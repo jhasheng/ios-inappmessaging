@@ -1,16 +1,15 @@
 internal func checkConfigurationServer() -> Bool {
     // Fetch infoplist
-    if let configUrl = retrieveConfigurationURL() {
+    if let configUrl: String = retrieveConfigurationUrl() {
         // Request to config server
         print("valid")
+        callConfigurationServer(withUrl: configUrl)
     } else {
         #if DEBUG
             assertionFailure("'RakutenInsightsConfigURL' is not valid.")
         #endif
         return false
     }
-    
-    // Request to config server
     
     // Parse through config logic
     
@@ -23,7 +22,7 @@ internal func checkConfigurationServer() -> Bool {
  * Value must be a String type.
  * @returns { Optional String } configuration server URL.
  */
-fileprivate func retrieveConfigurationURL() -> String? {
+fileprivate func retrieveConfigurationUrl() -> String? {
     var configServerUrl: String?
     var infoPlistDict: NSDictionary?
 
@@ -45,6 +44,43 @@ fileprivate func retrieveConfigurationURL() -> String? {
     }
 
     return configServerUrl
+}
+
+/**
+ *
+ */
+fileprivate func callConfigurationServer(withUrl: String) {
+    
+    
+    if let url = URL(string: withUrl) {
+        
+        var enabled: Bool?
+        var endpoints: NSDictionary?
+        
+        // Add in the HTTP headers.
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with:url, completionHandler: {(data, response, error) in
+            
+            do {
+                guard let data = data else {
+                    print("Data returned is nil")
+                    return
+                }
+                
+                guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary else {
+                    return
+                }
+                print(json) // TESTING
+            } catch let error {
+                print("Error calling configuration server: \(error)")
+                return
+            }
+               
+        }).resume()
+    }
 }
 
 
