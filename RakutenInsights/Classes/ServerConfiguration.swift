@@ -47,10 +47,10 @@ fileprivate func retrieveConfigurationUrl() -> String? {
 }
 
 /**
- *
+ * Sends a POST request to configuration server.
+ * @param { String } configuration server URL.
  */
 fileprivate func callConfigurationServer(withUrl: String) {
-    
     
     if let url = URL(string: withUrl) {
         
@@ -82,6 +82,3 @@ fileprivate func callConfigurationServer(withUrl: String) {
         }).resume()
     }
 }
-
-
-
