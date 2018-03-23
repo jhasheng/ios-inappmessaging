@@ -1,0 +1,16 @@
+PODS:
+  - RakutenInsights (0.1.0)
+
+DEPENDENCIES:
+  - RakutenInsights (from `../`)
+
+EXTERNAL SOURCES:
+  RakutenInsights:
+    :path: ../
+
+SPEC CHECKSUMS:
+  RakutenInsights: 2410ad8ca54261fb58914e9dd2895b12c93d27fc
+
+PODFILE CHECKSUM: d15b31961856b7c6f9e825b18a13c4848319bb15
+
+COCOAPODS: 1.4.0
