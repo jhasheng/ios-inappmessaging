@@ -35,7 +35,8 @@ fileprivate func retrieveConfigurationUrl() -> String? {
         return configServerUrl;
     }
     
-    if let infoPlistContent = infoPlistDict, let optionalConfigServerUrl = infoPlistContent["RakutenInsightsConfigURL"] as? String {
+    if let infoPlistContent = infoPlistDict,
+        let optionalConfigServerUrl = infoPlistContent["RakutenInsightsConfigURL"] as? String {
         configServerUrl = optionalConfigServerUrl;
     } else {
         #if DEBUG
@@ -51,9 +52,7 @@ fileprivate func retrieveConfigurationUrl() -> String? {
  * @param { String } configuration server URL.
  */
 fileprivate func callConfigurationServer(withUrl: String) {
-    
     if let url = URL(string: withUrl) {
-        
         var enabled: Bool?
         var endpoints: NSDictionary?
         
@@ -61,16 +60,16 @@ fileprivate func callConfigurationServer(withUrl: String) {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = buildJSONBody()
         
-        URLSession.shared.dataTask(with:url, completionHandler: {(data, response, error) in
-            
+        URLSession.shared.dataTask(with: url, completionHandler: {(data, response, error) in
             do {
                 guard let data = data else {
                     print("Data returned is nil")
                     return
                 }
                 
-                guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary else {
+                guard let json = try JSONSerialization.jsonObject(with: data) as? NSDictionary else {
                     return
                 }
                 print(json) // TESTING
@@ -78,7 +77,24 @@ fileprivate func callConfigurationServer(withUrl: String) {
                 print("Error calling configuration server: \(error)")
                 return
             }
-               
         }).resume()
     }
+}
+
+fileprivate func buildJSONBody() -> Data? {
+    
+    guard let appId = getAppId() else {
+        return nil
+    }
+    
+    guard let appVersion = getAppVersion() else {
+        return nil
+    }
+    
+    let json: [String: Any] = [
+        "app_id": appId,
+        "platform": "iOS",
+    ]
+    
+    return nil
 }
