@@ -17,8 +17,6 @@
 		928220B9F28452386DE319F70E27F7F3 /* RakutenInsights-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B05A79EE09E1164390C2B396F5C60F /* RakutenInsights-dummy.m */; };
 		D938F2D92069605700DF894E /* CommonUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D938F2D82069605700DF894E /* CommonUtilities.swift */; };
 		D938F2DA2069605700DF894E /* CommonUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D938F2D82069605700DF894E /* CommonUtilities.swift */; };
-		D93FED292065D21300F3BFFD /* ApplicationInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93FED282065D21300F3BFFD /* ApplicationInformation.swift */; };
-		D93FED2A2065D21F00F3BFFD /* ApplicationInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93FED282065D21300F3BFFD /* ApplicationInformation.swift */; };
 		D9AD27792064799F00492322 /* ServerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AD27782064799F00492322 /* ServerConfiguration.swift */; };
 		D9AD277A20647B6400492322 /* ServerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AD27782064799F00492322 /* ServerConfiguration.swift */; };
 		D9AD277B2064AFB200492322 /* RakutenInsights.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF272477ED20B2D1C8887A11D825CD2 /* RakutenInsights.swift */; };
@@ -68,7 +66,6 @@
 		CBCF0F11DCCE8A28E8E9D0DF96EB7F9D /* RakutenInsights.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = RakutenInsights.xcconfig; sourceTree = "<group>"; };
 		D6B05A79EE09E1164390C2B396F5C60F /* RakutenInsights-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "RakutenInsights-dummy.m"; sourceTree = "<group>"; };
 		D938F2D82069605700DF894E /* CommonUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUtilities.swift; sourceTree = "<group>"; };
-		D93FED282065D21300F3BFFD /* ApplicationInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ApplicationInformation.swift; path = RakutenInsights/Classes/ApplicationInformation.swift; sourceTree = "<group>"; };
 		D9AD27782064799F00492322 /* ServerConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ServerConfiguration.swift; path = RakutenInsights/Classes/ServerConfiguration.swift; sourceTree = "<group>"; };
 		E1B1EB20F113452D295F00ECE5EF260C /* Pods-RakutenInsights_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-RakutenInsights_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		E39B881F0F843C6577856374B441AD5E /* Pods-RakutenInsights_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-RakutenInsights_Tests-umbrella.h"; sourceTree = "<group>"; };
@@ -184,7 +181,6 @@
 		9C73807DB6A1618DC9D15B2B4F4347FB /* RakutenInsights */ = {
 			isa = PBXGroup;
 			children = (
-				D93FED282065D21300F3BFFD /* ApplicationInformation.swift */,
 				D938F2D82069605700DF894E /* CommonUtilities.swift */,
 				D9AD27782064799F00492322 /* ServerConfiguration.swift */,
 				1DF272477ED20B2D1C8887A11D825CD2 /* RakutenInsights.swift */,
@@ -361,7 +357,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D93FED292065D21300F3BFFD /* ApplicationInformation.swift in Sources */,
 				24285AC7FC8B49E8A9CAB01CDD3A0C07 /* Pods-RakutenInsights_Example-dummy.m in Sources */,
 				D9AD277B2064AFB200492322 /* RakutenInsights.swift in Sources */,
 				D9AD27792064799F00492322 /* ServerConfiguration.swift in Sources */,
@@ -373,7 +368,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D93FED2A2065D21F00F3BFFD /* ApplicationInformation.swift in Sources */,
 				928220B9F28452386DE319F70E27F7F3 /* RakutenInsights-dummy.m in Sources */,
 				D9AD277A20647B6400492322 /* ServerConfiguration.swift in Sources */,
 				159C8AFECB9176CC98A2813F228F4848 /* RakutenInsights.swift in Sources */,

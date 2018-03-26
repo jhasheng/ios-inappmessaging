@@ -22,6 +22,7 @@ internal func checkConfigurationServer() -> Bool? {
 /**
  * Sends a POST request to configuration server.
  * @param { withUrl: String } configuration server URL.
+ * @returns { Optional Bool } value of 'enabled' flag by config server. nil if error.
  */
 fileprivate func callConfigurationServer(withUrl: String) -> Bool? {
     var enabled: Bool?
@@ -56,18 +57,17 @@ fileprivate func callConfigurationServer(withUrl: String) -> Bool? {
                     let jsonEnabled = jsonData["enabled"] as? Bool {
                         enabled = jsonEnabled;
                 }
-
-                print (json) // TESTING
+                
             } catch let error {
                 print("Error calling configuration server: \(error)")
                 return
             }
+            
             semaphore.signal()
         }).resume()
         
         semaphore.wait()
     }
-    print(enabled) // TESTING
 
     return enabled
 }
