@@ -1,28 +1,31 @@
+// Class to handle communication with the configuration server.
+
+/**
+ * Function that will parse the configuration server's response
+ * for the enabled flag.
+ * @returns { Optional Bool } value of the enabled flag.
+ */
 internal func checkConfigurationServer() -> Bool? {
-    var enableSDK: Bool?
+    var enableSdk: Bool?
     
-    // Fetch infoplist
-    if let configUrl: String = retrieveFromInfoPlist(forKey: "RakutenInsightsConfigURL") {
-        // Request to config server
-        if let optionalEnableSDK = callConfigurationServer(withUrl: configUrl) {
-            enableSDK = optionalEnableSDK
-        }
+    // Fetch configuration server URL.
+    if let configUrl = retrieveFromInfoPlist(forKey: "RakutenInsightsConfigURL"),
+        let enabledFlagFromResponse = callConfigurationServer(withUrl: configUrl) {
+            enableSdk = enabledFlagFromResponse
     } else {
         #if DEBUG
             assertionFailure("'RakutenInsightsConfigURL' is not valid.")
         #endif
-        return enableSDK
     }
     
-    // Parse through config logic
-    
-     return enableSDK
+     return enableSdk
 }
 
 /**
  * Sends a POST request to configuration server.
  * @param { withUrl: String } configuration server URL.
- * @returns { Optional Bool } value of 'enabled' flag by config server. nil if error.
+ * @returns { Optional Bool } value of 'enabled' flag by config server.
+ * (TODO: Daniel Tam) return endspoints also. (Bool?, [ String ]?)
  */
 fileprivate func callConfigurationServer(withUrl: String) -> Bool? {
     var enabled: Bool?
@@ -38,11 +41,13 @@ fileprivate func callConfigurationServer(withUrl: String) -> Bool? {
         if let requestBody = buildHttpBody() {
             request.httpBody = requestBody
         } else {
-            // Fail to contact config server.
+            return enabled
         }
         
+        // Semaphore added for synchronous HTTP calls.
         let semaphore = DispatchSemaphore(value: 0)
 
+        // Start HTTP call.
         URLSession.shared.dataTask(with: request, completionHandler: {(data, response, error) in
             do {
                 guard let data = data else {
@@ -50,22 +55,26 @@ fileprivate func callConfigurationServer(withUrl: String) -> Bool? {
                     return
                 }
                 
+                // Try to assign the data object from response body and convert to a JSON.
                 guard let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: AnyObject] else {
                     return
                 }
+                
+                // Parse 'enabled' flag from response body.
                 if let jsonData = json["data"],
                     let jsonEnabled = jsonData["enabled"] as? Bool {
                         enabled = jsonEnabled;
                 }
-                
             } catch let error {
                 print("Error calling configuration server: \(error)")
                 return
             }
             
+            // Signal completion of HTTP request.
             semaphore.signal()
         }).resume()
         
+        // Pause execution until signal() is called
         semaphore.wait()
     }
 
@@ -78,12 +87,14 @@ fileprivate func callConfigurationServer(withUrl: String) -> Bool? {
  */
 fileprivate func buildHttpBody() -> Data? {
     
+    // Assign all the variables required in request body to configuration server.
     guard let appId = retrieveFromMainBundle(forKey: "CFBundleIdentifier"),
         let appVersion = retrieveFromMainBundle(forKey: "CFBundleVersion"),
         let sdkVersion = retrieveFromInfoPlist(forKey: "RakutenInsightsSDKVersion") else {
         return nil
     }
     
+    // Create the dictionary with the variables assigned above.
     let jsonDict: [String: Any] = [
         "app_id": appId,
         "platform": "iOS",
@@ -91,5 +102,6 @@ fileprivate func buildHttpBody() -> Data? {
         "sdk_version": sdkVersion
     ]
     
+    // Return the serialized JSON object.
     return try? JSONSerialization.data(withJSONObject: jsonDict)
 }

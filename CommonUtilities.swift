@@ -36,12 +36,12 @@ internal func retrieveFromInfoPlist(forKey: String) -> String? {
  * @returns { Optional String } value of the key property.
  */
 internal func retrieveFromMainBundle(forKey: String) -> String? {
-    guard let optionalValueOfPropertyToRetrieve = Bundle.main.infoDictionary?[forKey]  as? String else {
+    guard let valueOfPropertyToRetrieve = Bundle.main.infoDictionary?[forKey]  as? String else {
         #if DEBUG
-            assertionFailure("Failed to retrieve \(forKey).")
+            assertionFailure("Failed to retrieve '\(forKey)' from main bundle.")
         #endif
         return nil
     }
     
-    return optionalValueOfPropertyToRetrieve
+    return valueOfPropertyToRetrieve
 }
