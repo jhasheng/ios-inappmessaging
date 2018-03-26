@@ -1,6 +1,6 @@
 internal func checkConfigurationServer() -> Bool {
     // Fetch infoplist
-    if let configUrl: String = retrieveConfigurationUrl() {
+    if let configUrl: String = retrieveFromInfoPlist(forKey: "RakutenInsightsConfigURL") {
         // Request to config server
         print("valid")
         callConfigurationServer(withUrl: configUrl)
@@ -18,38 +18,38 @@ internal func checkConfigurationServer() -> Bool {
 
 /**
  * Retrieves configuration URL from Info.plist.
- * Key should be called "RakutenInsightsConfigURL"
- * Value must be a String type.
- * @returns { Optional String } configuration server URL.
+ * @param { forKey: String } key of the property to extract value from.
+ * @returns { Optional String } value of the key property.
  */
-fileprivate func retrieveConfigurationUrl() -> String? {
-    var configServerUrl: String?
+fileprivate func retrieveFromInfoPlist(forKey: String) -> String? {
+    var valueOfPropertyToRetrieve: String?
     var infoPlistDict: NSDictionary?
 
+    
     if let path = Bundle.main.path(forResource: "Info", ofType: "plist") {
         infoPlistDict = NSDictionary(contentsOfFile: path)
     } else {
         #if DEBUG
             assertionFailure("Fail to locate Info.plist.")
         #endif
-        return configServerUrl;
+        return valueOfPropertyToRetrieve;
     }
     
     if let infoPlistContent = infoPlistDict,
-        let optionalConfigServerUrl = infoPlistContent["RakutenInsightsConfigURL"] as? String {
-        configServerUrl = optionalConfigServerUrl;
+        let optionalValueOfPropertyToRetrieve = infoPlistContent[forKey] as? String {
+        valueOfPropertyToRetrieve = optionalValueOfPropertyToRetrieve;
     } else {
         #if DEBUG
-            assertionFailure("Please specify a 'RakutenInsightsConfigURL' key in Info.plist. Must be a String value.")
+            assertionFailure("Please specify a '\(forKey)' key in Info.plist. Must be a String value.")
         #endif
     }
-
-    return configServerUrl
+    
+    return valueOfPropertyToRetrieve
 }
 
 /**
  * Sends a POST request to configuration server.
- * @param { String } configuration server URL.
+ * @param { withUrl: String } configuration server URL.
  */
 fileprivate func callConfigurationServer(withUrl: String) {
     if let url = URL(string: withUrl) {
@@ -94,7 +94,10 @@ fileprivate func buildJSONBody() -> Data? {
     let json: [String: Any] = [
         "app_id": appId,
         "platform": "iOS",
+        "sdk_version": "0.1.0" // Temp. Is this specified by the user?
     ]
+    
+    print(JSONSerialization.isValidJSONObject(json))
     
     return nil
 }

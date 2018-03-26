@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>RakutenInsightsConfigURL</key>
-	<string>0</string>
+	<string>http://www.mocky.io/v2/5ab925f52c0000d41e1863f3</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
