@@ -29,7 +29,7 @@
 
 /* Begin PBXFileReference section */
 		2A646039285EC61C10F78396 /* Pods-RakutenInsights_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RakutenInsights_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RakutenInsights_Example/Pods-RakutenInsights_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		595752113E2067AF992BA037 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		595752113E2067AF992BA037 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* RakutenInsights_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RakutenInsights_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -42,10 +42,10 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		7E8195D022226F6C6CD4C832 /* Pods-RakutenInsights_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RakutenInsights_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RakutenInsights_Tests/Pods-RakutenInsights_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		8641EE406C0C0AF261E78635 /* Pods_RakutenInsights_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RakutenInsights_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		86BA1AE02C1803D5EAB7C600 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		86BA1AE02C1803D5EAB7C600 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		AFCE627DEAE7EDA6D661D0A1 /* Pods-RakutenInsights_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RakutenInsights_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RakutenInsights_Tests/Pods-RakutenInsights_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		CFBDF4BD95EAA9C4C4387F95 /* Pods-RakutenInsights_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RakutenInsights_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-RakutenInsights_Example/Pods-RakutenInsights_Example.release.xcconfig"; sourceTree = "<group>"; };
-		DF26658B1E70C91041705F11 /* RakutenInsights.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = RakutenInsights.podspec; path = ../RakutenInsights.podspec; sourceTree = "<group>"; };
+		DF26658B1E70C91041705F11 /* RakutenInsights.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = RakutenInsights.podspec; path = ../RakutenInsights.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		DFD081AABB594CB9A1E143CB /* Pods_RakutenInsights_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RakutenInsights_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
