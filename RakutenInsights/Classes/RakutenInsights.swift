@@ -4,16 +4,10 @@
  * Function to called by host application to initialize Rakuten Insights SDK.
  */
 public func configure() {
-    
-    guard let enabledFlag = checkConfigurationServer() else {
-        return
-    }
-    
-    if enabledFlag {
-        print("enabled")
-        // Swizzle everything.
+    if checkConfigurationServer() {
+        print("Enable SDK.")
     } else {
-        print("disabled")
-        // Do nothing.
+        print("Disable SDK.")
     }
 }
+    

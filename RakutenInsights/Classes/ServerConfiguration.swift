@@ -2,37 +2,32 @@
 
 /**
  * Function that will parse the configuration server's response
- * for the enabled flag.
- * @returns { Optional Bool } value of the enabled flag.
+ * for the enabled flag. Return false by default.
+ * @returns { Bool } value of the enabled flag.
  */
-internal func checkConfigurationServer() -> Bool? {
-    var enableSdk: Bool?
-    
+internal func checkConfigurationServer() -> Bool {
     // Fetch configuration server URL.
-    if let configUrl = retrieveFromInfoPlist(forKey: "RakutenInsightsConfigURL"),
-        let enabledFlagFromResponse = callConfigurationServer(withUrl: configUrl) {
-            enableSdk = enabledFlagFromResponse
+    if let configUrl = retrieveFromMainBundle(forKey: "RakutenInsightsConfigURL") {
+        return callConfigurationServer(withUrl: configUrl)
     } else {
         #if DEBUG
             assertionFailure("'RakutenInsightsConfigURL' is not valid.")
         #endif
     }
     
-     return enableSdk
+     return false
 }
 
 /**
  * Sends a POST request to configuration server.
  * @param { withUrl: String } configuration server URL.
- * @returns { Optional Bool } value of 'enabled' flag by config server.
- * (TODO: Daniel Tam) return endspoints also. (Bool?, [ String ]?)
+ * @returns { Bool } value of 'enabled' flag by config server.
+ * (TODO: Daniel Tam) return endpoints also. (Bool, [ String ]?)
  */
-fileprivate func callConfigurationServer(withUrl: String) -> Bool? {
-    var enabled: Bool?
+fileprivate func callConfigurationServer(withUrl: String) -> Bool {
+    var enabled: Bool = false
     
     if let url = URL(string: withUrl) {
-        var endpoints: NSDictionary?
-        
         // Add in the HTTP headers.
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -52,15 +47,18 @@ fileprivate func callConfigurationServer(withUrl: String) -> Bool? {
             do {
                 guard let data = data else {
                     print("Data returned is nil")
+                    semaphore.signal()
                     return
                 }
                 
                 // Try to assign the data object from response body and convert to a JSON.
                 guard let json =
-                    try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: AnyObject]
-                    else {
+                    try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                        as? [String: AnyObject]
+                            else {
                         
-                        return
+                                semaphore.signal()
+                                return
                 }
                 
                 // Parse 'enabled' flag from response body.
@@ -70,6 +68,7 @@ fileprivate func callConfigurationServer(withUrl: String) -> Bool? {
                 }
             } catch let error {
                 print("Error calling configuration server: \(error)")
+                semaphore.signal()
                 return
             }
             
@@ -93,7 +92,7 @@ fileprivate func buildHttpBody() -> Data? {
     // Assign all the variables required in request body to configuration server.
     guard let appId = retrieveFromMainBundle(forKey: "CFBundleIdentifier"),
         let appVersion = retrieveFromMainBundle(forKey: "CFBundleVersion"),
-        let sdkVersion = retrieveFromInfoPlist(forKey: "RakutenInsightsSDKVersion"),
+        let sdkVersion = retrieveFromMainBundle(forKey: "RakutenInsightsSDKVersion"),
         let locale = "\(Locale.current)".components(separatedBy: " ").first else {
             
         return nil
