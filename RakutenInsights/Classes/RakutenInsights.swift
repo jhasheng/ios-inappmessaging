@@ -10,4 +10,3 @@ public func configure() {
         print("Disable SDK.")
     }
 }
-    

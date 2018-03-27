@@ -6,7 +6,6 @@
  * @returns { Bool } value of the enabled flag.
  */
 internal func checkConfigurationServer() -> Bool {
-    // Fetch configuration server URL.
     if let configUrl = retrieveFromMainBundle(forKey: "RakutenInsightsConfigURL") {
         return callConfigurationServer(withUrl: configUrl)
     } else {
