@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../RakutenInsights/Classes/ServerConfiguration.swift"
-            timestampString = "543797174.028163"
+            timestampString = "543868027.410008"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
             landmarkName = "buildHttpBody()"
             landmarkType = "9">
          </BreakpointContent>

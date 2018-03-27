@@ -93,7 +93,9 @@ fileprivate func buildHttpBody() -> Data? {
     // Assign all the variables required in request body to configuration server.
     guard let appId = retrieveFromMainBundle(forKey: "CFBundleIdentifier"),
         let appVersion = retrieveFromMainBundle(forKey: "CFBundleVersion"),
-        let sdkVersion = retrieveFromInfoPlist(forKey: "RakutenInsightsSDKVersion") else {
+        let sdkVersion = retrieveFromInfoPlist(forKey: "RakutenInsightsSDKVersion"),
+        let locale = "\(Locale.current)".components(separatedBy: " ").first else {
+            
         return nil
     }
     
@@ -102,7 +104,8 @@ fileprivate func buildHttpBody() -> Data? {
         "app_id": appId,
         "platform": "iOS",
         "app_version": appVersion,
-        "sdk_version": sdkVersion
+        "sdk_version": sdkVersion,
+        "locale": locale
     ]
     
     // Return the serialized JSON object.
