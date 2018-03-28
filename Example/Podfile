@@ -5,7 +5,7 @@ target 'RakutenInsights_Example' do
 
   target 'RakutenInsights_Tests' do
     inherit! :search_paths
-
+  pod 'RakutenInsights', :path => '../'
     
   end
 end

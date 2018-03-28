@@ -1,5 +1,5 @@
 import XCTest
-import RakutenInsights
+@testable import RakutenInsights
 
 class Tests: XCTestCase {
     
@@ -14,15 +14,31 @@ class Tests: XCTestCase {
     }
     
     func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure() {
-            // Put the code you want to measure the time of here.
+        
+        Bundle.main.infoDictionary!["RakutenInsightsConfigURL"] = "hi"
+        
+        if let _: String = retrieveFromMainBundle(forKey: "RakutenInsightsConfigURL") {
+            XCTAssert(true)
         }
+//
+//        XCTAssert(false)
     }
+
+//    /**
+//     * Retrieves the value of a specified key from main bundle.
+//     * @param { forKey: String } key of the property to extract value from.
+//     * @returns { Optional String } value of the key property.
+//     */
+//    internal func retrieveFromMainBundle(forKey: String) -> String? {
+//        guard let valueOfPropertyToRetrieve = Bundle.main.infoDictionary?[forKey]  as? String else {
+//            #if DEBUG
+//                assertionFailure("Failed to retrieve '\(forKey)' from main bundle.")
+//            #endif
+//            return nil
+//        }
+//
+//        return valueOfPropertyToRetrieve
+//    }
+
     
 }

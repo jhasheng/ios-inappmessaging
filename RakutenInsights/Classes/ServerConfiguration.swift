@@ -51,13 +51,10 @@ fileprivate func callConfigurationServer(withUrl: String) -> Bool {
                 }
                 
                 // Try to assign the data object from response body and convert to a JSON.
-                guard let json =
-                    try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                        as? [String: AnyObject]
-                            else {
-                        
-                                semaphore.signal()
-                                return
+                guard let json = try JSONSerialization
+                        .jsonObject(with: data, options: .allowFragments) as? [String: AnyObject] else {
+                            semaphore.signal()
+                            return
                 }
                 
                 // Parse 'enabled' flag from response body.
