@@ -10,7 +10,7 @@
 		24285AC7FC8B49E8A9CAB01CDD3A0C07 /* Pods-RakutenInsights_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A9CC271440D6686893CBE2E98330EC /* Pods-RakutenInsights_Example-dummy.m */; };
 		355881708BB5DBD858DB065DD675F7E0 /* Pods-RakutenInsights_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D076A3EC40DCBAFC1EF3127F31E8CE6 /* Pods-RakutenInsights_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		461884A7A57B4E14FDF89BF8035578F4 /* RakutenInsights-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F09DB1BC8F1BBD1E0B387FC0D5CA31 /* RakutenInsights-dummy.m */; };
-		4ACF5B35BA6196DEA4EF795FEF6D25CA /* CommonUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F816F2B7992AF73CFB30D24DF240CDDD /* CommonUtilities.swift */; };
+		4ACF5B35BA6196DEA4EF795FEF6D25CA /* CommonUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = F816F2B7992AF73CFB30D24DF240CDDD /* CommonUtility.swift */; };
 		4C1A44D1AA41B9991CFDBF4CDB171E45 /* Pods-RakutenInsights_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D11B3E92F1A24C6BE589FA8F198FB82 /* Pods-RakutenInsights_Tests-dummy.m */; };
 		73EBDC67F12A7CD18063623294805E88 /* RakutenInsights-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A1829EF68D4D1C08FFDB2A54B155856 /* RakutenInsights-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A0D4EE0AE69878BA63516750D418B2E9 /* Pods-RakutenInsights_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E39B881F0F843C6577856374B441AD5E /* Pods-RakutenInsights_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -42,12 +42,12 @@
 		00845AF7800D6910E199EFB79E448429 /* RakutenInsights.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = RakutenInsights.xcconfig; sourceTree = "<group>"; };
 		0277E94FD951FFF57AAE660A090D435D /* Pods-RakutenInsights_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RakutenInsights_Example-resources.sh"; sourceTree = "<group>"; };
 		09C82346E7C2D7FEEEA91362CF491A51 /* Pods-RakutenInsights_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RakutenInsights_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
-		0CA491ED837072158DBDD32F3D475F2D /* Pods_RakutenInsights_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_RakutenInsights_Tests.framework; path = "Pods-RakutenInsights_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		106F850680918E993E19996086600A06 /* RakutenInsights.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = RakutenInsights.framework; path = RakutenInsights.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0CA491ED837072158DBDD32F3D475F2D /* Pods_RakutenInsights_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RakutenInsights_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		106F850680918E993E19996086600A06 /* RakutenInsights.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RakutenInsights.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1323AF3055F04E3B77AA91BADBB255FA /* RakutenInsights.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RakutenInsights.swift; path = RakutenInsights/Classes/RakutenInsights.swift; sourceTree = "<group>"; };
 		149745B70275E0627D9607E68348C336 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17A9CC271440D6686893CBE2E98330EC /* Pods-RakutenInsights_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-RakutenInsights_Example-dummy.m"; sourceTree = "<group>"; };
-		1D711DF4ECCC7A72B8A84EBD91943E9E /* Pods_RakutenInsights_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_RakutenInsights_Example.framework; path = "Pods-RakutenInsights_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D711DF4ECCC7A72B8A84EBD91943E9E /* Pods_RakutenInsights_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RakutenInsights_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C0A2B72026B474E42A6FBEC8CF838D1 /* Pods-RakutenInsights_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RakutenInsights_Example.release.xcconfig"; sourceTree = "<group>"; };
 		2F7CA7AEA7D5FDCE08C6B3713939D3C1 /* Pods-RakutenInsights_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-RakutenInsights_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		32F09DB1BC8F1BBD1E0B387FC0D5CA31 /* RakutenInsights-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "RakutenInsights-dummy.m"; sourceTree = "<group>"; };
@@ -56,24 +56,24 @@
 		4DE4F6E33448C04CB3708AECD6B85416 /* Pods-RakutenInsights_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RakutenInsights_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		6BA2297614DD63DFC036C7A2AB1AC2F5 /* ServerConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerConfiguration.swift; path = RakutenInsights/Classes/ServerConfiguration.swift; sourceTree = "<group>"; };
-		6F6AA1A01B13F990D933B1F8BB0F6362 /* RakutenInsights.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = RakutenInsights.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		6FA8B7DFEEABC699BE7A876BFEDBE950 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
-		7772CB98A5A7217D6F2AD87D95B2A89B /* Pods-RakutenInsights_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-RakutenInsights_Example.modulemap"; sourceTree = "<group>"; };
+		6F6AA1A01B13F990D933B1F8BB0F6362 /* RakutenInsights.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = RakutenInsights.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		6FA8B7DFEEABC699BE7A876BFEDBE950 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		7772CB98A5A7217D6F2AD87D95B2A89B /* Pods-RakutenInsights_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-RakutenInsights_Example.modulemap"; sourceTree = "<group>"; };
 		7D11B3E92F1A24C6BE589FA8F198FB82 /* Pods-RakutenInsights_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-RakutenInsights_Tests-dummy.m"; sourceTree = "<group>"; };
 		8A2366FDA273892B725C6C12DD5BB2DB /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D076A3EC40DCBAFC1EF3127F31E8CE6 /* Pods-RakutenInsights_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-RakutenInsights_Example-umbrella.h"; sourceTree = "<group>"; };
 		8D0C52361165B25209EE1A994F37EBA9 /* RakutenInsights-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RakutenInsights-prefix.pch"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9A3DFD27A03E35976DA9D06C0EF6385A /* Pods-RakutenInsights_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RakutenInsights_Tests-resources.sh"; sourceTree = "<group>"; };
-		B48046A05BBAFB51701367883A1BE976 /* Pods-RakutenInsights_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-RakutenInsights_Tests.modulemap"; sourceTree = "<group>"; };
+		B48046A05BBAFB51701367883A1BE976 /* Pods-RakutenInsights_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-RakutenInsights_Tests.modulemap"; sourceTree = "<group>"; };
 		B7703232CDACC1B07A0B8D885B3FCA58 /* Pods-RakutenInsights_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RakutenInsights_Example-frameworks.sh"; sourceTree = "<group>"; };
 		B94B5C14D1693938C5C88422368362CF /* Pods-RakutenInsights_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RakutenInsights_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		E1B1EB20F113452D295F00ECE5EF260C /* Pods-RakutenInsights_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-RakutenInsights_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		E39B881F0F843C6577856374B441AD5E /* Pods-RakutenInsights_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-RakutenInsights_Tests-umbrella.h"; sourceTree = "<group>"; };
-		EB3135165A4943AB7D6FAB9C00AB8ABD /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
-		EC238262BEC584F7D65267D90560C273 /* RakutenInsights.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = RakutenInsights.modulemap; sourceTree = "<group>"; };
+		EB3135165A4943AB7D6FAB9C00AB8ABD /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		EC238262BEC584F7D65267D90560C273 /* RakutenInsights.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = RakutenInsights.modulemap; sourceTree = "<group>"; };
 		F0115DD5EFCF4A3ADF6B0B2B41969887 /* Pods-RakutenInsights_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RakutenInsights_Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		F816F2B7992AF73CFB30D24DF240CDDD /* CommonUtilities.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CommonUtilities.swift; path = RakutenInsights/Classes/CommonUtilities.swift; sourceTree = "<group>"; };
+		F816F2B7992AF73CFB30D24DF240CDDD /* CommonUtility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CommonUtility.swift; path = RakutenInsights/Classes/CommonUtility.swift; sourceTree = "<group>"; };
 		F95851CA24080C128319C3DD95BCB7B7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD014D7AFEC86FA0F53980C954E52680 /* Pods-RakutenInsights_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RakutenInsights_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -175,7 +175,7 @@
 		B6768AF15F37E0E84262FE663ED0E2FA /* RakutenInsights */ = {
 			isa = PBXGroup;
 			children = (
-				F816F2B7992AF73CFB30D24DF240CDDD /* CommonUtilities.swift */,
+				F816F2B7992AF73CFB30D24DF240CDDD /* CommonUtility.swift */,
 				1323AF3055F04E3B77AA91BADBB255FA /* RakutenInsights.swift */,
 				6BA2297614DD63DFC036C7A2AB1AC2F5 /* ServerConfiguration.swift */,
 				D0F7989C278F8F1F482D467B63C07F3D /* Pod */,
@@ -365,7 +365,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4ACF5B35BA6196DEA4EF795FEF6D25CA /* CommonUtilities.swift in Sources */,
+				4ACF5B35BA6196DEA4EF795FEF6D25CA /* CommonUtility.swift in Sources */,
 				461884A7A57B4E14FDF89BF8035578F4 /* RakutenInsights-dummy.m in Sources */,
 				EA241FB10F1EA8744070F6256EE68B7B /* RakutenInsights.swift in Sources */,
 				D0283FC47894C28D2A02D84D9AA92FF6 /* ServerConfiguration.swift in Sources */,

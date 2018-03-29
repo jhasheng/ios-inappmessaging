@@ -5,8 +5,8 @@
  * for the enabled flag. Return false by default.
  * @returns { Bool } value of the enabled flag.
  */
-internal func checkConfigurationServer() -> Bool {
-    if let configUrl = retrieveFromMainBundle(forKey: "RakutenInsightsConfigURL") {
+internal func checkConfigurationServer(param1: String) -> Bool {
+    if let configUrl = CommonUtility.retrieveFromMainBundle(forKey: "RakutenInsightsConfigURL") {
         return callConfigurationServer(withUrl: configUrl)
     } else {
         #if DEBUG
@@ -86,9 +86,9 @@ fileprivate func callConfigurationServer(withUrl: String) -> Bool {
 fileprivate func buildHttpBody() -> Data? {
     
     // Assign all the variables required in request body to configuration server.
-    guard let appId = retrieveFromMainBundle(forKey: "CFBundleIdentifier"),
-        let appVersion = retrieveFromMainBundle(forKey: "CFBundleVersion"),
-        let sdkVersion = retrieveFromMainBundle(forKey: "RakutenInsightsSDKVersion"),
+    guard let appId = CommonUtility.retrieveFromMainBundle(forKey: "CFBundleIdentifier"),
+        let appVersion = CommonUtility.retrieveFromMainBundle(forKey: "CFBundleVersion"),
+        let sdkVersion = CommonUtility.retrieveFromMainBundle(forKey: "RakutenInsightsSDKVersion"),
         let locale = "\(Locale.current)".components(separatedBy: " ").first else {
             
         return nil

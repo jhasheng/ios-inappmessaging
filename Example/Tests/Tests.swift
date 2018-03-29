@@ -15,13 +15,15 @@ class Tests: XCTestCase {
     
     func testExample() {
         
-        Bundle.main.infoDictionary!["RakutenInsightsConfigURL"] = "hi"
-        
-        if let _: String = retrieveFromMainBundle(forKey: "RakutenInsightsConfigURL") {
-            XCTAssert(true)
+        var myDict: NSDictionary?
+        if let path = Bundle.main.path(forResource: "Info", ofType: "plist") {
+            myDict = NSDictionary(contentsOfFile: path)
         }
-//
-//        XCTAssert(false)
+        print(myDict)
+        if let dict = myDict {
+            print(dict["RakutenInsightsConfigURL"])
+        }
+ 
     }
 
 //    /**
