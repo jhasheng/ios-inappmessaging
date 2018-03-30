@@ -41,7 +41,7 @@ class ServerConfigurationTests: XCTestCase {
     
     /**
      * Test for behavior of checkConfigurationServer() when no value is returned from
-     * CommonUtility.retrieveFromMainBundle() and callConfigurationServer returns true.
+     * CommonUtility.retrieveFromMainBundle() and callConfigurationServer() returns true.
      */
     func testCheckConfigurationServer_1() {
         let serverConfiguration =
@@ -52,7 +52,7 @@ class ServerConfigurationTests: XCTestCase {
     
     /**
      * Test for behavior of checkConfigurationServer() when a value is returned from
-     * CommonUtility.retrieveFromMainBundle() and callConfigurationServer returns true.
+     * CommonUtility.retrieveFromMainBundle() and callConfigurationServer() returns true.
      */
     func testCheckConfigurationServer_2() {
         let serverConfiguration =
@@ -63,7 +63,7 @@ class ServerConfigurationTests: XCTestCase {
  
     /**
      * Test for behavior of checkConfigurationServer() when a value is returned from
-     * CommonUtility.retrieveFromMainBundle() and callConfigurationServer returns false.
+     * CommonUtility.retrieveFromMainBundle() and callConfigurationServer() returns false.
      */
     func testCheckConfigurationServer_3() {
         let serverConfiguration =
@@ -74,7 +74,7 @@ class ServerConfigurationTests: XCTestCase {
     
     /**
      * Test for behavior of checkConfigurationServer() when no value is returned from
-     * CommonUtility.retrieveFromMainBundle() and callConfigurationServer returns false.
+     * CommonUtility.retrieveFromMainBundle() and callConfigurationServer() returns false.
      */
     func testCheckConfigurationServer_4() {
         let serverConfiguration =
