@@ -1,4 +1,6 @@
-// Class that contains the public methods for host application to call.
+/**
+ * Class that contains the public methods for host application to call.
+ */
 
 /**
  * Function to called by host application to initialize Rakuten Insights SDK.

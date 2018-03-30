@@ -1,7 +1,6 @@
 /**
  *  Class that provides common utility methods for RakutenInsights module.
  */
-
 class CommonUtility {
     
     /**

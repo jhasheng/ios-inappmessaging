@@ -1,5 +1,6 @@
-// Class to handle communication with the configuration server.
-
+/**
+ * Class to handle communication with the configuration server.
+ */
 class ServerConfiguration {
     
     let commonUtility: CommonUtility
