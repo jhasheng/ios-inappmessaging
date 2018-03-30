@@ -13,16 +13,16 @@ class ServerConfiguration {
      * for the enabled flag. Return false by default.
      * @returns { Bool } value of the enabled flag.
      */
-    func checkConfigurationServer() -> Bool {
-        if let configUrl = commonUtility.retrieveFromMainBundle(forKey: "RakutenInsightsConfigURL") {
-            return self.callConfigurationServer(withUrl: configUrl)
-        } else {
+    internal func checkConfigurationServer() -> Bool {
+        guard let configUrl = commonUtility.retrieveFromMainBundle(forKey: "RakutenInsightsConfigURL") else {
             #if DEBUG
-                assertionFailure("'RakutenInsightsConfigURL' is not valid.")
+                print("RakutenInsights: 'RakutenInsightsConfigURL' is not valid.")
             #endif
+            
+            return false
         }
         
-        return false
+        return self.callConfigurationServer(withUrl: configUrl)
     }
     
     /**
@@ -31,7 +31,7 @@ class ServerConfiguration {
      * @returns { Bool } value of 'enabled' flag by config server.
      * (TODO: Daniel Tam) return endpoints also. (Bool, [ String ]?)
      */
-    func callConfigurationServer(withUrl: String) -> Bool {
+    internal func callConfigurationServer(withUrl: String) -> Bool {
         var enabled: Bool = false
         
         if let url = URL(string: withUrl) {
@@ -91,7 +91,7 @@ class ServerConfiguration {
      * Build out the request body for talking to configuration server.
      * @returns { Optional Data } of serialized JSON object with the required fields.
      */
-    func buildHttpBody() -> Data? {
+    fileprivate func buildHttpBody() -> Data? {
     
         // Assign all the variables required in request body to configuration server.
         guard let appId = commonUtility.retrieveFromMainBundle(forKey: "CFBundleIdentifier"),
