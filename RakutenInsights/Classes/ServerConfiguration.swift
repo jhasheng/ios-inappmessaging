@@ -1,11 +1,5 @@
 // Class to handle communication with the configuration server.
 
-//internal func initializeSdk() {
-//    let boolFlag = checkConfigurationServer(
-//        optionalConfigUrl: retrieveFromMainBundle(forKey: "RakutenInsightsConfigURL"),
-//        optionalConfigResponse:
-//}
-
 class ServerConfiguration {
     
     let commonUtility: CommonUtility
@@ -46,11 +40,11 @@ class ServerConfiguration {
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             
-            //        if let requestBody = buildHttpBody() {
-            //            request.httpBody = requestBody
-            //        } else {
-            //            return enabled
-            //        }
+            if let requestBody = self.buildHttpBody() {
+                request.httpBody = requestBody
+            } else {
+                return enabled
+            }
             
             // Semaphore added for synchronous HTTP calls.
             let semaphore = DispatchSemaphore(value: 0)
@@ -97,29 +91,27 @@ class ServerConfiguration {
      * Build out the request body for talking to configuration server.
      * @returns { Optional Data } of serialized JSON object with the required fields.
      */
-    //fileprivate func buildHttpBody() -> Data? {
-    //
-    //    // Assign all the variables required in request body to configuration server.
-    //    guard let appId = CommonUtility.retrieveFromMainBundle(forKey: "CFBundleIdentifier"),
-    //        let appVersion = CommonUtility.retrieveFromMainBundle(forKey: "CFBundleVersion"),
-    //        let sdkVersion = CommonUtility.retrieveFromMainBundle(forKey: "RakutenInsightsSDKVersion"),
-    //        let locale = "\(Locale.current)".components(separatedBy: " ").first else {
-    //
-    //        return nil
-    //    }
-    //
-    //    // Create the dictionary with the variables assigned above.
-    //    let jsonDict: [String: Any] = [
-    //        "app_id": appId,
-    //        "platform": "iOS",
-    //        "app_version": appVersion,
-    //        "sdk_version": sdkVersion,
-    //        "locale": locale
-    //    ]
-    //
-    //    // Return the serialized JSON object.
-    //    return try? JSONSerialization.data(withJSONObject: jsonDict)
-    //}
+    func buildHttpBody() -> Data? {
     
-
+        // Assign all the variables required in request body to configuration server.
+        guard let appId = commonUtility.retrieveFromMainBundle(forKey: "CFBundleIdentifier"),
+            let appVersion = commonUtility.retrieveFromMainBundle(forKey: "CFBundleVersion"),
+            let sdkVersion = commonUtility.retrieveFromMainBundle(forKey: "RakutenInsightsSDKVersion"),
+            let locale = "\(Locale.current)".components(separatedBy: " ").first else {
+    
+            return nil
+        }
+    
+        // Create the dictionary with the variables assigned above.
+        let jsonDict: [String: Any] = [
+            "app_id": appId,
+            "platform": "iOS",
+            "app_version": appVersion,
+            "sdk_version": sdkVersion,
+            "locale": locale
+        ]
+    
+        // Return the serialized JSON object.
+        return try? JSONSerialization.data(withJSONObject: jsonDict)
+    }
 }
