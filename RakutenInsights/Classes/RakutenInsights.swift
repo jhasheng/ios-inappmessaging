@@ -4,8 +4,7 @@
  */
 public func configure() -> Bool {
     
-    let commonUtility = CommonUtility()
-    let serverConfiguration = ServerConfiguration(commonUtility: commonUtility)
+    let serverConfiguration = ServerConfiguration(commonUtility: CommonUtility())
     
     if serverConfiguration.checkConfigurationServer() {
         print("Enable SDK.")
@@ -15,6 +14,5 @@ public func configure() -> Bool {
         return false
     }
 
-    //initializeSdk()
     return true
 }
