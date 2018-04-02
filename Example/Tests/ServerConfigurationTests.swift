@@ -7,79 +7,66 @@ import XCTest
 
 class ServerConfigurationTests: XCTestCase {
     
-    private class MockCommonUtility_with_value: CommonUtility {
+    private class MockCommonUtility: CommonUtility {
+        
+        let strToRetrieve: String
+        let keyValueMapping: [String: Any?]
+        
+        init(strToRetrieve: String, keyValueMapping: [String: Any?]) {
+            self.strToRetrieve = strToRetrieve
+            self.keyValueMapping = keyValueMapping
+        }
+        
         override func retrieveFromMainBundle(forKey: String) -> String? {
-            return "Catfish with fashion"
+            let dict = self.keyValueMapping[strToRetrieve] as? NSDictionary
+            return dict!["return"]! as? String
         }
     }
     
-    private class MockCommonUtility_without_value: CommonUtility {
-        override func retrieveFromMainBundle(forKey: String) -> String? {
-            return nil
+    private class MockServerConfiguration: ServerConfiguration {
+        
+        var boolToReturn: Bool
+        
+        init(boolToReturn: Bool, commonUtility: CommonUtility) {
+            self.boolToReturn = boolToReturn
+            super.init(commonUtility: commonUtility)
         }
-    }
-    
-    private class MockServerConfiguration_return_true: ServerConfiguration {
+        
         override func callConfigurationServer(withUrl: String) -> Bool {
-            return true
+            return self.boolToReturn
         }
     }
     
-    private class MockServerConfiguration_return_false: ServerConfiguration {
-        override func callConfigurationServer(withUrl: String) -> Bool {
-            return false
+    /**
+     * Test for ServerConfiguration's checkConfigurationServer() method.
+     * There are four results of the parameterized tests based on
+     * the two variables from ServerConfiguration.callConfigurationServer()
+     * and CommonUtility.retrieveFromMainBundle().
+     */
+    func testCheckConfigurationServer() {
+        let dictForCommonUtility: [String: [String: Any?]] = [
+            "1": [
+                "return": "Catfish with fashion",
+                "result": true
+            ],
+            "2": [
+                "return": nil,
+                "result": false
+            ]
+        ]
+        
+        for(key, value) in dictForCommonUtility {
+            var serverConfiguration = MockServerConfiguration(
+                boolToReturn: true,
+                commonUtility: MockCommonUtility(strToRetrieve: key, keyValueMapping: dictForCommonUtility))
+
+            XCTAssert(serverConfiguration.checkConfigurationServer() == value["result"] as! Bool)
+            
+            serverConfiguration = MockServerConfiguration(
+                boolToReturn: false,
+                commonUtility: MockCommonUtility(strToRetrieve: key, keyValueMapping: dictForCommonUtility))
+            
+            XCTAssertFalse(serverConfiguration.checkConfigurationServer())
         }
-    }
-    
-    override func setUp() {
-        super.setUp()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-    }
-    
-    /**
-     * Test for behavior of checkConfigurationServer() when no value is returned from
-     * CommonUtility.retrieveFromMainBundle() and callConfigurationServer() returns true.
-     */
-    func testCheckConfigurationServer_1() {
-        let serverConfiguration =
-            MockServerConfiguration_return_true(commonUtility: MockCommonUtility_without_value())
-        
-        XCTAssertFalse(serverConfiguration.checkConfigurationServer())
-    }
-    
-    /**
-     * Test for behavior of checkConfigurationServer() when a value is returned from
-     * CommonUtility.retrieveFromMainBundle() and callConfigurationServer() returns true.
-     */
-    func testCheckConfigurationServer_2() {
-        let serverConfiguration =
-            MockServerConfiguration_return_true(commonUtility: MockCommonUtility_with_value())
-        
-        XCTAssertTrue(serverConfiguration.checkConfigurationServer())
-    }
- 
-    /**
-     * Test for behavior of checkConfigurationServer() when a value is returned from
-     * CommonUtility.retrieveFromMainBundle() and callConfigurationServer() returns false.
-     */
-    func testCheckConfigurationServer_3() {
-        let serverConfiguration =
-            MockServerConfiguration_return_false(commonUtility: MockCommonUtility_with_value())
-        
-        XCTAssertFalse(serverConfiguration.checkConfigurationServer())
-    }
-    
-    /**
-     * Test for behavior of checkConfigurationServer() when no value is returned from
-     * CommonUtility.retrieveFromMainBundle() and callConfigurationServer() returns false.
-     */
-    func testCheckConfigurationServer_4() {
-        let serverConfiguration =
-            MockServerConfiguration_return_false(commonUtility: MockCommonUtility_without_value())
-        
-        XCTAssertFalse(serverConfiguration.checkConfigurationServer())
     }
 }
