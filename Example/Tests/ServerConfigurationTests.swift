@@ -44,7 +44,7 @@ class ServerConfigurationTests: XCTestCase {
      * and CommonUtility.retrieveFromMainBundle().
      */
     func testCheckConfigurationServer() {
-        let dictForCommonUtility: [String: [String: Any?]] = [
+        let stubDataForCommonUtility: [String: [String: Any?]] = [
             "1": [
                 "return": "Catfish with fashion",
                 "result": true
@@ -55,16 +55,16 @@ class ServerConfigurationTests: XCTestCase {
             ]
         ]
         
-        for(key, value) in dictForCommonUtility {
+        for(key, value) in stubDataForCommonUtility {
             var serverConfiguration = MockServerConfiguration(
                 boolToReturn: true,
-                commonUtility: MockCommonUtility(strToRetrieve: key, keyValueMapping: dictForCommonUtility))
+                commonUtility: MockCommonUtility(strToRetrieve: key, keyValueMapping: stubDataForCommonUtility))
 
             XCTAssert(serverConfiguration.checkConfigurationServer() == value["result"] as! Bool)
             
             serverConfiguration = MockServerConfiguration(
                 boolToReturn: false,
-                commonUtility: MockCommonUtility(strToRetrieve: key, keyValueMapping: dictForCommonUtility))
+                commonUtility: MockCommonUtility(strToRetrieve: key, keyValueMapping: stubDataForCommonUtility))
             
             XCTAssertFalse(serverConfiguration.checkConfigurationServer())
         }
