@@ -7,29 +7,39 @@ import XCTest
 
 class ServerConfigurationTests: XCTestCase {
     
+    /**
+     * Mock class of CommonUtility. Purpose is to stub the method
+     * retrieveFromMainBundle() to return prefined values in order to test
+     * create behavior of other classes that utilizes CommonUtlity.
+     */
     private class MockCommonUtility: CommonUtility {
         
         let strToRetrieve: String
-        let keyValueMapping: [String: Any?]
+        let mockedPropertyValuesForKeys: [String: Any?]
         
         init(strToRetrieve: String, keyValueMapping: [String: Any?]) {
             self.strToRetrieve = strToRetrieve
-            self.keyValueMapping = keyValueMapping
+            self.mockedPropertyValuesForKeys = keyValueMapping
         }
         
         override func retrieveFromMainBundle(forKey: String) -> String? {
-            let dict = self.keyValueMapping[strToRetrieve] as? NSDictionary
+            let dict = self.mockedPropertyValuesForKeys[strToRetrieve] as? NSDictionary
             return dict!["return"]! as? String
         }
     }
     
+    /**
+     * Mock class of ServerConfiguration. Purpose is to stub the method
+     * callConfigurationServer() to mimic a response from backend server
+     * and test behavior based on the different responses.
+     */
     private class MockServerConfiguration: ServerConfiguration {
         
         var boolToReturn: Bool
         
-        init(boolToReturn: Bool, commonUtility: CommonUtility) {
+        init(boolToReturn: Bool, mockedCommonUtility: CommonUtility) {
             self.boolToReturn = boolToReturn
-            super.init(commonUtility: commonUtility)
+            super.init(commonUtility: mockedCommonUtility)
         }
         
         override func callConfigurationServer(withUrl: String) -> Bool {
@@ -58,13 +68,13 @@ class ServerConfigurationTests: XCTestCase {
         for(key, value) in stubDataForCommonUtility {
             var serverConfiguration = MockServerConfiguration(
                 boolToReturn: true,
-                commonUtility: MockCommonUtility(strToRetrieve: key, keyValueMapping: stubDataForCommonUtility))
+                mockedCommonUtility: MockCommonUtility(strToRetrieve: key, keyValueMapping: stubDataForCommonUtility))
 
             XCTAssert(serverConfiguration.checkConfigurationServer() == value["result"] as! Bool)
             
             serverConfiguration = MockServerConfiguration(
                 boolToReturn: false,
-                commonUtility: MockCommonUtility(strToRetrieve: key, keyValueMapping: stubDataForCommonUtility))
+                mockedCommonUtility: MockCommonUtility(strToRetrieve: key, keyValueMapping: stubDataForCommonUtility))
             
             XCTAssertFalse(serverConfiguration.checkConfigurationServer())
         }

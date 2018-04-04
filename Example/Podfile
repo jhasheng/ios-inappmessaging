@@ -2,7 +2,6 @@ use_frameworks!
 
 target 'RakutenInsights_Example' do
   pod 'RakutenInsights', :path => '../'
-
   target 'RakutenInsights_Tests' do
     inherit! :search_paths
   pod 'RakutenInsights', :path => '../'
