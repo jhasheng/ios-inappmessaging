@@ -9,7 +9,7 @@ class ServerConfigurationTests: XCTestCase {
     
     /**
      * Mock class of CommonUtility. Purpose is to stub the method
-     * retrieveFromMainBundle() to return prefined values in order to test
+     * retrieveFromMainBundle() to return predefined values in order to test
      * create behavior of other classes that utilizes CommonUtlity.
      */
     private class MockCommonUtility: CommonUtility {
