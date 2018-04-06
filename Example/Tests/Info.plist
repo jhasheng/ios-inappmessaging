@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>RakutenInsightsConfigURL</key>
-	<string>hi</string>
+	<string>http://127.0.0.1:300</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>

@@ -8,7 +8,7 @@
 public func configure() {
     
     let serverConfiguration = ServerConfiguration(commonUtility: CommonUtility())
-    
+        
     // (TODO: Daniel Tam) remove if statement later.
     if serverConfiguration.checkConfigurationServer() {
         print("Enable SDK.")

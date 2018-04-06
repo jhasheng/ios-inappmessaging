@@ -21,10 +21,10 @@ class ServerConfigurationTests: XCTestCase {
             self.strToRetrieve = strToRetrieve
             self.mockedPropertyValuesForKeys = keyValueMapping
         }
-        
-        override func retrieveFromMainBundle(forKey: String) -> String? {
-            let dict = self.mockedPropertyValuesForKeys[strToRetrieve] as? NSDictionary
-            return dict!["return"]! as? String
+
+        override func retrieveFromMainBundle(forKey: String) -> Any? {
+            let dict = self.mockedPropertyValuesForKeys as? NSDictionary
+            return dict?[strToRetrieve] as? String
         }
     }
     
@@ -54,29 +54,39 @@ class ServerConfigurationTests: XCTestCase {
      * and CommonUtility.retrieveFromMainBundle().
      */
     func testCheckConfigurationServer() {
-        let stubDataForCommonUtility: [String: [String: Any?]] = [
-            "1": [
-                "return": "Catfish with fashion",
-                "result": true
-            ],
-            "2": [
-                "return": nil,
-                "result": false
-            ]
+        let stubDataForCommonUtility: [String: Any?] = [
+            "RakutenInsightsConfigURL": "Catfish with Fashion",
+            "ReturnNil": nil
         ]
         
-        for(key, value) in stubDataForCommonUtility {
-            var serverConfiguration = MockServerConfiguration(
-                boolToReturn: true,
-                mockedCommonUtility: MockCommonUtility(strToRetrieve: key, keyValueMapping: stubDataForCommonUtility))
+        var serverConfiguration: MockServerConfiguration
+        
+        // True and true case.
+        serverConfiguration = MockServerConfiguration(
+            boolToReturn: true,
+            mockedCommonUtility: MockCommonUtility(strToRetrieve: "RakutenInsightsConfigURL", keyValueMapping: stubDataForCommonUtility))
 
-            XCTAssert(serverConfiguration.checkConfigurationServer() == value["result"] as! Bool)
-            
-            serverConfiguration = MockServerConfiguration(
-                boolToReturn: false,
-                mockedCommonUtility: MockCommonUtility(strToRetrieve: key, keyValueMapping: stubDataForCommonUtility))
-            
-            XCTAssertFalse(serverConfiguration.checkConfigurationServer())
-        }
+        XCTAssertTrue(serverConfiguration.checkConfigurationServer())
+
+        // True and false case.
+        serverConfiguration = MockServerConfiguration(
+            boolToReturn: true,
+            mockedCommonUtility: MockCommonUtility(strToRetrieve: "ReturnNil", keyValueMapping: stubDataForCommonUtility))
+
+        XCTAssertFalse(serverConfiguration.checkConfigurationServer())
+
+        // False and true case.
+        serverConfiguration = MockServerConfiguration(
+            boolToReturn: false,
+            mockedCommonUtility: MockCommonUtility(strToRetrieve: "RakutenInsightsConfigURL", keyValueMapping: stubDataForCommonUtility))
+
+        XCTAssertFalse(serverConfiguration.checkConfigurationServer())
+
+        // False and false case.
+        serverConfiguration = MockServerConfiguration(
+            boolToReturn: false,
+            mockedCommonUtility: MockCommonUtility(strToRetrieve: "ReturnNil", keyValueMapping: stubDataForCommonUtility))
+
+        XCTAssertFalse(serverConfiguration.checkConfigurationServer())
     }
 }

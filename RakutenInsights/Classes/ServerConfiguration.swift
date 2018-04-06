@@ -15,7 +15,7 @@ class ServerConfiguration {
      * @returns { Bool } value of the enabled flag.
      */
     internal func checkConfigurationServer() -> Bool {
-        guard let configUrl = commonUtility.retrieveFromMainBundle(forKey: "RakutenInsightsConfigURL") else {
+        guard let configUrl = commonUtility.retrieveFromMainBundle(forKey: "RakutenInsightsConfigURL") as? String else {
             #if DEBUG
                 print("RakutenInsights: 'RakutenInsightsConfigURL' is not valid.")
             #endif
@@ -58,14 +58,14 @@ class ServerConfiguration {
                         semaphore.signal()
                         return
                     }
-                    
+
                     // Try to assign the data object from response body and convert to a JSON.
                     guard let json = try JSONSerialization
                         .jsonObject(with: data, options: .allowFragments) as? [String: AnyObject] else {
                             semaphore.signal()
                             return
                     }
-                    
+
                     // Parse 'enabled' flag from response body.
                     if let jsonData = json["data"],
                         let jsonEnabled = jsonData["enabled"] as? Bool {
@@ -76,7 +76,7 @@ class ServerConfiguration {
                     semaphore.signal()
                     return
                 }
-                
+
                 // Signal completion of HTTP request.
                 semaphore.signal()
             }).resume()
@@ -84,7 +84,7 @@ class ServerConfiguration {
             // Pause execution until signal() is called
             semaphore.wait()
         }
-        
+
         return enabled
     }
     
