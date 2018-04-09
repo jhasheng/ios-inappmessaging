@@ -1,7 +1,7 @@
 /**
  * Class to handle communication with the configuration server.
  */
-class ServerConfiguration {
+class ConfigurationClient {
     
     let commonUtility: CommonUtility
     
@@ -33,13 +33,14 @@ class ServerConfiguration {
     
     /**
      * Parse the response retrieve from configuration server for the 'enabled' flag.
-     * @param { configResponse: [String: AnyObject] } response as a dictionary equivalent.
+     * @param { configResponse: [String: Any] } response as a dictionary equivalent.
      * @returns { Bool } the value of the 'enabled' flag.
+     * (TODO: Daniel Tam) Parse for endpoints.
      */
-    fileprivate func parseConfigResponse(configResponse: [String: AnyObject]) -> Bool {
+    fileprivate func parseConfigResponse(configResponse: [String: Any]) -> Bool {
         var enabled: Bool = false
 
-        if let jsonData = configResponse["data"],
+        if let jsonData = configResponse["data"] as? [String: Any],
             let enabledFlag = jsonData["enabled"] as? Bool {
             enabled = enabledFlag;
         }

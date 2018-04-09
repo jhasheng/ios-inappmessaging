@@ -1,5 +1,5 @@
 /**
- *  Test class for configurationClient.swift
+ *  Test class for ConfigurationClient.swift
  */
 
 import XCTest
@@ -7,87 +7,91 @@ import XCTest
 
 class ConfigurationClientTests: XCTestCase {
     
-//    /**
-//     * Mock class of CommonUtility. Purpose is to stub the method
-//     * retrieveFromMainBundle() to return predefined values in order to test
-//     * create behavior of other classes that utilizes CommonUtlity.
-//     */
-//    private class MockCommonUtility: CommonUtility {
-//        
-//        let strToRetrieve: String
-//        let mockedPropertyValuesForKeys: [String: Any?]
-//        
-//        init(strToRetrieve: String, keyValueMapping: [String: Any?]) {
-//            self.strToRetrieve = strToRetrieve
-//            self.mockedPropertyValuesForKeys = keyValueMapping
-//        }
-//
-//        override func retrieveFromMainBundle(forKey: String) -> Any? {
-//            let dict = self.mockedPropertyValuesForKeys as? NSDictionary
-//            return dict?[strToRetrieve] as? String
-//        }
-//    }
-//    
-//    /**
-//     * Mock class of ConfigurationClient. Purpose is to stub the method
-//     * callConfigurationServer() to mimic a response from backend server
-//     * and test behavior based on the different responses.
-//     */
-//    private class MockServerConfiguration: configurationClient {
-//        
-//        var boolToReturn: Bool
-//        
-//        init(boolToReturn: Bool, mockedCommonUtility: CommonUtility) {
-//            self.boolToReturn = boolToReturn
-//            super.init(commonUtility: mockedCommonUtility)
-//        }
-//        
-//        override func callConfigurationServer(withUrl: String) -> Bool {
-//            return self.boolToReturn
-//        }
-//    }
-    
-//    /**
-//     * Test for configurationClient's checkConfigurationServer() method.
-//     * There are four results of the parameterized tests based on
-//     * the two variables from configurationClient.callConfigurationServer()
-//     * and CommonUtility.retrieveFromMainBundle().
-//     */
-//    func testCheckConfigurationServer() {
-//        let stubDataForCommonUtility: [String: Any?] = [
-//            "RakutenInsightsConfigURL": "Catfish with Fashion",
-//            "ReturnNil": nil
-//        ]
-//
-//        var configurationClient: MockServerConfiguration
-//
-//        // True and true case.
-//        configurationClient = MockServerConfiguration(
-//            boolToReturn: true,
-//            mockedCommonUtility: MockCommonUtility(strToRetrieve: "RakutenInsightsConfigURL", keyValueMapping: stubDataForCommonUtility))
-//
-//        XCTAssertTrue(configurationClient.checkConfigurationServer())
-//
-//        // True and false case.
-//        configurationClient = MockServerConfiguration(
-//            boolToReturn: true,
-//            mockedCommonUtility: MockCommonUtility(strToRetrieve: "ReturnNil", keyValueMapping: stubDataForCommonUtility))
-//
-//        XCTAssertFalse(configurationClient.checkConfigurationServer())
-//
-//        // False and true case.
-//        configurationClient = MockServerConfiguration(
-//            boolToReturn: false,
-//            mockedCommonUtility: MockCommonUtility(strToRetrieve: "RakutenInsightsConfigURL", keyValueMapping: stubDataForCommonUtility))
-//
-//        XCTAssertFalse(configurationClient.checkConfigurationServer())
-//
-//        // False and false case.
-//        configurationClient = MockServerConfiguration(
-//            boolToReturn: false,
-//            mockedCommonUtility: MockCommonUtility(strToRetrieve: "ReturnNil", keyValueMapping: stubDataForCommonUtility))
-//
-//        XCTAssertFalse(configurationClient.checkConfigurationServer())
-//    }
-}
+    /**
+     * Mock class of CommonUtility. Purpose is to stub the method
+     * retrieveFromMainBundle() to return predefined values in order to test
+     * create behavior of other classes that utilizes CommonUtlity.
+     */
+    private class MockCommonUtility: CommonUtility {
 
+        let strToRetrieve: String
+        let stubRetrieveFromMainBundle: [String: Any?]
+        let stubCallServer: [String: Any]?
+
+        init(strToRetrieve: String, stubRetrieveFromMainBundle: [String: Any?], stubCallServer: [String: Any]?) {
+            self.strToRetrieve = strToRetrieve
+            self.stubRetrieveFromMainBundle = stubRetrieveFromMainBundle
+            self.stubCallServer = stubCallServer
+        }
+
+        override func retrieveFromMainBundle(forKey: String) -> Any? {
+            let dict = self.stubRetrieveFromMainBundle as? NSDictionary
+            return dict?[strToRetrieve] as? String
+        }
+        
+        override func callServer(withUrl: String, withHTTPMethod: String) -> [String: Any]? {
+            return stubCallServer
+        }
+    }
+    
+    /**
+     * Tests for the correct behavior of ConfigurationClient's checkConfigurationServer().
+     * Based on two variables return from retrieveFromMainBundle() and callServer().
+     * SDK should be true if and only if both variables returns something valid.
+     */
+    func testCheckConfigurationServer() {
+        let stubDataForRetrieveFromMainBundle: [String: Any?] = [
+            "RakutenInsightsConfigURL": "Catfish with Fashion",
+            "ReturnNil": nil
+        ]
+        
+        let stubDataForCallServer = [
+            [
+                "data": [
+                    "enabled": true
+                ]
+            ],
+            [
+                "data": [
+                    "enabled": false
+                ]
+            ]
+        ]
+
+        // True and true case
+        var configurationClient = ConfigurationClient(commonUtility:
+            MockCommonUtility(
+                strToRetrieve: "RakutenInsightsConfigURL",
+                stubRetrieveFromMainBundle: stubDataForRetrieveFromMainBundle,
+                stubCallServer: stubDataForCallServer[0]))
+
+        XCTAssertTrue(configurationClient.checkConfigurationServer())
+
+        // True and false case
+        configurationClient = ConfigurationClient(commonUtility:
+            MockCommonUtility(
+                strToRetrieve: "RakutenInsightsConfigURL",
+                stubRetrieveFromMainBundle: stubDataForRetrieveFromMainBundle,
+                stubCallServer: stubDataForCallServer[1]))
+
+        XCTAssertFalse(configurationClient.checkConfigurationServer())
+
+        // False and true case
+        configurationClient = ConfigurationClient(commonUtility:
+            MockCommonUtility(
+                strToRetrieve: "ReturnNil",
+                stubRetrieveFromMainBundle: stubDataForRetrieveFromMainBundle,
+                stubCallServer: stubDataForCallServer[0]))
+
+        XCTAssertFalse(configurationClient.checkConfigurationServer())
+
+        // False and false case
+        configurationClient = ConfigurationClient(commonUtility:
+            MockCommonUtility(
+                strToRetrieve: "ReturnNil",
+                stubRetrieveFromMainBundle: stubDataForRetrieveFromMainBundle,
+                stubCallServer: stubDataForCallServer[1]))
+
+        XCTAssertFalse(configurationClient.checkConfigurationServer())
+    }
+}

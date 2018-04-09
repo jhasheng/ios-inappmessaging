@@ -37,10 +37,10 @@ class CommonUtility {
      * Generic method for calling an API.
      * @param { withUrl: String} the URL of the API to call.
      * @param { withHTTPMethod: String } the HTTP method used. E.G "POST" / "GET"
-     * @returns { Optional [String: AnyObject] } returns either nil or the response in a dictionary.
+     * @returns { Optional [String: Any] } returns either nil or the response in a dictionary.
      */
-    internal func callServer(withUrl: String, withHTTPMethod: String) -> [String: AnyObject]? {
-        var dataToReturn: [String: AnyObject]?
+    internal func callServer(withUrl: String, withHTTPMethod: String) -> [String: Any]? {
+        var dataToReturn: [String: Any]?
         
         if let url = URL(string: withUrl) {
             
@@ -62,7 +62,7 @@ class CommonUtility {
                     
                     // Try to assign the data object from response body and convert to a JSON.
                     guard let jsonData = try JSONSerialization
-                        .jsonObject(with: data, options: .allowFragments) as? [String: AnyObject] else {
+                        .jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
                             semaphore.signal()
                             return
                     }
