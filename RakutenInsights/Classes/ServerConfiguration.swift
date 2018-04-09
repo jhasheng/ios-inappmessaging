@@ -23,96 +23,27 @@ class ServerConfiguration {
             return false
         }
         
-        return self.callConfigurationServer(withUrl: configUrl)
-    }
-    
-    /**
-     * Sends a POST request to configuration server.
-     * @param { withUrl: String } configuration server URL.
-     * @returns { Bool } value of 'enabled' flag by config server.
-     * (TODO: Daniel Tam) return endpoints also. (Bool, [ String ]?)
-     */
-    internal func callConfigurationServer(withUrl: String) -> Bool {
-        var enabled: Bool = false
+        guard let response = commonUtility.callServer(withUrl: configUrl, withHTTPMethod: "POST") else {
+            print("Error calling server")
+            return false
+        }
         
-        if let url = URL(string: withUrl) {
-            // Add in the HTTP headers.
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            if let requestBody = self.buildHttpBody() {
-                request.httpBody = requestBody
-            } else {
-                return enabled
-            }
-            
-            // Semaphore added for synchronous HTTP calls.
-            let semaphore = DispatchSemaphore(value: 0)
-            
-            // Start HTTP call.
-            URLSession.shared.dataTask(with: request, completionHandler: {(data, response, error) in
-                do {
-                    guard let data = data else {
-                        print("Data returned is nil")
-                        semaphore.signal()
-                        return
-                    }
-
-                    // Try to assign the data object from response body and convert to a JSON.
-                    guard let json = try JSONSerialization
-                        .jsonObject(with: data, options: .allowFragments) as? [String: AnyObject] else {
-                            semaphore.signal()
-                            return
-                    }
-
-                    // Parse 'enabled' flag from response body.
-                    if let jsonData = json["data"],
-                        let jsonEnabled = jsonData["enabled"] as? Bool {
-                        enabled = jsonEnabled;
-                    }
-                } catch let error {
-                    print("Error calling configuration server: \(error)")
-                    semaphore.signal()
-                    return
-                }
-
-                // Signal completion of HTTP request.
-                semaphore.signal()
-            }).resume()
-            
-            // Pause execution until signal() is called
-            semaphore.wait()
-        }
-
-        return enabled
+        return parseConfigResponse(configResponse: response)
     }
     
     /**
-     * Build out the request body for talking to configuration server.
-     * @returns { Optional Data } of serialized JSON object with the required fields.
+     * Parse the response retrieve from configuration server for the 'enabled' flag.
+     * @param { configResponse: [String: AnyObject] } response as a dictionary equivalent.
+     * @returns { Bool } the value of the 'enabled' flag.
      */
-    fileprivate func buildHttpBody() -> Data? {
-    
-        // Assign all the variables required in request body to configuration server.
-        guard let appId = commonUtility.retrieveFromMainBundle(forKey: "CFBundleIdentifier"),
-            let appVersion = commonUtility.retrieveFromMainBundle(forKey: "CFBundleVersion"),
-            let sdkVersion = commonUtility.retrieveFromMainBundle(forKey: "RakutenInsightsSDKVersion"),
-            let locale = "\(Locale.current)".components(separatedBy: " ").first else {
-    
-            return nil
+    fileprivate func parseConfigResponse(configResponse: [String: AnyObject]) -> Bool {
+        var enabled: Bool = false
+
+        if let jsonData = configResponse["data"],
+            let enabledFlag = jsonData["enabled"] as? Bool {
+            enabled = enabledFlag;
         }
-    
-        // Create the dictionary with the variables assigned above.
-        let jsonDict: [String: Any] = [
-            "app_id": appId,
-            "platform": "iOS",
-            "app_version": appVersion,
-            "sdk_version": sdkVersion,
-            "locale": locale
-        ]
-    
-        // Return the serialized JSON object.
-        return try? JSONSerialization.data(withJSONObject: jsonDict)
+        
+        return enabled
     }
 }
