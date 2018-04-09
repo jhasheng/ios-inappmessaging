@@ -1,12 +1,12 @@
-///**
-// *  Test class for ServerConfiguration.swift
-// */
-//
-//import XCTest
-//@testable import RakutenInsights
-//
-//class ServerConfigurationTests: XCTestCase {
-//    
+/**
+ *  Test class for configurationClient.swift
+ */
+
+import XCTest
+@testable import RakutenInsights
+
+class ConfigurationClientTests: XCTestCase {
+    
 //    /**
 //     * Mock class of CommonUtility. Purpose is to stub the method
 //     * retrieveFromMainBundle() to return predefined values in order to test
@@ -29,11 +29,11 @@
 //    }
 //    
 //    /**
-//     * Mock class of ServerConfiguration. Purpose is to stub the method
+//     * Mock class of ConfigurationClient. Purpose is to stub the method
 //     * callConfigurationServer() to mimic a response from backend server
 //     * and test behavior based on the different responses.
 //     */
-//    private class MockServerConfiguration: ServerConfiguration {
+//    private class MockServerConfiguration: configurationClient {
 //        
 //        var boolToReturn: Bool
 //        
@@ -46,11 +46,11 @@
 //            return self.boolToReturn
 //        }
 //    }
-//    
+    
 //    /**
-//     * Test for ServerConfiguration's checkConfigurationServer() method.
+//     * Test for configurationClient's checkConfigurationServer() method.
 //     * There are four results of the parameterized tests based on
-//     * the two variables from ServerConfiguration.callConfigurationServer()
+//     * the two variables from configurationClient.callConfigurationServer()
 //     * and CommonUtility.retrieveFromMainBundle().
 //     */
 //    func testCheckConfigurationServer() {
@@ -58,36 +58,36 @@
 //            "RakutenInsightsConfigURL": "Catfish with Fashion",
 //            "ReturnNil": nil
 //        ]
-//        
-//        var serverConfiguration: MockServerConfiguration
-//        
+//
+//        var configurationClient: MockServerConfiguration
+//
 //        // True and true case.
-//        serverConfiguration = MockServerConfiguration(
+//        configurationClient = MockServerConfiguration(
 //            boolToReturn: true,
 //            mockedCommonUtility: MockCommonUtility(strToRetrieve: "RakutenInsightsConfigURL", keyValueMapping: stubDataForCommonUtility))
 //
-//        XCTAssertTrue(serverConfiguration.checkConfigurationServer())
+//        XCTAssertTrue(configurationClient.checkConfigurationServer())
 //
 //        // True and false case.
-//        serverConfiguration = MockServerConfiguration(
+//        configurationClient = MockServerConfiguration(
 //            boolToReturn: true,
 //            mockedCommonUtility: MockCommonUtility(strToRetrieve: "ReturnNil", keyValueMapping: stubDataForCommonUtility))
 //
-//        XCTAssertFalse(serverConfiguration.checkConfigurationServer())
+//        XCTAssertFalse(configurationClient.checkConfigurationServer())
 //
 //        // False and true case.
-//        serverConfiguration = MockServerConfiguration(
+//        configurationClient = MockServerConfiguration(
 //            boolToReturn: false,
 //            mockedCommonUtility: MockCommonUtility(strToRetrieve: "RakutenInsightsConfigURL", keyValueMapping: stubDataForCommonUtility))
 //
-//        XCTAssertFalse(serverConfiguration.checkConfigurationServer())
+//        XCTAssertFalse(configurationClient.checkConfigurationServer())
 //
 //        // False and false case.
-//        serverConfiguration = MockServerConfiguration(
+//        configurationClient = MockServerConfiguration(
 //            boolToReturn: false,
 //            mockedCommonUtility: MockCommonUtility(strToRetrieve: "ReturnNil", keyValueMapping: stubDataForCommonUtility))
 //
-//        XCTAssertFalse(serverConfiguration.checkConfigurationServer())
+//        XCTAssertFalse(configurationClient.checkConfigurationServer())
 //    }
-//}
+}
 

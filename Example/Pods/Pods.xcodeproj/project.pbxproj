@@ -15,7 +15,7 @@
 		9FD4547F74775CA7C8D5379FDDED353F /* CommonUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96B27D9A3EEE506652E6AAF39E2FAE6 /* CommonUtility.swift */; };
 		A0D4EE0AE69878BA63516750D418B2E9 /* Pods-RakutenInsights_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E39B881F0F843C6577856374B441AD5E /* Pods-RakutenInsights_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B090163104A9C540A880372FD7A7A8A1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		BD4CC10BC33C1690DF13180F8AFD9A06 /* ServerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981271449BA1B24E61E8BD8398FB5635 /* ServerConfiguration.swift */; };
+		BD4CC10BC33C1690DF13180F8AFD9A06 /* ConfigurationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981271449BA1B24E61E8BD8398FB5635 /* ConfigurationClient.swift */; };
 		D296CA3180948FC46D0F89A5A44989F9 /* RakutenInsights-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F956C22AA9B7B1BFFC84C5D0CBEAFCB /* RakutenInsights-dummy.m */; };
 		D9F5F62C3C42D5721FBEF705D492268F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		DC31C9CDFF2775C94811C7B599B839D8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
@@ -62,7 +62,7 @@
 		8A2366FDA273892B725C6C12DD5BB2DB /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D076A3EC40DCBAFC1EF3127F31E8CE6 /* Pods-RakutenInsights_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-RakutenInsights_Example-umbrella.h"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		981271449BA1B24E61E8BD8398FB5635 /* ServerConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerConfiguration.swift; path = RakutenInsights/Classes/ServerConfiguration.swift; sourceTree = "<group>"; };
+		981271449BA1B24E61E8BD8398FB5635 /* ConfigurationClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConfigurationClient.swift; path = RakutenInsights/Classes/ConfigurationClient.swift; sourceTree = "<group>"; };
 		984DE2E1AFF060CF637507ADE558817C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9A3DFD27A03E35976DA9D06C0EF6385A /* Pods-RakutenInsights_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RakutenInsights_Tests-resources.sh"; sourceTree = "<group>"; };
 		B48046A05BBAFB51701367883A1BE976 /* Pods-RakutenInsights_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-RakutenInsights_Tests.modulemap"; sourceTree = "<group>"; };
@@ -129,7 +129,7 @@
 			children = (
 				B96B27D9A3EEE506652E6AAF39E2FAE6 /* CommonUtility.swift */,
 				7942983CB05CE78496E55B4B545F8977 /* RakutenInsights.swift */,
-				981271449BA1B24E61E8BD8398FB5635 /* ServerConfiguration.swift */,
+				981271449BA1B24E61E8BD8398FB5635 /* ConfigurationClient.swift */,
 				F8EBCB9F751D12815A0B8FA06043BE91 /* Pod */,
 				8896E7BD5FE167617C7F9373B0277E70 /* Support Files */,
 			);
@@ -368,7 +368,7 @@
 				9FD4547F74775CA7C8D5379FDDED353F /* CommonUtility.swift in Sources */,
 				D296CA3180948FC46D0F89A5A44989F9 /* RakutenInsights-dummy.m in Sources */,
 				996A13F22A70610A46A6832148B9B5EF /* RakutenInsights.swift in Sources */,
-				BD4CC10BC33C1690DF13180F8AFD9A06 /* ServerConfiguration.swift in Sources */,
+				BD4CC10BC33C1690DF13180F8AFD9A06 /* ConfigurationClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
