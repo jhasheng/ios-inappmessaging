@@ -1,0 +1,749 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		24285AC7FC8B49E8A9CAB01CDD3A0C07 /* Pods-RakutenInsights_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A9CC271440D6686893CBE2E98330EC /* Pods-RakutenInsights_Example-dummy.m */; };
+		355881708BB5DBD858DB065DD675F7E0 /* Pods-RakutenInsights_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D076A3EC40DCBAFC1EF3127F31E8CE6 /* Pods-RakutenInsights_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C1A44D1AA41B9991CFDBF4CDB171E45 /* Pods-RakutenInsights_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D11B3E92F1A24C6BE589FA8F198FB82 /* Pods-RakutenInsights_Tests-dummy.m */; };
+		73EBDC67F12A7CD18063623294805E88 /* RakutenInsights-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = ED25815AC9479FC6C791D10B475AB6F0 /* RakutenInsights-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		996A13F22A70610A46A6832148B9B5EF /* RakutenInsights.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7942983CB05CE78496E55B4B545F8977 /* RakutenInsights.swift */; };
+		9FD4547F74775CA7C8D5379FDDED353F /* CommonUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96B27D9A3EEE506652E6AAF39E2FAE6 /* CommonUtility.swift */; };
+		A0D4EE0AE69878BA63516750D418B2E9 /* Pods-RakutenInsights_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E39B881F0F843C6577856374B441AD5E /* Pods-RakutenInsights_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B090163104A9C540A880372FD7A7A8A1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		BD4CC10BC33C1690DF13180F8AFD9A06 /* ConfigurationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981271449BA1B24E61E8BD8398FB5635 /* ConfigurationClient.swift */; };
+		D296CA3180948FC46D0F89A5A44989F9 /* RakutenInsights-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F956C22AA9B7B1BFFC84C5D0CBEAFCB /* RakutenInsights-dummy.m */; };
+		D9F5F62C3C42D5721FBEF705D492268F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		DC31C9CDFF2775C94811C7B599B839D8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3425A6816DE1F1C808B804BC9F1C92D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 97345EA3E331344C769A71E1007AAB61;
+			remoteInfo = RakutenInsights;
+		};
+		CC5515E4870874646074C84DEE7D7676 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 97345EA3E331344C769A71E1007AAB61;
+			remoteInfo = RakutenInsights;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0277E94FD951FFF57AAE660A090D435D /* Pods-RakutenInsights_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RakutenInsights_Example-resources.sh"; sourceTree = "<group>"; };
+		09C82346E7C2D7FEEEA91362CF491A51 /* Pods-RakutenInsights_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RakutenInsights_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
+		0CA491ED837072158DBDD32F3D475F2D /* Pods_RakutenInsights_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RakutenInsights_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		106F850680918E993E19996086600A06 /* RakutenInsights.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RakutenInsights.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		17A9CC271440D6686893CBE2E98330EC /* Pods-RakutenInsights_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-RakutenInsights_Example-dummy.m"; sourceTree = "<group>"; };
+		1D711DF4ECCC7A72B8A84EBD91943E9E /* Pods_RakutenInsights_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RakutenInsights_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C0A2B72026B474E42A6FBEC8CF838D1 /* Pods-RakutenInsights_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RakutenInsights_Example.release.xcconfig"; sourceTree = "<group>"; };
+		2F7CA7AEA7D5FDCE08C6B3713939D3C1 /* Pods-RakutenInsights_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-RakutenInsights_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		39C2892ECE8A886BEC4A0B54DDFE942A /* Pods-RakutenInsights_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RakutenInsights_Tests-frameworks.sh"; sourceTree = "<group>"; };
+		4DE4F6E33448C04CB3708AECD6B85416 /* Pods-RakutenInsights_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RakutenInsights_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		5F956C22AA9B7B1BFFC84C5D0CBEAFCB /* RakutenInsights-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "RakutenInsights-dummy.m"; sourceTree = "<group>"; };
+		6134DE61C1209098593BEF4257EAA1AB /* RakutenInsights-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RakutenInsights-prefix.pch"; sourceTree = "<group>"; };
+		622325DF2B2D993F14EBB95F48B6F1C8 /* RakutenInsights.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = RakutenInsights.modulemap; sourceTree = "<group>"; };
+		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		7772CB98A5A7217D6F2AD87D95B2A89B /* Pods-RakutenInsights_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-RakutenInsights_Example.modulemap"; sourceTree = "<group>"; };
+		7942983CB05CE78496E55B4B545F8977 /* RakutenInsights.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RakutenInsights.swift; path = RakutenInsights/Classes/RakutenInsights.swift; sourceTree = "<group>"; };
+		7CE10817D56D6D3CFEB194113D785947 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		7D11B3E92F1A24C6BE589FA8F198FB82 /* Pods-RakutenInsights_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-RakutenInsights_Tests-dummy.m"; sourceTree = "<group>"; };
+		800E0457F909AC513FDCF7211A046D74 /* RakutenInsights.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = RakutenInsights.xcconfig; sourceTree = "<group>"; };
+		86AF03ACB4BB1EF2992243C5C06A2B51 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8A2366FDA273892B725C6C12DD5BB2DB /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D076A3EC40DCBAFC1EF3127F31E8CE6 /* Pods-RakutenInsights_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-RakutenInsights_Example-umbrella.h"; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		981271449BA1B24E61E8BD8398FB5635 /* ConfigurationClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConfigurationClient.swift; path = RakutenInsights/Classes/ConfigurationClient.swift; sourceTree = "<group>"; };
+		984DE2E1AFF060CF637507ADE558817C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9A3DFD27A03E35976DA9D06C0EF6385A /* Pods-RakutenInsights_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RakutenInsights_Tests-resources.sh"; sourceTree = "<group>"; };
+		B48046A05BBAFB51701367883A1BE976 /* Pods-RakutenInsights_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-RakutenInsights_Tests.modulemap"; sourceTree = "<group>"; };
+		B7703232CDACC1B07A0B8D885B3FCA58 /* Pods-RakutenInsights_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RakutenInsights_Example-frameworks.sh"; sourceTree = "<group>"; };
+		B94B5C14D1693938C5C88422368362CF /* Pods-RakutenInsights_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RakutenInsights_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		B96B27D9A3EEE506652E6AAF39E2FAE6 /* CommonUtility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CommonUtility.swift; path = RakutenInsights/Classes/CommonUtility.swift; sourceTree = "<group>"; };
+		D3A995D16D826B2AA1ABDF963A9DAB17 /* RakutenInsights.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = RakutenInsights.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		E1B1EB20F113452D295F00ECE5EF260C /* Pods-RakutenInsights_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-RakutenInsights_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
+		E39B881F0F843C6577856374B441AD5E /* Pods-RakutenInsights_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-RakutenInsights_Tests-umbrella.h"; sourceTree = "<group>"; };
+		ED25815AC9479FC6C791D10B475AB6F0 /* RakutenInsights-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RakutenInsights-umbrella.h"; sourceTree = "<group>"; };
+		F0115DD5EFCF4A3ADF6B0B2B41969887 /* Pods-RakutenInsights_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RakutenInsights_Example-acknowledgements.plist"; sourceTree = "<group>"; };
+		F95851CA24080C128319C3DD95BCB7B7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FD014D7AFEC86FA0F53980C954E52680 /* Pods-RakutenInsights_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RakutenInsights_Tests.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3346E5EAA5C4A837911BC325A53758AC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B090163104A9C540A880372FD7A7A8A1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAF84BDF76449B9861ABD2AD1F39B766 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC31C9CDFF2775C94811C7B599B839D8 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD3C3A3156F46F11C607259B5930327F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9F5F62C3C42D5721FBEF705D492268F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		65F37E96F801B0C2FB17955C051DAE3B /* Pods-RakutenInsights_Tests */ = {
+			isa = PBXGroup;
+			children = (
+				8A2366FDA273892B725C6C12DD5BB2DB /* Info.plist */,
+				B48046A05BBAFB51701367883A1BE976 /* Pods-RakutenInsights_Tests.modulemap */,
+				2F7CA7AEA7D5FDCE08C6B3713939D3C1 /* Pods-RakutenInsights_Tests-acknowledgements.markdown */,
+				09C82346E7C2D7FEEEA91362CF491A51 /* Pods-RakutenInsights_Tests-acknowledgements.plist */,
+				7D11B3E92F1A24C6BE589FA8F198FB82 /* Pods-RakutenInsights_Tests-dummy.m */,
+				39C2892ECE8A886BEC4A0B54DDFE942A /* Pods-RakutenInsights_Tests-frameworks.sh */,
+				9A3DFD27A03E35976DA9D06C0EF6385A /* Pods-RakutenInsights_Tests-resources.sh */,
+				E39B881F0F843C6577856374B441AD5E /* Pods-RakutenInsights_Tests-umbrella.h */,
+				B94B5C14D1693938C5C88422368362CF /* Pods-RakutenInsights_Tests.debug.xcconfig */,
+				FD014D7AFEC86FA0F53980C954E52680 /* Pods-RakutenInsights_Tests.release.xcconfig */,
+			);
+			name = "Pods-RakutenInsights_Tests";
+			path = "Target Support Files/Pods-RakutenInsights_Tests";
+			sourceTree = "<group>";
+		};
+		6CAB2BDE30E793E0415B5C12776E9C2E /* RakutenInsights */ = {
+			isa = PBXGroup;
+			children = (
+				B96B27D9A3EEE506652E6AAF39E2FAE6 /* CommonUtility.swift */,
+				7942983CB05CE78496E55B4B545F8977 /* RakutenInsights.swift */,
+				981271449BA1B24E61E8BD8398FB5635 /* ConfigurationClient.swift */,
+				F8EBCB9F751D12815A0B8FA06043BE91 /* Pod */,
+				8896E7BD5FE167617C7F9373B0277E70 /* Support Files */,
+			);
+			name = RakutenInsights;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		791BE12AA8D72A0BDE67895DBCE45275 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D711DF4ECCC7A72B8A84EBD91943E9E /* Pods_RakutenInsights_Example.framework */,
+				0CA491ED837072158DBDD32F3D475F2D /* Pods_RakutenInsights_Tests.framework */,
+				106F850680918E993E19996086600A06 /* RakutenInsights.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		79D9DEAE32109E0D766D98EF5FB5A30F /* Pods-RakutenInsights_Example */ = {
+			isa = PBXGroup;
+			children = (
+				F95851CA24080C128319C3DD95BCB7B7 /* Info.plist */,
+				7772CB98A5A7217D6F2AD87D95B2A89B /* Pods-RakutenInsights_Example.modulemap */,
+				E1B1EB20F113452D295F00ECE5EF260C /* Pods-RakutenInsights_Example-acknowledgements.markdown */,
+				F0115DD5EFCF4A3ADF6B0B2B41969887 /* Pods-RakutenInsights_Example-acknowledgements.plist */,
+				17A9CC271440D6686893CBE2E98330EC /* Pods-RakutenInsights_Example-dummy.m */,
+				B7703232CDACC1B07A0B8D885B3FCA58 /* Pods-RakutenInsights_Example-frameworks.sh */,
+				0277E94FD951FFF57AAE660A090D435D /* Pods-RakutenInsights_Example-resources.sh */,
+				8D076A3EC40DCBAFC1EF3127F31E8CE6 /* Pods-RakutenInsights_Example-umbrella.h */,
+				4DE4F6E33448C04CB3708AECD6B85416 /* Pods-RakutenInsights_Example.debug.xcconfig */,
+				2C0A2B72026B474E42A6FBEC8CF838D1 /* Pods-RakutenInsights_Example.release.xcconfig */,
+			);
+			name = "Pods-RakutenInsights_Example";
+			path = "Target Support Files/Pods-RakutenInsights_Example";
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				F9F5149BD50A021E6B03BE3534684BBD /* Development Pods */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				791BE12AA8D72A0BDE67895DBCE45275 /* Products */,
+				82E497F074DC752E417E783A393CF168 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		82E497F074DC752E417E783A393CF168 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				79D9DEAE32109E0D766D98EF5FB5A30F /* Pods-RakutenInsights_Example */,
+				65F37E96F801B0C2FB17955C051DAE3B /* Pods-RakutenInsights_Tests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		8896E7BD5FE167617C7F9373B0277E70 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				86AF03ACB4BB1EF2992243C5C06A2B51 /* Info.plist */,
+				622325DF2B2D993F14EBB95F48B6F1C8 /* RakutenInsights.modulemap */,
+				800E0457F909AC513FDCF7211A046D74 /* RakutenInsights.xcconfig */,
+				5F956C22AA9B7B1BFFC84C5D0CBEAFCB /* RakutenInsights-dummy.m */,
+				6134DE61C1209098593BEF4257EAA1AB /* RakutenInsights-prefix.pch */,
+				ED25815AC9479FC6C791D10B475AB6F0 /* RakutenInsights-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/RakutenInsights";
+			sourceTree = "<group>";
+		};
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D35AF013A5F0BAD4F32504907A52519E /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D35AF013A5F0BAD4F32504907A52519E /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		F8EBCB9F751D12815A0B8FA06043BE91 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				7CE10817D56D6D3CFEB194113D785947 /* LICENSE */,
+				D3A995D16D826B2AA1ABDF963A9DAB17 /* RakutenInsights.podspec */,
+				984DE2E1AFF060CF637507ADE558817C /* README.md */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		F9F5149BD50A021E6B03BE3534684BBD /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6CAB2BDE30E793E0415B5C12776E9C2E /* RakutenInsights */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		21EBFF7E1062A60DCD702A9CF57669DF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73EBDC67F12A7CD18063623294805E88 /* RakutenInsights-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5F54645308ACAEC1D543A7A551C4E6B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				355881708BB5DBD858DB065DD675F7E0 /* Pods-RakutenInsights_Example-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F1CDF3CB3229B0BF78D7174E07D9E069 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0D4EE0AE69878BA63516750D418B2E9 /* Pods-RakutenInsights_Tests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		1059E900C64720618E2A6D21642150FE /* Pods-RakutenInsights_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 782D3F7EA81376193517613391755199 /* Build configuration list for PBXNativeTarget "Pods-RakutenInsights_Tests" */;
+			buildPhases = (
+				27AE0B6C971560048014D03941AA46DC /* Sources */,
+				3346E5EAA5C4A837911BC325A53758AC /* Frameworks */,
+				F1CDF3CB3229B0BF78D7174E07D9E069 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				24342D19A8E9DF7563BFB53FD8456AAA /* PBXTargetDependency */,
+			);
+			name = "Pods-RakutenInsights_Tests";
+			productName = "Pods-RakutenInsights_Tests";
+			productReference = 0CA491ED837072158DBDD32F3D475F2D /* Pods_RakutenInsights_Tests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		5FCDF28FBE8BC17A616A938FC55B8980 /* Pods-RakutenInsights_Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55251DAED26A4E748FF1D9D497E788A1 /* Build configuration list for PBXNativeTarget "Pods-RakutenInsights_Example" */;
+			buildPhases = (
+				46FF602DD63656C47671A23F74603410 /* Sources */,
+				BD3C3A3156F46F11C607259B5930327F /* Frameworks */,
+				E5F54645308ACAEC1D543A7A551C4E6B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6EF7F315C356973341208742562CA936 /* PBXTargetDependency */,
+			);
+			name = "Pods-RakutenInsights_Example";
+			productName = "Pods-RakutenInsights_Example";
+			productReference = 1D711DF4ECCC7A72B8A84EBD91943E9E /* Pods_RakutenInsights_Example.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		97345EA3E331344C769A71E1007AAB61 /* RakutenInsights */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1BB97E84B6B936BC3450F668E921D6E /* Build configuration list for PBXNativeTarget "RakutenInsights" */;
+			buildPhases = (
+				CAB433293EEF68089B72E066EB6CC33B /* Sources */,
+				AAF84BDF76449B9861ABD2AD1F39B766 /* Frameworks */,
+				21EBFF7E1062A60DCD702A9CF57669DF /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RakutenInsights;
+			productName = RakutenInsights;
+			productReference = 106F850680918E993E19996086600A06 /* RakutenInsights.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = 791BE12AA8D72A0BDE67895DBCE45275 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5FCDF28FBE8BC17A616A938FC55B8980 /* Pods-RakutenInsights_Example */,
+				1059E900C64720618E2A6D21642150FE /* Pods-RakutenInsights_Tests */,
+				97345EA3E331344C769A71E1007AAB61 /* RakutenInsights */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		27AE0B6C971560048014D03941AA46DC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C1A44D1AA41B9991CFDBF4CDB171E45 /* Pods-RakutenInsights_Tests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		46FF602DD63656C47671A23F74603410 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24285AC7FC8B49E8A9CAB01CDD3A0C07 /* Pods-RakutenInsights_Example-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CAB433293EEF68089B72E066EB6CC33B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9FD4547F74775CA7C8D5379FDDED353F /* CommonUtility.swift in Sources */,
+				D296CA3180948FC46D0F89A5A44989F9 /* RakutenInsights-dummy.m in Sources */,
+				996A13F22A70610A46A6832148B9B5EF /* RakutenInsights.swift in Sources */,
+				BD4CC10BC33C1690DF13180F8AFD9A06 /* ConfigurationClient.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		24342D19A8E9DF7563BFB53FD8456AAA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RakutenInsights;
+			target = 97345EA3E331344C769A71E1007AAB61 /* RakutenInsights */;
+			targetProxy = CC5515E4870874646074C84DEE7D7676 /* PBXContainerItemProxy */;
+		};
+		6EF7F315C356973341208742562CA936 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RakutenInsights;
+			target = 97345EA3E331344C769A71E1007AAB61 /* RakutenInsights */;
+			targetProxy = 3425A6816DE1F1C808B804BC9F1C92D1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		33DA7F43A1D2FA3C74A8C8FC246E1FA6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		5E6B8CCF9F99C9F5E80EAA5D993BA3CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4DE4F6E33448C04CB3708AECD6B85416 /* Pods-RakutenInsights_Example.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-RakutenInsights_Example/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-RakutenInsights_Example/Pods-RakutenInsights_Example.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_RakutenInsights_Example;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		731DC216E1A58545B559F6E0A2418060 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		96845872C5089A6CC2BB501F6C7FCE72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 800E0457F909AC513FDCF7211A046D74 /* RakutenInsights.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/RakutenInsights/RakutenInsights-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/RakutenInsights/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/RakutenInsights/RakutenInsights.modulemap";
+				PRODUCT_NAME = RakutenInsights;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		9F3AD874013393FAA04EB36C46C897FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C0A2B72026B474E42A6FBEC8CF838D1 /* Pods-RakutenInsights_Example.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-RakutenInsights_Example/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-RakutenInsights_Example/Pods-RakutenInsights_Example.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_RakutenInsights_Example;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		C353FD07F2609AF7132BBA8774FF2B4B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD014D7AFEC86FA0F53980C954E52680 /* Pods-RakutenInsights_Tests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-RakutenInsights_Tests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-RakutenInsights_Tests/Pods-RakutenInsights_Tests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_RakutenInsights_Tests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		D55553C248C7DD5A0F603E50C308F583 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B94B5C14D1693938C5C88422368362CF /* Pods-RakutenInsights_Tests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-RakutenInsights_Tests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-RakutenInsights_Tests/Pods-RakutenInsights_Tests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_RakutenInsights_Tests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		E996088E2F46B046D66230822FE52ABA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 800E0457F909AC513FDCF7211A046D74 /* RakutenInsights.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/RakutenInsights/RakutenInsights-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/RakutenInsights/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/RakutenInsights/RakutenInsights.modulemap";
+				PRODUCT_NAME = RakutenInsights;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33DA7F43A1D2FA3C74A8C8FC246E1FA6 /* Debug */,
+				731DC216E1A58545B559F6E0A2418060 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55251DAED26A4E748FF1D9D497E788A1 /* Build configuration list for PBXNativeTarget "Pods-RakutenInsights_Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E6B8CCF9F99C9F5E80EAA5D993BA3CB /* Debug */,
+				9F3AD874013393FAA04EB36C46C897FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		782D3F7EA81376193517613391755199 /* Build configuration list for PBXNativeTarget "Pods-RakutenInsights_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D55553C248C7DD5A0F603E50C308F583 /* Debug */,
+				C353FD07F2609AF7132BBA8774FF2B4B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E1BB97E84B6B936BC3450F668E921D6E /* Build configuration list for PBXNativeTarget "RakutenInsights" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				96845872C5089A6CC2BB501F6C7FCE72 /* Debug */,
+				E996088E2F46B046D66230822FE52ABA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}

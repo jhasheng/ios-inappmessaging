@@ -1,0 +1,6 @@
+framework module RakutenInsights {
+  umbrella header "RakutenInsights-umbrella.h"
+
+  export *
+  module * { export * }
+}
