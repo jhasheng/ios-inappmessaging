@@ -7,6 +7,24 @@ import XCTest
 
 class ConfigurationClientTests: XCTestCase {
     
+    let stubDataForRetrieveFromMainBundle: [String: Any?] = [
+        "RakutenInsightsConfigURL": "Catfish with Fashion",
+        "ReturnNil": nil
+    ]
+    
+    let stubDataForCallServer = [
+        [
+            "data": [
+                "enabled": true
+            ]
+        ],
+        [
+            "data": [
+                "enabled": false
+            ]
+        ]
+    ]
+    
     /**
      * Mock class of CommonUtility. Purpose is to stub the method
      * retrieveFromMainBundle() to return predefined values in order to test
@@ -39,59 +57,47 @@ class ConfigurationClientTests: XCTestCase {
      * Based on two variables return from retrieveFromMainBundle() and callServer().
      * SDK should be true if and only if both variables returns something valid.
      */
-    func testCheckConfigurationServer() {
-        let stubDataForRetrieveFromMainBundle: [String: Any?] = [
-            "RakutenInsightsConfigURL": "Catfish with Fashion",
-            "ReturnNil": nil
-        ]
-        
-        let stubDataForCallServer = [
-            [
-                "data": [
-                    "enabled": true
-                ]
-            ],
-            [
-                "data": [
-                    "enabled": false
-                ]
-            ]
-        ]
-
+    func testCheckConfigurationServer1() {
         // True and true case
-        var configurationClient = ConfigurationClient(commonUtility:
+        let configurationClient = ConfigurationClient(commonUtility:
             MockCommonUtility(
                 strToRetrieve: "RakutenInsightsConfigURL",
                 stubRetrieveFromMainBundle: stubDataForRetrieveFromMainBundle,
                 stubCallServer: stubDataForCallServer[0]))
 
         XCTAssertTrue(configurationClient.checkConfigurationServer())
-
+    }
+    
+    func testCheckConfigurationServer2() {
         // True and false case
-        configurationClient = ConfigurationClient(commonUtility:
+        let configurationClient = ConfigurationClient(commonUtility:
             MockCommonUtility(
                 strToRetrieve: "RakutenInsightsConfigURL",
                 stubRetrieveFromMainBundle: stubDataForRetrieveFromMainBundle,
                 stubCallServer: stubDataForCallServer[1]))
-
+        
         XCTAssertFalse(configurationClient.checkConfigurationServer())
-
+    }
+    
+    func testCheckConfigurationServer3() {
         // False and true case
-        configurationClient = ConfigurationClient(commonUtility:
+        let configurationClient = ConfigurationClient(commonUtility:
             MockCommonUtility(
                 strToRetrieve: "ReturnNil",
                 stubRetrieveFromMainBundle: stubDataForRetrieveFromMainBundle,
                 stubCallServer: stubDataForCallServer[0]))
-
+        
         XCTAssertFalse(configurationClient.checkConfigurationServer())
-
+    }
+    
+    func testCheckConfigurationServer4() {
         // False and false case
-        configurationClient = ConfigurationClient(commonUtility:
+        let configurationClient = ConfigurationClient(commonUtility:
             MockCommonUtility(
                 strToRetrieve: "ReturnNil",
                 stubRetrieveFromMainBundle: stubDataForRetrieveFromMainBundle,
                 stubCallServer: stubDataForCallServer[1]))
-
+        
         XCTAssertFalse(configurationClient.checkConfigurationServer())
     }
 }
