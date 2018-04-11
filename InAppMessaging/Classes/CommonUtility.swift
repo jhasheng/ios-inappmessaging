@@ -95,7 +95,7 @@ class CommonUtility {
         // Assign all the variables required in request body to configuration server.
         guard let appId = self.retrieveFromMainBundle(forKey: "CFBundleIdentifier"),
             let appVersion = self.retrieveFromMainBundle(forKey: "CFBundleVersion"),
-            let sdkVersion = self.retrieveFromMainBundle(forKey: "RakutenInAppMessagingSDKVersion"),
+            let sdkVersion = self.retrieveFromMainBundle(forKey: "InAppMessagingSDKVersion"),
             let locale = "\(Locale.current)".components(separatedBy: " ").first else {
                 
                 return nil
