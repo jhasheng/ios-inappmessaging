@@ -22,7 +22,7 @@ pod 'InAppMessaging'
 
 ## Author
 
-dctam, ts-daniel.a.tam@rakuten.com
+Daniel Tam, daniel.a.tam@rakuten.com
 
 ## License
 
