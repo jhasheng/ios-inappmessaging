@@ -3,12 +3,12 @@
  */
 
 import XCTest
-@testable import RakutenInsights
+@testable import InAppMessaging
 
 class ConfigurationClientTests: XCTestCase {
     
     let stubDataForRetrieveFromMainBundle: [String: Any?] = [
-        "RakutenInsightsConfigURL": "Catfish with Fashion",
+        "InAppMessagingConfigURL": "Catfish with Fashion",
         "ReturnNil": nil
     ]
     
@@ -41,7 +41,7 @@ class ConfigurationClientTests: XCTestCase {
             self.stubRetrieveFromMainBundle = stubRetrieveFromMainBundle
             self.stubCallServer = stubCallServer
         }
-
+        
         override func retrieveFromMainBundle(forKey: String) -> Any? {
             let dict = self.stubRetrieveFromMainBundle as? NSDictionary
             return dict?[strToRetrieve] as? String
@@ -61,10 +61,10 @@ class ConfigurationClientTests: XCTestCase {
         // True and true case
         let configurationClient = ConfigurationClient(commonUtility:
             MockCommonUtility(
-                strToRetrieve: "RakutenInsightsConfigURL",
+                strToRetrieve: "InAppMessagingConfigURL",
                 stubRetrieveFromMainBundle: stubDataForRetrieveFromMainBundle,
                 stubCallServer: stubDataForCallServer[0]))
-
+        
         XCTAssertTrue(configurationClient.checkConfigurationServer())
     }
     
@@ -72,7 +72,7 @@ class ConfigurationClientTests: XCTestCase {
         // True and false case
         let configurationClient = ConfigurationClient(commonUtility:
             MockCommonUtility(
-                strToRetrieve: "RakutenInsightsConfigURL",
+                strToRetrieve: "InAppMessagingConfigURL",
                 stubRetrieveFromMainBundle: stubDataForRetrieveFromMainBundle,
                 stubCallServer: stubDataForCallServer[1]))
         
@@ -101,3 +101,4 @@ class ConfigurationClientTests: XCTestCase {
         XCTAssertFalse(configurationClient.checkConfigurationServer())
     }
 }
+

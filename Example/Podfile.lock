@@ -1,16 +1,16 @@
 PODS:
-  - RakutenInsights (0.1.0)
+  - InAppMessaging (0.1.0)
 
 DEPENDENCIES:
-  - RakutenInsights (from `../`)
+  - InAppMessaging (from `../`)
 
 EXTERNAL SOURCES:
-  RakutenInsights:
+  InAppMessaging:
     :path: ../
 
 SPEC CHECKSUMS:
-  RakutenInsights: 53baa239b9ffffcbb3512fcdf2ec6f88145b16da
+  InAppMessaging: 065e9cc02f1353164acf2793e412139eb6c5b68c
 
-PODFILE CHECKSUM: dead861b44a23d4dbfbbac3e5ca49fe45876b609
+PODFILE CHECKSUM: 6a458d41073b3a2a96cd289c5bbe27d5b1e906a4
 
 COCOAPODS: 1.4.0
