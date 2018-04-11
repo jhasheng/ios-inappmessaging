@@ -7,18 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		159D62B35EF0437C67E955D068958394 /* InAppMessaging-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E9F9488F2563931CBF927160709AD0D /* InAppMessaging-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1EEB2AC435A5B36AA45CAE4535F83F5E /* InAppMessaging-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DABFB54C19CE591ADA6A6C03051EE7A2 /* InAppMessaging-dummy.m */; };
+		159D62B35EF0437C67E955D068958394 /* InAppMessaging-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A68E6AFEE9DD3F8E8DCD186EE0F6C6B2 /* InAppMessaging-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		28FD5931865017D21D1E6CEE2BBD1C73 /* InAppMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B4FA750D958383B31AB858FABB882B /* InAppMessaging.swift */; };
+		2CE0B3B108559D9AA204C3B1440B4A84 /* InAppMessaging-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E302DAD8147CF1ED155457606C981D2D /* InAppMessaging-dummy.m */; };
+		3328615E222692D4E5441EB347B02328 /* CommonUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CCB37C102E2001E76555715A7EC0BB /* CommonUtility.swift */; };
 		39DA27670E70932E74C0B3DD221E80E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		3CE2D0A7F1B82C0C847CAEB5CE993883 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		7857E47BE8571EAB4278E5710D7C7962 /* InAppMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A38D1FCAB3B3F4AFD8BD77E5471D6A /* InAppMessaging.swift */; };
 		9D1B5F463E5168819FC5C1ACB8A13CA7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		A73519EE9C5BE603406BC183D374DB52 /* Pods-InAppMessaging_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AAD9703CC981D2EEFB75553DBBB27F6 /* Pods-InAppMessaging_Example-dummy.m */; };
 		A9DBAC3D484E7733467196CAD24327EA /* Pods-InAppMessaging_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C8E7BC0F577A9A175C8AC24662AF2F58 /* Pods-InAppMessaging_Tests-dummy.m */; };
 		BB590B85C661631F7C5133FB9F0518A9 /* Pods-InAppMessaging_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 05D862AE9181603BD416FAA632F07511 /* Pods-InAppMessaging_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E16F12B7CF7519667EDBE68AB118F550 /* ConfigurationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CBD352354545D0287A490AD28EDE90 /* ConfigurationClient.swift */; };
 		E3F6A05B749CCFAB15ACC56A9C923CA1 /* Pods-InAppMessaging_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B2715D9D7CCDC671F29A15C50A5C35BF /* Pods-InAppMessaging_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E5008997F052B82874E83CED971913F3 /* CommonUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8F4F3A29CC32E9DE115E55E6329001 /* CommonUtility.swift */; };
+		FF281D925A71F1E6528BDF7364101352 /* ConfigurationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6D971DF35CE9C7B8F8AE4DC4D4CE55 /* ConfigurationClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,42 +39,42 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		017B86BA84F7926CAA57390D8FFA6425 /* Pods-InAppMessaging_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-InAppMessaging_Tests.modulemap"; sourceTree = "<group>"; };
+		017B86BA84F7926CAA57390D8FFA6425 /* Pods-InAppMessaging_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-InAppMessaging_Tests.modulemap"; sourceTree = "<group>"; };
 		04156D764D0652BAC8279383A372BC98 /* Pods-InAppMessaging_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-InAppMessaging_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		05D862AE9181603BD416FAA632F07511 /* Pods-InAppMessaging_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-InAppMessaging_Example-umbrella.h"; sourceTree = "<group>"; };
 		0779A282D3A77830E8382E158802CB95 /* Pods-InAppMessaging_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-InAppMessaging_Tests-resources.sh"; sourceTree = "<group>"; };
 		0C3ED72656A179068EFB2DB59D70B2DC /* Pods-InAppMessaging_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-InAppMessaging_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		0D29B0680E09816E70FFD0305984B250 /* Pods-InAppMessaging_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-InAppMessaging_Example.release.xcconfig"; sourceTree = "<group>"; };
+		0D6D971DF35CE9C7B8F8AE4DC4D4CE55 /* ConfigurationClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConfigurationClient.swift; path = InAppMessaging/Classes/ConfigurationClient.swift; sourceTree = "<group>"; };
 		0F174AD3D1A44A700969D114C9401F32 /* Pods-InAppMessaging_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-InAppMessaging_Tests-frameworks.sh"; sourceTree = "<group>"; };
-		12CBD352354545D0287A490AD28EDE90 /* ConfigurationClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConfigurationClient.swift; path = InAppMessaging/Classes/ConfigurationClient.swift; sourceTree = "<group>"; };
 		17AE83B6BE98FAC071DFF0AA1F532246 /* Pods-InAppMessaging_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-InAppMessaging_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		261DAD15D89AF010C676FAC6AF47EB0F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2AAD9703CC981D2EEFB75553DBBB27F6 /* Pods-InAppMessaging_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-InAppMessaging_Example-dummy.m"; sourceTree = "<group>"; };
-		30D44FC83D8536F06AD51C599235F87A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		369572250704DEB497AAA09273D1F724 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		396C385E38D5AC5BFEDEFA4B1F521E47 /* Pods-InAppMessaging_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-InAppMessaging_Example.modulemap"; sourceTree = "<group>"; };
-		4301BB5D9F59704505DC7A4CF11FC0FD /* InAppMessaging.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = InAppMessaging.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		4D8F4F3A29CC32E9DE115E55E6329001 /* CommonUtility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CommonUtility.swift; path = InAppMessaging/Classes/CommonUtility.swift; sourceTree = "<group>"; };
-		4E9F9488F2563931CBF927160709AD0D /* InAppMessaging-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "InAppMessaging-umbrella.h"; sourceTree = "<group>"; };
-		54A38D1FCAB3B3F4AFD8BD77E5471D6A /* InAppMessaging.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InAppMessaging.swift; path = InAppMessaging/Classes/InAppMessaging.swift; sourceTree = "<group>"; };
+		396C385E38D5AC5BFEDEFA4B1F521E47 /* Pods-InAppMessaging_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-InAppMessaging_Example.modulemap"; sourceTree = "<group>"; };
+		499A56DB968BD899A3C74EB6F4FAE485 /* InAppMessaging.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = InAppMessaging.modulemap; sourceTree = "<group>"; };
 		5A77B649565F7102A3E89971E3588994 /* Pods-InAppMessaging_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-InAppMessaging_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
-		65D8DF50F76005D74E711A5808DA3D1A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		7A00BF94EBE5AA738C9C72DBAB2D38E4 /* Pods-InAppMessaging_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-InAppMessaging_Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		8856E7BB7D4F9E8420BEA78E422277F8 /* Pods_InAppMessaging_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InAppMessaging_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8B5EA9CCA3E5ADA1E8765280C3C6D77B /* InAppMessaging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = InAppMessaging.xcconfig; sourceTree = "<group>"; };
+		8856E7BB7D4F9E8420BEA78E422277F8 /* Pods_InAppMessaging_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_InAppMessaging_Example.framework; path = "Pods-InAppMessaging_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		90AA82DCFA3DDED7D748CC4E871430F5 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9963A4CF53A0E35618FCF694FA43B445 /* Pods-InAppMessaging_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-InAppMessaging_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		9B64F863CE89334B09370412605A4E44 /* InAppMessaging.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = InAppMessaging.modulemap; sourceTree = "<group>"; };
-		AF554A31BD9B2A1D3EA7B6CAAFDDE5E6 /* InAppMessaging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = InAppMessaging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B11B44669EE3578377FEEB34AF35EFC7 /* Pods_InAppMessaging_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InAppMessaging_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5F8E5DE1F58406C567079C34DEC776C /* InAppMessaging.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = InAppMessaging.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A68E6AFEE9DD3F8E8DCD186EE0F6C6B2 /* InAppMessaging-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "InAppMessaging-umbrella.h"; sourceTree = "<group>"; };
+		A822F56130B8F31CE72B23F6DF9041D6 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		AF554A31BD9B2A1D3EA7B6CAAFDDE5E6 /* InAppMessaging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = InAppMessaging.framework; path = InAppMessaging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B11B44669EE3578377FEEB34AF35EFC7 /* Pods_InAppMessaging_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_InAppMessaging_Tests.framework; path = "Pods-InAppMessaging_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2715D9D7CCDC671F29A15C50A5C35BF /* Pods-InAppMessaging_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-InAppMessaging_Tests-umbrella.h"; sourceTree = "<group>"; };
 		B360B6D17381CB364EBC0F6BCE05E190 /* Pods-InAppMessaging_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-InAppMessaging_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		C335B49D23CEEF5AF06D4A694150531B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C56451684A611DA1143906A781F4C523 /* Pods-InAppMessaging_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-InAppMessaging_Example-frameworks.sh"; sourceTree = "<group>"; };
 		C8E7BC0F577A9A175C8AC24662AF2F58 /* Pods-InAppMessaging_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-InAppMessaging_Tests-dummy.m"; sourceTree = "<group>"; };
-		DABFB54C19CE591ADA6A6C03051EE7A2 /* InAppMessaging-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "InAppMessaging-dummy.m"; sourceTree = "<group>"; };
-		E38964D0D6CD4D42D21739E099298E58 /* InAppMessaging-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "InAppMessaging-prefix.pch"; sourceTree = "<group>"; };
+		D0CCB37C102E2001E76555715A7EC0BB /* CommonUtility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CommonUtility.swift; path = InAppMessaging/Classes/CommonUtility.swift; sourceTree = "<group>"; };
+		D1B4FA750D958383B31AB858FABB882B /* InAppMessaging.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InAppMessaging.swift; path = InAppMessaging/Classes/InAppMessaging.swift; sourceTree = "<group>"; };
+		D698266BAC1F50760CDA768FDD2960F1 /* InAppMessaging-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "InAppMessaging-prefix.pch"; sourceTree = "<group>"; };
+		E302DAD8147CF1ED155457606C981D2D /* InAppMessaging-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "InAppMessaging-dummy.m"; sourceTree = "<group>"; };
+		ED0350813D7274FED7DDA8BF38E18F5F /* InAppMessaging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = InAppMessaging.xcconfig; sourceTree = "<group>"; };
+		F07716491FCC1323F44AC69B886E82F5 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
 		F70FE3333448B16755F53E56AAC730FD /* Pods-InAppMessaging_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-InAppMessaging_Example-resources.sh"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,17 +106,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2D23A83EE7798DE1C8AD04E6B95BFCBE /* InAppMessaging */ = {
+		1A531D820B9B90EF253750AD66F51111 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				4D8F4F3A29CC32E9DE115E55E6329001 /* CommonUtility.swift */,
-				12CBD352354545D0287A490AD28EDE90 /* ConfigurationClient.swift */,
-				54A38D1FCAB3B3F4AFD8BD77E5471D6A /* InAppMessaging.swift */,
-				F53255D1C2C2674045EEB22DBD2D5713 /* Pod */,
-				B2BAFEA3FABCD620B6491026C0EE0482 /* Support Files */,
+				499A56DB968BD899A3C74EB6F4FAE485 /* InAppMessaging.modulemap */,
+				ED0350813D7274FED7DDA8BF38E18F5F /* InAppMessaging.xcconfig */,
+				E302DAD8147CF1ED155457606C981D2D /* InAppMessaging-dummy.m */,
+				D698266BAC1F50760CDA768FDD2960F1 /* InAppMessaging-prefix.pch */,
+				A68E6AFEE9DD3F8E8DCD186EE0F6C6B2 /* InAppMessaging-umbrella.h */,
+				261DAD15D89AF010C676FAC6AF47EB0F /* Info.plist */,
 			);
-			name = InAppMessaging;
-			path = ../..;
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/InAppMessaging";
 			sourceTree = "<group>";
 		};
 		32BF5B9F08FD1AED374F2B274DB47A9A /* Products */ = {
@@ -127,6 +128,16 @@
 				B11B44669EE3578377FEEB34AF35EFC7 /* Pods_InAppMessaging_Tests.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		4F9CC3E5BE4D91602EC698A9FEADC2E5 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				A5F8E5DE1F58406C567079C34DEC776C /* InAppMessaging.podspec */,
+				F07716491FCC1323F44AC69B886E82F5 /* LICENSE */,
+				A822F56130B8F31CE72B23F6DF9041D6 /* README.md */,
+			);
+			name = Pod;
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
@@ -167,26 +178,25 @@
 			path = "Target Support Files/Pods-InAppMessaging_Tests";
 			sourceTree = "<group>";
 		};
+		915EB9504D038C08FCB0C068A72B0E02 /* InAppMessaging */ = {
+			isa = PBXGroup;
+			children = (
+				D0CCB37C102E2001E76555715A7EC0BB /* CommonUtility.swift */,
+				0D6D971DF35CE9C7B8F8AE4DC4D4CE55 /* ConfigurationClient.swift */,
+				D1B4FA750D958383B31AB858FABB882B /* InAppMessaging.swift */,
+				4F9CC3E5BE4D91602EC698A9FEADC2E5 /* Pod */,
+				1A531D820B9B90EF253750AD66F51111 /* Support Files */,
+			);
+			name = InAppMessaging;
+			path = ../..;
+			sourceTree = "<group>";
+		};
 		965CB303813C95BACFB2FFB2C8BB2B67 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				2D23A83EE7798DE1C8AD04E6B95BFCBE /* InAppMessaging */,
+				915EB9504D038C08FCB0C068A72B0E02 /* InAppMessaging */,
 			);
 			name = "Development Pods";
-			sourceTree = "<group>";
-		};
-		B2BAFEA3FABCD620B6491026C0EE0482 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				9B64F863CE89334B09370412605A4E44 /* InAppMessaging.modulemap */,
-				8B5EA9CCA3E5ADA1E8765280C3C6D77B /* InAppMessaging.xcconfig */,
-				DABFB54C19CE591ADA6A6C03051EE7A2 /* InAppMessaging-dummy.m */,
-				E38964D0D6CD4D42D21739E099298E58 /* InAppMessaging-prefix.pch */,
-				4E9F9488F2563931CBF927160709AD0D /* InAppMessaging-umbrella.h */,
-				65D8DF50F76005D74E711A5808DA3D1A /* Info.plist */,
-			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/InAppMessaging";
 			sourceTree = "<group>";
 		};
 		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
@@ -221,16 +231,6 @@
 			);
 			name = "Pods-InAppMessaging_Example";
 			path = "Target Support Files/Pods-InAppMessaging_Example";
-			sourceTree = "<group>";
-		};
-		F53255D1C2C2674045EEB22DBD2D5713 /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				4301BB5D9F59704505DC7A4CF11FC0FD /* InAppMessaging.podspec */,
-				30D44FC83D8536F06AD51C599235F87A /* LICENSE */,
-				369572250704DEB497AAA09273D1F724 /* README.md */,
-			);
-			name = Pod;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -303,7 +303,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E9C4898CA90EEA648A4FC1A07EF8E854 /* Build configuration list for PBXNativeTarget "InAppMessaging" */;
 			buildPhases = (
-				B9327FD504F6F49DAB249245F1211932 /* Sources */,
+				574C965B1FF31AD474C1ECE348B4F2A3 /* Sources */,
 				19FE705B1AD426493DE3E6C809338B40 /* Frameworks */,
 				8861B1E8D9ADB8E9059709BAAF53828F /* Headers */,
 			);
@@ -345,6 +345,17 @@
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		574C965B1FF31AD474C1ECE348B4F2A3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3328615E222692D4E5441EB347B02328 /* CommonUtility.swift in Sources */,
+				FF281D925A71F1E6528BDF7364101352 /* ConfigurationClient.swift in Sources */,
+				2CE0B3B108559D9AA204C3B1440B4A84 /* InAppMessaging-dummy.m in Sources */,
+				28FD5931865017D21D1E6CEE2BBD1C73 /* InAppMessaging.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5BA6388F561958AE6A908E48F834E85C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -358,17 +369,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9DBAC3D484E7733467196CAD24327EA /* Pods-InAppMessaging_Tests-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B9327FD504F6F49DAB249245F1211932 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E5008997F052B82874E83CED971913F3 /* CommonUtility.swift in Sources */,
-				E16F12B7CF7519667EDBE68AB118F550 /* ConfigurationClient.swift in Sources */,
-				1EEB2AC435A5B36AA45CAE4535F83F5E /* InAppMessaging-dummy.m in Sources */,
-				7857E47BE8571EAB4278E5710D7C7962 /* InAppMessaging.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -643,7 +643,7 @@
 		};
 		956EA10A43412C0D68129657D4DAFD13 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8B5EA9CCA3E5ADA1E8765280C3C6D77B /* InAppMessaging.xcconfig */;
+			baseConfigurationReference = ED0350813D7274FED7DDA8BF38E18F5F /* InAppMessaging.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -675,7 +675,7 @@
 		};
 		E301D3A5E65B5B2A7C7D508069534537 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8B5EA9CCA3E5ADA1E8765280C3C6D77B /* InAppMessaging.xcconfig */;
+			baseConfigurationReference = ED0350813D7274FED7DDA8BF38E18F5F /* InAppMessaging.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
