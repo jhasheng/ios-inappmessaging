@@ -15,9 +15,9 @@ class ConfigurationClient {
      * @returns { Bool } value of the enabled flag.
      */
     internal func checkConfigurationServer() -> Bool {
-        guard let configUrl = commonUtility.retrieveFromMainBundle(forKey: "RakutenInsightsConfigURL") as? String else {
+        guard let configUrl = commonUtility.retrieveFromMainBundle(forKey: "RakutenInAppMessagingConfigURL") as? String else {
             #if DEBUG
-                print("RakutenInsights: 'RakutenInsightsConfigURL' is not valid.")
+                print("InAppMessaging: 'RakutenInAppMessagingConfigURL' is not valid.")
             #endif
             
             return false

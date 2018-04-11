@@ -8,7 +8,7 @@ import XCTest
 class ConfigurationClientTests: XCTestCase {
     
     let stubDataForRetrieveFromMainBundle: [String: Any?] = [
-        "RakutenInsightsConfigURL": "Catfish with Fashion",
+        "RakutenInAppMessagingConfigURL": "Catfish with Fashion",
         "ReturnNil": nil
     ]
     
@@ -61,7 +61,7 @@ class ConfigurationClientTests: XCTestCase {
         // True and true case
         let configurationClient = ConfigurationClient(commonUtility:
             MockCommonUtility(
-                strToRetrieve: "RakutenInsightsConfigURL",
+                strToRetrieve: "RakutenInAppMessagingConfigURL",
                 stubRetrieveFromMainBundle: stubDataForRetrieveFromMainBundle,
                 stubCallServer: stubDataForCallServer[0]))
         
@@ -72,7 +72,7 @@ class ConfigurationClientTests: XCTestCase {
         // True and false case
         let configurationClient = ConfigurationClient(commonUtility:
             MockCommonUtility(
-                strToRetrieve: "RakutenInsightsConfigURL",
+                strToRetrieve: "RakutenInAppMessagingConfigURL",
                 stubRetrieveFromMainBundle: stubDataForRetrieveFromMainBundle,
                 stubCallServer: stubDataForCallServer[1]))
         

@@ -1,5 +1,5 @@
 /**
- *  Class that provides common utility methods for RakutenInsights module.
+ *  Class that provides common utility methods for RakutenInAppMessaging module.
  */
 class CommonUtility {
     
@@ -11,7 +11,7 @@ class CommonUtility {
     internal func retrieveFromMainBundle(forKey: String) -> Any? {
         guard let valueOfPropertyToRetrieve = Bundle.main.infoDictionary?[forKey] else {
             #if DEBUG
-                print("RakutenInsights: Failed to retrieve '\(forKey)' from main bundle.")
+                print("InAppMessaging: Failed to retrieve '\(forKey)' from main bundle.")
             #endif
             return nil
         }
@@ -95,7 +95,7 @@ class CommonUtility {
         // Assign all the variables required in request body to configuration server.
         guard let appId = self.retrieveFromMainBundle(forKey: "CFBundleIdentifier"),
             let appVersion = self.retrieveFromMainBundle(forKey: "CFBundleVersion"),
-            let sdkVersion = self.retrieveFromMainBundle(forKey: "RakutenInsightsSDKVersion"),
+            let sdkVersion = self.retrieveFromMainBundle(forKey: "RakutenInAppMessagingSDKVersion"),
             let locale = "\(Locale.current)".components(separatedBy: " ").first else {
                 
                 return nil

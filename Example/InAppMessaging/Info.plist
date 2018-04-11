@@ -2,9 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>RakutenInsightsSDKVersion</key>
+	<key>RakutenInAppMessagingSDKVersion</key>
 	<string>0</string>
-	<key>RakutenInsightsConfigURL</key>
+	<key>RakutenInAppMessagingConfigURL</key>
 	<string>http://127.0.0.1:3000</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>

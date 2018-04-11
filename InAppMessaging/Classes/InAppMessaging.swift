@@ -3,7 +3,7 @@
  */
 
 /**
- * Function to called by host application to initialize Rakuten Insights SDK.
+ * Function to called by host application to initialize Rakuten InAppMessaging SDK.
  */
 public func configure() {
     let configurationClient = ConfigurationClient(commonUtility: CommonUtility())
