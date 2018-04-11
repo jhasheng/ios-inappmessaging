@@ -4,17 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-RakutenInsights_Example.xcscheme</key>
+		<key>InAppMessaging.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-RakutenInsights_Tests.xcscheme</key>
+		<key>Pods-InAppMessaging_Example.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>RakutenInsights.xcscheme</key>
+		<key>Pods-InAppMessaging_Tests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
