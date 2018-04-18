@@ -6,21 +6,25 @@ import Swinject
 
 public class InAppMessaging {
     
+    // Container to register all the services using Swinject library.
+    static let container = Container() { container in
+        
+        container.register(CommonUtility.self) { _ in CommonUtility()}
+        
+        container.register(ConfigurationClient.self) { _ in
+            ConfigurationClient(commonUtility: container.resolve(CommonUtility.self)!)
+        }
+    }
+    
     /**
-     * Function to called by host application to configure Rakuten InAppMessaging SDK.
+     * Function to be called by host application to configure Rakuten InAppMessaging SDK.
      */
     public class func configure() {
         
-        // Container of ConfigurationClient with added dependency.
-        let configurationClientContainer = Container()
-        configurationClientContainer.register(ConfigurationClient.self) { _ in
-            ConfigurationClient(commonUtility: CommonUtility())
-        }
+        // Resolve container to a ConfigurationClient instance.
+        let configurationClient = container.resolve(ConfigurationClient.self)!
         
-        // Resolve container into a ConfigurationClient instance.
-        let configurationClient = configurationClientContainer.resolve(ConfigurationClient.self)!
-        
-        // (TODO: Daniel Tam) remove if statement later.
+        // (TODO: Daniel Tam) Implement logic for enabled/disabled SDK here.
         if configurationClient.checkConfigurationServer() {
             print("Enable SDK.")
         } else {
