@@ -2,19 +2,7 @@
  * Class that contains the public methods for host application to call.
  */
 
-import Swinject
-
 public class InAppMessaging {
-    
-    // Container to register all the services using Swinject library.
-    static let container = Container() { container in
-        
-        container.register(CommonUtility.self) { _ in CommonUtility()}
-        
-        container.register(ConfigurationClient.self) { _ in
-            ConfigurationClient(commonUtility: container.resolve(CommonUtility.self)!)
-        }
-    }
     
     /**
      * Function to be called by host application to configure Rakuten InAppMessaging SDK.
@@ -22,7 +10,7 @@ public class InAppMessaging {
     public class func configure() {
         
         // Resolve container to a ConfigurationClient instance.
-        let configurationClient = container.resolve(ConfigurationClient.self)!
+        let configurationClient = InjectionContainer.container.resolve(ConfigurationClient.self)!
         
         // (TODO: Daniel Tam) Implement logic for enabled/disabled SDK here.
         if configurationClient.checkConfigurationServer() {
