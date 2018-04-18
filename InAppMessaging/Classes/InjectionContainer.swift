@@ -1,9 +1,8 @@
+import Swinject
+
 /**
  * Class to hold all the registered services in a container using Swinject
  */
-
-import Swinject
-
 class InjectionContainer {
     
     // Container to register all the services using Swinject library.

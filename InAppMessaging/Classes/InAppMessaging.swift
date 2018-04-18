@@ -1,7 +1,6 @@
 /**
  * Class that contains the public methods for host application to call.
  */
-
 public class InAppMessaging {
     
     /**
