@@ -1,6 +1,0 @@
-framework module InAppMessaging {
-  umbrella header "InAppMessaging-umbrella.h"
-
-  export *
-  module * { export * }
-}

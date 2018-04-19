@@ -1,5 +1,7 @@
 PODS:
-  - InAppMessaging (0.1.0)
+  - InAppMessaging (0.1.0):
+    - Swinject
+  - Swinject (2.2.0)
 
 DEPENDENCIES:
   - InAppMessaging (from `../`)
@@ -9,7 +11,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  InAppMessaging: 065e9cc02f1353164acf2793e412139eb6c5b68c
+  InAppMessaging: d8ad6a8fe877fa140883804a1772e7340d63f3e1
+  Swinject: 4ca48bca7de5f398229a26abe1ac902b9f3ee541
 
 PODFILE CHECKSUM: 6a458d41073b3a2a96cd289c5bbe27d5b1e906a4
 
