@@ -22,7 +22,8 @@ class ConfigurationClient {
             
             return false
         }
-        
+        print(Thread.current)
+
         guard let response = commonUtility.callServer(withUrl: configUrl, withHTTPMethod: "POST") else {
             print("Error calling server")
             return false
