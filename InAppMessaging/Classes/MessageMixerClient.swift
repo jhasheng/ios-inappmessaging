@@ -17,7 +17,7 @@ class MessageMixerClient {
      * Function to retrieve Mixer Server URL then pings the server continously
      * based on the variable secondsBetweenInterval using Timer API.
      */
-    internal func scheduledTimer() {
+    fileprivate func scheduledTimer() {
         guard let mixerServerUrl = commonUtility.retrieveFromMainBundle(forKey: "InAppMessagingMixerServerURL") as? String else {
             print("Error retrieving InAppMessaging Mixer Server URL")
             return
