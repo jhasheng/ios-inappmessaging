@@ -13,5 +13,10 @@ class InjectionContainer {
         container.register(ConfigurationClient.self) { _ in
             ConfigurationClient(commonUtility: container.resolve(CommonUtility.self)!)
         }
+        
+        //(TODO: Daniel Tam) get secondsBetweenInterval from config server response when response body is finalized.
+        container.register(MessageMixerClient.self) { _ in
+            MessageMixerClient(secondsBetweenInterval: 1, commonUtility: container.resolve(CommonUtility.self)!)
+        }
     }
 }

@@ -21,8 +21,7 @@ public class InAppMessaging {
             return;
         }
         
-        // (TODO: Daniel Tam) Implement logic for enabled SDK here.
-        // Enqueue task into this GCD dispatch queue.
-        let concurrentQueue = DispatchQueue(label: "InAppMessagingQueue", attributes: .concurrent)
+        // Start an instance of the MessageMixerClient which starts beacon pinging message mixer server.
+        InjectionContainer.container.resolve(MessageMixerClient.self)!
     }
 }

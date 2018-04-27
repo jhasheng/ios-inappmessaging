@@ -1,0 +1,27 @@
+{
+  "name": "InAppMessaging",
+  "version": "0.1.0",
+  "summary": "Rakuten SDK to help push notifications to mobile devices.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/dctam/InAppMessaging",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Daniiel Tam": "daniel.a.tam@rakuten.com"
+  },
+  "source": {
+    "git": "https://github.com/dctam/InAppMessaging.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "InAppMessaging/Classes/**/*",
+  "dependencies": {
+    "Swinject": [
+
+    ]
+  }
+}
