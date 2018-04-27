@@ -12,6 +12,10 @@ public class InAppMessaging {
         Thread.init(target: self, selector:#selector(initializeSdk), object: nil).start()
     }
     
+    /**
+     * Function to initialize InAppMessaging Module.
+     * Wrapped with @objc so that it can be used as a Selector.
+     */
     @objc static func initializeSdk() {
         // Resolve container to a ConfigurationClient instance.
         let configurationClient = InjectionContainer.container.resolve(ConfigurationClient.self)!
