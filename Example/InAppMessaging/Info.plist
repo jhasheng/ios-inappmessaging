@@ -2,6 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <!-- Adjust value of InAppMessagingMixerServerURL to point to configuration server -->
 	<key>InAppMessagingMixerServerURL</key>
 	<string>http://127.0.0.1:3000/message-mixer</string>
 	<key>InAppMessagingSDKVersion</key>
