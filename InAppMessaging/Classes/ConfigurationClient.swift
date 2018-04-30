@@ -3,7 +3,7 @@
  */
 class ConfigurationClient {
     
-    let commonUtility: CommonUtility
+    private let commonUtility: CommonUtility
     
     init(commonUtility: CommonUtility) {
         self.commonUtility = commonUtility

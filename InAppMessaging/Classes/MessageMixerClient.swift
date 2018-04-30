@@ -4,9 +4,10 @@
 class MessageMixerClient {
     
     // Variable to hold the number of seconds between each beacon ping to message mixer server.
-    let secondsBetweenInterval: Double
-    let commonUtility: CommonUtility
-    
+    private let secondsBetweenInterval: Double
+    private let commonUtility: CommonUtility
+    private var timer: DispatchSourceTimer?
+
     init(secondsBetweenInterval: Double, commonUtility: CommonUtility) {
         self.secondsBetweenInterval = secondsBetweenInterval
         self.commonUtility = commonUtility
@@ -23,27 +24,23 @@ class MessageMixerClient {
             return
         }
         
-        // Dispatch Timer in main thread asynchronously because Timer cannot run on background thread.
-        DispatchQueue.main.async {
-            Timer.scheduledTimer(
-                timeInterval: self.secondsBetweenInterval,
-                target: self,
-                selector: #selector(self.pingMixerServer),
-                userInfo: mixerServerUrl,
-                repeats: true
-            )
+        let queue = DispatchQueue(label: "InAppMessagingQueue", qos: .background, attributes: .concurrent)
+        timer = DispatchSource.makeTimerSource(queue: queue)
+        timer!.schedule(deadline: .now(), repeating: self.secondsBetweenInterval)
+        timer!.setEventHandler {
+            self.pingMixerServer(mixerServerUrl)
         }
+        timer!.resume()
     }
     
     /**
-     * The function called by the Timer created in scheduledTimer().
-     * This function handles the http request and parsing the response body.
-     * @param { timer: Timer } contains the Message Mixer URL passed in through userInfo property.
+     * The function called by the DispatchSourceTimer created in scheduledTimer().
+     * This function handles the HTTP request and parsing the response body.
+     * @param { messageMixerUrl: String } URL of InAppMessaging Mixer server.
      */
-    @objc fileprivate func pingMixerServer(timer: Timer) {
-        let messageMixerUrl = timer.userInfo as! String
+    fileprivate func pingMixerServer(_ messageMixerUrl: String) {
         let response = commonUtility.callServer(withUrl: messageMixerUrl, withHTTPMethod: "POST")
-        
+
         //(TODO: Daniel Tam) Handle response of message mixer when scope is clearer.
         print(response)
     }
