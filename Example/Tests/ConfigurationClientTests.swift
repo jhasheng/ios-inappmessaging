@@ -61,9 +61,10 @@ class ConfigurationClientTests: XCTestCase {
     func testCheckConfigurationServer1() {
         // True and true case
         let stubContainer = Container() { stubContainer in
-            stubContainer.register(CommonUtility.self) { _ in MockCommonUtility(strToRetrieve: "InAppMessagingConfigURL",
-                                                                                stubRetrieveFromMainBundle: self.stubDataForRetrieveFromMainBundle,
-                                                                                stubCallServer: self.stubDataForCallServer[0]) }
+            stubContainer.register(CommonUtility.self) { _ in
+                MockCommonUtility(strToRetrieve: "InAppMessagingConfigURL",
+                    stubRetrieveFromMainBundle: self.stubDataForRetrieveFromMainBundle,
+                    stubCallServer: self.stubDataForCallServer[0]) }
         }
         
         InjectionContainer.container = stubContainer
@@ -73,9 +74,10 @@ class ConfigurationClientTests: XCTestCase {
     func testCheckConfigurationServer2() {
         // True and false case
         let stubContainer = Container() { stubContainer in
-            stubContainer.register(CommonUtility.self) { _ in MockCommonUtility(strToRetrieve: "InAppMessagingConfigURL",
-                                                                                stubRetrieveFromMainBundle: self.stubDataForRetrieveFromMainBundle,
-                                                                                stubCallServer: self.stubDataForCallServer[1]) }
+            stubContainer.register(CommonUtility.self) { _ in
+                MockCommonUtility(strToRetrieve: "InAppMessagingConfigURL",
+                    stubRetrieveFromMainBundle: self.stubDataForRetrieveFromMainBundle,
+                    stubCallServer: self.stubDataForCallServer[1]) }
         }
         
         InjectionContainer.container = stubContainer
@@ -85,9 +87,10 @@ class ConfigurationClientTests: XCTestCase {
     func testCheckConfigurationServer3() {
         // False and true case
         let stubContainer = Container() { stubContainer in
-            stubContainer.register(CommonUtility.self) { _ in MockCommonUtility(strToRetrieve: "ReturnNil",
-                                                                                stubRetrieveFromMainBundle: self.stubDataForRetrieveFromMainBundle,
-                                                                                stubCallServer: self.stubDataForCallServer[0]) }
+            stubContainer.register(CommonUtility.self) { _ in
+                MockCommonUtility(strToRetrieve: "ReturnNil",
+                    stubRetrieveFromMainBundle: self.stubDataForRetrieveFromMainBundle,
+                    stubCallServer: self.stubDataForCallServer[0]) }
         }
         
         InjectionContainer.container = stubContainer
@@ -97,9 +100,10 @@ class ConfigurationClientTests: XCTestCase {
     func testCheckConfigurationServer4() {
         // False and false case
         let stubContainer = Container() { stubContainer in
-            stubContainer.register(CommonUtility.self) { _ in MockCommonUtility(strToRetrieve: "ReturnNil",
-                                                                                stubRetrieveFromMainBundle: self.stubDataForRetrieveFromMainBundle,
-                                                                                stubCallServer: self.stubDataForCallServer[1]) }
+            stubContainer.register(CommonUtility.self) { _ in
+                MockCommonUtility(strToRetrieve: "ReturnNil",
+                    stubRetrieveFromMainBundle: self.stubDataForRetrieveFromMainBundle,
+                    stubCallServer: self.stubDataForCallServer[1]) }
         }
         
         InjectionContainer.container = stubContainer
