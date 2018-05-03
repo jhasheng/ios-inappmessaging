@@ -3,11 +3,7 @@
  */
 class ConfigurationClient {
     
-    private let commonUtility: CommonUtility
-    
-    init(commonUtility: CommonUtility) {
-        self.commonUtility = commonUtility
-    }
+    private let commonUtility = InjectionContainer.container.resolve(CommonUtility.self)!
     
     /**
      * Function that will parse the configuration server's response

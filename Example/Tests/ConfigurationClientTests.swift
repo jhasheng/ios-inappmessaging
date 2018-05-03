@@ -3,15 +3,16 @@
  */
 
 import XCTest
+import Swinject
 @testable import InAppMessaging
 
 class ConfigurationClientTests: XCTestCase {
-    
+
     let stubDataForRetrieveFromMainBundle: [String: Any?] = [
         "InAppMessagingConfigURL": "Catfish with Fashion",
         "ReturnNil": nil
     ]
-    
+
     let stubDataForCallServer = [
         [
             "data": [
@@ -24,7 +25,7 @@ class ConfigurationClientTests: XCTestCase {
             ]
         ]
     ]
-    
+
     /**
      * Mock class of CommonUtility. Purpose is to stub the method
      * retrieveFromMainBundle() to return predefined values in order to test
@@ -41,17 +42,17 @@ class ConfigurationClientTests: XCTestCase {
             self.stubRetrieveFromMainBundle = stubRetrieveFromMainBundle
             self.stubCallServer = stubCallServer
         }
-        
+
         override func retrieveFromMainBundle(forKey: String) -> Any? {
             let dict = self.stubRetrieveFromMainBundle as? NSDictionary
             return dict?[strToRetrieve] as? String
         }
-        
+
         override func callServer(withUrl: String, withHTTPMethod: String) -> [String: Any]? {
             return stubCallServer
         }
     }
-    
+
     /**
      * Tests for the correct behavior of ConfigurationClient's checkConfigurationServer().
      * Based on two variables return from retrieveFromMainBundle() and callServer().
@@ -59,46 +60,51 @@ class ConfigurationClientTests: XCTestCase {
      */
     func testCheckConfigurationServer1() {
         // True and true case
-        let configurationClient = ConfigurationClient(commonUtility:
-            MockCommonUtility(
-                strToRetrieve: "InAppMessagingConfigURL",
-                stubRetrieveFromMainBundle: stubDataForRetrieveFromMainBundle,
-                stubCallServer: stubDataForCallServer[0]))
+        let stubContainer = Container() { stubContainer in
+            stubContainer.register(CommonUtility.self) { _ in MockCommonUtility(strToRetrieve: "InAppMessagingConfigURL",
+                                                                                stubRetrieveFromMainBundle: self.stubDataForRetrieveFromMainBundle,
+                                                                                stubCallServer: self.stubDataForCallServer[0]) }
+        }
         
-        XCTAssertTrue(configurationClient.checkConfigurationServer())
+        InjectionContainer.container = stubContainer
+        XCTAssertTrue(ConfigurationClient().checkConfigurationServer())
     }
-    
+
     func testCheckConfigurationServer2() {
         // True and false case
-        let configurationClient = ConfigurationClient(commonUtility:
-            MockCommonUtility(
-                strToRetrieve: "InAppMessagingConfigURL",
-                stubRetrieveFromMainBundle: stubDataForRetrieveFromMainBundle,
-                stubCallServer: stubDataForCallServer[1]))
+        let stubContainer = Container() { stubContainer in
+            stubContainer.register(CommonUtility.self) { _ in MockCommonUtility(strToRetrieve: "InAppMessagingConfigURL",
+                                                                                stubRetrieveFromMainBundle: self.stubDataForRetrieveFromMainBundle,
+                                                                                stubCallServer: self.stubDataForCallServer[1]) }
+        }
         
-        XCTAssertFalse(configurationClient.checkConfigurationServer())
+        InjectionContainer.container = stubContainer
+        XCTAssertFalse(ConfigurationClient().checkConfigurationServer())
     }
-    
+
     func testCheckConfigurationServer3() {
         // False and true case
-        let configurationClient = ConfigurationClient(commonUtility:
-            MockCommonUtility(
-                strToRetrieve: "ReturnNil",
-                stubRetrieveFromMainBundle: stubDataForRetrieveFromMainBundle,
-                stubCallServer: stubDataForCallServer[0]))
+        let stubContainer = Container() { stubContainer in
+            stubContainer.register(CommonUtility.self) { _ in MockCommonUtility(strToRetrieve: "ReturnNil",
+                                                                                stubRetrieveFromMainBundle: self.stubDataForRetrieveFromMainBundle,
+                                                                                stubCallServer: self.stubDataForCallServer[0]) }
+        }
         
-        XCTAssertFalse(configurationClient.checkConfigurationServer())
+        InjectionContainer.container = stubContainer
+        XCTAssertFalse(ConfigurationClient().checkConfigurationServer())
     }
-    
+
     func testCheckConfigurationServer4() {
         // False and false case
-        let configurationClient = ConfigurationClient(commonUtility:
-            MockCommonUtility(
-                strToRetrieve: "ReturnNil",
-                stubRetrieveFromMainBundle: stubDataForRetrieveFromMainBundle,
-                stubCallServer: stubDataForCallServer[1]))
+        let stubContainer = Container() { stubContainer in
+            stubContainer.register(CommonUtility.self) { _ in MockCommonUtility(strToRetrieve: "ReturnNil",
+                                                                                stubRetrieveFromMainBundle: self.stubDataForRetrieveFromMainBundle,
+                                                                                stubCallServer: self.stubDataForCallServer[1]) }
+        }
         
-        XCTAssertFalse(configurationClient.checkConfigurationServer())
+        InjectionContainer.container = stubContainer
+        XCTAssertFalse(ConfigurationClient().checkConfigurationServer())
     }
 }
+
 
