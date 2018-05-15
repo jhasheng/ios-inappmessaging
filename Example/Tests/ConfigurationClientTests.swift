@@ -54,7 +54,7 @@ class ConfigurationClientTests: XCTestCase {
     }
 
     /**
-     * Tests for the correct behavior of ConfigurationClient's checkConfigurationServer().
+     * Tests for the correct behavior of ConfigurationClient's isConfigEnabled().
      * Based on two variables return from retrieveFromMainBundle() and callServer().
      * SDK should be true if and only if both variables returns something valid.
      */
@@ -68,7 +68,7 @@ class ConfigurationClientTests: XCTestCase {
         }
         
         InjectionContainer.container = stubContainer
-        XCTAssertTrue(ConfigurationClient().isEnabledFlagOn())
+        XCTAssertTrue(ConfigurationClient().isConfigEnabled())
     }
 
     func testCheckConfigurationServer2() {
@@ -81,7 +81,7 @@ class ConfigurationClientTests: XCTestCase {
         }
         
         InjectionContainer.container = stubContainer
-        XCTAssertFalse(ConfigurationClient().isEnabledFlagOn())
+        XCTAssertFalse(ConfigurationClient().isConfigEnabled())
     }
 
     func testCheckConfigurationServer3() {
@@ -94,7 +94,7 @@ class ConfigurationClientTests: XCTestCase {
         }
         
         InjectionContainer.container = stubContainer
-        XCTAssertFalse(ConfigurationClient().isEnabledFlagOn())
+        XCTAssertFalse(ConfigurationClient().isConfigEnabled())
     }
 
     func testCheckConfigurationServer4() {
@@ -107,7 +107,7 @@ class ConfigurationClientTests: XCTestCase {
         }
         
         InjectionContainer.container = stubContainer
-        XCTAssertFalse(ConfigurationClient().isEnabledFlagOn())
+        XCTAssertFalse(ConfigurationClient().isConfigEnabled())
     }
 }
 
