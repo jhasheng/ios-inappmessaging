@@ -68,7 +68,7 @@ class ConfigurationClientTests: XCTestCase {
         }
         
         InjectionContainer.container = stubContainer
-        XCTAssertTrue(ConfigurationClient().checkConfigurationServer())
+        XCTAssertTrue(ConfigurationClient().isEnabledFlagOn())
     }
 
     func testCheckConfigurationServer2() {
@@ -81,7 +81,7 @@ class ConfigurationClientTests: XCTestCase {
         }
         
         InjectionContainer.container = stubContainer
-        XCTAssertFalse(ConfigurationClient().checkConfigurationServer())
+        XCTAssertFalse(ConfigurationClient().isEnabledFlagOn())
     }
 
     func testCheckConfigurationServer3() {
@@ -94,7 +94,7 @@ class ConfigurationClientTests: XCTestCase {
         }
         
         InjectionContainer.container = stubContainer
-        XCTAssertFalse(ConfigurationClient().checkConfigurationServer())
+        XCTAssertFalse(ConfigurationClient().isEnabledFlagOn())
     }
 
     func testCheckConfigurationServer4() {
@@ -107,7 +107,7 @@ class ConfigurationClientTests: XCTestCase {
         }
         
         InjectionContainer.container = stubContainer
-        XCTAssertFalse(ConfigurationClient().checkConfigurationServer())
+        XCTAssertFalse(ConfigurationClient().isEnabledFlagOn())
     }
 }
 

@@ -17,7 +17,7 @@ public class InAppMessaging {
         let configurationClient = InjectionContainer.container.resolve(ConfigurationClient.self)!
         
         // Return and exit thread if SDK were to be disabled.
-        if !configurationClient.checkConfigurationServer() {
+        if !configurationClient.isEnabledFlagOn() {
             return;
         }
         

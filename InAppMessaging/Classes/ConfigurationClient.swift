@@ -8,7 +8,7 @@ class ConfigurationClient {
      * for the enabled flag. Return false by default.
      * @returns { Bool } value of the enabled flag.
      */
-    internal func checkConfigurationServer() -> Bool {
+    internal func isEnabledFlagOn() -> Bool {
         let configUrlKey = "InAppMessagingConfigURL"
         let commonUtility = InjectionContainer.container.resolve(CommonUtility.self)!
         
