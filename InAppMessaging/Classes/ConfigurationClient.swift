@@ -3,21 +3,18 @@
  */
 class ConfigurationClient {
     
-    let commonUtility: CommonUtility
-    
-    init(commonUtility: CommonUtility) {
-        self.commonUtility = commonUtility
-    }
-    
     /**
      * Function that will parse the configuration server's response
      * for the enabled flag. Return false by default.
      * @returns { Bool } value of the enabled flag.
      */
-    internal func checkConfigurationServer() -> Bool {
-        guard let configUrl = commonUtility.retrieveFromMainBundle(forKey: "InAppMessagingConfigURL") as? String else {
+    internal func isConfigEnabled() -> Bool {
+        let configUrlKey = "InAppMessagingConfigURL"
+        let commonUtility = InjectionContainer.container.resolve(CommonUtility.self)!
+        
+        guard let configUrl = commonUtility.retrieveFromMainBundle(forKey: configUrlKey) as? String else {
             #if DEBUG
-                print("InAppMessaging: 'InAppMessagingConfigURL' is not valid.")
+                print("InAppMessaging: '\(configUrlKey)' is not valid.")
             #endif
             
             return false
