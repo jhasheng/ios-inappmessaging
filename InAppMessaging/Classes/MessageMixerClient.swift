@@ -10,14 +10,14 @@ class MessageMixerClient {
 
     init(secondsBetweenInterval: Double) {
         self.secondsBetweenInterval = secondsBetweenInterval
-        self.startTimer()
+        self.scheduleTimerToPingMixerServer()
     }
     
     /**
      * Function to retrieve Mixer Server URL then pings the server continously
      * based on the variable secondsBetweenInterval using DispatchSourceTimer API.
      */
-    fileprivate func startTimer() {
+    fileprivate func scheduleTimerToPingMixerServer() {
         if self.secondsBetweenInterval > 0 {
             let queue = DispatchQueue(label: "InAppMessagingQueue", qos: .background, attributes: .concurrent)
             timer = DispatchSource.makeTimerSource(queue: queue)
