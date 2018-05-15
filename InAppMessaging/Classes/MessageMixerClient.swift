@@ -6,11 +6,14 @@ class MessageMixerClient {
     // Variable to hold the number of seconds between each beacon ping to message mixer server.
     private let secondsBetweenInterval: Double
     private var timer: DispatchSourceTimer?
-    private let commonUtility = InjectionContainer.container.resolve(CommonUtility.self)!
+    private let commonUtility: CommonUtility
 
-    init(secondsBetweenInterval: Double) {
-        self.secondsBetweenInterval = secondsBetweenInterval
-        self.scheduleTimerToPingMixerServer()
+    init(secondsBetweenInterval: Double,
+        commonUtility: CommonUtility = InjectionContainer.container.resolve(CommonUtility.self)!) {
+        
+            self.secondsBetweenInterval = secondsBetweenInterval
+            self.commonUtility = commonUtility
+            self.scheduleTimerToPingMixerServer()
     }
     
     /**
