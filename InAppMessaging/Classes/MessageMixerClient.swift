@@ -38,7 +38,7 @@ class MessageMixerClient {
      * (TODO: Daniel Tam) Parse for Message Mixer endpoint from Config response.
      */
     fileprivate func pingMixerServer() {
-        guard let mixerServerUrl = commonUtility.retrieveFromMainBundle(forKey: "InAppMessagingMixerServerURL") as? String else {
+        guard let mixerServerUrl = commonUtility.retrieveFromMainBundle(forKey: Keys.InAppMessaging.MixerServerURL) as? String else {
             #if DEBUG
                 print("Error retrieving InAppMessaging Mixer Server URL")
             #endif

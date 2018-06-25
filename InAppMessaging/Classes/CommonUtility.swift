@@ -100,14 +100,14 @@ class CommonUtility {
                 
                 return nil
         }
-        
+                
         // Create the dictionary with the variables assigned above.
         let jsonDict: [String: Any] = [
-            "app_id": appId,
-            "platform": "iOS",
-            "app_version": appVersion,
-            "sdk_version": sdkVersion,
-            "locale": locale
+            Keys.Request.AppID: appId,
+            Keys.Request.Platform: "iOS",
+            Keys.Request.AppVersion: appVersion,
+            Keys.Request.SDKVersion: sdkVersion,
+            Keys.Request.Locale: locale
         ]
         
         // Return the serialized JSON object.
