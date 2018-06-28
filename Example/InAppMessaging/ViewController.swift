@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func showModalButton(_ sender: Any) {
-        let vc = ModalViewController2()
+        let vc = ModalViewController()
         self.present(vc, animated: true)
     }
     

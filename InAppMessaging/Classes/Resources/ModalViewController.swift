@@ -8,13 +8,16 @@
 import UIKit
 
 public class ModalViewController: UIViewController {
-
-    let transitioner = Transitioner()
     
     override init(nibName: String?, bundle: Bundle?) {
         super.init(nibName: nibName, bundle: bundle)
-        self.modalPresentationStyle = .custom
-        self.transitioningDelegate = self.transitioner
+        self.modalPresentationStyle = .popover
+//        self.transitioningDelegate = self.transitioner
+        let bundle = Bundle(for: self.classForCoder)
+//        bundle.loadNibNamed("ModalViewController", owner: nil, options: nil)?.first
+        let nib = UINib(nibName: "ModalViewController", bundle: bundle)
+        nib.instantiate(withOwner: self, options: nil)
+
     }
     
     convenience init() {
