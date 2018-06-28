@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import InAppMessaging
 
 class ViewController: UIViewController {
 
@@ -19,6 +20,11 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    @IBAction func showModalButton(_ sender: Any) {
+        let vc = ModalViewController2()
+        self.present(vc, animated: true)
+    }
+    
 }
 

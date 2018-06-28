@@ -1,5 +1,5 @@
 //
-//  ModalViewController.swift
+//  ModalViewController2.swift
 //  InAppMessaging
 //
 //  Created by Tam, Daniel a on 6/28/18.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-public class ModalViewController: UIViewController {
-
+public class ModalViewController2: UIViewController {
+    
     let transitioner = Transitioner()
     
     override init(nibName: String?, bundle: Bundle?) {
