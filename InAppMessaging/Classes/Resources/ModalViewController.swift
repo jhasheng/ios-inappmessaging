@@ -7,7 +7,9 @@
 
 import UIKit
 
-public class ModalViewController: UIViewController {
+class ModalViewController: UIViewController {
+    
+    @IBOutlet weak var testLabel: UILabel!
     
     override init(nibName: String?, bundle: Bundle?) {
         super.init(nibName: nibName, bundle: bundle)
@@ -20,14 +22,16 @@ public class ModalViewController: UIViewController {
 
     }
     
-    convenience init() {
-        self.init(nibName:nil, bundle:nil)
-    }
     
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("NSCoding not supported")
     }
     @IBAction func dismissButton(_ sender: Any) {
         self.presentingViewController?.dismiss(animated: true)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        testLabel.text = "abcd"
+    }
+    
 }
