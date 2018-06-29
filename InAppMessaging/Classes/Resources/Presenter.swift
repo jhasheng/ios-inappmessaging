@@ -11,6 +11,8 @@ public class Presenter: UIViewController {
     
     public func displayModalView(_ view: UIViewController) {
         let vc = ModalViewController()
-        view.present(vc, animated: true)
+//        view.modalPresentationStyle = .overCurrentContext
+        view.present(vc, animated: false)
+
     }
 }
