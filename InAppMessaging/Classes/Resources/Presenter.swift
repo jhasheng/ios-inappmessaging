@@ -12,6 +12,5 @@ public class Presenter: UIViewController {
     public func displayModalView(_ view: UIViewController) {
         let modalViewController = ModalViewController()
         view.present(modalViewController, animated: false)
-
     }
 }
