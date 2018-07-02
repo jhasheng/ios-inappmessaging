@@ -22,7 +22,6 @@ class ModalViewController: UIViewController {
 
     }
     
-    
     required init?(coder: NSCoder) {
         fatalError("NSCoding not supported")
     }
@@ -31,15 +30,10 @@ class ModalViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        modalView.backgroundColor = UIColor.clear
-////        modalView.isOpaque = false
-        testLabel.text = "abcd"
+        testLabel.text = "abcd" // TESTING. Remove later.
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//        modalView.backgroundColor = UIColor.clear
-//        //        modalView.isOpaque = false
-//        testLabel.text = "abcd"
     }
     
 }
