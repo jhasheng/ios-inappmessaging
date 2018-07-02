@@ -3,33 +3,23 @@
  */
 class MessageMixerClient {
     
-    // Variable to hold the number of seconds between each beacon ping to message mixer server.
-    private let secondsBetweenInterval: Double
-    private var timer: DispatchSourceTimer?
+    private var messageMixerQueue = DispatchQueue(label: "MessageMixerQueue", attributes: .concurrent)
     private let commonUtility: CommonUtility
 
-    init(secondsBetweenInterval: Double,
-        commonUtility: CommonUtility = InjectionContainer.container.resolve(CommonUtility.self)!) {
+    init(commonUtility: CommonUtility = InjectionContainer.container.resolve(CommonUtility.self)!) {
+        self.commonUtility = commonUtility
         
-            self.secondsBetweenInterval = secondsBetweenInterval
-            self.commonUtility = commonUtility
-            self.scheduleTimerToPingMixerServer()
+        self.schedulePingToMixerServer(0) // First initial ping to Message Mixer server.
     }
     
     /**
-     * Function to retrieve Mixer Server URL then pings the server continously
-     * based on the variable secondsBetweenInterval using DispatchSourceTimer API.
+     * Ping the Message Mixer server after delaying for X milliseconds.
+     * @param { milliseconds: Int } - Milliseconds before executing the ping.
      */
-    fileprivate func scheduleTimerToPingMixerServer() {
-        if self.secondsBetweenInterval > 0 {
-            let queue = DispatchQueue(label: "InAppMessagingQueue", qos: .background, attributes: .concurrent)
-            timer = DispatchSource.makeTimerSource(queue: queue)
-            timer!.schedule(deadline: .now(), repeating: self.secondsBetweenInterval)
-            timer!.setEventHandler {
-                self.pingMixerServer()
-            }
-            timer!.resume()
-        }
+    fileprivate func schedulePingToMixerServer(_ milliseconds: Int) {
+        messageMixerQueue.asyncAfter(deadline: .now() + .milliseconds(milliseconds), execute: {
+            self.pingMixerServer()
+        })
     }
     
     /**

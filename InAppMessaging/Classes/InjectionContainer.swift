@@ -14,7 +14,7 @@ struct InjectionContainer {
         
         //(TODO: Daniel Tam) get secondsBetweenInterval from config server response when response body is finalized.
         container.register(MessageMixerClient.self) { _ in
-            MessageMixerClient(secondsBetweenInterval: 1)
+            MessageMixerClient()
         }
     }
 }
