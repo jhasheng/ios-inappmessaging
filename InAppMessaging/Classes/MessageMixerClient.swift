@@ -1,15 +1,16 @@
 /**
- * Class to handle communication with InAppMessaging Mixer Server.
+ * Class to handle communication with InAppMessaging Message Mixer Server.
  */
 class MessageMixerClient {
     
-    private var messageMixerQueue = DispatchQueue(label: "MessageMixerQueue", attributes: .concurrent)
     private let commonUtility: CommonUtility
+    private let messageMixerQueue = DispatchQueue(label: "MessageMixerQueue", attributes: .concurrent)
+    private var delay: Int = 0 // Milliseconds before pinging Message Mixer server.
 
     init(commonUtility: CommonUtility = InjectionContainer.container.resolve(CommonUtility.self)!) {
         self.commonUtility = commonUtility
         
-        self.schedulePingToMixerServer(0) // First initial ping to Message Mixer server.
+        self.schedulePingToMixerServer(self.delay) // First initial ping to Message Mixer server.
     }
     
     /**
@@ -35,7 +36,12 @@ class MessageMixerClient {
             return
         }
         
-        let response = commonUtility.callServer(withUrl: mixerServerUrl, withHTTPMethod: "POST")
+        guard let response = commonUtility.callServer(withUrl: mixerServerUrl, withHTTPMethod: "POST") else {
+            // Exponential backoff for pinging Message Mixer server.
+            self.delay = (self.delay == 0) ? 1000 : self.delay * 2
+            schedulePingToMixerServer(self.delay)
+            return
+        }
 
         //(TODO: Daniel Tam) Handle response of message mixer when scope is clearer.
         print(response)
