@@ -44,8 +44,10 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* ConfigurationClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationClientTests.swift; sourceTree = "<group>"; };
 		622C5C8C61F4187AA79C4021 /* Pods_InAppMessaging_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InAppMessaging_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		81EA8FFFFEBFDDCDFA48D543 /* InAppMessaging.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = InAppMessaging.podspec; path = ../InAppMessaging.podspec; sourceTree = "<group>"; };
+		81EA8FFFFEBFDDCDFA48D543 /* InAppMessaging.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = InAppMessaging.podspec; path = ../InAppMessaging.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9D8B5B22B8667738939AF00A /* Pods-InAppMessaging_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InAppMessaging_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-InAppMessaging_Tests/Pods-InAppMessaging_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		D91B6CD620E6A81B00CA4656 /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ModalViewController.swift; path = ../InAppMessaging/Classes/Resources/ModalViewController.swift; sourceTree = "<group>"; };
+		D91B6CD720E6A81E00CA4656 /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Presenter.swift; path = ../InAppMessaging/Classes/Resources/Presenter.swift; sourceTree = "<group>"; };
 		E15257F1C352541770516882 /* Pods-InAppMessaging_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InAppMessaging_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InAppMessaging_Tests/Pods-InAppMessaging_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,6 +83,8 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				D91B6CD620E6A81B00CA4656 /* ModalViewController.swift */,
+				D91B6CD720E6A81E00CA4656 /* Presenter.swift */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for InAppMessaging */,
 				607FACE81AFB9204008FA782 /* Tests */,
@@ -171,7 +175,6 @@
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				5D811F1815F5EAF835F19887 /* [CP] Embed Pods Frameworks */,
-				64F05B535207296B20498A42 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -191,7 +194,6 @@
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
 				43AEE38B8D5C794023745239 /* [CP] Embed Pods Frameworks */,
-				E1D5C0A36CB1E3F77FDA11BA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -215,10 +217,12 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 5J4GVGN58B;
 						LastSwiftMigration = 0900;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 5J4GVGN58B;
 						LastSwiftMigration = 0900;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -322,21 +326,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-InAppMessaging_Example/Pods-InAppMessaging_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		64F05B535207296B20498A42 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-InAppMessaging_Example/Pods-InAppMessaging_Example-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		6F33BA8D088F78E3527CAAE4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -353,21 +342,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E1D5C0A36CB1E3F77FDA11BA /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-InAppMessaging_Tests/Pods-InAppMessaging_Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -524,6 +498,7 @@
 			baseConfigurationReference = 50F1704495F3F391B0062778 /* Pods-InAppMessaging_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 5J4GVGN58B;
 				INFOPLIST_FILE = InAppMessaging/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -539,6 +514,7 @@
 			baseConfigurationReference = 2E896E50C43FA5C6A4C2639D /* Pods-InAppMessaging_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 5J4GVGN58B;
 				INFOPLIST_FILE = InAppMessaging/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -553,6 +529,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E15257F1C352541770516882 /* Pods-InAppMessaging_Tests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 5J4GVGN58B;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -574,6 +551,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9D8B5B22B8667738939AF00A /* Pods-InAppMessaging_Tests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 5J4GVGN58B;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

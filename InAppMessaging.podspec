@@ -30,11 +30,11 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'InAppMessaging/Classes/**/*'
+  s.source_files = 'InAppMessaging/Classes/**/*.swift'
   
-  # s.resource_bundles = {
-  #   'InAppMessaging' => ['InAppMessaging/Assets/*.png']
-  # }
+  s.resource_bundles = {
+    'InAppMessaging' => ['InAppMessaging/Classes/Resources/*.xib']
+  }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

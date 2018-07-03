@@ -6,14 +6,18 @@ PODS:
 DEPENDENCIES:
   - InAppMessaging (from `../`)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Swinject
+
 EXTERNAL SOURCES:
   InAppMessaging:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  InAppMessaging: d8ad6a8fe877fa140883804a1772e7340d63f3e1
+  InAppMessaging: bc3ffa0bb8554bc557fedce0674d06d99584e272
   Swinject: 4ca48bca7de5f398229a26abe1ac902b9f3ee541
 
 PODFILE CHECKSUM: 6a458d41073b3a2a96cd289c5bbe27d5b1e906a4
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3
