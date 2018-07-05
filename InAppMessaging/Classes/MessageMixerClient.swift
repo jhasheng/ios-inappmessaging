@@ -42,8 +42,14 @@ class MessageMixerClient {
             schedulePingToMixerServer(self.delay)
             return
         }
+        
+//        let decoder = JSONDecoder()
+//        if let jsonData = response.data(using: .utf8), let address = try? decoder.decode(CampaignData.self, from: jsonData) {
+//            print(address)
+//        }
+
 
         //(TODO: Daniel Tam) Handle response of message mixer when scope is clearer.
-        print(response)
+//        print(response)
     }
 }

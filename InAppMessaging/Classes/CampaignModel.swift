@@ -5,13 +5,21 @@
 //  Created by Tam, Daniel a on 7/5/18.
 //
 
-struct Data: Decodable {
+struct CampaignResponse: Decodable {
     let nextPing: Int
-    let data: [CampaignData]
+    let data: [ResponseData]
     
     enum CodingKeys: String, CodingKey {
         case nextPing = "next_ping"
         case data
+    }
+}
+
+struct ResponseData: Decodable {
+    let campaignData: CampaignData
+    
+    enum CodingKeys: String, CodingKey {
+        case campaignData = "campaign_data"
     }
 }
 
@@ -38,7 +46,6 @@ struct Trigger: Decodable {
         case type
         case event
         case displayDelay = "display_delay"
-
     }
 }
 
