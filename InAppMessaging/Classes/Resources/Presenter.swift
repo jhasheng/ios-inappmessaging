@@ -3,7 +3,7 @@
  */
 public class Presenter: UIViewController {
     
-    public func displayModalView(_ name: String) {
+    func displayModalView(_ name: String) {
         let modalViewController = ModalViewController(nibName: nil, bundle: nil, triggerName: name)
         let viewController = UIApplication.shared.keyWindow!.rootViewController
         viewController!.presentViewControllerFromVisibleViewController(modalViewController, animated: false, completion: {})
