@@ -25,12 +25,12 @@ class ConfigurationClient {
             return false
         }
         
-        guard let response = commonUtility.convertDataToDictionary(responseData) else {
-            print("Error converting response.")
-            return false
-        }
+//        guard let response = commonUtility.convertDataToDictionary(responseData) else {
+//            print("Error converting response.")
+//            return false
+//        }
         
-        return parseConfigResponse(configResponse: response)
+        return parseConfigResponse(configResponse: responseData)
     }
     
     /**
@@ -39,13 +39,36 @@ class ConfigurationClient {
      * @returns { Bool } the value of the 'enabled' flag.
      * (TODO: Daniel Tam) Parse for endpoints.
      */
-    fileprivate func parseConfigResponse(configResponse: [String: Any]) -> Bool {
+    fileprivate func parseConfigResponse(configResponse: Data) -> Bool {
         var enabled: Bool = false
+        
+        
 
-        if let jsonData = configResponse["data"] as? [String: Any],
-            let enabledFlag = jsonData["enabled"] as? Bool {
-            enabled = enabledFlag;
+//        if let jsonData = configResponse["data"] as? [String: Any],
+//            let enabledFlag = jsonData["enabled"] as? Bool {
+//            enabled = enabledFlag;
+//        }
+        
+        do {
+            let decoder = JSONDecoder()
+            let response = try decoder.decode(ConfigResponse.self, from: configResponse)
+            
+            print(response)
+        } catch let error {
+            print("Failed to parse json:", error)
         }
+        
+        
+        /**
+        do {
+            let decoder = JSONDecoder()
+            MessageMixerClient.sharedInstance.campaign = try decoder.decode(CampaignResponse.self, from: response).data
+            let nextPing = try decoder.decode(CampaignResponse.self, from: response).nextPing
+            schedulePingToMixerServer(nextPing)
+        } catch let error {
+            print("Failed to parse json:", error)
+        }
+        */
         
         return enabled
     }
