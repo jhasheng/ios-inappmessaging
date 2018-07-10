@@ -9,6 +9,9 @@ import Foundation
 
 class CampaignParser {
     
+    /**
+     * Sear
+     */
     internal func findMatchingTrigger(trigger: String, campaignListOptional: [CampaignList]?) -> CampaignData? {
         
         guard let campaignList = campaignListOptional else {
@@ -16,20 +19,14 @@ class CampaignParser {
         }
         
         for campaign in campaignList {
-            print(campaign.campaignData.trigger)
+            for campaignTrigger in campaign.campaignData.trigger {
+                if trigger == campaignTrigger.event {
+                    print(campaign.campaignData)
+                    return campaign.campaignData
+                }
+            }
         }
-        
-//        do {
-//            let jsonData = try JSON(data: campaignList)
-//
-//            print(campaign)
-//        } catch let error {
-//            print("Failed to parse json:", error)
-//        }
-//
-//        for campaign in campaignList {
-//            print(campaign)
-//        }
+
         return nil
     }
 }

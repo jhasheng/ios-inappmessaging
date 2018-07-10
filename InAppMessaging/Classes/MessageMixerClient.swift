@@ -7,6 +7,7 @@ class MessageMixerClient {
     private let campaignParser: CampaignParser
     private let messageMixerQueue = DispatchQueue(label: "MessageMixerQueue", attributes: .concurrent)
     private var delay: Int = 0 // Milliseconds before pinging Message Mixer server.
+    private var campaign: [CampaignList]? // List of all campaigns returned by Message Mixer server.
 
     init(
         commonUtility: CommonUtility = InjectionContainer.container.resolve(CommonUtility.self)!,
@@ -51,8 +52,9 @@ class MessageMixerClient {
         //(TODO: Daniel Tam) Handle response of message mixer when scope is clearer.
         do {
             let decoder = JSONDecoder()
-            let campaign = try decoder.decode(CampaignResponse.self, from: response)
-            campaignParser.findMatchingTrigger(trigger: "test", campaignListOptional: campaign.data)
+            self.campaign = try decoder.decode(CampaignResponse.self, from: response).data
+            
+            campaignParser.findMatchingTrigger(trigger: "purchase_unsuccessful", campaignListOptional: self.campaign)
 //            print(campaign)
         } catch let error {
             print("Failed to parse json:", error)
