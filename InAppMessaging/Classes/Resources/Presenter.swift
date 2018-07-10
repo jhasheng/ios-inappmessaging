@@ -3,10 +3,38 @@
  */
 public class Presenter: UIViewController {
     
-    func displayModalView(_ name: String) {
-        let modalViewController = ModalViewController(nibName: nil, bundle: nil, triggerName: name)
-        let viewController = UIApplication.shared.keyWindow!.rootViewController
-        viewController!.presentViewControllerFromVisibleViewController(modalViewController, animated: false, completion: {})
+    /**
+     * Contains logic to
+     */
+    internal func display(_ name: String) {
+        let campaignParser = CampaignParser()
+        
+        guard let listOfCampaign = MessageMixerClient.sharedInstance.campaign,
+            let campaignToDisplay = campaignParser.findMatchingTrigger(trigger: name, campaignListOptional: listOfCampaign),
+            let campaignViewType = campaignParser.findViewType(campaign: campaignToDisplay) else {
+                return
+        }
+        
+        var campaignViewController: UIViewController?
+
+        switch campaignViewType {
+            case "modal":
+                campaignViewController = ModalViewController(nibName: nil, bundle: nil, campaign: campaignToDisplay)
+                break;
+            case "slideup":
+                break;
+            case "fullscreen":
+                break;
+            case "html":
+                break;
+            default:
+                break;
+        }
+        
+        if let controllerToPresent = campaignViewController {
+            let rootViewController = UIApplication.shared.keyWindow!.rootViewController
+            rootViewController!.presentViewControllerFromVisibleViewController(controllerToPresent, animated: false, completion: {})
+        }
     }
 }
 

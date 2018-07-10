@@ -24,4 +24,8 @@ class CampaignParser {
 
         return nil
     }
+    
+    internal func findViewType(campaign: CampaignData) -> String? {
+        return campaign.type
+    }
 }

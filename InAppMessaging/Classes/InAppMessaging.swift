@@ -30,8 +30,6 @@ public class InAppMessaging {
     }
     
     public class func logEvent(_ name: String) {
-        
-        //TODO(daniel.tam) Add logic to check which view to use. Remove hardcoded modal.
-        Presenter().displayModalView(name)
+        Presenter().display(name)
     }
 }
