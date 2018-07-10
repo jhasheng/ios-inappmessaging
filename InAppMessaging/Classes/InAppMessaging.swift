@@ -26,6 +26,11 @@ public class InAppMessaging {
         }
         
         // Start an instance of the MessageMixerClient which starts beacon pinging message mixer server.
-        InjectionContainer.container.resolve(MessageMixerClient.self)!
+        MessageMixerClient()
+//        InjectionContainer.container.resolve(MessageMixerClient.self)!
+    }
+    
+    public class func logEvent(_ name: String) {
+        Presenter().displayModalView(name)
     }
 }

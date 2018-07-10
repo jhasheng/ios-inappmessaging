@@ -11,11 +11,13 @@ class ModalViewController: UIViewController {
     
     @IBOutlet var modalView: UIView!
     @IBOutlet weak var testLabel: UILabel!
+    private var triggerName: String?
     
-    override init(nibName: String?, bundle: Bundle?) {
+    init(nibName: String?, bundle: Bundle?, triggerName: String) {
         super.init(nibName: nibName, bundle: bundle)
-        self.modalPresentationStyle = .overCurrentContext
+        self.triggerName = triggerName
         
+        self.modalPresentationStyle = .overCurrentContext
         let bundle = Bundle(for: self.classForCoder)
         let nib = UINib(nibName: "ModalViewController", bundle: bundle)
         nib.instantiate(withOwner: self, options: nil)
@@ -29,11 +31,24 @@ class ModalViewController: UIViewController {
         self.presentingViewController?.dismiss(animated: false)
     }
     
+    override func viewDidLoad() {
+//        let list = MessageMixerClient.sharedInstance.campaign
+//        let campaignToDisplay = CampaignParser().findMatchingTrigger(trigger: self.triggerName!, campaignListOptional: list)
+//        self.testLabel.text = campaignToDisplay?.messagePayload.messageBody
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
-        testLabel.text = "abcd" // TESTING. Remove later.
+//        testLabel.text = "abcd" // TESTING. Remove later.
+        
+            let list = MessageMixerClient.sharedInstance.campaign
+            let campaignToDisplay = CampaignParser().findMatchingTrigger(trigger: self.triggerName!, campaignListOptional: list)
+            testLabel.text = campaignToDisplay?.messagePayload.messageBody
+//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
+//        let list = MessageMixerClient.sharedInstance.campaign
+//        let campaignToDisplay = CampaignParser().findMatchingTrigger(trigger: self.triggerName!, campaignListOptional: list)
+//        self.testLabel.text = campaignToDisplay?.messagePayload.messageBody
     }
-    
 }
