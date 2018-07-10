@@ -28,6 +28,6 @@ class ModalViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         let list = MessageMixerClient.sharedInstance.campaign
         let campaignToDisplay = CampaignParser().findMatchingTrigger(trigger: self.triggerName!, campaignListOptional: list)
-        testLabel.text = campaignToDisplay?.messagePayload.messageBody
+        testLabel.text = campaignToDisplay?.messagePayload.messageBody // TODO(daniel.tam) Delete after finalizing modal view UI.
     }
 }
