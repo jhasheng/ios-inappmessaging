@@ -47,6 +47,7 @@ class MessageMixerClient {
         do {
             let decoder = JSONDecoder()
             let campaign = try decoder.decode(CampaignResponse.self, from: response)
+//            CampaignParser.findMatchingTrigger(CampaignParser)
             print(campaign)
         } catch let error {
             print("Failed to parse json:", error)
