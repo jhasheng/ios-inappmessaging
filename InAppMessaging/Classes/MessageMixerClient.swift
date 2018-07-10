@@ -53,9 +53,7 @@ class MessageMixerClient {
         //(TODO: Daniel Tam) Handle response of message mixer when scope is clearer.
         do {
             let decoder = JSONDecoder()
-            MessageMixerClient.sharedInstance.campaign = try decoder.decode(CampaignResponse.self, from: response).data
-            
-            campaignParser.findMatchingTrigger(trigger: "purchase_unsuccessful", campaignListOptional: MessageMixerClient.sharedInstance.campaign)
+            MessageMixerClient.sharedInstance.campaign = try decoder.decode(CampaignResponse.self, from: response).data            
         } catch let error {
             print("Failed to parse json:", error)
         }

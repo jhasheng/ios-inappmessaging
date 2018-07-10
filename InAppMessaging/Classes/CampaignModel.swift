@@ -1,10 +1,6 @@
-//
-//  CampaignModel.swift
-//  InAppMessaging
-//
-//  Created by Tam, Daniel a on 7/5/18.
-//
-
+/**
+ * Data model for Campaign response.
+ */
 struct CampaignResponse: Decodable {
     let nextPing: Int
     let data: [CampaignList]

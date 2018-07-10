@@ -1,12 +1,6 @@
-//
-//  Presenter.swift
-//  InAppMessaging
-//
-//  Created by Tam, Daniel a on 6/28/18.
-//
-
-import Foundation
-
+/**
+ * Handle all the displaying logic of the SDK.
+ */
 public class Presenter: UIViewController {
     
     public func displayModalView(_ name: String) {
