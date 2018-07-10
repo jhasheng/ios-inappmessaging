@@ -4,7 +4,9 @@
 public class Presenter: UIViewController {
     
     /**
-     * Contains logic to
+     * Contains logic to display the correct view type -- modal, slideup, fullscreen, html -- and create
+     * a view controller to present.
+     * @param { name: String } name of the view type.
      */
     internal func display(_ name: String) {
         let campaignParser = CampaignParser()
@@ -17,6 +19,7 @@ public class Presenter: UIViewController {
         
         var campaignViewController: UIViewController?
 
+        // TODO(daniel.tam) Add the other view types.
         switch campaignViewType {
             case "modal":
                 campaignViewController = ModalViewController(nibName: nil, bundle: nil, campaign: campaignToDisplay)
