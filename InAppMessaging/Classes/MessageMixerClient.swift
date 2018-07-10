@@ -4,11 +4,16 @@
 class MessageMixerClient {
     
     private let commonUtility: CommonUtility
+    private let campaignParser: CampaignParser
     private let messageMixerQueue = DispatchQueue(label: "MessageMixerQueue", attributes: .concurrent)
     private var delay: Int = 0 // Milliseconds before pinging Message Mixer server.
 
-    init(commonUtility: CommonUtility = InjectionContainer.container.resolve(CommonUtility.self)!) {
+    init(
+        commonUtility: CommonUtility = InjectionContainer.container.resolve(CommonUtility.self)!,
+        campaignParser: CampaignParser = InjectionContainer.container.resolve(CampaignParser.self)!) {
+        
         self.commonUtility = commonUtility
+        self.campaignParser = campaignParser
         
         self.schedulePingToMixerServer(self.delay) // First initial ping to Message Mixer server.
     }
@@ -47,8 +52,8 @@ class MessageMixerClient {
         do {
             let decoder = JSONDecoder()
             let campaign = try decoder.decode(CampaignResponse.self, from: response)
-//            CampaignParser.findMatchingTrigger(CampaignParser)
-            print(campaign)
+            campaignParser.findMatchingTrigger(trigger: "test", campaignListOptional: campaign.data)
+//            print(campaign)
         } catch let error {
             print("Failed to parse json:", error)
         }

@@ -9,7 +9,7 @@ import Foundation
 
 class CampaignParser {
     
-    internal func findMatchingTrigger(trigger: String, campaignListOptional: [CampaignList]?) {
+    internal func findMatchingTrigger(trigger: String, campaignListOptional: [CampaignList]?) -> CampaignData? {
         
         guard let campaignList = campaignListOptional else {
             return nil
