@@ -48,7 +48,11 @@ class ConfigurationClientTests: XCTestCase {
             return dict?[strToRetrieve] as? String
         }
 
-        override func callServer(withUrl: String, withHTTPMethod: String) -> [String: Any]? {
+        override func callServer(withUrl: String, withHTTPMethod: String) -> Data? {
+            return "test string".data(using: .utf8)
+        }
+        
+        override func convertDataToDictionary(_ data: Data) -> [String : Any]? {
             return stubCallServer
         }
     }

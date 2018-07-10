@@ -20,8 +20,13 @@ class ConfigurationClient {
             return false
         }
         
-        guard let response = commonUtility.callServer(withUrl: configUrl, withHTTPMethod: "POST") else {
-            print("Error calling server")
+        guard let responseData = commonUtility.callServer(withUrl: configUrl, withHTTPMethod: "POST") else {
+            print("Error calling server.")
+            return false
+        }
+        
+        guard let response = commonUtility.convertDataToDictionary(responseData) else {
+            print("Error converting response.")
             return false
         }
         

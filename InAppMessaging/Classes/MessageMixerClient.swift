@@ -42,8 +42,15 @@ class MessageMixerClient {
             schedulePingToMixerServer(self.delay)
             return
         }
-
+        
         //(TODO: Daniel Tam) Handle response of message mixer when scope is clearer.
-        print(response)
+        do {
+            let decoder = JSONDecoder()
+            let campaign = try decoder.decode(CampaignResponse.self, from: response)
+            print(campaign)
+        } catch let error {
+            print("Failed to parse json:", error)
+        }
+
     }
 }

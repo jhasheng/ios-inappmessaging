@@ -39,8 +39,8 @@ class CommonUtility {
      * @param { withHTTPMethod: String } the HTTP method used. E.G "POST" / "GET"
      * @returns { Optional [String: Any] } returns either nil or the response in a dictionary.
      */
-    internal func callServer(withUrl: String, withHTTPMethod: String) -> [String: Any]? {
-        var dataToReturn: [String: Any]?
+    internal func callServer(withUrl: String, withHTTPMethod: String) -> Data? {
+        var dataToReturn: Data?
         
         if let url = URL(string: withUrl) {
             
@@ -60,14 +60,7 @@ class CommonUtility {
                         return
                     }
                     
-                    // Try to assign the data object from response body and convert to a JSON.
-                    guard let jsonData = try JSONSerialization
-                        .jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
-                            semaphore.signal()
-                            return
-                    }
-                    
-                    dataToReturn = jsonData
+                    dataToReturn = data
                     
                 } catch let error {
                     print("Error calling the server: \(error)")
@@ -81,6 +74,27 @@ class CommonUtility {
             
             // Pause execution until signal() is called
             semaphore.wait()
+        }
+        
+        return dataToReturn
+    }
+    
+    /**
+     * Convert data returned from callServer() to [String: Any]? type.
+     */
+    internal func convertDataToDictionary(_ data: Data) -> [String: Any]? {
+        var dataToReturn: [String: Any]?
+        
+        do {
+            guard let jsonData = try JSONSerialization
+                .jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
+                    return nil
+            }
+            
+            dataToReturn = jsonData
+        } catch let error {
+            print("Error converting data: \(error)")
+            return nil
         }
         
         return dataToReturn
