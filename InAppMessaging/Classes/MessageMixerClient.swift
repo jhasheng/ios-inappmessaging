@@ -32,7 +32,6 @@ class MessageMixerClient {
     /**
      * The function called by the DispatchSourceTimer created in scheduledTimer().
      * This function handles the HTTP request and parsing the response body.
-     * (TODO: Daniel Tam) Parse for Message Mixer endpoint from Config response.
      */
     fileprivate func pingMixerServer() {
         guard let mixerServerUrl = ConfigurationClient.endpoints?.ping else {

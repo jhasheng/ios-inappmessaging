@@ -2,6 +2,7 @@
  * Class to handle communication with the configuration server.
  */
 class ConfigurationClient {
+    
     static var endpoints: EndpointURL?
     
     /**
