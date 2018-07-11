@@ -26,6 +26,8 @@ class ViewController: UIViewController {
     }
     @IBAction func showModalButton2(_ sender: Any) {
         InAppMessaging.logEvent("purchase_unsuccessful")
+        let alert = TestCustom(title: "Hello there!! 👋🏻👋🏻")
+        alert.show(animated: true)
     }
 }
 

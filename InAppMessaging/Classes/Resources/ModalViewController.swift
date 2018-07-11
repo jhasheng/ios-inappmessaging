@@ -25,6 +25,11 @@ class ModalViewController: UIViewController {
         self.presentingViewController?.dismiss(animated: false)
     }
     
+    override func viewDidLoad() {
+        modalView.backgroundColor = UIColor.clear
+        modalView.isOpaque = false
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         testLabel.text = campaign?.messagePayload.messageBody // TODO(daniel.tam) Delete after finalizing modal view UI.
     }
