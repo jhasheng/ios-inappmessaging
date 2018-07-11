@@ -3,7 +3,6 @@
  */
 class MessageMixerClient {
     
-//    static let sharedInstance = MessageMixerClient()
     private let commonUtility: CommonUtility
     private let campaignParser: CampaignParser
     private let messageMixerQueue = DispatchQueue(label: "MessageMixerQueue", attributes: .concurrent)
