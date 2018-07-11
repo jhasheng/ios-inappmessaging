@@ -2,6 +2,7 @@
  * Class to handle communication with the configuration server.
  */
 class ConfigurationClient {
+    static var endpoints: EndpointURL?
     
     /**
      * Function that will parse the configuration server's response
@@ -25,50 +26,29 @@ class ConfigurationClient {
             return false
         }
         
-//        guard let response = commonUtility.convertDataToDictionary(responseData) else {
-//            print("Error converting response.")
-//            return false
-//        }
-        
         return parseConfigResponse(configResponse: responseData)
     }
     
     /**
-     * Parse the response retrieve from configuration server for the 'enabled' flag.
+     * Parse the response retrieve from configuration server for the 'enabled' flag and endpoints.
      * @param { configResponse: [String: Any] } response as a dictionary equivalent.
      * @returns { Bool } the value of the 'enabled' flag.
-     * (TODO: Daniel Tam) Parse for endpoints.
      */
     fileprivate func parseConfigResponse(configResponse: Data) -> Bool {
         var enabled: Bool = false
-        
-        
-
-//        if let jsonData = configResponse["data"] as? [String: Any],
-//            let enabledFlag = jsonData["enabled"] as? Bool {
-//            enabled = enabledFlag;
-//        }
         
         do {
             let decoder = JSONDecoder()
             let response = try decoder.decode(ConfigResponse.self, from: configResponse)
             
-            print(response)
+            if response.data.enabled {
+                enabled = response.data.enabled
+                ConfigurationClient.endpoints = response.data.endpoints
+            }
+            
         } catch let error {
             print("Failed to parse json:", error)
         }
-        
-        
-        /**
-        do {
-            let decoder = JSONDecoder()
-            MessageMixerClient.sharedInstance.campaign = try decoder.decode(CampaignResponse.self, from: response).data
-            let nextPing = try decoder.decode(CampaignResponse.self, from: response).nextPing
-            schedulePingToMixerServer(nextPing)
-        } catch let error {
-            print("Failed to parse json:", error)
-        }
-        */
         
         return enabled
     }

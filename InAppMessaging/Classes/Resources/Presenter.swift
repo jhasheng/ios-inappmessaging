@@ -11,7 +11,7 @@ public class Presenter: UIViewController {
     internal func display(_ name: String) {
         let campaignParser = CampaignParser()
         
-        guard let listOfCampaign = MessageMixerClient.sharedInstance.campaign,
+        guard let listOfCampaign = MessageMixerClient.campaign,
             let campaignToDisplay = campaignParser.findMatchingTrigger(trigger: name, campaignListOptional: listOfCampaign),
             let campaignViewType = campaignParser.findViewType(campaign: campaignToDisplay) else {
                 return

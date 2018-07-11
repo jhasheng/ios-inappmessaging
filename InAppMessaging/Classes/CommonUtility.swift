@@ -53,20 +53,14 @@ class CommonUtility {
             
             // Start HTTP call.
             URLSession.shared.dataTask(with: request, completionHandler: {(data, response, error) in
-                do {
-                    guard let data = data else {
-                        print("Data returned is nil")
-                        semaphore.signal()
-                        return
-                    }
-                    
-                    dataToReturn = data
-                    
-                } catch let error {
-                    print("Error calling the server: \(error)")
+
+                guard let data = data else {
+                    print("Data returned is nil")
                     semaphore.signal()
                     return
                 }
+                
+                dataToReturn = data
                 
                 // Signal completion of HTTP request.
                 semaphore.signal()
