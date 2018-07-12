@@ -3,12 +3,11 @@
  */
 class MessageMixerClient {
     
-    static let sharedInstance = MessageMixerClient()
     private let commonUtility: CommonUtility
     private let campaignParser: CampaignParser
     private let messageMixerQueue = DispatchQueue(label: "MessageMixerQueue", attributes: .concurrent)
     private var delay: Int = 0 // Milliseconds before pinging Message Mixer server.
-    var campaign: [CampaignList]? // List of all campaigns returned by Message Mixer server.
+    static var campaign: [CampaignList]? // List of all campaigns returned by Message Mixer server.
 
     init(
         commonUtility: CommonUtility = InjectionContainer.container.resolve(CommonUtility.self)!,
@@ -33,10 +32,9 @@ class MessageMixerClient {
     /**
      * The function called by the DispatchSourceTimer created in scheduledTimer().
      * This function handles the HTTP request and parsing the response body.
-     * (TODO: Daniel Tam) Parse for Message Mixer endpoint from Config response.
      */
     fileprivate func pingMixerServer() {
-        guard let mixerServerUrl = commonUtility.retrieveFromMainBundle(forKey: Keys.URL.MixerServerURL) as? String else {
+        guard let mixerServerUrl = ConfigurationClient.endpoints?.ping else {
             #if DEBUG
                 print("Error retrieving InAppMessaging Mixer Server URL")
             #endif
@@ -53,7 +51,7 @@ class MessageMixerClient {
         //(TODO: Daniel Tam) Handle response of message mixer when scope is clearer.
         do {
             let decoder = JSONDecoder()
-            MessageMixerClient.sharedInstance.campaign = try decoder.decode(CampaignResponse.self, from: response).data
+            MessageMixerClient.campaign = try decoder.decode(CampaignResponse.self, from: response).data
             let nextPing = try decoder.decode(CampaignResponse.self, from: response).nextPing
             schedulePingToMixerServer(nextPing)
         } catch let error {

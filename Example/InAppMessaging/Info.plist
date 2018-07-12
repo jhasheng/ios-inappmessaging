@@ -17,12 +17,10 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>InAppMessagingMixerServerURL</key>
-	<string>http://danieltam.local:3000/message-mixer</string>
 	<key>InAppMessagingSDKVersion</key>
 	<string>0</string>
 	<key>InAppMessagingConfigURL</key>
-	<string>http://danieltam.local:3000/</string>
+	<string>http://appmsg-dev-configsvr.westus2.cloudapp.azure.com:3000/config/get-config</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>

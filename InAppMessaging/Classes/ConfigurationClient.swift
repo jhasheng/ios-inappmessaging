@@ -3,6 +3,8 @@
  */
 class ConfigurationClient {
     
+    static var endpoints: EndpointURL?
+    
     /**
      * Function that will parse the configuration server's response
      * for the enabled flag. Return false by default.
@@ -25,26 +27,28 @@ class ConfigurationClient {
             return false
         }
         
-        guard let response = commonUtility.convertDataToDictionary(responseData) else {
-            print("Error converting response.")
-            return false
-        }
-        
-        return parseConfigResponse(configResponse: response)
+        return parseConfigResponse(configResponse: responseData)
     }
     
     /**
-     * Parse the response retrieve from configuration server for the 'enabled' flag.
+     * Parse the response retrieve from configuration server for the 'enabled' flag and endpoints.
      * @param { configResponse: [String: Any] } response as a dictionary equivalent.
      * @returns { Bool } the value of the 'enabled' flag.
-     * (TODO: Daniel Tam) Parse for endpoints.
      */
-    fileprivate func parseConfigResponse(configResponse: [String: Any]) -> Bool {
+    fileprivate func parseConfigResponse(configResponse: Data) -> Bool {
         var enabled: Bool = false
-
-        if let jsonData = configResponse["data"] as? [String: Any],
-            let enabledFlag = jsonData["enabled"] as? Bool {
-            enabled = enabledFlag;
+        
+        do {
+            let decoder = JSONDecoder()
+            let response = try decoder.decode(ConfigResponse.self, from: configResponse)
+            
+            if response.data.enabled {
+                enabled = response.data.enabled
+                ConfigurationClient.endpoints = response.data.endpoints
+            }
+            
+        } catch let error {
+            print("Failed to parse json:", error)
         }
         
         return enabled
