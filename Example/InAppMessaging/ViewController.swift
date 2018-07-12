@@ -22,8 +22,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func showModalButton(_ sender: Any) {
-        Presenter().displayModalView(self)
+        InAppMessaging.logEvent("purchase_successful")
     }
-    
+    @IBAction func showModalButton2(_ sender: Any) {
+        InAppMessaging.logEvent("purchase_unsuccessful")
+    }
 }
 

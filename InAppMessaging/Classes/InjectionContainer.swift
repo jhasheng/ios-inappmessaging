@@ -12,9 +12,8 @@ struct InjectionContainer {
         
         container.register(ConfigurationClient.self) { _ in ConfigurationClient() }
         
-        //(TODO: Daniel Tam) get secondsBetweenInterval from config server response when response body is finalized.
-        container.register(MessageMixerClient.self) { _ in
-            MessageMixerClient()
-        }
+        container.register(MessageMixerClient.self) { _ in MessageMixerClient() }
+        
+        container.register(CampaignParser.self) { _ in CampaignParser() }
     }
 }

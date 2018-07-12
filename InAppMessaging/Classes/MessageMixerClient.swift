@@ -3,14 +3,21 @@
  */
 class MessageMixerClient {
     
+    static let sharedInstance = MessageMixerClient()
     private let commonUtility: CommonUtility
+    private let campaignParser: CampaignParser
     private let messageMixerQueue = DispatchQueue(label: "MessageMixerQueue", attributes: .concurrent)
     private var delay: Int = 0 // Milliseconds before pinging Message Mixer server.
+    var campaign: [CampaignList]? // List of all campaigns returned by Message Mixer server.
 
-    init(commonUtility: CommonUtility = InjectionContainer.container.resolve(CommonUtility.self)!) {
-        self.commonUtility = commonUtility
+    init(
+        commonUtility: CommonUtility = InjectionContainer.container.resolve(CommonUtility.self)!,
+        campaignParser: CampaignParser = InjectionContainer.container.resolve(CampaignParser.self)!) {
         
-        self.schedulePingToMixerServer(self.delay) // First initial ping to Message Mixer server.
+            self.commonUtility = commonUtility
+            self.campaignParser = campaignParser
+        
+            self.schedulePingToMixerServer(0) // First initial ping to Message Mixer server.
     }
     
     /**
@@ -46,8 +53,9 @@ class MessageMixerClient {
         //(TODO: Daniel Tam) Handle response of message mixer when scope is clearer.
         do {
             let decoder = JSONDecoder()
-            let campaign = try decoder.decode(CampaignResponse.self, from: response)
-            print(campaign)
+            MessageMixerClient.sharedInstance.campaign = try decoder.decode(CampaignResponse.self, from: response).data
+            let nextPing = try decoder.decode(CampaignResponse.self, from: response).nextPing
+            schedulePingToMixerServer(nextPing)
         } catch let error {
             print("Failed to parse json:", error)
         }
