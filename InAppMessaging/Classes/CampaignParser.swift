@@ -15,7 +15,7 @@ class CampaignParser {
         }
         
         for campaign in campaignList {
-            for campaignTrigger in campaign.campaignData.trigger {
+            for campaignTrigger in campaign.campaignData.triggers {
                 if trigger == campaignTrigger.event {
                     return campaign.campaignData
                 }
