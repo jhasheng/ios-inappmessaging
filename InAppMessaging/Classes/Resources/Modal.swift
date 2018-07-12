@@ -15,7 +15,7 @@ extension Modal where Self:UIView {
     /**
      * Function that finds the presented view controller and add the modal sub view on top.
      */
-    func show() {
+    internal func show() {
         self.backgroundView.alpha = 0.66
         self.dialogView.center  = self.center
         
@@ -31,7 +31,7 @@ extension Modal where Self:UIView {
     /**
      * Function that dismisses the presented modal view.
      */
-    func dismiss() {
+    internal func dismiss() {
         self.removeFromSuperview()
     }
 }

@@ -24,7 +24,7 @@ class ModalView: UIView, Modal {
      * Creates the modal view to be displayed using the campaign information.
      * @param { campaign: CampaignData } the campaign to be displayed.
      */
-    func initialize(campaign: CampaignData){
+    internal func initialize(campaign: CampaignData){
         
         // Background view.
         backgroundView.frame = frame
@@ -79,7 +79,7 @@ class ModalView: UIView, Modal {
     /**
      * Obj-c selector to dismiss the modal view when the 'X' is tapped.
      */
-    @objc func didTappedOnExitButton(){
+    @objc internal func didTappedOnExitButton(){
         dismiss()
     }
 }
