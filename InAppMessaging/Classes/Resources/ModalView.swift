@@ -57,7 +57,7 @@ class ModalView: UIView, Modal {
         // The top right "X" button to dismiss.
         let exitButton = UILabel(frame: CGRect(x: dialogViewWidth - 25, y: 4, width: 20, height: 20))
         exitButton.text = "X"
-        exitButton.backgroundColor = .red
+        exitButton.backgroundColor = .gray
         exitButton.textColor = .white
         exitButton.textAlignment = .center
         exitButton.isUserInteractionEnabled = true
