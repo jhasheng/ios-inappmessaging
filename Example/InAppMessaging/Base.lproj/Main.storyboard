@@ -29,14 +29,6 @@
                                     <action selector="showModalButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="iI5-b1-W5l"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="51z-SD-n1j">
-                                <rect key="frame" x="34" y="92" width="160" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="purchase_unsuccessful"/>
-                                <connections>
-                                    <action selector="showModalButton2:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="GnZ-YK-Thp"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
