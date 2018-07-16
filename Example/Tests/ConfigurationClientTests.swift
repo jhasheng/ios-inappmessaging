@@ -13,18 +13,8 @@ class ConfigurationClientTests: XCTestCase {
         "ReturnNil": nil
     ]
 
-    let stubDataForCallServer = [
-        [
-            "data": [
-                "enabled": true
-            ]
-        ],
-        [
-            "data": [
-                "enabled": false
-            ]
-        ]
-    ]
+    let stubDataForCallServer = ["{\"data\": {\"enabled\": true,\"endpoints\": {\"ping\":\"\"}}}", // Enabled is true.
+                                 "{\"data\": {\"enabled\": false,\"endpoints\": {\"ping\":\"\"}}}"] // Enabled is false.
 
     /**
      * Mock class of CommonUtility. Purpose is to stub the method
@@ -35,9 +25,9 @@ class ConfigurationClientTests: XCTestCase {
 
         let strToRetrieve: String
         let stubRetrieveFromMainBundle: [String: Any?]
-        let stubCallServer: [String: Any]?
+        let stubCallServer: String?
 
-        init(strToRetrieve: String, stubRetrieveFromMainBundle: [String: Any?], stubCallServer: [String: Any]?) {
+        init(strToRetrieve: String, stubRetrieveFromMainBundle: [String: Any?], stubCallServer: String?) {
             self.strToRetrieve = strToRetrieve
             self.stubRetrieveFromMainBundle = stubRetrieveFromMainBundle
             self.stubCallServer = stubCallServer
@@ -49,11 +39,7 @@ class ConfigurationClientTests: XCTestCase {
         }
 
         override func callServer(withUrl: String, withHTTPMethod: String) -> Data? {
-            return "test string".data(using: .utf8)
-        }
-        
-        override func convertDataToDictionary(_ data: Data) -> [String : Any]? {
-            return stubCallServer
+            return self.stubCallServer!.data(using: .utf8)
         }
     }
 
@@ -114,5 +100,3 @@ class ConfigurationClientTests: XCTestCase {
         XCTAssertFalse(ConfigurationClient().isConfigEnabled())
     }
 }
-
-
