@@ -48,15 +48,18 @@ class MessageMixerClient {
             return
         }
         
-        //(TODO: Daniel Tam) Handle response of message mixer when scope is clearer.
+        var decodedResponse: CampaignResponse?
+        
         do {
             let decoder = JSONDecoder()
-            MessageMixerClient.campaign = try decoder.decode(CampaignResponse.self, from: response).data
-            let nextPing = try decoder.decode(CampaignResponse.self, from: response).nextPing
-            schedulePingToMixerServer(nextPing)
+            decodedResponse = try decoder.decode(CampaignResponse.self, from: response)
         } catch let error {
             print("Failed to parse json:", error)
         }
-
+        
+        if let campaignResponse = decodedResponse {
+            MessageMixerClient.campaign = campaignResponse.data
+            schedulePingToMixerServer(campaignResponse.nextPing)
+        }
     }
 }
