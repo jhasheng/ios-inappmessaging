@@ -104,6 +104,7 @@ class CommonUtility {
         guard let appId = self.retrieveFromMainBundle(forKey: "CFBundleIdentifier"),
             let appVersion = self.retrieveFromMainBundle(forKey: "CFBundleVersion"),
             let sdkVersion = self.retrieveFromMainBundle(forKey: "InAppMessagingSDKVersion"),
+            let subscriptionId = self.retrieveFromMainBundle(forKey: "InAppMessagingSubscriptionID"),
             let locale = "\(Locale.current)".components(separatedBy: " ").first else {
                 
                 return nil
@@ -115,7 +116,8 @@ class CommonUtility {
             Keys.Request.Platform: "iOS",
             Keys.Request.AppVersion: appVersion,
             Keys.Request.SDKVersion: sdkVersion,
-            Keys.Request.Locale: locale
+            Keys.Request.Locale: locale,
+            Keys.Request.SubscriptionID: subscriptionId
         ]
         
         // Return the serialized JSON object.

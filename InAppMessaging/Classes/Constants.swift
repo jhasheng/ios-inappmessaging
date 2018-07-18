@@ -20,5 +20,6 @@ struct Keys {
         static let AppVersion = "app_version"
         static let SDKVersion = "sdk_version"
         static let Locale = "locale"
+        static let SubscriptionID = "subscription_id"
     }
 }
