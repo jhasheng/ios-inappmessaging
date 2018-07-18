@@ -22,13 +22,13 @@ struct CampaignList: Decodable {
 struct CampaignData: Decodable {
     let campaignId: String
     let type: String
-    let trigger: [Trigger]
+    let triggers: [Trigger]
     let messagePayload: MessagePayload
     
     enum CodingKeys: String, CodingKey {
         case campaignId = "campaign_id"
         case type
-        case trigger
+        case triggers
         case messagePayload = "message_payload"
     }
 }
