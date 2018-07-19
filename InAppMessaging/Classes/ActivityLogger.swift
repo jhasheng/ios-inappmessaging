@@ -13,7 +13,7 @@ class ActivityLogger {
      * Log the activity sent by the host application in a hashmap of event name to list of timestamps.
      * Saves into a plist file.
      * TODO(daniel.tam) Clear file when it is dumped to a server.
-     * @param { activityName: String} name of the event sent by the host application.
+     * @param { activityName: String } name of the event sent by the host application.
      */
     static internal func logActivity(_ activityName: String) {
         
@@ -40,7 +40,7 @@ class ActivityLogger {
     
     /**
      * Save the hashmap of timestamps into the plist file located in the 'Documents' directory.
-     * @param { plist: Any} object to save.
+     * @param { plist: Any } object to save.
      */
     static func savePropertyList(_ plist: Any)
     {
