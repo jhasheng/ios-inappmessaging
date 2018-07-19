@@ -124,6 +124,10 @@ class CommonUtility {
         return try? JSONSerialization.data(withJSONObject: jsonDict)
     }
     
+    /**
+     * Returns timestamp in milliseconds since epoch.
+     * @returns { double } milliseconds since epoch.
+     */
     internal func getTimeStamp() -> Double {
         return Date().timeIntervalSince1970
     }
