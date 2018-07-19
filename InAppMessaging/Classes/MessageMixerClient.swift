@@ -62,8 +62,6 @@ class MessageMixerClient {
         if let campaignResponse = decodedResponse {
             MessageMixerClient.campaign = campaignResponse.data
             schedulePingToMixerServer(campaignResponse.nextPing)
-            
-            // Create a hashmap of the response.
         }
     }
 }
