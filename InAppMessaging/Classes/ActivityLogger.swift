@@ -4,7 +4,7 @@
 class ActivityLogger {
     
     static var activityLog = [String: [Double]]()
-    static var plistURL : URL {
+    static var plistURL: URL {
         let documentDirectoryURL =  try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         return documentDirectoryURL.appendingPathComponent(Keys.File.TimestampPlist)
     }
@@ -35,7 +35,7 @@ class ActivityLogger {
             self.activityLog[activityName] = [CommonUtility().getTimeStamp()]
         }
         
-       self.savePropertyList(self.activityLog)
+        self.savePropertyList(self.activityLog)
     }
     
     /**
@@ -65,6 +65,7 @@ class ActivityLogger {
         guard let plist = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String: [Double]] else {
             return [String: [Double]]()
         }
+        
         return plist
     }
 }
