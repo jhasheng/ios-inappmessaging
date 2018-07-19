@@ -15,11 +15,26 @@ struct Keys {
      * Constants used to build request body.
      */
     struct Request {
-        static let AppID = "app_id"
+        static let AppID = "appId"
         static let Platform = "platform"
-        static let AppVersion = "app_version"
-        static let SDKVersion = "sdk_version"
+        static let AppVersion = "appVersion"
+        static let SDKVersion = "sdkVersion"
         static let Locale = "locale"
-        static let SubscriptionID = "subscription_id"
+        static let SubscriptionID = "subscriptionId"
+    }
+    
+    /**
+     * Directories used for SDK.
+     */
+    struct File {
+        static let TimestampPlist = "InAppMessagingTimestamps.plist"
+    }
+    
+    /**
+     * Key names for Info.plist.
+     */
+    struct Bundle {
+        static let SDKVersion = "InAppMessagingSDKVersion"
+        static let SubscriptionID = "InAppMessagingSubscriptionID"
     }
 }

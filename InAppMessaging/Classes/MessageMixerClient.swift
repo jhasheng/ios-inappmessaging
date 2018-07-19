@@ -54,12 +54,16 @@ class MessageMixerClient {
             let decoder = JSONDecoder()
             decodedResponse = try decoder.decode(CampaignResponse.self, from: response)
         } catch let error {
-            print("Failed to parse json:", error)
+            #if DEBUG
+                print("Failed to parse json:", error)
+            #endif
         }
         
         if let campaignResponse = decodedResponse {
             MessageMixerClient.campaign = campaignResponse.data
             schedulePingToMixerServer(campaignResponse.nextPing)
+            
+            // Create a hashmap of the response.
         }
     }
 }
