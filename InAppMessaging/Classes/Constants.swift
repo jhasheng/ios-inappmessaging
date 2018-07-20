@@ -15,12 +15,12 @@ struct Keys {
      * Constants used to build request body.
      */
     struct Request {
-        static let AppID = "appId"
+        static let AppID = "app_id"
         static let Platform = "platform"
-        static let AppVersion = "appVersion"
-        static let SDKVersion = "sdkVersion"
+        static let AppVersion = "app_version"
+        static let SDKVersion = "sdk_version"
         static let Locale = "locale"
-        static let SubscriptionID = "subscriptionId"
+        static let SubscriptionID = "subscription_id"
     }
     
     /**
@@ -38,4 +38,4 @@ struct Keys {
         static let SubscriptionID = "InAppMessagingSubscriptionID"
     }
 }
-    
+

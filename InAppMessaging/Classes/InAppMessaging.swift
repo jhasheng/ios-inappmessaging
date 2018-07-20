@@ -30,6 +30,7 @@ public class InAppMessaging {
     }
     
     public class func logEvent(_ name: String) {
+        EventLogger.logEvent(name)
         Presenter().display(name)
     }
 }

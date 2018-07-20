@@ -1,25 +1,25 @@
 /**
  * Class to handle logging events by the host application.
  */
-class ActivityLogger {
+class EventLogger {
     
-    static var activityLog = [String: [Double]]()
+    static var eventLog = [String: [Double]]()
     static var plistURL: URL {
         let documentDirectoryURL =  try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         return documentDirectoryURL.appendingPathComponent(Keys.File.TimestampPlist)
     }
 
     /**
-     * Log the activity sent by the host application in a hashmap of event name to list of timestamps.
+     * Log the event sent by the host application in a hashmap of event name to list of timestamps.
      * Saves into a plist file.
      * TODO(daniel.tam) Clear file when it is dumped to a server.
      * @param { activityName: String } name of the event sent by the host application.
      */
-    static internal func logActivity(_ activityName: String) {
+    static internal func logEvent(_ eventName: String) {
         
-        if self.activityLog.isEmpty {
+        if self.eventLog.isEmpty {
             do {
-                self.activityLog = try self.loadPropertyList()
+                self.eventLog = try self.loadPropertyList()
             } catch {
                 #if DEBUG
                     print(error)
@@ -27,15 +27,15 @@ class ActivityLogger {
             }
         }
         
-        if self.activityLog[activityName] != nil {
-            var tempLog = self.activityLog[activityName]
+        if self.eventLog[eventName] != nil {
+            var tempLog = self.eventLog[eventName]
             tempLog?.append(CommonUtility().getTimeStamp())
-            self.activityLog[activityName] = tempLog
+            self.eventLog[eventName] = tempLog
         } else {
-            self.activityLog[activityName] = [CommonUtility().getTimeStamp()]
+            self.eventLog[eventName] = [CommonUtility().getTimeStamp()]
         }
         
-        self.savePropertyList(self.activityLog)
+        self.savePropertyList(self.eventLog)
     }
     
     /**
