@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>InAppMessagingSubscriptionID</key>
-	<string>random string</string>
+	<string>38400000-8cf0-11bd-b23e-10b96e4ef00d</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
