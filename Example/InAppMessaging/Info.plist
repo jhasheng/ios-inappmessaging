@@ -22,7 +22,7 @@
 	<key>InAppMessagingSDKVersion</key>
 	<string>0</string>
 	<key>InAppMessagingConfigURL</key>
-	<string>http://127.0.0.1:3000/config/get-config</string>
+	<string>http://appmsg-dev-configsvr.westus2.cloudapp.azure.com:3000/config/get-config</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>

@@ -6,9 +6,7 @@ class MessageMixerClient {
     private let commonUtility: CommonUtility
     private let campaignParser: CampaignHelper
     private let messageMixerQueue = DispatchQueue(label: "MessageMixerQueue", attributes: .concurrent)
-    private var delay: Int = 0 // Milliseconds before pinging Message Mixer server.
-//    static var campaign: [CampaignList]? // List of all campaigns returned by Message Mixer server.
-    
+    private var delay: Int = 0 // Milliseconds before pinging Message Mixer server.    
     static var campaignDict = [String: [Campaign]]()
     static var listOfShownCampaigns = [String]()
 

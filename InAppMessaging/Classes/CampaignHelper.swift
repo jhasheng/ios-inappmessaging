@@ -26,12 +26,10 @@ class CampaignHelper {
         return nil
     }
     
-    internal func findViewType(campaign: CampaignData) -> String? {
-        return campaign.type
-    }
-    
     /**
-     * Map campaign list returned by message mixer to a hashmap of trigger names to array of campaign.
+     * Map campaign list returned by message mixer to a hashmap of trigger names to array of campaigns.
+     * @param { campaignList: [Campaign] } list of campaign sent by Message Mixer server.
+     * @returns { [String: [Campaign]] } Hashmap of event names to list of campaigns.
      */
     internal func mapCampaign(campaignList: [Campaign]) -> [String: [Campaign]] {
         var campaignDict = [String: [Campaign]]()
@@ -52,6 +50,12 @@ class CampaignHelper {
         return campaignDict
     }
     
+    /**
+     * Fetches a campaign based on two conditions -- campaign has not been shown before
+     * and the event name matches.
+     * @param { withEventName: String } name of the event to fetch.
+     * @returns { CampaignData? } optional CampaignData that matches the two conditions.
+     */
     internal func fetchCampaign(withEventName: String) -> CampaignData? {
         if let campaignList = MessageMixerClient.campaignDict[withEventName] {
             for campaign in campaignList {
@@ -63,12 +67,30 @@ class CampaignHelper {
         
         return nil
     }
-        
-    internal func isCampaignShown(campaignId: String) -> Bool {
+    
+    /**
+     * Checks if the campaign has already been displayed or not based on the campaign ID.
+     * @param { campaignId: String } ID of the campaign to check.
+     * @returns { Bool } result of the check.
+     */
+    fileprivate func isCampaignShown(campaignId: String) -> Bool {
         return MessageMixerClient.listOfShownCampaigns.contains(campaignId)
     }
     
+    /**
+     * Method to append the campaign ID to the list of shown campaign IDs once it has been displayed once.
+     * @param { campaignId: String } ID of the campaign to append.
+     */
     internal func appendShownCampaign(campaignId: String) {
         MessageMixerClient.listOfShownCampaigns.append(campaignId)
+    }
+    
+    /**
+     * Parses the campaign passed in for the view type. E.G modal/slideup/etc.
+     * @param { campaign: CampaignData } campaign to parse through.
+     * @returns { String? } optional value of the view type field of the campaign.
+     */
+    internal func findViewType(campaign: CampaignData) -> String? {
+        return campaign.type
     }
 }
