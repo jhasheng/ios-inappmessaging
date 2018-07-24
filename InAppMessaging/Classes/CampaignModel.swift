@@ -47,7 +47,7 @@ struct Trigger: Decodable {
 
 struct MessagePayload: Decodable {
     let title: String
-    let messageBody: String
+    let messageBody: String?
     let header: String
     let titleColor: String
     let headerColor: String
@@ -72,8 +72,8 @@ struct MessagePayload: Decodable {
 }
 
 struct Resource: Decodable {
-    let assetsUrl: String
-    let imageUrl: String
+    let assetsUrl: String?
+    let imageUrl: String?
     let cropType: String
     
     enum CodingKeys: String, CodingKey {
@@ -95,7 +95,7 @@ struct MessageSettings: Decodable {
 
 struct DisplaySettings: Decodable {
     let orientation: String
-    let slideFrom: String
+    let slideFrom: String?
     let campaignEndTime: Int
     let textAlign: String
     
@@ -116,9 +116,9 @@ struct ControlSettings: Decodable {
 }
 
 struct Button: Decodable {
-    let buttonText: String
-    let buttonTextColor: String
-    let buttonBackgroundColor: String
+    let buttonText: String?
+    let buttonTextColor: String?
+    let buttonBackgroundColor: String?
     let buttonBehavior: ButtonBehavior
     
     enum CodingKeys: String, CodingKey {
@@ -130,7 +130,7 @@ struct Button: Decodable {
 }
 
 struct ButtonBehavior: Decodable {
-    let action: String
+    let action: String?
     let uri: String
     
     enum CodingKeys: String, CodingKey {
