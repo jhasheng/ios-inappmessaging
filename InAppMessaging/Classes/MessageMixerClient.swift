@@ -4,17 +4,18 @@
 class MessageMixerClient {
     
     private let commonUtility: CommonUtility
-    private let campaignParser: CampaignParser
+    private let campaignHelper: CampaignHelper
     private let messageMixerQueue = DispatchQueue(label: "MessageMixerQueue", attributes: .concurrent)
     private var delay: Int = 0 // Milliseconds before pinging Message Mixer server.
-    static var campaign: [CampaignList]? // List of all campaigns returned by Message Mixer server.
+    static var campaignDict = [String: [Campaign]]()
+    static var listOfShownCampaigns = [String]()
 
     init(
         commonUtility: CommonUtility = InjectionContainer.container.resolve(CommonUtility.self)!,
-        campaignParser: CampaignParser = InjectionContainer.container.resolve(CampaignParser.self)!) {
+        campaignHelper: CampaignHelper = InjectionContainer.container.resolve(CampaignHelper.self)!) {
         
             self.commonUtility = commonUtility
-            self.campaignParser = campaignParser
+            self.campaignHelper = campaignHelper
         
             self.schedulePingToMixerServer(0) // First initial ping to Message Mixer server.
     }
@@ -60,7 +61,7 @@ class MessageMixerClient {
         }
         
         if let campaignResponse = decodedResponse {
-            MessageMixerClient.campaign = campaignResponse.data
+            MessageMixerClient.campaignDict = campaignHelper.mapCampaign(campaignList: campaignResponse.data)
             schedulePingToMixerServer(campaignResponse.nextPing)
         }
     }

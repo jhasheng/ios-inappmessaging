@@ -3,7 +3,7 @@
  */
 struct CampaignResponse: Decodable {
     let nextPing: Int
-    let data: [CampaignList]
+    let data: [Campaign]
     
     enum CodingKeys: String, CodingKey {
         case nextPing = "next_ping"
@@ -11,7 +11,7 @@ struct CampaignResponse: Decodable {
     }
 }
 
-struct CampaignList: Decodable {
+struct Campaign: Decodable {
     let campaignData: CampaignData
     
     enum CodingKeys: String, CodingKey {
