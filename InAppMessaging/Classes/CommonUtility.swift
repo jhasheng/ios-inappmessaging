@@ -103,8 +103,8 @@ class CommonUtility {
         // Assign all the variables required in request body to configuration server.
         guard let appId = self.retrieveFromMainBundle(forKey: "CFBundleIdentifier"),
             let appVersion = self.retrieveFromMainBundle(forKey: "CFBundleVersion"),
-            let sdkVersion = self.retrieveFromMainBundle(forKey: "InAppMessagingSDKVersion"),
-            let subscriptionId = self.retrieveFromMainBundle(forKey: "InAppMessagingSubscriptionID"),
+            let sdkVersion = self.retrieveFromMainBundle(forKey: Keys.Bundle.SDKVersion),
+            let subscriptionId = self.retrieveFromMainBundle(forKey: Keys.Bundle.SubscriptionID),
             let locale = "\(Locale.current)".components(separatedBy: " ").first else {
                 
                 return nil
@@ -122,5 +122,13 @@ class CommonUtility {
         
         // Return the serialized JSON object.
         return try? JSONSerialization.data(withJSONObject: jsonDict)
+    }
+    
+    /**
+     * Returns timestamp in milliseconds since epoch.
+     * @returns { double } milliseconds since epoch.
+     */
+    internal func getTimeStamp() -> Double {
+        return Date().timeIntervalSince1970
     }
 }

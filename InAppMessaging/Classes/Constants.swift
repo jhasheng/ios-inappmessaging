@@ -22,4 +22,20 @@ struct Keys {
         static let Locale = "locale"
         static let SubscriptionID = "subscriptionId"
     }
+    
+    /**
+     * Directories used for SDK.
+     */
+    struct File {
+        static let TimestampPlist = "InAppMessagingTimestamps.plist"
+    }
+    
+    /**
+     * Key names for Info.plist.
+     */
+    struct Bundle {
+        static let SDKVersion = "InAppMessagingSDKVersion"
+        static let SubscriptionID = "InAppMessagingSubscriptionID"
+    }
 }
+    
