@@ -30,7 +30,16 @@ public class InAppMessaging {
     }
     
     public class func logEvent(_ name: String) {
-        EventLogger.logEvent(name)
+        DispatchQueue.global(qos: .background).async {
+            EventLogger.logEvent(name)
+        }
+        
         Presenter().display(name)
+    }
+    
+    public class func registerId(idType: Identification, id: String) {
+        DispatchQueue.global(qos: .background).async {
+            IndentificationManager.registerId(idType, id)
+        }
     }
 }

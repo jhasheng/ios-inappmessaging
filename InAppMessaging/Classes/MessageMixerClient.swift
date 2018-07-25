@@ -62,7 +62,7 @@ class MessageMixerClient {
         
         if let campaignResponse = decodedResponse {
             MessageMixerClient.campaignDict = campaignHelper.mapCampaign(campaignList: campaignResponse.data)
-            schedulePingToMixerServer(campaignResponse.nextPing)
+            schedulePingToMixerServer(campaignResponse.nextPingMillis)
         }
     }
 }
