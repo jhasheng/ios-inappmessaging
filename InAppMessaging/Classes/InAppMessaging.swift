@@ -2,7 +2,7 @@
  * Class that contains the public methods for host application to call.
  * Entry point for host application to communicate with InAppMessaging.
  */
-public class InAppMessaging {
+@objc public class InAppMessaging: NSObject {
     
     /**
      * Function to be called by host application to start a new thread that
