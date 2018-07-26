@@ -22,7 +22,7 @@ public class Presenter: UIViewController {
 
         // TODO(daniel.tam) Add the other view types.
         switch campaignViewType {
-            case "modal":
+            case "MODAL":
                 view = ModalView(campaign: campaignToDisplay)
                 break;
             case "slideup":

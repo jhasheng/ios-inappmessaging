@@ -59,6 +59,8 @@ class CommonUtility {
                     semaphore.signal()
                     return
                 }
+                
+                print(self.convertDataToDictionary(data))
                                 
                 dataToReturn = data
                 
