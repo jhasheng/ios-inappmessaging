@@ -59,7 +59,7 @@ class CommonUtility {
                     semaphore.signal()
                     return
                 }
-                
+                                
                 dataToReturn = data
                 
                 // Signal completion of HTTP request.
@@ -117,7 +117,8 @@ class CommonUtility {
             Keys.Request.AppVersion: appVersion,
             Keys.Request.SDKVersion: sdkVersion,
             Keys.Request.Locale: locale,
-            Keys.Request.SubscriptionID: subscriptionId
+            Keys.Request.SubscriptionID: subscriptionId,
+            Keys.Request.UserID: IndentificationManager.userId
         ]
         
         // Return the serialized JSON object.

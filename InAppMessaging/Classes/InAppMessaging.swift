@@ -29,8 +29,26 @@ public class InAppMessaging {
         InjectionContainer.container.resolve(MessageMixerClient.self)!
     }
     
+    /**
+     * Log the event name passed in and also pass the event name to the view controller to display a matching campaign.
+     * @param { name: String } name of the event.
+     */
     public class func logEvent(_ name: String) {
-        EventLogger.logEvent(name)
+        DispatchQueue.global(qos: .background).async {
+            EventLogger.logEvent(name)
+        }
+        
         Presenter().display(name)
+    }
+    
+    /**
+     * Register the ID of the user.
+     * @param { idType: Identification } the type of ID. E.G RakutenID or EasyID.
+     * @param { id: String } the string value of the ID.
+     */
+    public class func registerId(idType: Identification, id: String) {
+        DispatchQueue.global(qos: .background).async {
+            IndentificationManager.registerId(idType, id)
+        }
     }
 }

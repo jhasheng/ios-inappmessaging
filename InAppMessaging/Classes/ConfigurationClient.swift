@@ -1,7 +1,7 @@
 /**
  * Class to handle communication with the configuration server.
  */
-class ConfigurationClient {
+struct ConfigurationClient {
     
     static var endpoints: EndpointURL?
     
