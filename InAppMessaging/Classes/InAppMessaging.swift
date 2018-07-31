@@ -21,6 +21,7 @@
      * configures Rakuten InAppMessaging SDK.
      */
     public class func configure() {
+        print(Locale.formattedCode)
 //        Thread.init(target: self, selector:#selector(initializeSdk), object: nil).start()
         DispatchQueue.global(qos: .background).async {
             InAppMessaging().initializeSdk()

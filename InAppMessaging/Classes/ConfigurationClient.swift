@@ -61,25 +61,13 @@ class ConfigurationClient: HttpRequestable {
     
     internal func buildHttpBody() -> Data? {
         
-        // Assign all the variables required in request body to configuration server.
-        guard let appId = CommonUtility().retrieveFromMainBundle(forKey: "CFBundleIdentifier"),
-            let appVersion = CommonUtility().retrieveFromMainBundle(forKey: "CFBundleVersion"),
-            let sdkVersion = CommonUtility().retrieveFromMainBundle(forKey: Keys.Bundle.SDKVersion),
-            let subscriptionId = CommonUtility().retrieveFromMainBundle(forKey: Keys.Bundle.SubscriptionID),
-            let locale = "\(Locale.current)".components(separatedBy: " ").first else {
-                
-                return nil
-        }
-        
         // Create the dictionary with the variables assigned above.
         let jsonDict: [String: Any] = [
-            Keys.Request.AppID: appId,
+            Keys.Request.AppID: Bundle.applicationId as Any,
             Keys.Request.Platform: "iOS",
-            Keys.Request.AppVersion: appVersion,
-            Keys.Request.SDKVersion: sdkVersion,
-            Keys.Request.Locale: locale,
-            Keys.Request.SubscriptionID: subscriptionId,
-            Keys.Request.UserID: IndentificationManager.userId
+            Keys.Request.AppVersion: Bundle.appBuildVersion as Any,
+            Keys.Request.SDKVersion: Bundle.inAppSdkVersion as Any,
+            Keys.Request.Locale: Locale.formattedCode as Any
         ]
         
         // Return the serialized JSON object.

@@ -13,7 +13,7 @@ extension Bundle {
         return Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String
     }
     
-    static var buildVersion: String? {
+    static var appBuildVersion: String? {
         return Bundle.main.infoDictionary?["CFBundleVersion"] as? String
     }
     

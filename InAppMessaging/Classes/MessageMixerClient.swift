@@ -77,14 +77,9 @@ class MessageMixerClient: HttpRequestable {
     
     internal func buildHttpBody() -> Data? {
         
-        // Assign all the variables required in request body to configuration server.
-        guard let subscriptionId = CommonUtility().retrieveFromMainBundle(forKey: Keys.Bundle.SubscriptionID) else {
-                return nil
-        }
-        
         // Create the dictionary with the variables assigned above.
         let jsonDict: [String: Any] = [
-            Keys.Request.SubscriptionID: subscriptionId,
+            Keys.Request.SubscriptionID: Bundle.inAppSubscriptionId as Any,
             Keys.Request.UserID: IndentificationManager.userId
         ]
         
