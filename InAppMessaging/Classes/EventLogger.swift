@@ -29,10 +29,10 @@ class EventLogger {
         
         if self.eventLog[eventName] != nil {
             var tempLog = self.eventLog[eventName]
-            tempLog?.append(CommonUtility().getTimeStamp())
+            tempLog?.append(Date().timeIntervalSince1970)
             self.eventLog[eventName] = tempLog
         } else {
-            self.eventLog[eventName] = [CommonUtility().getTimeStamp()]
+            self.eventLog[eventName] = [Date().timeIntervalSince1970]
         }
         
         self.savePropertyList(self.eventLog)
