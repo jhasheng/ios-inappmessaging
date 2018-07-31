@@ -25,7 +25,7 @@ class ConfigurationClient: HttpRequestable {
             return false
         }
         
-        return parseConfigResponse(configResponse: responseData)
+        return self.parseConfigResponse(configResponse: responseData)
     }
     
     /**

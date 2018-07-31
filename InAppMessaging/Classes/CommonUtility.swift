@@ -1,12 +1,12 @@
 /**
- *  Class that provides common utility methods for RakutenInAppMessaging module.
+ *  Struct that provides common utility methods for RakutenInAppMessaging module.
  */
-class CommonUtility {
+struct CommonUtility {
     
     /**
      * Convert Data type responses to [String: Any]? type.
      */
-    internal func convertDataToDictionary(_ data: Data) -> [String: Any]? {
+    static func convertDataToDictionary(_ data: Data) -> [String: Any]? {
         var dataToReturn: [String: Any]?
         
         do {

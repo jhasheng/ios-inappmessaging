@@ -71,7 +71,7 @@ extension HttpRequestable {
                     return
                 }
                 
-                print(CommonUtility().convertDataToDictionary(data)) //TEST.
+                print(CommonUtility.convertDataToDictionary(data)) //TEST.
                 dataToReturn = data
                 
                 // Signal completion of HTTP request.

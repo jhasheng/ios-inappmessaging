@@ -1,7 +1,7 @@
 /**
- * Class to handle logging events by the host application.
+ * Struct to handle logging events by the host application.
  */
-class EventLogger {
+struct EventLogger {
     
     static var eventLog = [String: [Double]]()
     static var plistURL: URL {

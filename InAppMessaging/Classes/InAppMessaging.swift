@@ -47,7 +47,7 @@
         DispatchQueue.global(qos: .background).async {
             EventLogger.logEvent(name)
         }
-        
+
         Presenter().display(name)
     }
     

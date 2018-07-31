@@ -3,20 +3,10 @@
  */
 class MessageMixerClient: HttpRequestable {
     
-    private let commonUtility: CommonUtility
-    private let campaignHelper: CampaignHelper
     private let messageMixerQueue = DispatchQueue(label: "MessageMixerQueue", attributes: .concurrent)
     private var delay: Int = 0 // Milliseconds before pinging Message Mixer server.
     static var campaignDict = [String: [Campaign]]()
     static var listOfShownCampaigns = [String]()
-
-    init(
-        commonUtility: CommonUtility = InjectionContainer.container.resolve(CommonUtility.self)!,
-        campaignHelper: CampaignHelper = InjectionContainer.container.resolve(CampaignHelper.self)!) {
-        
-            self.commonUtility = commonUtility
-            self.campaignHelper = campaignHelper
-    }
     
     internal func enable() {
         self.schedulePingToMixerServer(0) // First initial ping to Message Mixer server.
@@ -63,7 +53,7 @@ class MessageMixerClient: HttpRequestable {
         }
         
         if let campaignResponse = decodedResponse {
-            MessageMixerClient.campaignDict = campaignHelper.mapCampaign(campaignList: campaignResponse.data)
+            MessageMixerClient.campaignDict = CampaignHelper.mapCampaign(campaignList: campaignResponse.data)
             schedulePingToMixerServer(campaignResponse.nextPingMillis)
         }
     }
