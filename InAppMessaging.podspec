@@ -36,4 +36,5 @@ TODO: Add long description of the pod here.
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'Swinject'
   s.dependency 'Nimble'
+  s.dependency 'Quick'
 end

@@ -1,6 +1,8 @@
 PODS:
   - InAppMessaging (0.1.0):
+    - Quick
     - Swinject
+  - Quick (1.3.0)
   - Swinject (2.2.0)
 
 DEPENDENCIES:
@@ -8,6 +10,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Quick
     - Swinject
 
 EXTERNAL SOURCES:
@@ -15,7 +18,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  InAppMessaging: 3301d70b7f9163240b926586835afcfb7608acb6
+  InAppMessaging: 91f2f1f8f1c950176aebbaad9c1cf90c962a72d0
+  Quick: 03278013f71aa05fe9ecabc94fbcc6835f1ee76f
   Swinject: 4ca48bca7de5f398229a26abe1ac902b9f3ee541
 
 PODFILE CHECKSUM: 6a458d41073b3a2a96cd289c5bbe27d5b1e906a4
