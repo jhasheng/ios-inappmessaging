@@ -24,17 +24,13 @@ TODO: Add long description of the pod here.
   s.homepage         = 'https://github.com/dctam/InAppMessaging'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'Daniiel Tam' => 'daniel.a.tam@rakuten.com' }
+  s.author           = { 'Daniel Tam' => 'daniel.a.tam@rakuten.com' }
   s.source           = { :git => 'https://gitpub.rakuten-it.com/projects/ECO/repos/ios-insights.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'InAppMessaging/Classes/**/*.{swift,h,m}'
-  
-#  s.resource_bundles = {
-#    'InAppMessaging' => ['InAppMessaging/Classes/Resources/*.xib']
-#  }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
