@@ -56,7 +56,7 @@ class ConfigurationClientTests: XCTestCase {
                     stubRetrieveFromMainBundle: self.stubDataForRetrieveFromMainBundle,
                     stubCallServer: self.stubDataForCallServer[0]) }
         }
-
+        
         InjectionContainer.container = stubContainer
         XCTAssertTrue(ConfigurationClient().isConfigEnabled())
     }
@@ -69,7 +69,7 @@ class ConfigurationClientTests: XCTestCase {
                     stubRetrieveFromMainBundle: self.stubDataForRetrieveFromMainBundle,
                     stubCallServer: self.stubDataForCallServer[1]) }
         }
-
+        
         InjectionContainer.container = stubContainer
         XCTAssertFalse(ConfigurationClient().isConfigEnabled())
     }
@@ -82,7 +82,7 @@ class ConfigurationClientTests: XCTestCase {
                     stubRetrieveFromMainBundle: self.stubDataForRetrieveFromMainBundle,
                     stubCallServer: self.stubDataForCallServer[0]) }
         }
-
+        
         InjectionContainer.container = stubContainer
         XCTAssertFalse(ConfigurationClient().isConfigEnabled())
     }
@@ -95,7 +95,7 @@ class ConfigurationClientTests: XCTestCase {
                     stubRetrieveFromMainBundle: self.stubDataForRetrieveFromMainBundle,
                     stubCallServer: self.stubDataForCallServer[1]) }
         }
-
+        
         InjectionContainer.container = stubContainer
         XCTAssertFalse(ConfigurationClient().isConfigEnabled())
     }
