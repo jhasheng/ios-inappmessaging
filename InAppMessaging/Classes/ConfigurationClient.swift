@@ -11,21 +11,14 @@ class ConfigurationClient: HttpRequestable {
      * @returns { Bool } value of the enabled flag.
      */
     internal func isConfigEnabled() -> Bool {
-        let configUrlKey = Keys.URL.ConfigServerURL
-        let commonUtility = InjectionContainer.container.resolve(CommonUtility.self)!
         
-        guard let configUrl = commonUtility.retrieveFromMainBundle(forKey: configUrlKey) as? String else {
+        guard let configUrl = Bundle.inAppConfigUrl else {
             #if DEBUG
-                print("InAppMessaging: '\(configUrlKey)' is not valid.")
+                print("InAppMessaging: '\(Keys.URL.ConfigServerURL)' is not valid.")
             #endif
             
             return false
         }
-        
-//        guard let responseData = commonUtility.callServer(withUrl: configUrl, withHTTPMethod: "POST") else {
-//            print("Error calling server.")
-//            return false
-//        }
 
         guard let responseData = self.request(withUrl: configUrl, withHTTPMethod: .post) else {
             print("Error calling server.")

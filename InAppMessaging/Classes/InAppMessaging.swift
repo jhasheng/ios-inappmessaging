@@ -21,8 +21,6 @@
      * configures Rakuten InAppMessaging SDK.
      */
     public class func configure() {
-        print(Locale.formattedCode)
-//        Thread.init(target: self, selector:#selector(initializeSdk), object: nil).start()
         DispatchQueue.global(qos: .background).async {
             InAppMessaging().initializeSdk()
         }
@@ -37,10 +35,8 @@
             return;
         }
         
+        // Enable MessageMixerClient which starts beacon pinging message mixer server.
         messageMixerClient.enable()
-        
-        // Start an instance of the MessageMixerClient which starts beacon pinging message mixer server.
-//        InjectionContainer.container.resolve(MessageMixerClient.self)!
     }
     
     /**

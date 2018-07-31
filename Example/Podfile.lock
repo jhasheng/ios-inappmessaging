@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  InAppMessaging: bc3ffa0bb8554bc557fedce0674d06d99584e272
+  InAppMessaging: 3301d70b7f9163240b926586835afcfb7608acb6
   Swinject: 4ca48bca7de5f398229a26abe1ac902b9f3ee541
 
 PODFILE CHECKSUM: 6a458d41073b3a2a96cd289c5bbe27d5b1e906a4
