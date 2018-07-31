@@ -1,7 +1,7 @@
 /**
  * Class to handle communication with the configuration server.
  */
-struct ConfigurationClient {
+class ConfigurationClient: HttpRequestable {
     
     static var endpoints: EndpointURL?
     
@@ -22,7 +22,12 @@ struct ConfigurationClient {
             return false
         }
         
-        guard let responseData = commonUtility.callServer(withUrl: configUrl, withHTTPMethod: "POST") else {
+//        guard let responseData = commonUtility.callServer(withUrl: configUrl, withHTTPMethod: "POST") else {
+//            print("Error calling server.")
+//            return false
+//        }
+
+        guard let responseData = self.request(withUrl: configUrl, withHTTPMethod: .post) else {
             print("Error calling server.")
             return false
         }
@@ -52,5 +57,32 @@ struct ConfigurationClient {
         }
         
         return enabled
+    }
+    
+    internal func buildHttpBody() -> Data? {
+        
+        // Assign all the variables required in request body to configuration server.
+        guard let appId = CommonUtility().retrieveFromMainBundle(forKey: "CFBundleIdentifier"),
+            let appVersion = CommonUtility().retrieveFromMainBundle(forKey: "CFBundleVersion"),
+            let sdkVersion = CommonUtility().retrieveFromMainBundle(forKey: Keys.Bundle.SDKVersion),
+            let subscriptionId = CommonUtility().retrieveFromMainBundle(forKey: Keys.Bundle.SubscriptionID),
+            let locale = "\(Locale.current)".components(separatedBy: " ").first else {
+                
+                return nil
+        }
+        
+        // Create the dictionary with the variables assigned above.
+        let jsonDict: [String: Any] = [
+            Keys.Request.AppID: appId,
+            Keys.Request.Platform: "iOS",
+            Keys.Request.AppVersion: appVersion,
+            Keys.Request.SDKVersion: sdkVersion,
+            Keys.Request.Locale: locale,
+            Keys.Request.SubscriptionID: subscriptionId,
+            Keys.Request.UserID: IndentificationManager.userId
+        ]
+        
+        // Return the serialized JSON object.
+        return try? JSONSerialization.data(withJSONObject: jsonDict)
     }
 }

@@ -1,7 +1,7 @@
 /**
  * Class to handle communication with InAppMessaging Message Mixer Server.
  */
-class MessageMixerClient {
+class MessageMixerClient: HttpRequestable {
     
     private let commonUtility: CommonUtility
     private let campaignHelper: CampaignHelper
@@ -16,8 +16,10 @@ class MessageMixerClient {
         
             self.commonUtility = commonUtility
             self.campaignHelper = campaignHelper
-        
-            self.schedulePingToMixerServer(0) // First initial ping to Message Mixer server.
+    }
+    
+    internal func enable() {
+        self.schedulePingToMixerServer(0) // First initial ping to Message Mixer server.
     }
     
     /**
@@ -42,7 +44,14 @@ class MessageMixerClient {
             return
         }
         
-        guard let response = commonUtility.callServer(withUrl: mixerServerUrl, withHTTPMethod: "POST") else {
+//        guard let response = commonUtility.callServer(withUrl: mixerServerUrl, withHTTPMethod: "POST") else {
+//            // Exponential backoff for pinging Message Mixer server.
+//            self.delay = (self.delay == 0) ? 1000 : self.delay * 2
+//            schedulePingToMixerServer(self.delay)
+//            return
+//        }
+        
+        guard let response = self.request(withUrl: mixerServerUrl, withHTTPMethod: .post) else {
             // Exponential backoff for pinging Message Mixer server.
             self.delay = (self.delay == 0) ? 1000 : self.delay * 2
             schedulePingToMixerServer(self.delay)
@@ -64,5 +73,30 @@ class MessageMixerClient {
             MessageMixerClient.campaignDict = campaignHelper.mapCampaign(campaignList: campaignResponse.data)
             schedulePingToMixerServer(campaignResponse.nextPingMillis)
         }
+    }
+    
+    internal func buildHttpBody() -> Data? {
+        
+        // Assign all the variables required in request body to configuration server.
+        guard let appId = CommonUtility().retrieveFromMainBundle(forKey: "CFBundleIdentifier"),
+            let appVersion = CommonUtility().retrieveFromMainBundle(forKey: "CFBundleVersion"),
+            let sdkVersion = CommonUtility().retrieveFromMainBundle(forKey: Keys.Bundle.SDKVersion),
+            let subscriptionId = CommonUtility().retrieveFromMainBundle(forKey: Keys.Bundle.SubscriptionID),
+            let locale = "\(Locale.current)".components(separatedBy: " ").first else {
+                
+                return nil
+        }
+        
+        // Create the dictionary with the variables assigned above.
+        let jsonDict: [String: Any] = [
+            Keys.Request.AppID: appId,
+            Keys.Request.Platform: "iOS",
+            Keys.Request.AppVersion: appVersion,
+            Keys.Request.SDKVersion: sdkVersion,
+            Keys.Request.SubscriptionID: subscriptionId
+        ]
+        
+        // Return the serialized JSON object.
+        return try? JSONSerialization.data(withJSONObject: jsonDict)
     }
 }

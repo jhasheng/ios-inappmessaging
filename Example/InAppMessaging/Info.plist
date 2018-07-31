@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>InAppMessagingSubscriptionID</key>
-	<string>38400000-8cf0-11bd-b23e-10b96e4ef00d</string>
+	<string>9e74c041-9431-11e8-b5e8-dd2f119aca9f</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -22,7 +22,7 @@
 	<key>InAppMessagingSDKVersion</key>
 	<string>0</string>
 	<key>InAppMessagingConfigURL</key>
-	<string>http://appmsg-dev-configsvr.westus2.cloudapp.azure.com:3000/config/get-config</string>
+	<string>http:127.0.0.1:3000/config/get-config</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
