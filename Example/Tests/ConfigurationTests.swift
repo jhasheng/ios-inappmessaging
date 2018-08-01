@@ -20,7 +20,7 @@ class ConfigurationTests: QuickSpec {
         }
         
         override func isConfigEnabled() -> Bool {
-            return true
+            return self.returnValueOfIsConfigEnabled
         }
     }
     
@@ -40,7 +40,7 @@ class ConfigurationTests: QuickSpec {
                 
                 InAppMessaging.init(configurationClient: mockConfigurationClient, messageMixerClient: mockMessageMixer).initializeSdk()
                 
-                expect(mockMessageMixer.enabledWasCalled).to(equal(true))
+                expect(mockMessageMixer.enabledWasCalled).to(equal(false))
                 
             }
             

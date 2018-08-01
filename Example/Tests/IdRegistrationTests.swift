@@ -6,7 +6,7 @@
 //  Copyright © 2018 CocoaPods. All rights reserved.
 //
 
-import Quick
-import Nimble
-@testable import InAppMessaging
-
+//import Quick
+//import Nimble
+//@testable import InAppMessaging
+//
