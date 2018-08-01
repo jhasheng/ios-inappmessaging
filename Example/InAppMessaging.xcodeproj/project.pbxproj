@@ -16,6 +16,7 @@
 		B12A7BFC92FB2A23B40FB5FC /* Pods_InAppMessaging_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 622C5C8C61F4187AA79C4021 /* Pods_InAppMessaging_Tests.framework */; };
 		D911DC4F211115730082B950 /* ConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F418282110FD9F00E2158F /* ConfigurationTests.swift */; };
 		D911DC5821115B410082B950 /* IdRegistrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D911DC56211159DE0082B950 /* IdRegistrationTests.swift */; };
+		D911DC5A211234610082B950 /* EventLoggingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D911DC59211234610082B950 /* EventLoggingTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		81EA8FFFFEBFDDCDFA48D543 /* InAppMessaging.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = InAppMessaging.podspec; path = ../InAppMessaging.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9D8B5B22B8667738939AF00A /* Pods-InAppMessaging_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InAppMessaging_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-InAppMessaging_Tests/Pods-InAppMessaging_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D911DC56211159DE0082B950 /* IdRegistrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdRegistrationTests.swift; sourceTree = "<group>"; };
+		D911DC59211234610082B950 /* EventLoggingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventLoggingTests.swift; sourceTree = "<group>"; };
 		D91B6CD720E6A81E00CA4656 /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Presenter.swift; path = ../InAppMessaging/Classes/Resources/Presenter.swift; sourceTree = "<group>"; };
 		D9F418282110FD9F00E2158F /* ConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationTests.swift; sourceTree = "<group>"; };
 		E15257F1C352541770516882 /* Pods-InAppMessaging_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InAppMessaging_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InAppMessaging_Tests/Pods-InAppMessaging_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				D9F418282110FD9F00E2158F /* ConfigurationTests.swift */,
+				D911DC59211234610082B950 /* EventLoggingTests.swift */,
 				D911DC56211159DE0082B950 /* IdRegistrationTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -356,6 +359,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D911DC5A211234610082B950 /* EventLoggingTests.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);

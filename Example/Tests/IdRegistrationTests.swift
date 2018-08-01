@@ -26,9 +26,14 @@ class idRegistrationTests: QuickSpec {
                 expect(expected).toEventually(equal(IndentificationManager.userId))
             }
             
-            it("should having one matching id type and id value ") {
+            /**
+             * The two tests below calls directory from IndentificationManager.registerId rather than
+             * InAppMessaging.registerId because the asynchronous nature in the public method causes
+             * inconsistency when running the tests -- it sometimes fail.
+             */
+            it("should having one matching id type and id value") {
             
-                InAppMessaging.registerId(idType: .easyId, id: "whales and dolphins")
+                IndentificationManager.registerId(.easyId, "whales and dolphins")
                 
                 // Build the expected object.
                 var expected = [[String: String]]()
@@ -37,7 +42,28 @@ class idRegistrationTests: QuickSpec {
                 map["id"] = "whales and dolphins"
                 expected.append(map)
                 
-                expect(expected).toEventually(equal(IndentificationManager.userId), timeout: 3)
+                expect(expected).to(equal(IndentificationManager.userId))
+            }
+            
+            it("should having two matching id type and id value") {
+                
+                IndentificationManager.registerId(.easyId, "whales and dolphins")
+                IndentificationManager.registerId(.rakutenId, "tigers and zebras")
+                
+                // Build the expected object.
+                var expected = [[String: String]]()
+                
+                var firstMap = [String: String]()
+                firstMap["type"] = "easyId"
+                firstMap["id"] = "whales and dolphins"
+                expected.append(firstMap)
+                
+                var secondMap = [String: String]()
+                secondMap["type"] = "rakutenId"
+                secondMap["id"] = "tigers and zebras"
+                expected.append(secondMap)
+                
+                expect(expected).to(equal(IndentificationManager.userId))
             }
         }
     }

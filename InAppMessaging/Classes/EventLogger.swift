@@ -1,7 +1,14 @@
+protocol EventLoggerProtocol {
+    static var plistURL: URL { get }
+    
+    static func savePropertyList(_ plist: Any) throws
+    static func loadPropertyList() throws -> [String: [Double]]
+}
+
 /**
  * Struct to handle logging events by the host application.
  */
-struct EventLogger {
+struct EventLogger: EventLoggerProtocol {
     
     static var eventLog = [String: [Double]]()
     static var plistURL: URL {
@@ -35,23 +42,23 @@ struct EventLogger {
             self.eventLog[eventName] = [Date().timeIntervalSince1970]
         }
         
-        self.savePropertyList(self.eventLog)
+        do {
+            try self.savePropertyList(self.eventLog)
+        } catch {
+            #if DEBUG
+                print(error)
+            #endif
+        }
     }
     
     /**
      * Save the hashmap of timestamps into the plist file located in the 'Documents' directory.
      * @param { plist: Any } object to save.
      */
-    static func savePropertyList(_ plist: Any)
+    static func savePropertyList(_ plist: Any) throws
     {
-        do {
-            let plistData = try PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
-            try plistData.write(to: plistURL)
-        } catch {
-            #if DEBUG
-                print(error)
-            #endif
-        }
+        let plistData = try PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
+        try plistData.write(to: plistURL)
     }
     
     /**
