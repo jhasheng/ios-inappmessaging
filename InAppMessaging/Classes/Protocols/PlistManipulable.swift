@@ -7,6 +7,7 @@ protocol PlistManipulable {
     /**
      * Save any object into the plist file located in plistURL directory.
      * @param { plist: Any } object to save.
+     * @throws when plist fails to serialize
      */
     static func savePropertyList(_ plist: Any) throws
     
@@ -19,6 +20,7 @@ protocol PlistManipulable {
     
     /**
      * Deletes the InAppMessaging's timestamp plist file.
+     * @throws when the plist file manager fails to remove the plist.
      */
     static func deletePropertyList() throws
 }
