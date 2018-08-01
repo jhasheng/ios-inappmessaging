@@ -1,20 +1,20 @@
 /**
  * Protocol to handle plist manipulation.
  */
-protocol EventLoggerProtocol {
+protocol PlistManipulable {
     static var plistURL: URL { get }
     
     static func savePropertyList(_ plist: Any) throws
-    static func loadPropertyList() throws -> [String: [Double]]
+    static func loadPropertyList() throws -> [String: [Any]]
     static func deletePropertyList() throws
 }
 
 /**
- * Default implementation of EventLoggerProtocol.
+ * Default implementation of PlistManipulable.
  */
-extension EventLoggerProtocol {
+extension PlistManipulable {
     /**
-     * Save the hashmap of timestamps into the plist file located in the 'Documents' directory.
+     * Save any object into the plist file located in plistURL directory.
      * @param { plist: Any } object to save.
      */
     static func savePropertyList(_ plist: Any) throws {
@@ -23,14 +23,14 @@ extension EventLoggerProtocol {
     }
     
     /**
-     * Loads the timestamp plist file located in the 'Documents' directory.
-     * @returns { [String: [Double]] } Hashmap of event names to list of timestamps.
+     * Loads the plist file located in the plistURL directory.
+     * @returns { [String: [Any]] } dictionary with the plist file's content.
      * @throws error when plist file cannot be found.
      */
-    static func loadPropertyList() throws -> [String: [Double]] {
+    static func loadPropertyList() throws -> [String: [Any]] {
         let data = try Data(contentsOf: plistURL)
-        guard let plist = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String: [Double]] else {
-            return [String: [Double]]()
+        guard let plist = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String: [Any]] else {
+            return [String: [Any]]()
         }
         
         return plist

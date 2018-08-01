@@ -1,8 +1,8 @@
 /**
  * Struct to handle logging events by the host application.
  */
-struct EventLogger: EventLoggerProtocol {
-    static var eventLog = [String: [Double]]()
+struct EventLogger: PlistManipulable {
+    static var eventLog = [String: [Any]]()
     static var plistURL: URL {
         let documentDirectoryURL =  try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         return documentDirectoryURL.appendingPathComponent(Keys.File.TimestampPlist)
