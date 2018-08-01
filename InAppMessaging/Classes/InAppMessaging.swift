@@ -57,8 +57,9 @@
      * @param { id: String } the string value of the ID.
      */
     public class func registerId(idType: Identification, id: String) {
-        DispatchQueue.global(qos: .background).async {
-            IndentificationManager.registerId(idType, id)
-        }
+//        DispatchQueue.global(qos: .background).async {
+//            IndentificationManager.registerId(idType, id)
+//        }
+        IndentificationManager.registerId(idType, id)
     }
 }

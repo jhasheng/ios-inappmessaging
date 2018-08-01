@@ -15,7 +15,7 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		B12A7BFC92FB2A23B40FB5FC /* Pods_InAppMessaging_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 622C5C8C61F4187AA79C4021 /* Pods_InAppMessaging_Tests.framework */; };
 		D911DC4F211115730082B950 /* ConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F418282110FD9F00E2158F /* ConfigurationTests.swift */; };
-		D911DC57211159DE0082B950 /* IdRegistrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D911DC56211159DE0082B950 /* IdRegistrationTests.swift */; };
+		D911DC5821115B410082B950 /* IdRegistrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D911DC56211159DE0082B950 /* IdRegistrationTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -357,7 +357,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
-				D911DC57211159DE0082B950 /* IdRegistrationTests.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -367,6 +366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D911DC4F211115730082B950 /* ConfigurationTests.swift in Sources */,
+				D911DC5821115B410082B950 /* IdRegistrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
