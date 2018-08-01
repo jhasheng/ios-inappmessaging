@@ -1,5 +1,3 @@
-//
-//  IdRegistrationTests.swift
 import Quick
 import Nimble
 @testable import InAppMessaging
