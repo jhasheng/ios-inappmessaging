@@ -63,17 +63,16 @@ extension HttpRequestable {
             URLSession.shared.dataTask(with: request, completionHandler: {(data, response, error) in
                 
                 if let err = error {
-                    print("Error is: \(err)")
+                    print("InAppMessaging: \(err)")
                     return
                 }
                 
                 guard let data = data else {
-                    print("Data returned is nil")
+                    print("InAppMessaging: data returned is nil")
                     semaphore.signal()
                     return
                 }
                 
-                print(CommonUtility.convertDataToDictionary(data)) //TEST.
                 dataToReturn = data
                 
                 // Signal completion of HTTP request.

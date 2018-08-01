@@ -21,7 +21,7 @@ class ConfigurationClient: HttpRequestable {
         }
 
         guard let responseData = self.request(withUrl: configUrl, withHTTPMethod: .post) else {
-            print("Error calling server.")
+            print("InAppMessaging: Error calling server.")
             return false
         }
         
@@ -46,7 +46,7 @@ class ConfigurationClient: HttpRequestable {
             }
             
         } catch let error {
-            print("Failed to parse json:", error)
+            print("InAppMessaging: Failed to parse json:", error)
         }
         
         return enabled

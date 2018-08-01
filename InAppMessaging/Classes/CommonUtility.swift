@@ -17,7 +17,7 @@ struct CommonUtility {
             
             dataToReturn = jsonData
         } catch let error {
-            print("Error converting data: \(error)")
+            print("InAppMessaging: Error converting data: \(error)")
             return nil
         }
         

@@ -32,7 +32,7 @@ class MessageMixerClient: HttpRequestable {
     fileprivate func pingMixerServer() {
         guard let mixerServerUrl = ConfigurationClient.endpoints?.ping else {
             #if DEBUG
-                print("Error retrieving InAppMessaging Mixer Server URL")
+                print("InAppMessaging: Error retrieving InAppMessaging Mixer Server URL")
             #endif
             return
         }
@@ -51,7 +51,7 @@ class MessageMixerClient: HttpRequestable {
             decodedResponse = try decoder.decode(CampaignResponse.self, from: response)
         } catch let error {
             #if DEBUG
-                print("Failed to parse json:", error)
+                print("InAppMessaging: Failed to parse json:", error)
             #endif
         }
         

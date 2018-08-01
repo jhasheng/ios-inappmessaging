@@ -5,7 +5,7 @@ import Nimble
 /**
  * Tests for behavior when registering IDs to the SDK.
  */
-class idRegistrationTests: QuickSpec {
+class IdRegistrationTests: QuickSpec {
     
     override func spec() {
         
