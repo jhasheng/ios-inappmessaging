@@ -48,7 +48,7 @@
             EventLogger.logEvent(name)
         }
 
-        Presenter().display(name)
+        InAppMessagingViewController().display(name)
     }
     
     /**

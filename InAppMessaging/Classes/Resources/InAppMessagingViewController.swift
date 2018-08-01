@@ -1,7 +1,7 @@
 /**
  * Handle all the displaying logic of the SDK.
  */
-public class Presenter: UIViewController {
+public class InAppMessagingViewController: UIViewController {
     
     /**
      * Contains logic to display the correct view type -- modal, slideup, fullscreen, html -- and create
