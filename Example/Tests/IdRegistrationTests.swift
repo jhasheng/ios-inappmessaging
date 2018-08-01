@@ -21,9 +21,9 @@ class idRegistrationTests: QuickSpec {
         context("ID Registration") {
             
             it("should not have any matching id type or id value") {
-                var expected = [[String: String]]()
+                let expected = [[String: String]]()
                 
-                expect(expected).to(equal(IndentificationManager.userId))
+                expect(expected).toEventually(equal(IndentificationManager.userId))
             }
             
             it("should having one matching id type and id value ") {
@@ -37,30 +37,8 @@ class idRegistrationTests: QuickSpec {
                 map["id"] = "whales and dolphins"
                 expected.append(map)
                 
-                expect(expected).to(equal(IndentificationManager.userId))
-            }
-            
-            it("should have two matching id type and id value") {
-                
-                InAppMessaging.registerId(idType: .easyId, id: "whales and dolphins")
-                InAppMessaging.registerId(idType: .rakutenId, id: "tigers and zebras")
-                
-                // Build the expected object.
-                var expected = [[String: String]]()
-                
-                var firstMap = [String: String]()
-                firstMap["type"] = "easyId"
-                firstMap["id"] = "whales and dolphins"
-                expected.append(firstMap)
-                
-                var secondMap = [String: String]()
-                secondMap["type"] = "rakutenId"
-                secondMap["id"] = "tigers and zebras"
-                expected.append(secondMap)
-                
-                expect(expected).to(equal(IndentificationManager.userId))
+                expect(expected).toEventually(equal(IndentificationManager.userId), timeout: 3)
             }
         }
     }
-    
 }
