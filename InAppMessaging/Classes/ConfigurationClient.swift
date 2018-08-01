@@ -33,7 +33,7 @@ class ConfigurationClient: HttpRequestable {
      * @param { configResponse: [String: Any] } response as a dictionary equivalent.
      * @returns { Bool } the value of the 'enabled' flag.
      */
-    fileprivate func parseConfigResponse(configResponse: Data) -> Bool {
+    func parseConfigResponse(configResponse: Data) -> Bool {
         var enabled: Bool = false
         
         do {

@@ -36,12 +36,12 @@ struct CampaignData: Decodable {
 struct Trigger: Decodable {
     let type: String
     let event: String
-    let triggerDelay: Int
+    let displayDelay: Int
     
     enum CodingKeys: String, CodingKey {
         case type
         case event
-        case triggerDelay
+        case displayDelay
     }
 }
 

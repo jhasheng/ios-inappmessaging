@@ -29,7 +29,7 @@
     /**
      * Function to initialize InAppMessaging Module.
      */
-    fileprivate func initializeSdk() {
+    internal func initializeSdk() {
         // Return and exit thread if SDK were to be disabled.
         if !self.configurationClient.isConfigEnabled() {
             return;
