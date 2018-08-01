@@ -1,12 +1,6 @@
-//
-//  Bundle+IAM.swift
-//  InAppMessaging
-//
-//  Created by Tam, Daniel a on 7/31/18.
-//
-
-import Foundation
-
+/**
+ * Extension to Bundle class to provide computed properties required by InAppMessaing.
+ */
 extension Bundle {
     
     static var applicationId: String? {

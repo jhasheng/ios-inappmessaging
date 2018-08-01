@@ -1,10 +1,6 @@
-//
-//  HttpRequestable.swift
-//  InAppMessaging
-//
-//  Created by Tam, Daniel a on 7/30/18.
-//
-
+/**
+ * Enum for HTTPRequestable protcol for http methods.
+ */
 enum HttpMethod: String {
     case post
     case get
@@ -25,6 +21,9 @@ enum HttpMethod: String {
     }
 }
 
+/**
+ * Protocol that is conformed to when a class requires HTTP communication abilities.
+ */
 protocol HttpRequestable {
     
     /**
@@ -42,6 +41,9 @@ protocol HttpRequestable {
     func buildHttpBody() -> Data?
 }
 
+/**
+ * Default implementation of HttpRequestable.
+ */
 extension HttpRequestable {
     func request(withUrl: String, withHTTPMethod: HttpMethod) -> Data? {
         var dataToReturn: Data?

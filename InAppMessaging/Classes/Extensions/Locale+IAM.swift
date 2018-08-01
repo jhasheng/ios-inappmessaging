@@ -1,12 +1,6 @@
-//
-//  Locale+IAM.swift
-//  InAppMessaging
-//
-//  Created by Tam, Daniel a on 7/31/18.
-//
-
-import Foundation
-
+/**
+ * Extension to Locale class to provide computed properties required by InAppMessaing.
+ */
 extension Locale {
     
     static var formattedCode: String? {

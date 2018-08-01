@@ -8,6 +8,9 @@ class MessageMixerClient: HttpRequestable {
     static var campaignDict = [String: [Campaign]]()
     static var listOfShownCampaigns = [String]()
     
+    /**
+     * Starts the first first to Message Mixer server.
+     */
     internal func enable() {
         self.schedulePingToMixerServer(0) // First initial ping to Message Mixer server.
     }

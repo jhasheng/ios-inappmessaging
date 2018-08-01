@@ -1,5 +1,5 @@
 /**
- * Protocol to handle plist manipulation.
+ * Protocol that is conformed to when a class has to manipulate property list files.
  */
 protocol PlistManipulable {
     static var plistURL: URL { get }
