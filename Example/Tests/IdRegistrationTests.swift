@@ -27,7 +27,7 @@ class IdRegistrationTests: QuickSpec {
              * inconsistency when running the tests -- it sometimes fail. Running the non-async
              * function will resolve this issue.
              */
-            it("should having one matching id type and id value") {
+            it("should have one matching id type and id value") {
             
                 IndentificationManager.registerId(.easyId, "whales and dolphins")
                 
@@ -41,7 +41,7 @@ class IdRegistrationTests: QuickSpec {
                 expect(expected).to(equal(IndentificationManager.userId))
             }
             
-            it("should having two matching id type and id value") {
+            it("should have two matching id type and id value") {
                 
                 IndentificationManager.registerId(.easyId, "whales and dolphins")
                 IndentificationManager.registerId(.rakutenId, "tigers and zebras")
