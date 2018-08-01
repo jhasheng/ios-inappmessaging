@@ -16,7 +16,7 @@
 		B12A7BFC92FB2A23B40FB5FC /* Pods_InAppMessaging_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 622C5C8C61F4187AA79C4021 /* Pods_InAppMessaging_Tests.framework */; };
 		D911DC4F211115730082B950 /* ConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F418282110FD9F00E2158F /* ConfigurationTests.swift */; };
 		D911DC5821115B410082B950 /* IdRegistrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D911DC56211159DE0082B950 /* IdRegistrationTests.swift */; };
-		D911DC5A211234610082B950 /* EventLoggingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D911DC59211234610082B950 /* EventLoggingTests.swift */; };
+		D911DC5B211236080082B950 /* EventLoggingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D911DC59211234610082B950 /* EventLoggingTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -359,7 +359,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D911DC5A211234610082B950 /* EventLoggingTests.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
@@ -369,6 +368,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D911DC5B211236080082B950 /* EventLoggingTests.swift in Sources */,
 				D911DC4F211115730082B950 /* ConfigurationTests.swift in Sources */,
 				D911DC5821115B410082B950 /* IdRegistrationTests.swift in Sources */,
 			);

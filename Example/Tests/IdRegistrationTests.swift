@@ -29,7 +29,8 @@ class idRegistrationTests: QuickSpec {
             /**
              * The two tests below calls directory from IndentificationManager.registerId rather than
              * InAppMessaging.registerId because the asynchronous nature in the public method causes
-             * inconsistency when running the tests -- it sometimes fail.
+             * inconsistency when running the tests -- it sometimes fail. Running the non-async
+             * function will resolve this issue.
              */
             it("should having one matching id type and id value") {
             
@@ -53,15 +54,15 @@ class idRegistrationTests: QuickSpec {
                 // Build the expected object.
                 var expected = [[String: String]]()
                 
-                var firstMap = [String: String]()
-                firstMap["type"] = "easyId"
-                firstMap["id"] = "whales and dolphins"
-                expected.append(firstMap)
+                var firstId = [String: String]()
+                firstId["type"] = "easyId"
+                firstId["id"] = "whales and dolphins"
+                expected.append(firstId)
                 
-                var secondMap = [String: String]()
-                secondMap["type"] = "rakutenId"
-                secondMap["id"] = "tigers and zebras"
-                expected.append(secondMap)
+                var secondId = [String: String]()
+                secondId["type"] = "rakutenId"
+                secondId["id"] = "tigers and zebras"
+                expected.append(secondId)
                 
                 expect(expected).to(equal(IndentificationManager.userId))
             }
