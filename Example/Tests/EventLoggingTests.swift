@@ -18,13 +18,13 @@ class EventLoggingTests: QuickSpec {
         
         beforeEach {
             do {
-                try FileManager.default.removeItem(at: MockEventLogger.plistURL)
+                try MockEventLogger.deletePropertyList()
             } catch {}
         }
         
         afterSuite {
             do {
-                try FileManager.default.removeItem(at: MockEventLogger.plistURL)
+                try MockEventLogger.deletePropertyList()
             } catch {}
         }
         
