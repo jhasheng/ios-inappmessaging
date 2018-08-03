@@ -22,8 +22,8 @@ class IdRegistrationTests: QuickSpec {
             }
             
             /**
-             * The two tests below calls directory from IndentificationManager.registerId rather than
-             * InAppMessaging.registerId because the asynchronous nature in the public method causes
+             * The two tests below calls directly from IndentificationManager.registerId() rather than
+             * InAppMessaging.registerId() because the asynchronous nature in the public method causes
              * inconsistency when running the tests -- it sometimes fail. Running the non-async
              * function will resolve this issue.
              */
