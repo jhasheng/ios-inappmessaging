@@ -21,14 +21,8 @@ class InAppMessagingViewController: UIViewController {
 
         // TODO(daniel.tam) Add the other view types.
         switch campaignViewType {
-            case "MODAL":
+            case .modal:
                 view = ModalView(campaign: campaignToDisplay)
-                break;
-            case "slideup":
-                break;
-            case "fullscreen":
-                break;
-            case "html":
                 break;
             default:
                 break;

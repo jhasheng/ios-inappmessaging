@@ -88,9 +88,9 @@ struct CampaignHelper {
     /**
      * Parses the campaign passed in for the view type. E.G modal/slideup/etc.
      * @param { campaign: CampaignData } campaign to parse through.
-     * @returns { String? } optional value of the view type field of the campaign.
+     * @returns { ViewType? } optional value of the view type field of the campaign.
      */
-    static func findViewType(campaign: CampaignData) -> String? {
-        return campaign.type
+    static func findViewType(campaign: CampaignData) -> ViewType? {
+        return ViewType(rawValue: campaign.type)
     }
 }
