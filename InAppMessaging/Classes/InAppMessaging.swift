@@ -7,6 +7,7 @@
     
     private let configurationClient: ConfigurationClient
     private let messageMixerClient: MessageMixerClient
+    private static var isEnabled = false;
     
     init(
         configurationClient: ConfigurationClient = InjectionContainer.container.resolve(ConfigurationClient.self)!,
@@ -20,9 +21,11 @@
      * Function to be called by host application to start a new thread that
      * configures Rakuten InAppMessaging SDK.
      */
-    public class func configure() {
-        DispatchQueue.global(qos: .userInitiated).async {
-            InAppMessaging().initializeSdk()
+    @objc public class func configure() {
+        if !InAppMessaging.isEnabled {
+            DispatchQueue.global(qos: .userInitiated).async {
+                InAppMessaging().initializeSdk()
+            }
         }
     }
     
@@ -34,6 +37,8 @@
         if !self.configurationClient.isConfigEnabled() {
             return;
         }
+        
+        InAppMessaging.isEnabled = true;
         
         // Enable MessageMixerClient which starts beacon pinging message mixer server.
         messageMixerClient.enable()

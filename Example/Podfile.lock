@@ -1,10 +1,10 @@
 PODS:
   - InAppMessaging (0.1.0):
-    - ReachabilitySwift
+    - Reachability
     - Swinject
   - Nimble (7.1.2)
   - Quick (1.3.0)
-  - ReachabilitySwift (4.1.0)
+  - Reachability (3.2)
   - Swinject (2.2.0)
 
 DEPENDENCIES:
@@ -16,7 +16,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Nimble
     - Quick
-    - ReachabilitySwift
+    - Reachability
     - Swinject
 
 EXTERNAL SOURCES:
@@ -24,10 +24,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  InAppMessaging: 003234ad4fe366677ab2f677015a286b0bdc6db8
+  InAppMessaging: c6814d07b7d13a454a9e6fb80848ed4070fcf614
   Nimble: 3835ba9f459daa6b347f8a8e110aaae8ca1920a8
   Quick: 03278013f71aa05fe9ecabc94fbcc6835f1ee76f
-  ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   Swinject: 4ca48bca7de5f398229a26abe1ac902b9f3ee541
 
 PODFILE CHECKSUM: 84fce570227b5468ffda40cb50120b81012470da

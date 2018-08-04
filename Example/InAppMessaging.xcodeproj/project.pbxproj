@@ -219,7 +219,7 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 5J4GVGN58B;
+						DevelopmentTeam = 87CT3T3CK2;
 						LastSwiftMigration = 0900;
 					};
 					607FACE41AFB9204008FA782 = {
@@ -278,7 +278,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-InAppMessaging_Tests/Pods-InAppMessaging_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/InAppMessaging/InAppMessaging.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
 				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
@@ -322,7 +322,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-InAppMessaging_Example/Pods-InAppMessaging_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/InAppMessaging/InAppMessaging.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -514,11 +514,11 @@
 			baseConfigurationReference = 50F1704495F3F391B0062778 /* Pods-InAppMessaging_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 5J4GVGN58B;
+				DEVELOPMENT_TEAM = 87CT3T3CK2;
 				INFOPLIST_FILE = InAppMessaging/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.demo.InAppMessaging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -530,11 +530,11 @@
 			baseConfigurationReference = 2E896E50C43FA5C6A4C2639D /* Pods-InAppMessaging_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 5J4GVGN58B;
+				DEVELOPMENT_TEAM = 87CT3T3CK2;
 				INFOPLIST_FILE = InAppMessaging/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.demo.InAppMessaging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
