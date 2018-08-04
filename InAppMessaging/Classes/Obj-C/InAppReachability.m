@@ -7,7 +7,7 @@
 // Initialize instance for Reachability API.
 Reachability* reach;
 
-@implementation InAppReachability: NSObject
+@implementation InAppReachability
 
 + (void)load {
     // Listener for network changes.
