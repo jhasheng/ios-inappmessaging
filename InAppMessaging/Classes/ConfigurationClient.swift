@@ -3,6 +3,7 @@
  */
 class ConfigurationClient: HttpRequestable {
     
+    private static var delay: Int = 0
     static var endpoints: EndpointURL?
     
     /**
@@ -22,6 +23,9 @@ class ConfigurationClient: HttpRequestable {
 
         guard let responseData = self.request(withUrl: configUrl, withHTTPMethod: .post) else {
             print("InAppMessaging: Error calling server.")
+            // Exponential backoff for pinging Configuration server.
+            ConfigurationClient.delay = (ConfigurationClient.delay == 0) ? 10000 : ConfigurationClient.delay * 2
+            WorkScheduler.scheduleTask(ConfigurationClient.delay, closure: InAppMessaging.configure)
             return false
         }
         
