@@ -12,7 +12,7 @@
 
 /**
  * Invoked when network status changes.
- * Retry talking to configuration server if unsuccessful befo
+ * Retry communicating with configuration server if unsuccessful on previous attempt.
  */
 + (void)reachabilityChanged;
 
