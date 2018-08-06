@@ -51,19 +51,4 @@ class ConfigurationClient: HttpRequestable {
         
         return enabled
     }
-    
-    internal func buildHttpBody() -> Data? {
-        
-        // Create the dictionary with the variables assigned above.
-        let jsonDict: [String: Any] = [
-            Keys.Request.AppID: Bundle.applicationId as Any,
-            Keys.Request.Platform: "iOS",
-            Keys.Request.AppVersion: Bundle.appBuildVersion as Any,
-            Keys.Request.SDKVersion: Bundle.inAppSdkVersion as Any,
-            Keys.Request.Locale: Locale.formattedCode as Any
-        ]
-        
-        // Return the serialized JSON object.
-        return try? JSONSerialization.data(withJSONObject: jsonDict)
-    }
 }
