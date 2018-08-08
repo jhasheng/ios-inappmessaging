@@ -1,5 +1,5 @@
 /**
- * Extension to Bundle class to provide computed properties required by InAppMessaing.
+ * Extension to Bundle class to provide computed properties required by InAppMessaging.
  */
 extension Bundle {
     

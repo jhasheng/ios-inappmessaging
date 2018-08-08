@@ -29,10 +29,9 @@ class ModalView: UIView, Modal {
      */
     internal func initialize(campaign: CampaignData) {
         
+        var hasImage = false
         
-        let semaphore = DispatchSemaphore(value: 0)
-        
-        // Background view.
+        // The opaque black background of modals.
         backgroundView.frame = frame
         backgroundView.backgroundColor = .black
         self.addSubview(backgroundView)
@@ -42,59 +41,49 @@ class ModalView: UIView, Modal {
         var currentHeight: CGFloat = 0
         
         if let imageUrl = campaign.messagePayload.resource.imageUrl {
-            let imageView = UIImageView(frame: CGRect(x: 0, y: 8, width: dialogViewWidth, height: 300))
+            hasImage = true
+            //TODO(Daniel Tam) Update aspect ratio here when finalized.
+            let imageView = UIImageView(frame: CGRect(x: 0, y: currentHeight, width: dialogViewWidth, height: dialogViewWidth / 2.9))
             imageView.contentMode = .scaleAspectFit
             
-            imageView.sd_setImage(with: URL(string: "https://i.imgur.com/OS8YlDG.jpg"), placeholderImage: nil) { (image, error, SDImageCacheType, url) in
-                semaphore.signal()
+            imageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil) { (image, error, SDImageCacheType, url) in
+                self.addSubview(self.dialogView)
             }
-
+            
             dialogView.addSubview(imageView)
             
-            currentHeight += imageView.frame.height + 8
+            currentHeight += imageView.frame.height
         }
 
         // Header title.
         if let headerMessage = campaign.messagePayload.header {
-            let messageHeaderLabel = UILabel(frame: CGRect(x: 8, y: currentHeight, width: dialogViewWidth - 16, height: 60))
-            messageHeaderLabel.text = headerMessage
-            messageHeaderLabel.textAlignment = .center
-            messageHeaderLabel.font = UIFont.boldSystemFont(ofSize: 16)
-            messageHeaderLabel.font = messageHeaderLabel.font.withSize(20)
-            dialogView.addSubview(messageHeaderLabel)
+            let headerMessageLabel = UILabel(frame: CGRect(x: 8, y: currentHeight, width: dialogViewWidth - 16, height: 60))
+            headerMessageLabel.text = headerMessage
+            headerMessageLabel.textAlignment = .center
+            headerMessageLabel.lineBreakMode = .byWordWrapping
+            headerMessageLabel.numberOfLines = 0
+            headerMessageLabel.font = UIFont.boldSystemFont(ofSize: 16)
+            headerMessageLabel.font = headerMessageLabel.font.withSize(20)
+            headerMessageLabel.frame.size.height = headerMessageLabel.optimalHeight
+            dialogView.addSubview(headerMessageLabel)
             
-            currentHeight += messageHeaderLabel.frame.height + 8
+            currentHeight += headerMessageLabel.frame.height + 8
         }
         
+        // Body message.
         if let bodyMessage = campaign.messagePayload.messageBody {
-            let messageBody = UILabel(frame: CGRect(x: 8, y: currentHeight, width: dialogViewWidth - 16, height: 60))
-            messageBody.text = bodyMessage
-            messageBody.textAlignment = .center
-            dialogView.addSubview(messageBody)
+            let bodyMessageLabel = UILabel(frame: CGRect(x: 8, y: currentHeight, width: dialogViewWidth - 16, height: 60))
+            bodyMessageLabel.text = bodyMessage
+            bodyMessageLabel.textAlignment = .center
+            bodyMessageLabel.lineBreakMode = .byWordWrapping
+            bodyMessageLabel.numberOfLines = 0
+            bodyMessageLabel.frame.size.height = bodyMessageLabel.optimalHeight
+            dialogView.addSubview(bodyMessageLabel)
             
-            currentHeight += messageBody.frame.height + 8
+            currentHeight += bodyMessageLabel.frame.height + 8
         }
         
-//        messageHeader.text = campaign.messagePayload.header
-//        messageHeader.textAlignment = .center
-//        dialogView.addSubview(messageHeader)
-        
-        // Separator between header title and message body
-//        let separatorLineView = UIView()
-//        separatorLineView.frame.origin = CGPoint(x: 8, y: currentHeight + 8)
-//        separatorLineView.frame.size = CGSize(width: dialogViewWidth, height: 1)
-//        separatorLineView.backgroundColor = .groupTableViewBackground
-//        dialogView.addSubview(separatorLineView)
-        
-//        let heightAfterSeparator = messageHeader.frame.height + 8 + separatorLineView.frame.height + 8
-//
-//        // Message body.
-//        let messageBody = UILabel(frame: CGRect(x: 8, y: heightAfterSeparator, width: dialogViewWidth - 16, height: 60))
-//        messageBody.text = campaign.messagePayload.messageBody
-//        messageBody.textAlignment = .center
-//        dialogView.addSubview(messageBody)
-//
-//        // The top right "X" button to dismiss.
+        // The top right "X" button to dismiss.
         let exitButton = UILabel(frame: CGRect(x: dialogViewWidth - 25, y: 4, width: 20, height: 20))
         exitButton.text = "X"
         exitButton.backgroundColor = .gray
@@ -107,17 +96,15 @@ class ModalView: UIView, Modal {
         dialogView.addSubview(exitButton)
         
         // The dialog view which is the rounded rectangle in the center.
-//        let dialogViewHeight = messageHeader.frame.height + 8 + messageBody.frame.height + 8 + separatorLineView.frame.height + 8
         dialogView.frame.origin = CGPoint(x: 32, y: frame.height)
         dialogView.frame.size = CGSize(width: dialogViewWidth, height: currentHeight)
         dialogView.backgroundColor = .white
         dialogView.layer.cornerRadius = 6
         dialogView.clipsToBounds = true
-//        semaphore.wait()
         
-
-        
-        self.addSubview(dialogView)
+        if !hasImage {
+            self.addSubview(dialogView)
+        }
     }
     
     /**
