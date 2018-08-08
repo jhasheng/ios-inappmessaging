@@ -110,7 +110,7 @@ class ModalView: UIView, Modal {
     /**
      * Obj-c selector to dismiss the modal view when the 'X' is tapped.
      */
-    @objc internal func didTappedOnExitButton(){
+    @objc fileprivate func didTappedOnExitButton(){
         dismiss()
     }
 }
