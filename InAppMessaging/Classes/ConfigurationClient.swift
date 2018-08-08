@@ -1,7 +1,7 @@
 /**
  * Class to handle communication with the configuration server.
  */
-struct ConfigurationClient {
+class ConfigurationClient: HttpRequestable {
     
     static var endpoints: EndpointURL?
     
@@ -11,23 +11,21 @@ struct ConfigurationClient {
      * @returns { Bool } value of the enabled flag.
      */
     internal func isConfigEnabled() -> Bool {
-        let configUrlKey = Keys.URL.ConfigServerURL
-        let commonUtility = InjectionContainer.container.resolve(CommonUtility.self)!
         
-        guard let configUrl = commonUtility.retrieveFromMainBundle(forKey: configUrlKey) as? String else {
+        guard let configUrl = Bundle.inAppConfigUrl else {
             #if DEBUG
-                print("InAppMessaging: '\(configUrlKey)' is not valid.")
+                print("InAppMessaging: '\(Keys.URL.ConfigServerURL)' is not valid.")
             #endif
             
             return false
         }
-        
-        guard let responseData = commonUtility.callServer(withUrl: configUrl, withHTTPMethod: "POST") else {
-            print("Error calling server.")
+
+        guard let responseData = self.request(withUrl: configUrl, withHTTPMethod: .post) else {
+            print("InAppMessaging: Error calling server.")
             return false
         }
         
-        return parseConfigResponse(configResponse: responseData)
+        return self.parseConfigResponse(configResponse: responseData)
     }
     
     /**
@@ -35,7 +33,7 @@ struct ConfigurationClient {
      * @param { configResponse: [String: Any] } response as a dictionary equivalent.
      * @returns { Bool } the value of the 'enabled' flag.
      */
-    fileprivate func parseConfigResponse(configResponse: Data) -> Bool {
+    internal func parseConfigResponse(configResponse: Data) -> Bool {
         var enabled: Bool = false
         
         do {
@@ -48,9 +46,24 @@ struct ConfigurationClient {
             }
             
         } catch let error {
-            print("Failed to parse json:", error)
+            print("InAppMessaging: Failed to parse json:", error)
         }
         
         return enabled
+    }
+    
+    internal func buildHttpBody() -> Data? {
+        
+        // Create the dictionary with the variables assigned above.
+        let jsonDict: [String: Any] = [
+            Keys.Request.AppID: Bundle.applicationId as Any,
+            Keys.Request.Platform: "iOS",
+            Keys.Request.AppVersion: Bundle.appBuildVersion as Any,
+            Keys.Request.SDKVersion: Bundle.inAppSdkVersion as Any,
+            Keys.Request.Locale: Locale.formattedCode as Any
+        ]
+        
+        // Return the serialized JSON object.
+        return try? JSONSerialization.data(withJSONObject: jsonDict)
     }
 }

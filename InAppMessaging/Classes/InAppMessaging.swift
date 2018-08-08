@@ -1,32 +1,42 @@
 /**
  * Class that contains the public methods for host application to call.
  * Entry point for host application to communicate with InAppMessaging.
+ * Conforms to NSObject and exposed with objc tag to make it work with Obj-c projects.
  */
-public class InAppMessaging {
+@objc public class InAppMessaging: NSObject {
+    
+    private let configurationClient: ConfigurationClient
+    private let messageMixerClient: MessageMixerClient
+    
+    init(
+        configurationClient: ConfigurationClient = InjectionContainer.container.resolve(ConfigurationClient.self)!,
+        messageMixerClient: MessageMixerClient = InjectionContainer.container.resolve(MessageMixerClient.self)!) {
+        
+            self.configurationClient = configurationClient
+            self.messageMixerClient = messageMixerClient
+    }
     
     /**
      * Function to be called by host application to start a new thread that
      * configures Rakuten InAppMessaging SDK.
      */
     public class func configure() {
-        Thread.init(target: self, selector:#selector(initializeSdk), object: nil).start()
+        DispatchQueue.global(qos: .userInitiated).async {
+            InAppMessaging().initializeSdk()
+        }
     }
     
     /**
      * Function to initialize InAppMessaging Module.
-     * Wrapped with @objc so that it can be used as a Selector.
      */
-    @objc static func initializeSdk() {
-        // Resolve container to a ConfigurationClient instance.
-        let configurationClient = InjectionContainer.container.resolve(ConfigurationClient.self)!
-        
+    internal func initializeSdk() {
         // Return and exit thread if SDK were to be disabled.
-        if !configurationClient.isConfigEnabled() {
+        if !self.configurationClient.isConfigEnabled() {
             return;
         }
         
-        // Start an instance of the MessageMixerClient which starts beacon pinging message mixer server.
-        InjectionContainer.container.resolve(MessageMixerClient.self)!
+        // Enable MessageMixerClient which starts beacon pinging message mixer server.
+        messageMixerClient.enable()
     }
     
     /**
@@ -37,8 +47,8 @@ public class InAppMessaging {
         DispatchQueue.global(qos: .background).async {
             EventLogger.logEvent(name)
         }
-        
-        Presenter().display(name)
+
+        InAppMessagingViewController.display(name)
     }
     
     /**
@@ -47,7 +57,7 @@ public class InAppMessaging {
      * @param { id: String } the string value of the ID.
      */
     public class func registerId(idType: Identification, id: String) {
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInitiated).async {
             IndentificationManager.registerId(idType, id)
         }
     }

@@ -15,7 +15,7 @@ struct Campaign: Decodable {
     let campaignData: CampaignData
     
     enum CodingKeys: String, CodingKey {
-        case campaignData = "campaignData"
+        case campaignData
     }
 }
 
@@ -26,10 +26,10 @@ struct CampaignData: Decodable {
     let messagePayload: MessagePayload
     
     enum CodingKeys: String, CodingKey {
-        case campaignId = "campaignId"
+        case campaignId
         case type
         case triggers
-        case messagePayload = "messagePayload"
+        case messagePayload
     }
 }
 
@@ -41,7 +41,7 @@ struct Trigger: Decodable {
     enum CodingKeys: String, CodingKey {
         case type
         case event
-        case displayDelay = "displayDelay"
+        case displayDelay
     }
 }
 
@@ -59,15 +59,15 @@ struct MessagePayload: Decodable {
     
     enum CodingKeys: String, CodingKey {
         case title
-        case messageBody = "messageBody"
+        case messageBody
         case header
-        case titleColor = "titleColor"
-        case headerColor = "headerColor"
-        case messageBodyColor = "messageBodyColor"
-        case backgroundColor = "backgroundColor"
-        case frameColor = "frameColor"
+        case titleColor
+        case headerColor
+        case messageBodyColor
+        case backgroundColor
+        case frameColor
         case resource
-        case messageSettings = "messageSettings"
+        case messageSettings
     }
 }
 
@@ -77,9 +77,9 @@ struct Resource: Decodable {
     let cropType: String
     
     enum CodingKeys: String, CodingKey {
-        case assetsUrl = "assetsUrl"
-        case imageUrl = "imageUrl"
-        case cropType = "cropType"
+        case assetsUrl
+        case imageUrl
+        case cropType
     }
 }
 
@@ -88,8 +88,8 @@ struct MessageSettings: Decodable {
     let controlSettings: ControlSettings?
     
     enum CodingKeys: String, CodingKey {
-        case displaySettings = "displaySettings"
-        case controlSettings = "controlSettings"
+        case displaySettings
+        case controlSettings
     }
 }
 
@@ -101,17 +101,17 @@ struct DisplaySettings: Decodable {
     
     enum CodingKeys: String, CodingKey {
         case orientation
-        case slideFrom = "slideFrom"
+        case slideFrom
         case endTimeMillis
-        case textAlign = "textAlign"
+        case textAlign
     }
 }
 
 struct ControlSettings: Decodable {
-    let button: [Button]
+    let buttons: [Button]
     
     enum CodingKeys: String, CodingKey {
-        case button
+        case buttons
     }
 }
 
@@ -122,10 +122,10 @@ struct Button: Decodable {
     let buttonBehavior: ButtonBehavior
     
     enum CodingKeys: String, CodingKey {
-        case buttonText = "buttonText"
-        case buttonTextColor = "buttonTextColor"
-        case buttonBackgroundColor = "buttonBackgroundColor"
-        case buttonBehavior = "buttonBehavior"
+        case buttonText
+        case buttonTextColor
+        case buttonBackgroundColor
+        case buttonBehavior
     }
 }
 

@@ -1,14 +1,13 @@
 /**
- * Class to handle logging events by the host application.
+ * Struct to handle logging events by the host application.
  */
-class EventLogger {
-    
-    static var eventLog = [String: [Double]]()
+struct EventLogger: PlistManipulable {
+    static var eventLog = [String: [Any]]()
     static var plistURL: URL {
         let documentDirectoryURL =  try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         return documentDirectoryURL.appendingPathComponent(Keys.File.TimestampPlist)
     }
-
+    
     /**
      * Log the event sent by the host application in a hashmap of event name to list of timestamps.
      * Saves into a plist file.
@@ -22,50 +21,25 @@ class EventLogger {
                 self.eventLog = try self.loadPropertyList()
             } catch {
                 #if DEBUG
-                    print(error)
+                print("InAppMessaging: \(error)")
                 #endif
             }
         }
         
         if self.eventLog[eventName] != nil {
             var tempLog = self.eventLog[eventName]
-            tempLog?.append(CommonUtility().getTimeStamp())
+            tempLog?.append(Date().timeIntervalSince1970)
             self.eventLog[eventName] = tempLog
         } else {
-            self.eventLog[eventName] = [CommonUtility().getTimeStamp()]
+            self.eventLog[eventName] = [Date().timeIntervalSince1970]
         }
         
-        self.savePropertyList(self.eventLog)
-    }
-    
-    /**
-     * Save the hashmap of timestamps into the plist file located in the 'Documents' directory.
-     * @param { plist: Any } object to save.
-     */
-    static func savePropertyList(_ plist: Any)
-    {
         do {
-            let plistData = try PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
-            try plistData.write(to: plistURL)
+            try self.savePropertyList(self.eventLog)
         } catch {
             #if DEBUG
-                print(error)
+            print("InAppMessaging: \(error)")
             #endif
         }
-    }
-    
-    /**
-     * Loads the timestamp plist file located in the 'Documents' directory.
-     * @returns { [String: [Double]] } Hashmap of event names to list of timestamps.
-     * @throws error when plist file cannot be found.
-     */
-    static func loadPropertyList() throws -> [String: [Double]]
-    {
-        let data = try Data(contentsOf: plistURL)
-        guard let plist = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String: [Double]] else {
-            return [String: [Double]]()
-        }
-        
-        return plist
     }
 }

@@ -1,8 +1,8 @@
 /**
- * Utility class to provide methods for anything campaign related.
+ * Utility struct to provide methods for anything campaign related.
  * Helps parse fore fields, map responses, and provide display logic.
  */
-class CampaignHelper {
+struct CampaignHelper {
     
     /**
      * Search through list of all campaigns' triggers to find the first matching campaign to return.
@@ -10,7 +10,7 @@ class CampaignHelper {
      * @param { campaignListOptional: [CampaignList]? } Optional array of the list of campaigns.
      * @returns { CampaignData? } Optional campaign with the matching trigger name.
      */
-    internal func findMatchingTrigger(trigger: String, campaignListOptional: [Campaign]?) -> CampaignData? {
+    static func findMatchingTrigger(trigger: String, campaignListOptional: [Campaign]?) -> CampaignData? {
         guard let campaignList = campaignListOptional else {
             return nil
         }
@@ -31,7 +31,7 @@ class CampaignHelper {
      * @param { campaignList: [Campaign] } list of campaign sent by Message Mixer server.
      * @returns { [String: [Campaign]] } Hashmap of event names to list of campaigns.
      */
-    internal func mapCampaign(campaignList: [Campaign]) -> [String: [Campaign]] {
+    static func mapCampaign(campaignList: [Campaign]) -> [String: [Campaign]] {
         var campaignDict = [String: [Campaign]]()
         
         for campaign in campaignList {
@@ -56,7 +56,7 @@ class CampaignHelper {
      * @param { withEventName: String } name of the event to fetch.
      * @returns { CampaignData? } optional CampaignData that matches the two conditions.
      */
-    internal func fetchCampaign(withEventName: String) -> CampaignData? {
+    static func fetchCampaign(withEventName: String) -> CampaignData? {
         if let campaignList = MessageMixerClient.campaignDict[withEventName] {
             for campaign in campaignList {
                 if !self.isCampaignShown(campaignId: campaign.campaignData.campaignId) {
@@ -73,7 +73,7 @@ class CampaignHelper {
      * @param { campaignId: String } ID of the campaign to check.
      * @returns { Bool } result of the check.
      */
-    fileprivate func isCampaignShown(campaignId: String) -> Bool {
+    static func isCampaignShown(campaignId: String) -> Bool {
         return MessageMixerClient.listOfShownCampaigns.contains(campaignId)
     }
     
@@ -81,16 +81,16 @@ class CampaignHelper {
      * Method to append the campaign ID to the list of shown campaign IDs once it has been displayed once.
      * @param { campaignId: String } ID of the campaign to append.
      */
-    internal func appendShownCampaign(campaignId: String) {
+    static func appendShownCampaign(campaignId: String) {
         MessageMixerClient.listOfShownCampaigns.append(campaignId)
     }
     
     /**
      * Parses the campaign passed in for the view type. E.G modal/slideup/etc.
      * @param { campaign: CampaignData } campaign to parse through.
-     * @returns { String? } optional value of the view type field of the campaign.
+     * @returns { ViewType? } optional value of the view type field of the campaign.
      */
-    internal func findViewType(campaign: CampaignData) -> String? {
-        return campaign.type
+    static func findViewType(campaign: CampaignData) -> ViewType? {
+        return ViewType(rawValue: campaign.type)
     }
 }
