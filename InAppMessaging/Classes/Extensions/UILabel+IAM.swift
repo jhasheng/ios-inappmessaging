@@ -8,7 +8,7 @@ extension UILabel
      */
     var optimalHeight : CGFloat { get
     {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: CGFloat.greatestFiniteMagnitude))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: .greatestFiniteMagnitude))
         label.numberOfLines = 0
         label.lineBreakMode = self.lineBreakMode
         label.font = self.font
