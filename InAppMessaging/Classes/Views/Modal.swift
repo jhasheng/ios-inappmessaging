@@ -6,11 +6,11 @@ import UIKit
 protocol Modal {
     func show()
     func dismiss()
-    var backgroundView:UIView { get }
-    var dialogView:UIView { get set }
+    var backgroundView: UIView { get }
+    var dialogView: UIView { get set }
 }
 
-extension Modal where Self:UIView {
+extension Modal where Self: UIView {
     
     /**
      * Function that finds the presented view controller and add the modal sub view on top.
