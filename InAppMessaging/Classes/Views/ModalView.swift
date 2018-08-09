@@ -83,6 +83,22 @@ class ModalView: UIView, Modal {
             currentHeight += bodyMessageLabel.frame.height + 8
         }
         
+        if let buttonsList = campaign.messagePayload.messageSettings.controlSettings?.buttons {
+            if buttonsList.count != 0 {
+                print(buttonsList.count)
+                
+                let testLabel = UILabel(frame: CGRect(x: 8, y: currentHeight, width: dialogViewWidth - 16, height: 60))
+                testLabel.text = "sdfdfml;akdsmfl"
+                dialogView.addSubview(testLabel)
+                
+                let button = UIButton(frame: CGRect(x: 50, y: currentHeight, width: 200, height: 200))
+                button.setTitle("BUtton 1", for: .normal)
+                button.backgroundColor = .green
+                button.addTarget(self, action: #selector(didTappedOnExitButton), for: .touchUpInside)
+                dialogView.addSubview(button)
+            }
+        }
+        
         // The top right "X" button to dismiss.
         let exitButton = UILabel(frame: CGRect(x: dialogViewWidth - 25, y: 4, width: 20, height: 20))
         exitButton.text = "X"

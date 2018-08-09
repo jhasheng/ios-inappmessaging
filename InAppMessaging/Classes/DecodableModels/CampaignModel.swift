@@ -108,7 +108,7 @@ struct DisplaySettings: Decodable {
 }
 
 struct ControlSettings: Decodable {
-    let buttons: [Button]
+    let buttons: [Button]?
     
     enum CodingKeys: String, CodingKey {
         case buttons
