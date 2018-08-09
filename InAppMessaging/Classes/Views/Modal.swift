@@ -15,10 +15,7 @@ extension Modal where Self: UIView {
     /**
      * Function that finds the presented view controller and add the modal sub view on top.
      */
-    internal func show() {
-        self.backgroundView.alpha = 0.66
-        self.dialogView.center  = self.center
-        
+    internal func show() {        
         if var topController = UIApplication.shared.delegate?.window??.rootViewController {
             while let presentedViewController = topController.presentedViewController {
                 topController = presentedViewController

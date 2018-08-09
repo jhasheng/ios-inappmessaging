@@ -25,7 +25,6 @@ class ModalView: UIView, Modal {
         self.init(frame: UIScreen.main.bounds)
         
         self.initialize(campaign: campaign)
-
     }
     
     override init(frame: CGRect) {
@@ -42,8 +41,10 @@ class ModalView: UIView, Modal {
      */
     internal func initialize(campaign: CampaignData) {
         // The opaque black background of modals.
-        backgroundView.frame = frame
-        backgroundView.backgroundColor = .black
+        self.backgroundView.frame = frame
+        self.backgroundView.backgroundColor = .black
+        self.backgroundView.alpha = 0.66
+
         self.addSubview(backgroundView)
         
         // Set the initial width to -64 to leave spacing on the left and right side.
@@ -86,10 +87,11 @@ class ModalView: UIView, Modal {
         
         // The dialog view which is the rounded rectangle in the center.
         self.dialogView.frame.origin = CGPoint(x: 32, y: frame.height)
-        self.dialogView.frame.size = CGSize(width: dialogViewWidth, height: dialogViewCurrentHeight)
+        self.dialogView.frame.size = CGSize(width: self.dialogViewWidth, height: self.dialogViewCurrentHeight)
         self.dialogView.backgroundColor = .white
         self.dialogView.layer.cornerRadius = 6
         self.dialogView.clipsToBounds = true
+        self.dialogView.center  = self.center
         
         if !hasImage {
             self.addSubview(self.dialogView)
@@ -103,6 +105,10 @@ class ModalView: UIView, Modal {
         dismiss()
     }
     
+    /**
+     * Append image view to dialog view.
+     * @param { imageUrl: String } string of the image URL.
+     */
     fileprivate func appendImageView(withUrl imageUrl: String) {
         //TODO(Daniel Tam) Update aspect ratio here when finalized.
         let imageView = UIImageView(frame: CGRect(x: 0, y: self.dialogViewCurrentHeight, width: self.dialogViewWidth, height: self.dialogViewWidth / 2.9))
@@ -117,6 +123,10 @@ class ModalView: UIView, Modal {
         self.dialogViewCurrentHeight += imageView.frame.height
     }
     
+    /**
+     * Append header message to dialog view.
+     * @param { headerMessage: String } string of the header message.
+     */
     fileprivate func appendHeaderMessage(withHeader headerMessage: String) {
         let headerMessageLabel = UILabel(frame: CGRect(x: 8, y: self.dialogViewCurrentHeight, width: self.dialogViewWidth - 16, height: 0))
         headerMessageLabel.text = headerMessage
@@ -131,6 +141,10 @@ class ModalView: UIView, Modal {
         self.dialogViewCurrentHeight += headerMessageLabel.frame.height + 8
     }
     
+    /**
+     * Append body message to dialog view.
+     * @param { bodyMessage: String } string of the body message.
+     */
     fileprivate func appendBodyMessage(withBody bodyMessage: String) {
         let bodyMessageLabel = UILabel(frame: CGRect(x: 8, y: self.dialogViewCurrentHeight, width: self.dialogViewWidth - 16, height: 0))
         bodyMessageLabel.text = bodyMessage
@@ -143,6 +157,10 @@ class ModalView: UIView, Modal {
         self.dialogViewCurrentHeight += bodyMessageLabel.frame.height + 8
     }
     
+    /**
+     * Append buttons to dialog view.
+     * @param { buttonList: [Button] } list of Button data type.
+     */
     fileprivate func appendButtons(withButtonList buttonList: [Button]) {
         
         var buttonHorizontalSpace: CGFloat = 8 // Space for the left and right margin.
