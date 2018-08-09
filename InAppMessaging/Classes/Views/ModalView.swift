@@ -8,6 +8,19 @@ class ModalView: UIView, Modal {
     var backgroundView = UIView()
     var dialogView = UIView()
     
+    // Boolean to change when the SDK will display the modal view.
+    // Will change to true if campaign has an image URL.
+    // If true, display after image has finish downloading.
+    // If false, display after everything else is built.
+    var hasImage = false
+    
+    // Spacing on the left and right side of subviews.
+    var dialogViewWidth: CGFloat = 0
+    
+    // Counter of the height to dynamically set the height of the dialog view.
+    // Will increment as more subviews are populated.
+    var dialogViewCurrentHeight: CGFloat = 0
+    
     convenience init(campaign: CampaignData) {
         self.init(frame: UIScreen.main.bounds)
         
@@ -28,103 +41,34 @@ class ModalView: UIView, Modal {
      * @param { campaign: CampaignData } the campaign to be displayed.
      */
     internal func initialize(campaign: CampaignData) {
-        
-        // NOTE: DO NOT CHANGE!
-        // Boolean to change when the SDK will display the modal view.
-        // Will change to true if campaign has an image URL.
-        // If true, display after image has finish downloading.
-        // If false, display after everything else is built.
-        var hasImage = false
-        
         // The opaque black background of modals.
         backgroundView.frame = frame
         backgroundView.backgroundColor = .black
         self.addSubview(backgroundView)
         
-        // Minus 64 to leave spacing on the left and right side.
-        let dialogViewWidth = frame.width - 64
+        // Set the initial width to -64 to leave spacing on the left and right side.
+        self.dialogViewWidth = frame.width - 64
         
-        // Counter of the height to dynamically set the height of the dialog view.
-        // Will increment as more subviews are populated.
-        var dialogViewCurrentHeight: CGFloat = 0
-        
+        // Image view.
         if let imageUrl = campaign.messagePayload.resource.imageUrl {
-            hasImage = true
-            //TODO(Daniel Tam) Update aspect ratio here when finalized.
-            let imageView = UIImageView(frame: CGRect(x: 0, y: dialogViewCurrentHeight, width: dialogViewWidth, height: dialogViewWidth / 2.9))
-            imageView.contentMode = .scaleAspectFit
-            
-            imageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil) { (image, error, SDImageCacheType, url) in
-                self.addSubview(self.dialogView)
-            }
-            
-            dialogView.addSubview(imageView)
-            
-            dialogViewCurrentHeight += imageView.frame.height
+            self.hasImage = true
+            appendImageView(withUrl: imageUrl)
         }
 
         // Header title.
         if let headerMessage = campaign.messagePayload.header {
-            let headerMessageLabel = UILabel(frame: CGRect(x: 8, y: dialogViewCurrentHeight, width: dialogViewWidth - 16, height: 0))
-            headerMessageLabel.text = headerMessage
-            headerMessageLabel.textAlignment = .center
-            headerMessageLabel.lineBreakMode = .byWordWrapping
-            headerMessageLabel.numberOfLines = 0
-            headerMessageLabel.font = UIFont.boldSystemFont(ofSize: 16)
-            headerMessageLabel.font = headerMessageLabel.font.withSize(20)
-            headerMessageLabel.frame.size.height = headerMessageLabel.optimalHeight
-            dialogView.addSubview(headerMessageLabel)
-            
-            dialogViewCurrentHeight += headerMessageLabel.frame.height + 8
+            appendHeaderMessage(withHeader: headerMessage)
         }
         
         // Body message.
         if let bodyMessage = campaign.messagePayload.messageBody {
-            let bodyMessageLabel = UILabel(frame: CGRect(x: 8, y: dialogViewCurrentHeight, width: dialogViewWidth - 16, height: 0))
-            bodyMessageLabel.text = bodyMessage
-            bodyMessageLabel.textAlignment = .center
-            bodyMessageLabel.lineBreakMode = .byWordWrapping
-            bodyMessageLabel.numberOfLines = 0
-            bodyMessageLabel.frame.size.height = bodyMessageLabel.optimalHeight
-            dialogView.addSubview(bodyMessageLabel)
-            
-            dialogViewCurrentHeight += bodyMessageLabel.frame.height + 8
+            appendBodyMessage(withBody: bodyMessage)
         }
         
         // Buttons.
-        if let buttonsList = campaign.messagePayload.messageSettings.controlSettings?.buttons {
-            if buttonsList.count != 0 {
-                
-                var buttonHorizontalSpace: CGFloat = 8 // Space for the left and right margin.
-                let buttonHeight: CGFloat = 30 // Define the height to use for the button.
-                
-                for (index, button) in buttonsList.enumerated() {
-                    
-                    // Determine offset value based on numbers of buttons to display.
-                    let buttonWidthOffset: CGFloat = buttonsList.count == 1 ? 16 : 12
-                    
-                    let buttonToAdd = UIButton(frame: CGRect(x: buttonHorizontalSpace,
-                                                             y: dialogViewCurrentHeight,
-                                                             width: ((dialogViewWidth / CGFloat(buttonsList.count)) - buttonWidthOffset),
-                                                             height: buttonHeight))
-                    
-                    buttonToAdd.setTitle(button.buttonText, for: .normal)
-                    buttonToAdd.layer.cornerRadius = 6
-                    
-                    //TODO(Daniel Tam) Remove hardcoded colors when backend is ready.
-                    if index == 0 {
-                        buttonToAdd.backgroundColor = .blue
-
-                    } else if index == 1 {
-                        buttonToAdd.backgroundColor = .gray
-                    }
-                    
-                    buttonHorizontalSpace += buttonToAdd.frame.width + 8
-                    
-                    dialogView.addSubview(buttonToAdd)
-                }
-                
-                dialogViewCurrentHeight += buttonHeight + 8
+        if let buttonList = campaign.messagePayload.messageSettings.controlSettings?.buttons {
+            if buttonList.count != 0 {
+                appendButtons(withButtonList: buttonList)
             }
         }
         
@@ -138,17 +82,17 @@ class ModalView: UIView, Modal {
         exitButton.layer.cornerRadius = exitButton.frame.width / 2
         exitButton.layer.masksToBounds = true
         exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnExitButton)))
-        dialogView.addSubview(exitButton)
+        self.dialogView.addSubview(exitButton)
         
         // The dialog view which is the rounded rectangle in the center.
-        dialogView.frame.origin = CGPoint(x: 32, y: frame.height)
-        dialogView.frame.size = CGSize(width: dialogViewWidth, height: dialogViewCurrentHeight)
-        dialogView.backgroundColor = .white
-        dialogView.layer.cornerRadius = 6
-        dialogView.clipsToBounds = true
+        self.dialogView.frame.origin = CGPoint(x: 32, y: frame.height)
+        self.dialogView.frame.size = CGSize(width: dialogViewWidth, height: dialogViewCurrentHeight)
+        self.dialogView.backgroundColor = .white
+        self.dialogView.layer.cornerRadius = 6
+        self.dialogView.clipsToBounds = true
         
         if !hasImage {
-            self.addSubview(dialogView)
+            self.addSubview(self.dialogView)
         }
     }
     
@@ -157,5 +101,79 @@ class ModalView: UIView, Modal {
      */
     @objc fileprivate func didTappedOnExitButton(){
         dismiss()
+    }
+    
+    fileprivate func appendImageView(withUrl imageUrl: String) {
+        //TODO(Daniel Tam) Update aspect ratio here when finalized.
+        let imageView = UIImageView(frame: CGRect(x: 0, y: self.dialogViewCurrentHeight, width: self.dialogViewWidth, height: self.dialogViewWidth / 2.9))
+        imageView.contentMode = .scaleAspectFit
+        
+        imageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil) { (image, error, SDImageCacheType, url) in
+            self.addSubview(self.dialogView)
+        }
+        
+        self.dialogView.addSubview(imageView)
+        
+        self.dialogViewCurrentHeight += imageView.frame.height
+    }
+    
+    fileprivate func appendHeaderMessage(withHeader headerMessage: String) {
+        let headerMessageLabel = UILabel(frame: CGRect(x: 8, y: self.dialogViewCurrentHeight, width: self.dialogViewWidth - 16, height: 0))
+        headerMessageLabel.text = headerMessage
+        headerMessageLabel.textAlignment = .center
+        headerMessageLabel.lineBreakMode = .byWordWrapping
+        headerMessageLabel.numberOfLines = 0
+        headerMessageLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        headerMessageLabel.font = headerMessageLabel.font.withSize(20)
+        headerMessageLabel.frame.size.height = headerMessageLabel.optimalHeight
+        self.dialogView.addSubview(headerMessageLabel)
+        
+        self.dialogViewCurrentHeight += headerMessageLabel.frame.height + 8
+    }
+    
+    fileprivate func appendBodyMessage(withBody bodyMessage: String) {
+        let bodyMessageLabel = UILabel(frame: CGRect(x: 8, y: self.dialogViewCurrentHeight, width: self.dialogViewWidth - 16, height: 0))
+        bodyMessageLabel.text = bodyMessage
+        bodyMessageLabel.textAlignment = .center
+        bodyMessageLabel.lineBreakMode = .byWordWrapping
+        bodyMessageLabel.numberOfLines = 0
+        bodyMessageLabel.frame.size.height = bodyMessageLabel.optimalHeight
+        self.dialogView.addSubview(bodyMessageLabel)
+        
+        self.dialogViewCurrentHeight += bodyMessageLabel.frame.height + 8
+    }
+    
+    fileprivate func appendButtons(withButtonList buttonList: [Button]) {
+        
+        var buttonHorizontalSpace: CGFloat = 8 // Space for the left and right margin.
+        let buttonHeight: CGFloat = 30 // Define the height to use for the button.
+        
+        for (index, button) in buttonList.enumerated() {
+            
+            // Determine offset value based on numbers of buttons to display.
+            let buttonWidthOffset: CGFloat = buttonList.count == 1 ? 16 : 12
+            
+            let buttonToAdd = UIButton(frame: CGRect(x: buttonHorizontalSpace,
+                                                     y: self.dialogViewCurrentHeight,
+                                                     width: ((self.dialogViewWidth / CGFloat(buttonList.count)) - buttonWidthOffset),
+                                                     height: buttonHeight))
+            
+            buttonToAdd.setTitle(button.buttonText, for: .normal)
+            buttonToAdd.layer.cornerRadius = 6
+            
+            //TODO(Daniel Tam) Remove hardcoded colors when backend is ready.
+            if index == 0 {
+                buttonToAdd.backgroundColor = .blue
+                
+            } else if index == 1 {
+                buttonToAdd.backgroundColor = .gray
+            }
+            
+            buttonHorizontalSpace += buttonToAdd.frame.width + 8
+            
+            self.dialogView.addSubview(buttonToAdd)
+        }
+        
+        self.dialogViewCurrentHeight += buttonHeight + 8
     }
 }
