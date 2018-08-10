@@ -24,8 +24,6 @@ class InAppMessagingViewController: UIViewController {
             case .modal:
                 view = ModalView(campaign: campaignToDisplay)
                 break;
-            default:
-                break;
         }
         
         // Display the campaign if the view exists and add the campaign ID to the shown ID list.
