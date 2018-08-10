@@ -1,3 +1,9 @@
+/**
+ * This class is taken and renamed from 'Reachability' to 'ReachabilityManager'
+ * to resolve posssible app rejection by the app store.
+ * Original repo of the class can be found here: https://github.com/tonymillion/Reachability
+ */
+
 #import "ReachabilityManager.h"
 
 #import <sys/socket.h>
