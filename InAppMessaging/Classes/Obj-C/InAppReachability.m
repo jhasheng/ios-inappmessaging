@@ -1,11 +1,11 @@
 #import <Foundation/Foundation.h>
 #import <InAppMessaging/InAppMessaging-Swift.h>
-#import <Reachability/Reachability.h>
 
+#import "ReachabilityManager.h"
 #import "InAppReachability.h"
 
 // Initialize instance for Reachability API.
-Reachability* reach;
+ReachabilityManager* reach;
 
 @implementation InAppReachability
 
@@ -15,7 +15,7 @@ Reachability* reach;
                                              selector:@selector(reachabilityChanged)
                                                  name:kReachabilityChangedNotification object:nil];
     
-    reach = [Reachability reachabilityForInternetConnection];
+    reach = [ReachabilityManager reachabilityForInternetConnection];
     [reach startNotifier];
 }
 
