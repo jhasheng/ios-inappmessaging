@@ -3,6 +3,7 @@
  */
 class ConfigurationClient: HttpRequestable {
     
+    private static var delay: Int = 0
     static var endpoints: EndpointURL?
     
     /**
@@ -22,6 +23,9 @@ class ConfigurationClient: HttpRequestable {
 
         guard let responseData = self.request(withUrl: configUrl, withHTTPMethod: .post) else {
             print("InAppMessaging: Error calling server.")
+            // Exponential backoff for pinging Configuration server.
+            ConfigurationClient.delay = (ConfigurationClient.delay == 0) ? 10000 : ConfigurationClient.delay * 2
+            WorkScheduler.scheduleTask(ConfigurationClient.delay, closure: InAppMessaging.configure)
             return false
         }
         
@@ -50,20 +54,5 @@ class ConfigurationClient: HttpRequestable {
         }
         
         return enabled
-    }
-    
-    internal func buildHttpBody() -> Data? {
-        
-        // Create the dictionary with the variables assigned above.
-        let jsonDict: [String: Any] = [
-            Keys.Request.AppID: Bundle.applicationId as Any,
-            Keys.Request.Platform: "iOS",
-            Keys.Request.AppVersion: Bundle.appBuildVersion as Any,
-            Keys.Request.SDKVersion: Bundle.inAppSdkVersion as Any,
-            Keys.Request.Locale: Locale.formattedCode as Any
-        ]
-        
-        // Return the serialized JSON object.
-        return try? JSONSerialization.data(withJSONObject: jsonDict)
     }
 }

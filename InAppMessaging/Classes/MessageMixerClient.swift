@@ -3,26 +3,15 @@
  */
 class MessageMixerClient: HttpRequestable {
     
-    private let messageMixerQueue = DispatchQueue(label: "MessageMixerQueue", attributes: .concurrent)
-    private var delay: Int = 0 // Milliseconds before pinging Message Mixer server.
+    private static var delay: Int = 0 // Milliseconds before pinging Message Mixer server.
     static var campaignDict = [String: [Campaign]]()
     static var listOfShownCampaigns = [String]()
     
     /**
-     * Starts the first first to Message Mixer server.
+     * Starts the first ping to Message Mixer server.
      */
     internal func enable() {
-        self.schedulePingToMixerServer(0) // First initial ping to Message Mixer server.
-    }
-    
-    /**
-     * Ping the Message Mixer server after delaying for X milliseconds.
-     * @param { milliseconds: Int } - Milliseconds before executing the ping.
-     */
-    fileprivate func schedulePingToMixerServer(_ milliseconds: Int) {
-        messageMixerQueue.asyncAfter(deadline: .now() + .milliseconds(milliseconds), execute: {
-            self.pingMixerServer()
-        })
+        WorkScheduler.scheduleTask(0, closure: self.pingMixerServer)
     }
     
     /**
@@ -39,8 +28,8 @@ class MessageMixerClient: HttpRequestable {
         
         guard let response = self.request(withUrl: mixerServerUrl, withHTTPMethod: .post) else {
             // Exponential backoff for pinging Message Mixer server.
-            self.delay = (self.delay == 0) ? 1000 : self.delay * 2
-            schedulePingToMixerServer(self.delay)
+            MessageMixerClient.delay = (MessageMixerClient.delay == 0) ? 10000 : MessageMixerClient.delay * 2
+            WorkScheduler.scheduleTask(MessageMixerClient.delay, closure: self.pingMixerServer)
             return
         }
         
@@ -57,19 +46,7 @@ class MessageMixerClient: HttpRequestable {
         
         if let campaignResponse = decodedResponse {
             MessageMixerClient.campaignDict = CampaignHelper.mapCampaign(campaignList: campaignResponse.data)
-            schedulePingToMixerServer(campaignResponse.nextPingMillis)
+            WorkScheduler.scheduleTask(campaignResponse.nextPingMillis, closure: self.pingMixerServer)
         }
-    }
-    
-    internal func buildHttpBody() -> Data? {
-        
-        // Create the dictionary with the variables assigned above.
-        let jsonDict: [String: Any] = [
-            Keys.Request.SubscriptionID: Bundle.inAppSubscriptionId as Any,
-            Keys.Request.UserID: IndentificationManager.userId
-        ]
-        
-        // Return the serialized JSON object.
-        return try? JSONSerialization.data(withJSONObject: jsonDict)
     }
 }

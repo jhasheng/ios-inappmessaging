@@ -86,3 +86,40 @@ extension HttpRequestable {
         return dataToReturn
     }
 }
+
+/**
+ * Request body for Message Mixer Client.
+ */
+extension HttpRequestable where Self: MessageMixerClient {
+    internal func buildHttpBody() -> Data? {
+        
+        // Create the dictionary with the variables assigned above.
+        let jsonDict: [String: Any] = [
+            Keys.Request.SubscriptionID: Bundle.inAppSubscriptionId as Any,
+            Keys.Request.UserID: IndentificationManager.userId
+        ]
+        
+        // Return the serialized JSON object.
+        return try? JSONSerialization.data(withJSONObject: jsonDict)
+    }
+}
+
+/**
+ * Request body for Configuration client.
+ */
+extension HttpRequestable where Self: ConfigurationClient {
+    internal func buildHttpBody() -> Data? {
+        
+        // Create the dictionary with the variables assigned above.
+        let jsonDict: [String: Any] = [
+            Keys.Request.AppID: Bundle.applicationId as Any,
+            Keys.Request.Platform: "iOS",
+            Keys.Request.AppVersion: Bundle.appBuildVersion as Any,
+            Keys.Request.SDKVersion: Bundle.inAppSdkVersion as Any,
+            Keys.Request.Locale: Locale.formattedCode as Any
+        ]
+        
+        // Return the serialized JSON object.
+        return try? JSONSerialization.data(withJSONObject: jsonDict)
+    }
+}
