@@ -21,11 +21,11 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>InAppMessagingConfigURL</key>
-	<string>http://appmsg-dev-configsvr.westus2.cloudapp.azure.com:3000/config/get-config</string>
+	<string>https://iam-stg.westus.cloudapp.azure.com/config/get-config</string>
 	<key>InAppMessagingSDKVersion</key>
 	<string>0</string>
 	<key>InAppMessagingSubscriptionID</key>
-	<string>96e957d1-9776-11e8-8150-b9d391f59137</string>
+	<string>115d2cd1-9a6a-11e8-85bf-0b440af035cd</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

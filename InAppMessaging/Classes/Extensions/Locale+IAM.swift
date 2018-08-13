@@ -1,5 +1,5 @@
 /**
- * Extension to Locale class to provide computed properties required by InAppMessaing.
+ * Extension to Locale class to provide computed properties required by InAppMessaging.
  */
 extension Locale {
     

@@ -2,6 +2,7 @@
  * Struct to help dispatch function calls at a later time in a concurrent queue.
  */
 struct WorkScheduler {
+    
     static private let inAppMessagingQueue = DispatchQueue(label: "InAppMessagingQueue", attributes: .concurrent)
 
     /**
