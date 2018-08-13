@@ -54,6 +54,9 @@ class ModalView: UIView, Modal {
         if let imageUrl = campaign.messagePayload.resource.imageUrl, !imageUrl.isEmpty {
             self.hasImage = true
             appendImageView(withUrl: imageUrl)
+        } else {
+            // Append some space between the exit button and header.
+            self.dialogViewCurrentHeight += 20
         }
 
         // Header title.
