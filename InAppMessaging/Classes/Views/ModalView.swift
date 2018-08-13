@@ -51,7 +51,7 @@ class ModalView: UIView, Modal {
         self.dialogViewWidth = frame.width - 64
         
         // Image view.
-        if let imageUrl = campaign.messagePayload.resource.imageUrl {
+        if let imageUrl = campaign.messagePayload.resource.imageUrl, !imageUrl.isEmpty {
             self.hasImage = true
             appendImageView(withUrl: imageUrl)
         }
@@ -67,10 +67,8 @@ class ModalView: UIView, Modal {
         }
         
         // Buttons.
-        if let buttonList = campaign.messagePayload.messageSettings.controlSettings?.buttons {
-            if buttonList.count != 0 {
-                appendButtons(withButtonList: buttonList)
-            }
+        if let buttonList = campaign.messagePayload.messageSettings.controlSettings?.buttons, !buttonList.isEmpty {
+            appendButtons(withButtonList: buttonList)
         }
         
         // The top right "X" button to dismiss.
