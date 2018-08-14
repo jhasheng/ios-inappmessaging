@@ -7,6 +7,7 @@ import SDWebImage
 class ModalView: UIView, Modal {
     var backgroundView = UIView()
     var dialogView = UIView()
+    var webView = UIView()
     
     // Boolean to change when the SDK will display the modal view.
     // Will change to true if campaign has an image URL.
@@ -168,31 +169,48 @@ class ModalView: UIView, Modal {
         let buttonHeight: CGFloat = 30 // Define the height to use for the button.
         
         for (index, button) in buttonList.enumerated() {
-            
-            // Determine offset value based on numbers of buttons to display.
-            let buttonWidthOffset: CGFloat = buttonList.count == 1 ? 16 : 12
-            
-            let buttonToAdd = UIButton(frame: CGRect(x: buttonHorizontalSpace,
-                                                     y: self.dialogViewCurrentHeight,
-                                                     width: ((self.dialogViewWidth / CGFloat(buttonList.count)) - buttonWidthOffset),
-                                                     height: buttonHeight))
-            
-            buttonToAdd.setTitle(button.buttonText, for: .normal)
-            buttonToAdd.layer.cornerRadius = 6
-            
-            //TODO(Daniel Tam) Remove hardcoded colors when backend is ready.
-            if index == 0 {
-                buttonToAdd.backgroundColor = .blue
+            if let buttonAction = ButtonActionType(rawValue: button.buttonBehavior.action) {
+                // Determine offset value based on numbers of buttons to display.
+                let buttonWidthOffset: CGFloat = buttonList.count == 1 ? 16 : 12
                 
-            } else if index == 1 {
-                buttonToAdd.backgroundColor = .gray
+                let buttonToAdd = UIButton(frame: CGRect(x: buttonHorizontalSpace,
+                                                         y: self.dialogViewCurrentHeight,
+                                                         width: ((self.dialogViewWidth / CGFloat(buttonList.count)) - buttonWidthOffset),
+                                                         height: buttonHeight))
+                
+                buttonToAdd.setTitle(button.buttonText, for: .normal)
+                buttonToAdd.layer.cornerRadius = 6
+                
+                switch buttonAction {
+                    case .invalid:
+                        return
+                    case .redirect:
+                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnRedirect)))
+                    case .deeplink:
+                        print("2")
+                    case .close:
+                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnExitButton)))
+                }
+                
+                //TODO(Daniel Tam) Remove hardcoded colors when backend is ready.
+                if index == 0 {
+                    buttonToAdd.backgroundColor = .blue
+                    
+                } else if index == 1 {
+                    buttonToAdd.backgroundColor = .gray
+                }
+                
+                buttonHorizontalSpace += buttonToAdd.frame.width + 8
+                
+                self.dialogView.addSubview(buttonToAdd)
             }
-            
-            buttonHorizontalSpace += buttonToAdd.frame.width + 8
-            
-            self.dialogView.addSubview(buttonToAdd)
         }
         
         self.dialogViewCurrentHeight += buttonHeight + 8
+    }
+    
+    @objc fileprivate func didTappedOnRedirect(){
+        UIApplication.shared.keyWindow?.rootViewController?.present(InAppMessagingWebViewController(), animated: true, completion: nil)
+        dismiss();
     }
 }
