@@ -7,11 +7,19 @@
 
 import WebKit
 
-class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
+class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate, UIBarPositioningDelegate {
     
     var webView: WKWebView!
     var progressView: UIProgressView!
+    var navigationBar: UINavigationBar!
+    
     var uri: String = ""
+    
+    // To handle iPhone X un-safe areas.
+    var topSafeArea: CGFloat = 0
+    var bottomSafeArea: CGFloat = 0
+    
+    var currentHeight: CGFloat = 0
     
     convenience init(uri: String) {
         self.init()
@@ -25,49 +33,74 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Navigation bar.
-        let navBar: UINavigationBar =
-            UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 60))
+        self.view.backgroundColor = .red
         
-        navBar.isTranslucent = false
+        // To handle iPhone X un-safe areas.
+        if #available(iOS 11.0, *) {
+            let window = UIApplication.shared.keyWindow?.safeAreaInsets
+            if let topPadding = window?.top,
+                let bottomPadding = window?.bottom {
+                    self.topSafeArea = topPadding
+                    self.bottomSafeArea = bottomPadding
+                    self.currentHeight += topSafeArea
+            }
+        }
+        
+        print("After offset: \(self.currentHeight)")
+        
+        // Navigation bar.
+//        let navBarOffset = self.currentHeight == 0 ? 20 : self.currentHeight
+        
+        self.currentHeight = (self.currentHeight == 0) ? self.currentHeight + 20 : self.currentHeight
+
+        navigationBar = UINavigationBar(frame: CGRect(x: 0, y: self.currentHeight, width: UIScreen.main.bounds.width, height: 44))
+        navigationBar.isTranslucent = false
+        
         let navItem = UINavigationItem(title: uri);
         let doneItem = UIBarButtonItem(barButtonSystemItem: .stop , target: nil, action: #selector(didTapOnWebViewStopButton));
         navItem.rightBarButtonItem = doneItem;
-        navBar.setItems([navItem], animated: true);
-        self.view.addSubview(navBar);
+        navigationBar.setItems([navItem], animated: true);
         
+        self.view.addSubview(navigationBar);
+
+
+        self.currentHeight += navigationBar.frame.size.height
+
+        print("After nav bar: \(self.currentHeight)")
+        
+        // Progress bar.
+        self.progressView = UIProgressView(progressViewStyle: .default)
+        self.progressView.frame.size.width = UIScreen.main.bounds.width
+        self.progressView.frame.origin.y = self.currentHeight - 2
+        self.view.addSubview(self.progressView)
+
+
         // Web view.
         self.webView = WKWebView(
             frame: CGRect(x: 0,
-                          y: navBar.frame.size.height,
+                          y: self.currentHeight,
                           width: UIScreen.main.bounds.width,
-                          height: UIScreen.main.bounds.height - navBar.frame.size.height),
+                          height: UIScreen.main.bounds.height - self.currentHeight),
             configuration: WKWebViewConfiguration())
-        
+
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         self.webView.uiDelegate = self
-        
-        // Progress bar.
-        progressView = UIProgressView(progressViewStyle: .default)
-        progressView.frame.size.width = UIScreen.main.bounds.width
-        progressView.frame.origin.y = navBar.frame.size.height - 2
-        self.view.addSubview(progressView)
 
         self.view.addSubview(self.webView)
-        
+
         guard let url = URL(string: self.uri) else {
             #if DEBUG
                 print("InAppMessaging: Invalid URI.")
             #endif
-            
+
             return
         }
         webView.load(URLRequest(url: url))
-        
+
         webView.allowsBackForwardNavigationGestures = true
-//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        
+
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
