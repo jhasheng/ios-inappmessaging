@@ -41,7 +41,7 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
             frame: CGRect(x: 0,
                           y: navBar.frame.size.height,
                           width: UIScreen.main.bounds.width,
-                          height: UIScreen.main.bounds.height),
+                          height: UIScreen.main.bounds.height - navBar.frame.size.height),
             configuration: WKWebViewConfiguration())
         
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
@@ -81,6 +81,7 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "estimatedProgress" {
             progressView.progress = Float(webView.estimatedProgress)
+            
             if webView.estimatedProgress == 1.0 {
                 progressView.removeFromSuperview()
             }
