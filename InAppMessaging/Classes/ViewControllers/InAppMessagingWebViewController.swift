@@ -27,7 +27,7 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
         
         // Navigation bar.
         let navBar: UINavigationBar =
-            UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.09))
+            UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 60))
         
         navBar.isTranslucent = false
         let navItem = UINavigationItem(title: uri);
@@ -35,10 +35,6 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
         navItem.rightBarButtonItem = doneItem;
         navBar.setItems([navItem], animated: true);
         self.view.addSubview(navBar);
-        
-        // Progress bar.
-        progressView = UIProgressView(progressViewStyle: .default)
-        progressView.frame = CGRect(x: 0, y: navBar.frame.size.height - 2, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         
         // Web view.
         self.webView = WKWebView(
@@ -49,10 +45,14 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
             configuration: WKWebViewConfiguration())
         
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        self.webView.uiDelegate = self
         
+        // Progress bar.
+        progressView = UIProgressView(progressViewStyle: .default)
+        progressView.frame.size.width = UIScreen.main.bounds.width
+        progressView.frame.origin.y = navBar.frame.size.height - 2
         self.view.addSubview(progressView)
 
-        self.webView.uiDelegate = self
         self.view.addSubview(self.webView)
         
         guard let url = URL(string: self.uri) else {
