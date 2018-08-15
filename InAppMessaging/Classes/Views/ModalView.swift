@@ -9,6 +9,8 @@ class ModalView: UIView, Modal {
     var dialogView = UIView()
     var webView = UIView()
     
+    var redirectUri: String?
+    
     // Boolean to change when the SDK will display the modal view.
     // Will change to true if campaign has an image URL.
     // If true, display after image has finish downloading.
@@ -185,6 +187,7 @@ class ModalView: UIView, Modal {
                     case .invalid:
                         return
                     case .redirect:
+                        self.redirectUri = button.buttonBehavior.uri
                         buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnRedirect)))
                     case .deeplink:
                         print("2")
@@ -210,7 +213,10 @@ class ModalView: UIView, Modal {
     }
     
     @objc fileprivate func didTappedOnRedirect(){
-        UIApplication.shared.keyWindow?.rootViewController?.present(InAppMessagingWebViewController(), animated: true, completion: nil)
+        if let uri = self.redirectUri, !uri.isEmpty {
+            UIApplication.shared.keyWindow?.rootViewController?.present(InAppMessagingWebViewController(uri: uri), animated: true, completion: nil)
+        }
+        
         dismiss();
     }
 }

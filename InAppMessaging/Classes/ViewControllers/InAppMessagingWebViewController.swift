@@ -10,6 +10,13 @@ import WebKit
 class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
     
     var webView: WKWebView!
+    var progressView: UIProgressView!
+    var uri: String = ""
+    
+    convenience init(uri: String) {
+        self.init()
+        self.uri = uri
+    }
     
     override func loadView() {
         self.view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
@@ -18,35 +25,48 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Nav bar
-        let navBar: UINavigationBar =  UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.09))
-        self.view.addSubview(navBar);
-        let navItem = UINavigationItem(title: "SomeTitle");
-        let doneItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: nil, action: "selector");
+        // Navigation bar.
+        let navBar: UINavigationBar =
+            UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.09))
+        
+        navBar.isTranslucent = false
+        let navItem = UINavigationItem(title: uri);
+        let doneItem = UIBarButtonItem(barButtonSystemItem: .stop , target: nil, action: #selector(didTapOnWebViewStopButton));
         navItem.rightBarButtonItem = doneItem;
-        navBar.setItems([navItem], animated: false);
+        navBar.setItems([navItem], animated: true);
+        self.view.addSubview(navBar);
         
-        // Web view
-        webView = WKWebView(frame: CGRect(x: 0, y: navBar.frame.size.height, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height), configuration: WKWebViewConfiguration())
-        webView.uiDelegate = self
-        self.view.addSubview(webView)
+        // Progress bar.
+        progressView = UIProgressView(progressViewStyle: .default)
+        progressView.frame = CGRect(x: 0, y: navBar.frame.size.height - 2, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        
+        // Web view.
+        self.webView = WKWebView(
+            frame: CGRect(x: 0,
+                          y: navBar.frame.size.height,
+                          width: UIScreen.main.bounds.width,
+                          height: UIScreen.main.bounds.height),
+            configuration: WKWebViewConfiguration())
+        
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        
+        self.view.addSubview(progressView)
 
+        self.webView.uiDelegate = self
+        self.view.addSubview(self.webView)
         
-        let url = URL(string: "https://google.com")!
+        guard let url = URL(string: self.uri) else {
+            #if DEBUG
+                print("InAppMessaging: Invalid URI.")
+            #endif
+            
+            return
+        }
         webView.load(URLRequest(url: url))
-        webView.allowsBackForwardNavigationGestures = true
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-
-//        let myWebView:UIWebView = UIWebView(frame: CGRect(x: 0, y: 20, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-//
-//
-//        myWebView.delegate = self as? UIWebViewDelegate
-//        self.view.addSubview(myWebView)
-//        let url = URL (string: "https://google.com");
-//        let request = URLRequest(url: url! as URL);
-//        myWebView.loadRequest(request);
         
-        // Do any additional setup after loading the view.
+        webView.allowsBackForwardNavigationGestures = true
+//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,6 +74,25 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
         // Dispose of any resources that can be recreated.
     }
     
+    @objc fileprivate func didTapOnWebViewStopButton() {
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "estimatedProgress" {
+            progressView.progress = Float(webView.estimatedProgress)
+            if webView.estimatedProgress == 1.0 {
+                progressView.removeFromSuperview()
+            }
+        }
+    }
+    
+    deinit {
+        //remove all observers
+        webView.removeObserver(self, forKeyPath: "estimatedProgress")
+        //remove progress bar from navigation bar
+        progressView.removeFromSuperview()
+    }
 
     /*
     // MARK: - Navigation
