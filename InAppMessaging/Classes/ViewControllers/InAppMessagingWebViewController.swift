@@ -21,6 +21,7 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
     var bottomSafeArea: CGFloat = 0
     
     var currentHeight: CGFloat = 0
+    var toolBarOffset: CGFloat = 0
     
     convenience init(uri: String) {
         self.init()
@@ -38,77 +39,19 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
         
         // To handle iPhone X un-safe areas.
         setUpSafeArea()
-//        if #available(iOS 11.0, *) {
-//            let window = UIApplication.shared.keyWindow?.safeAreaInsets
-//            if let topPadding = window?.top,
-//                let bottomPadding = window?.bottom {
-//                    self.topSafeArea = topPadding
-//                    self.bottomSafeArea = bottomPadding
-//                    self.currentHeight += topSafeArea
-//            }
-//        }
-        
         
         // Navigation bar.
         setUpNavigationBar()
-//        self.currentHeight = (self.currentHeight == 0) ? self.currentHeight + 20 : self.currentHeight
-//        navigationBar = UINavigationBar(frame: CGRect(x: 0, y: self.currentHeight, width: UIScreen.main.bounds.width, height: 44))
-//        navigationBar.isTranslucent = false
-//        let navItem = UINavigationItem(title: uri);
-//        let doneItem = UIBarButtonItem(barButtonSystemItem: .done , target: self, action: #selector(didTapOnWebViewDoneButton));
-//        navItem.rightBarButtonItem = doneItem;
-//        navigationBar.setItems([navItem], animated: true);
-//        self.view.addSubview(navigationBar);
-//
-//        self.currentHeight += navigationBar.frame.size.height
-
-        print("After nav bar: \(self.currentHeight)")
         
         // Progress view.
         setUpProgressView()
-//        self.progressView = UIProgressView(progressViewStyle: .default)
-//        self.progressView.frame.size.width = UIScreen.main.bounds.width
-//        self.progressView.frame.origin.y = self.currentHeight - 2
-//        self.view.addSubview(self.progressView)
         
         // Tool bar.
         setUpToolBar()
-//        self.toolbar = UIToolbar(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 44, width: UIScreen.main.bounds.width, height: 44))
-//        self.toolbar.isTranslucent = false
-//        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-//        let backButton: UIBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(didTapOnWebViewDoneButton))
-//        let forwardButton: UIBarButtonItem = UIBarButtonItem(title: "Forward", style: .plain, target: self, action: #selector(didTapOnWebViewDoneButton))
-//        let refreshButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(didTapOnWebViewDoneButton))
-//        let actionButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapOnWebViewDoneButton))
-//        self.toolbar.setItems([backButton, space, forwardButton, space, refreshButton, space, actionButton], animated: true)
-//
-//        self.view.addSubview(self.toolbar)
-        
-//        self.currentHeight += self.toolbar.frame.size.height
-        
+
         // Web view.
         setUpWebView()
-//        self.webView = WKWebView(
-//            frame: CGRect(x: 0,
-//                          y: self.currentHeight,
-//                          width: UIScreen.main.bounds.width,
-//                          height: UIScreen.main.bounds.height - self.currentHeight - 44),
-//            configuration: WKWebViewConfiguration())
-//
-//        self.webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
-//        self.webView.allowsBackForwardNavigationGestures = true
-//        self.webView.uiDelegate = self
-//
-//        guard let url = URL(string: self.uri) else {
-//            #if DEBUG
-//                print("InAppMessaging: Invalid URI.")
-//            #endif
-//
-//            return
-//        }
-//
-//        webView.load(URLRequest(url: url))
-//        self.view.addSubview(self.webView)
+
     }
     
 
@@ -139,12 +82,15 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
                 self.topSafeArea = topPadding
                 self.bottomSafeArea = bottomPadding
                 self.currentHeight += topSafeArea
+                self.toolBarOffset += bottomSafeArea
             }
         }
+        
+        self.currentHeight = (self.currentHeight == 0) ? 20 : self.currentHeight
+        self.toolBarOffset = (self.toolBarOffset == 0) ? 44 : self.toolBarOffset + 44
     }
     
     fileprivate func setUpNavigationBar() {
-        self.currentHeight = (self.currentHeight == 0) ? self.currentHeight + 20 : self.currentHeight
         navigationBar = UINavigationBar(frame: CGRect(x: 0, y: self.currentHeight, width: UIScreen.main.bounds.width, height: 44))
         navigationBar.isTranslucent = false
         let navItem = UINavigationItem(title: uri);
@@ -164,13 +110,13 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
     }
     
     fileprivate func setUpToolBar() {
-        self.toolbar = UIToolbar(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 44, width: UIScreen.main.bounds.width, height: 44))
+        self.toolbar = UIToolbar(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - self.toolBarOffset, width: UIScreen.main.bounds.width, height: toolBarOffset))
         self.toolbar.isTranslucent = false
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let backButton: UIBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(didTapOnWebViewDoneButton))
-        let forwardButton: UIBarButtonItem = UIBarButtonItem(title: "Forward", style: .plain, target: self, action: #selector(didTapOnWebViewDoneButton))
-        let refreshButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(didTapOnWebViewDoneButton))
-        let actionButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapOnWebViewDoneButton))
+        let backButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(didTapOnWebViewDoneButton))
+        let forwardButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .fastForward, target: self, action: #selector(didTapOnWebViewDoneButton))
+        let refreshButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: nil)
+        let actionButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: nil)
         self.toolbar.setItems([backButton, space, forwardButton, space, refreshButton, space, actionButton], animated: true)
         
         self.view.addSubview(self.toolbar)
@@ -181,7 +127,7 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
             frame: CGRect(x: 0,
                           y: self.currentHeight,
                           width: UIScreen.main.bounds.width,
-                          height: UIScreen.main.bounds.height - self.currentHeight - 44),
+                          height: UIScreen.main.bounds.height - self.currentHeight - self.toolbar.frame.size.height),
             configuration: WKWebViewConfiguration())
         
         self.webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
