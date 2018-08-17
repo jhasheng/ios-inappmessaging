@@ -47,8 +47,6 @@ class ModalView: UIView, Modal {
         self.backgroundView.frame = frame
         self.backgroundView.backgroundColor = .black
         self.backgroundView.alpha = 0.66
-
-        self.addSubview(backgroundView)
         
         // Set the initial width to -64 to leave spacing on the left and right side.
         self.dialogViewWidth = frame.width - 64
@@ -99,6 +97,7 @@ class ModalView: UIView, Modal {
         
         if !hasImage {
             self.addSubview(self.dialogView)
+            self.addSubview(backgroundView)
         }
     }
     
@@ -120,6 +119,7 @@ class ModalView: UIView, Modal {
         
         imageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil) { (image, error, SDImageCacheType, url) in
             self.addSubview(self.dialogView)
+            self.addSubview(self.backgroundView)
         }
         
         self.dialogView.addSubview(imageView)

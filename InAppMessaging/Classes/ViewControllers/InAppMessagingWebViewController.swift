@@ -62,6 +62,7 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate {
     
     // WKNavigationDelegates.
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        webView.
         self.forwardButton.isEnabled = self.webView.canGoForward
         self.backButton.isEnabled = self.webView.canGoBack
         progressView.isHidden = true
