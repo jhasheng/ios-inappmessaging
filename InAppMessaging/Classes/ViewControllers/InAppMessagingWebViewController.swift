@@ -12,7 +12,11 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
     var webView: WKWebView!
     var progressView: UIProgressView!
     var navigationBar: UINavigationBar!
+    var navItem: UINavigationItem!
     var toolbar: UIToolbar!
+    
+    var backButton: UIBarButtonItem!
+    var forwardButton: UIBarButtonItem!
     
     var uri: String = ""
     
@@ -54,7 +58,20 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
 
     }
     
-
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        self.forwardButton.isEnabled = self.webView.canGoForward
+        self.backButton.isEnabled = self.webView.canGoBack
+    }
+    
+    @objc func didTapOnActionButton(sender: UIView) {
+        let textToShare = self.uri
+        let objectsToShare = [textToShare] as [Any]
+        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+        activityVC.excludedActivityTypes = [.airDrop, .saveToCameraRoll, .print, .assignToContact]
+        activityVC.popoverPresentationController?.sourceView = sender
+        self.present(activityVC, animated: true, completion: nil)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -64,12 +81,42 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
         self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
+    @objc fileprivate func didTapOnBackButton() {
+        if self.webView.canGoBack {
+            setUpProgressView()
+            self.webView.goBack()
+        }
+    }
+    
+    @objc fileprivate func didTapOnForwardButton() {
+        if self.webView.canGoForward {
+            setUpProgressView()
+            self.webView.goForward()
+        }
+    }
+    
+    @objc fileprivate func didTapOnRefreshButton() {
+        if let url = self.webView.url {
+            setUpProgressView()
+            self.webView.reload()
+        }
+    }
+    
+    // For the action bar's copy to clipcoard.
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let urlStr = navigationAction.request.url?.absoluteString {
+            self.uri = urlStr
+        }
+        
+        decisionHandler(.allow)
+    }
+    
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "estimatedProgress" {
-            progressView.progress = Float(webView.estimatedProgress)
+            self.progressView.progress = Float(webView.estimatedProgress)
             
-            if webView.estimatedProgress == 1.0 {
-                progressView.removeFromSuperview()
+            if self.webView.estimatedProgress == 1.0 {
+                self.progressView.removeFromSuperview()
             }
         }
     }
@@ -91,12 +138,12 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
     }
     
     fileprivate func setUpNavigationBar() {
-        navigationBar = UINavigationBar(frame: CGRect(x: 0, y: self.currentHeight, width: UIScreen.main.bounds.width, height: 44))
-        navigationBar.isTranslucent = false
-        let navItem = UINavigationItem(title: uri);
+        self.navigationBar = UINavigationBar(frame: CGRect(x: 0, y: self.currentHeight + 1, width: UIScreen.main.bounds.width, height: 44))
+        self.navigationBar.isTranslucent = false
+        self.navItem = UINavigationItem(title: uri);
         let doneItem = UIBarButtonItem(barButtonSystemItem: .done , target: self, action: #selector(didTapOnWebViewDoneButton));
-        navItem.rightBarButtonItem = doneItem;
-        navigationBar.setItems([navItem], animated: true);
+        self.navItem.rightBarButtonItem = doneItem;
+        self.navigationBar.setItems([navItem], animated: true);
         self.view.addSubview(navigationBar);
         
         self.currentHeight += navigationBar.frame.size.height
@@ -113,10 +160,12 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
         self.toolbar = UIToolbar(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - self.toolBarOffset, width: UIScreen.main.bounds.width, height: toolBarOffset))
         self.toolbar.isTranslucent = false
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let backButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(didTapOnWebViewDoneButton))
-        let forwardButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .fastForward, target: self, action: #selector(didTapOnWebViewDoneButton))
-        let refreshButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: nil)
-        let actionButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: nil)
+        backButton = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(didTapOnBackButton))
+        backButton.isEnabled = false
+        forwardButton = UIBarButtonItem(barButtonSystemItem: .fastForward, target: self, action: #selector(didTapOnForwardButton))
+        forwardButton.isEnabled = false
+        let refreshButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(didTapOnRefreshButton))
+        let actionButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapOnActionButton))
         self.toolbar.setItems([backButton, space, forwardButton, space, refreshButton, space, actionButton], animated: true)
         
         self.view.addSubview(self.toolbar)
@@ -133,6 +182,7 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
         self.webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         self.webView.allowsBackForwardNavigationGestures = true
         self.webView.uiDelegate = self
+        self.webView.navigationDelegate = self
         
         guard let url = URL(string: self.uri) else {
             #if DEBUG
@@ -148,9 +198,7 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate, W
     
     
     deinit {
-        //remove all observers
         webView.removeObserver(self, forKeyPath: "estimatedProgress")
-        //remove progress bar from navigation bar
         progressView.removeFromSuperview()
     }
 }
