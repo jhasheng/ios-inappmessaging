@@ -55,7 +55,7 @@ class ModalView: UIView, Modal {
         // Image view.
         if let imageUrl = campaign.messagePayload.resource.imageUrl, !imageUrl.isEmpty {
             self.hasImage = true
-            appendImageView(withUrl: imageUrl)
+            self.appendImageView(withUrl: imageUrl)
         } else {
             // Append some space between the exit button and header.
             self.dialogViewCurrentHeight += 20
@@ -63,17 +63,17 @@ class ModalView: UIView, Modal {
 
         // Header title.
         if let headerMessage = campaign.messagePayload.header {
-            appendHeaderMessage(withHeader: headerMessage)
+            self.appendHeaderMessage(withHeader: headerMessage)
         }
         
         // Body message.
         if let bodyMessage = campaign.messagePayload.messageBody {
-            appendBodyMessage(withBody: bodyMessage)
+            self.appendBodyMessage(withBody: bodyMessage)
         }
         
         // Buttons.
         if let buttonList = campaign.messagePayload.messageSettings.controlSettings?.buttons, !buttonList.isEmpty {
-            appendButtons(withButtonList: buttonList)
+            self.appendButtons(withButtonList: buttonList)
         }
         
         // The top right "X" button to dismiss.
@@ -97,8 +97,7 @@ class ModalView: UIView, Modal {
         self.dialogView.center  = self.center
         
         if !hasImage {
-            self.addSubview(backgroundView)
-            self.addSubview(self.dialogView)
+            self.appendSubViews()
         }
     }
     
@@ -106,7 +105,7 @@ class ModalView: UIView, Modal {
      * Obj-c selector to dismiss the modal view when the 'X' is tapped.
      */
     @objc fileprivate func didTappedOnExitButton(){
-        dismiss()
+        self.dismiss()
     }
     
     /**
@@ -119,8 +118,7 @@ class ModalView: UIView, Modal {
         imageView.contentMode = .scaleAspectFit
         
         imageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil) { (image, error, SDImageCacheType, url) in
-            self.addSubview(self.backgroundView)
-            self.addSubview(self.dialogView)
+            self.appendSubViews()
         }
         
         self.dialogView.addSubview(imageView)
@@ -213,12 +211,21 @@ class ModalView: UIView, Modal {
         self.dialogViewCurrentHeight += buttonHeight + 8
     }
     
+    /**
+     * Append sub views to present view when ready.
+     */
+    fileprivate func appendSubViews() {
+        self.addSubview(self.backgroundView)
+        self.addSubview(self.dialogView)
+    }
+    
+    // Button selectors for modal view.
     @objc fileprivate func didTappedOnRedirect(){
         if let uri = self.uri, !uri.isEmpty {
             UIApplication.shared.keyWindow?.rootViewController?.present(InAppMessagingWebViewController(uri: uri), animated: true, completion: nil)
         }
         
-        dismiss();
+        self.dismiss();
     }
     
     @objc fileprivate func didTappedOnDeeplink(){
