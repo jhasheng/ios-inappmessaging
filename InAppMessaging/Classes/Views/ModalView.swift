@@ -9,7 +9,8 @@ class ModalView: UIView, Modal {
     var dialogView = UIView()
     var webView = UIView()
     
-    var redirectUri: String?
+    // Field obtained from button behavior payload.
+    var uri: String?
     
     // Boolean to change when the SDK will display the modal view.
     // Will change to true if campaign has an image URL.
@@ -96,8 +97,8 @@ class ModalView: UIView, Modal {
         self.dialogView.center  = self.center
         
         if !hasImage {
-            self.addSubview(self.dialogView)
             self.addSubview(backgroundView)
+            self.addSubview(self.dialogView)
         }
     }
     
@@ -118,8 +119,8 @@ class ModalView: UIView, Modal {
         imageView.contentMode = .scaleAspectFit
         
         imageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil) { (image, error, SDImageCacheType, url) in
-            self.addSubview(self.dialogView)
             self.addSubview(self.backgroundView)
+            self.addSubview(self.dialogView)
         }
         
         self.dialogView.addSubview(imageView)
@@ -187,10 +188,10 @@ class ModalView: UIView, Modal {
                     case .invalid:
                         return
                     case .redirect:
-                        self.redirectUri = button.buttonBehavior.uri
+                        self.uri = button.buttonBehavior.uri
                         buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnRedirect)))
                     case .deeplink:
-                        print("2")
+                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnDeeplink)))
                     case .close:
                         buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnExitButton)))
                 }
@@ -213,10 +214,21 @@ class ModalView: UIView, Modal {
     }
     
     @objc fileprivate func didTappedOnRedirect(){
-        if let uri = self.redirectUri, !uri.isEmpty {
+        if let uri = self.uri, !uri.isEmpty {
             UIApplication.shared.keyWindow?.rootViewController?.present(InAppMessagingWebViewController(uri: uri), animated: true, completion: nil)
         }
         
         dismiss();
+    }
+    
+    @objc fileprivate func didTappedOnDeeplink(){
+        if let unwrappedUri = self.uri,
+            let uriToOpen = URL(string: unwrappedUri),
+            UIApplication.shared.canOpenURL(uriToOpen) {
+            
+                UIApplication.shared.openURL(uriToOpen)
+        } else {
+            //TODO(Daniel Tam) Display error message to inform that the deep link cannot be displayed.
+        }
     }
 }

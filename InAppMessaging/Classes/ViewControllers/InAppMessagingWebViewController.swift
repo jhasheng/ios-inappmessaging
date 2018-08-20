@@ -1,12 +1,8 @@
-//
-//  WebViewController.swift
-//  InAppMessaging
-//
-//  Created by Tam, Daniel a on 8/14/18.
-//
-
 import WebKit
 
+/**
+ * Class to initialize any webview created by InAppMessaging.
+ */
 class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate {
     
     var webView: WKWebView!
@@ -14,17 +10,17 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate {
     var navigationBar: UINavigationBar!
     var navItem: UINavigationItem!
     var toolbar: UIToolbar!
-    
     var backButton: UIBarButtonItem!
     var forwardButton: UIBarButtonItem!
     
+    // Uri of the page to display.
     var uri: String = ""
     
     // Handles iPhone X un-safe areas.
     var topSafeArea: CGFloat = 0
     var bottomSafeArea: CGFloat = 0
     
-    // Handles responsive design.
+    // Handles screen size responsiveness.
     var currentHeight: CGFloat = 0
     var toolBarOffset: CGFloat = 0
     
@@ -62,11 +58,11 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate {
     
     // WKNavigationDelegates.
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        webView.
         self.forwardButton.isEnabled = self.webView.canGoForward
         self.backButton.isEnabled = self.webView.canGoBack
         progressView.isHidden = true
     }
+    
 
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         
@@ -79,7 +75,6 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate {
     }
     
     // Observers.
-    
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "estimatedProgress" {
             self.progressView.progress = Float(webView.estimatedProgress)
@@ -169,7 +164,6 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate {
     }
     
     // Button selectors for webviews.
-    
     @objc func didTapOnActionButton(sender: UIView) {
         let textToShare = self.uri
         let objectsToShare = [textToShare] as [Any]
@@ -184,18 +178,16 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate {
     }
     
     @objc fileprivate func didTapOnBackButton() {
-        if self.webView.canGoBack {
-//            self.progressView.isHidden = false;
-            self.backButton.isEnabled = self.webView.canGoBack
+        if self.webView.canGoBack && self.webView.url != nil {
             self.webView.goBack()
+            self.webView.reload()
         }
     }
     
     @objc fileprivate func didTapOnForwardButton() {
-        if self.webView.canGoForward {
-//            self.progressView.isHidden = false;
-            self.forwardButton.isEnabled = self.webView.canGoForward
+        if self.webView.canGoForward && self.webView.url != nil {
             self.webView.goForward()
+            self.webView.reload()
         }
     }
     
