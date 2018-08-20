@@ -1,5 +1,5 @@
 /**
- * Enum of all view types InAppMessaging will support.
+ * Enum of all view types InAppMessaging supports.
  * TODO(Daniel Tam) include the other views.
  */
 enum ViewType: String {

@@ -90,7 +90,7 @@ struct CampaignHelper {
      * @param { campaign: CampaignData } campaign to parse through.
      * @returns { ViewType? } optional value of the view type field of the campaign.
      */
-    static func findViewType(campaign: CampaignData) -> ViewType? {
-        return ViewType(rawValue: campaign.type)
+    static func findViewType(campaign: CampaignData) -> CampaignDisplayType? {
+        return CampaignDisplayType(rawValue: campaign.type)
     }
 }

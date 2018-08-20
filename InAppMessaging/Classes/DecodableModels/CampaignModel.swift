@@ -21,7 +21,7 @@ struct Campaign: Decodable {
 
 struct CampaignData: Decodable {
     let campaignId: String
-    let type: String
+    let type: Int
     let triggers: [Trigger]
     let messagePayload: MessagePayload
     
@@ -34,7 +34,7 @@ struct CampaignData: Decodable {
 }
 
 struct Trigger: Decodable {
-    let type: String
+    let type: Int
     let event: String
     let displayDelay: Int
     
@@ -74,7 +74,7 @@ struct MessagePayload: Decodable {
 struct Resource: Decodable {
     let assetsUrl: String?
     let imageUrl: String?
-    let cropType: String
+    let cropType: Int
     
     enum CodingKeys: String, CodingKey {
         case assetsUrl
@@ -94,10 +94,10 @@ struct MessageSettings: Decodable {
 }
 
 struct DisplaySettings: Decodable {
-    let orientation: String
-    let slideFrom: String?
+    let orientation: Int
+    let slideFrom: Int
     let endTimeMillis: Int
-    let textAlign: String
+    let textAlign: Int
     
     enum CodingKeys: String, CodingKey {
         case orientation
