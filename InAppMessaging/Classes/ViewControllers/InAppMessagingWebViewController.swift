@@ -34,19 +34,19 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate {
         self.view.backgroundColor = .white
         
         // To handle iPhone X un-safe areas.
-        setUpSafeArea()
+        self.setUpSafeArea()
         
         // Navigation bar.
-        setUpNavigationBar()
+        self.setUpNavigationBar()
         
         // Progress view.
-        setUpProgressView()
+        self.setUpProgressView()
         
         // Tool bar.
-        setUpToolBar()
+        self.setUpToolBar()
         
         // Web view.
-        setUpWebView()
+        self.setUpWebView()
     }
 
     override func viewDidLoad() {
@@ -60,7 +60,7 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.forwardButton.isEnabled = self.webView.canGoForward
         self.backButton.isEnabled = self.webView.canGoBack
-        progressView.isHidden = true
+        self.progressView.isHidden = true
     }
     
 
@@ -71,7 +71,7 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate {
             self.uri = currentUrl.absoluteString
         }
         
-        progressView.isHidden = false
+        self.progressView.isHidden = false
     }
     
     // Observers.
@@ -84,6 +84,7 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate {
             if let title = change?[NSKeyValueChangeKey.newKey] as? String {
                 self.navItem.title = title
             }
+            
             return
         }
     }
@@ -112,10 +113,10 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate {
         self.navItem = UINavigationItem(title: uri);
         let doneItem = UIBarButtonItem(barButtonSystemItem: .done , target: self, action: #selector(didTapOnWebViewDoneButton));
         self.navItem.rightBarButtonItem = doneItem;
-        self.navigationBar.setItems([navItem], animated: true);
+        self.navigationBar.setItems([self.navItem], animated: true);
         self.view.addSubview(navigationBar);
         
-        self.currentHeight += navigationBar.frame.size.height
+        self.currentHeight += self.navigationBar.frame.size.height
     }
     
     fileprivate func setUpProgressView() {
@@ -126,16 +127,20 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate {
     }
     
     fileprivate func setUpToolBar() {
-        self.toolbar = UIToolbar(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - self.toolBarOffset, width: UIScreen.main.bounds.width, height: toolBarOffset))
+        self.toolbar = UIToolbar(frame: CGRect(x: 0,
+                                               y: UIScreen.main.bounds.height - self.toolBarOffset,
+                                               width: UIScreen.main.bounds.width,
+                                               height: self.toolBarOffset))
+        
         self.toolbar.isTranslucent = false
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        backButton = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(didTapOnBackButton))
-        backButton.isEnabled = false
-        forwardButton = UIBarButtonItem(barButtonSystemItem: .fastForward, target: self, action: #selector(didTapOnForwardButton))
-        forwardButton.isEnabled = false
+        self.backButton = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(didTapOnBackButton))
+        self.backButton.isEnabled = false
+        self.forwardButton = UIBarButtonItem(barButtonSystemItem: .fastForward, target: self, action: #selector(didTapOnForwardButton))
+        self.forwardButton.isEnabled = false
         let refreshButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(didTapOnRefreshButton))
         let actionButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapOnActionButton))
-        self.toolbar.setItems([backButton, space, forwardButton, space, refreshButton, space, actionButton], animated: true)
+        self.toolbar.setItems([self.backButton, space, self.forwardButton, space, refreshButton, space, actionButton], animated: true)
         
         self.view.addSubview(self.toolbar)
     }

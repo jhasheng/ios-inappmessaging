@@ -1,6 +1,5 @@
 /**
- *  * Enum of all button actions InAppMessaging will support.
-
+ * Enum of all button actions InAppMessaging will support.
  */
 enum ButtonActionType: Int {
     case invalid = 0
