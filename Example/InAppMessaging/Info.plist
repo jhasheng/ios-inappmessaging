@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>youtube</string>
+		<string>instagram</string>
+		<string>fb</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -21,7 +27,7 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>InAppMessagingConfigURL</key>
-	<string>https://iam-stg.westus.cloudapp.azure.com/config/get-config</string>
+	<string>http://danieltam.local:3000/config/get-config</string>
 	<key>InAppMessagingSDKVersion</key>
 	<string>0</string>
 	<key>InAppMessagingSubscriptionID</key>

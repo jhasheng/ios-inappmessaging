@@ -130,7 +130,7 @@ struct Button: Decodable {
 }
 
 struct ButtonBehavior: Decodable {
-    let action: String?
+    let action: Int
     let uri: String
     
     enum CodingKeys: String, CodingKey {
