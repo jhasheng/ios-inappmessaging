@@ -235,7 +235,10 @@ class ModalView: UIView, Modal {
             
                 UIApplication.shared.openURL(uriToOpen)
         } else {
-            //TODO(Daniel Tam) Display error message to inform that the deep link cannot be displayed.
+            let alert = UIAlertController(title: "Page not found", message: "Encountered error while navigating to the page.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
+            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
+            self.dismiss()
         }
     }
 }
