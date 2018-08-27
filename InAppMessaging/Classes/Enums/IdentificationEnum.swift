@@ -1,8 +1,9 @@
 /**
  * Enum of all the ID type that Rakuten supports.
  */
-public enum Identification: String {
-    case rakutenId
-    case easyId
-    case userId
+public enum Identification: Int {
+    case invalidId = 0
+    case rakutenId = 1
+    case easyId = 2
+    case userId = 3
 }
