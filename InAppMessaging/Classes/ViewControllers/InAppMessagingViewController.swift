@@ -23,7 +23,15 @@ class InAppMessagingViewController: UIViewController {
         switch campaignViewType {
             case .modal:
                 view = ModalView(campaign: campaignToDisplay)
-                break;
+                break
+            case .invalid:
+                break
+            case .full:
+                break
+            case .slide:
+                break
+            case .html:
+                break
         }
         
         // Display the campaign if the view exists and add the campaign ID to the shown ID list.

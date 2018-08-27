@@ -63,7 +63,6 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate {
         self.progressView.isHidden = true
     }
     
-
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         
         // Update current URL of the site that is displaying.
@@ -88,7 +87,6 @@ class InAppMessagingWebViewController: UIViewController, WKNavigationDelegate {
             return
         }
     }
-    
     
     // Web view setup.
     fileprivate func setUpSafeArea() {
