@@ -18,6 +18,8 @@ struct IndentificationManager {
                 typeOptional = "easyId"
             case .rakutenId:
                 typeOptional = "rakutenId"
+            case .userId:
+                typeOptional = "userId";
         }
         
         if let type = typeOptional {
