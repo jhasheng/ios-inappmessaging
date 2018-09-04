@@ -96,7 +96,7 @@ extension HttpRequestable where Self: MessageMixerClient {
         // Create the dictionary with the variables assigned above.
         let jsonDict: [String: Any] = [
             Keys.Request.SubscriptionID: Bundle.inAppSubscriptionId as Any,
-            Keys.Request.UserID: IndentificationManager.userId
+            Keys.Request.UserID: IndentificationManager.idList
         ]
         
         // Return the serialized JSON object.

@@ -2,7 +2,7 @@
  * Struct to handle registering different IDs that Rakuten supports.
  */
 struct IndentificationManager {
-    static var userId = [[String: String]]()
+    static var idList = [[String: AnyHashable]]()
     
     /**
      * Register the ID to the static userId field which will be used in request bodies.
@@ -10,21 +10,9 @@ struct IndentificationManager {
      * @param { id: String } value of the id.
      */
     static func registerId(_ idType: Identification, _ id: String) {
-        
-        var typeOptional: String?
-        
-        switch idType {
-            case .easyId:
-                typeOptional = "easyId"
-            case .rakutenId:
-                typeOptional = "rakutenId"
-        }
-        
-        if let type = typeOptional {
-            self.userId.append([
-                "type": type,
-                "id": id
-            ])
-        }
+        self.idList.append([
+            "type": idType.rawValue,
+            "id": id
+        ])
     }
 }
