@@ -131,7 +131,7 @@ struct Button: Decodable {
 
 struct ButtonBehavior: Decodable {
     let action: Int
-    let uri: String
+    let uri: String?
     
     enum CodingKeys: String, CodingKey {
         case action
