@@ -1,7 +1,7 @@
 /**
  * Handle all the displaying logic of the SDK.
  */
-class InAppMessagingViewController: UIViewController, HttpRequestable {
+class InAppMessagingViewController: UIViewController {
     
     /**
      * Contains logic to display the correct view type -- modal, slideup, fullscreen, html -- and create
@@ -18,16 +18,12 @@ class InAppMessagingViewController: UIViewController, HttpRequestable {
         }
         
         // Permission check here.
-        let campaignInfo = [
+        // TODO(Daniel Tam) Refactor with Event object.
+        let campaignInfo: [String: Any] = [
             "campaignId": campaignToDisplay.campaignId,
-            "event": eventName
+            "event": eventName,
+            "timestamp": Date().timeIntervalSince1970
         ]
-        
-        checkPermission(withCampaignInfo: campaignInfo)
-        
-        
-        
-        
         
         
         var view: Modal?
@@ -52,31 +48,5 @@ class InAppMessagingViewController: UIViewController, HttpRequestable {
             viewToDisplay.show()
             CampaignHelper.appendShownCampaign(campaignId: campaignToDisplay.campaignId)
         }
-    }
-    
-    internal class func checkPermission(withCampaignInfo campaignInfo: [String: Any]) -> Bool {
-        
-        
-        return false
-    }
-    
-    /**
-     * Request body for display permission check.
-     */
-    internal func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data? {
-        
-        // Create the dictionary with the variables assigned above.
-        var jsonDict = optionalParams ?? [:]
-        
-        jsonDict[Keys.Request.SubscriptionID] = Bundle.inAppSubscriptionId
-        jsonDict[Keys.Request.UserIdentifiers] = IndentificationManager.userIdentifiers
-        jsonDict[Keys.Request.AppID] = Bundle.applicationId
-        jsonDict[Keys.Request.Platform] = "iOS"
-        jsonDict[Keys.Request.AppVersion] = Bundle.appBuildVersion
-        jsonDict[Keys.Request.SDKVersion] = Bundle.inAppSdkVersion
-        jsonDict[Keys.Request.Locale] = Locale.formattedCode
-        
-        // Return the serialized JSON object.
-        return try? JSONSerialization.data(withJSONObject: jsonDict)
     }
 }

@@ -32,7 +32,7 @@ protocol HttpRequestable {
      * @param { withHTTPMethod: String } the HTTP method used. E.G "POST" / "GET"
      * @returns { Optional [String: Any] } returns either nil or the response in a dictionary.
      */
-    func request(withUrl url: String,
+    func requestFromServer(withUrl url: String,
                  withHttpMethod httpMethod: HttpMethod,
                  withOptionalParams optionalParams: [String: Any]) -> Data?
     
@@ -47,7 +47,7 @@ protocol HttpRequestable {
  * Default implementation of HttpRequestable.
  */
 extension HttpRequestable {
-    func request(withUrl url: String,
+    func requestFromServer(withUrl url: String,
                  withHttpMethod httpMethod: HttpMethod,
                  withOptionalParams optionalParams: [String: Any] = [:]) -> Data? {
         
