@@ -21,7 +21,7 @@ struct Keys {
         static let SDKVersion = "sdkVersion"
         static let Locale = "locale"
         static let SubscriptionID = "subscriptionId"
-        static let UserID = "userId"
+        static let UserIdentifiers = "userIdentifiers"
     }
     
     /**

@@ -21,8 +21,10 @@ struct ConfigData: Decodable {
 
 struct EndpointURL: Decodable {
     let ping: String
+    let displayPermission: String
     
     enum CodingKeys: String, CodingKey {
         case ping
+        case displayPermission = "display_permission"
     }
 }

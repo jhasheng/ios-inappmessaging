@@ -10,7 +10,7 @@ class IdRegistrationTests: QuickSpec {
     override func spec() {
         
         beforeEach {
-            IndentificationManager.idList.removeAll()
+            IndentificationManager.userIdentifiers.removeAll()
         }
         
         context("ID Registration") {
@@ -18,7 +18,7 @@ class IdRegistrationTests: QuickSpec {
             it("should not have any matching id type or id value") {
                 let expected = [[String: String]]()
                 
-                expect(expected).toEventually(equal(IndentificationManager.idList))
+                expect(expected).toEventually(equal(IndentificationManager.userIdentifiers))
             }
             
             /**
@@ -38,7 +38,7 @@ class IdRegistrationTests: QuickSpec {
                 map["id"] = "whales and dolphins"
                 expected.append(map)
 
-                expect(expected).to(equal(IndentificationManager.idList))
+                expect(expected).to(equal(IndentificationManager.userIdentifiers))
             }
 
             it("should have two matching id type and id value") {
@@ -59,7 +59,7 @@ class IdRegistrationTests: QuickSpec {
                 secondId["id"] = "tigers and zebras"
                 expected.append(secondId)
 
-                expect(expected).to(equal(IndentificationManager.idList))
+                expect(expected).to(equal(IndentificationManager.userIdentifiers))
             }
         }
     }

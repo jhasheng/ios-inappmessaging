@@ -26,7 +26,7 @@ class MessageMixerClient: HttpRequestable {
             return
         }
         
-        guard let response = self.request(withUrl: mixerServerUrl, withHTTPMethod: .post) else {
+        guard let response = self.request(withUrl: mixerServerUrl, withHttpMethod: .post) else {
             // Exponential backoff for pinging Message Mixer server.
             MessageMixerClient.delay = (MessageMixerClient.delay == 0) ? 10000 : MessageMixerClient.delay * 2
             WorkScheduler.scheduleTask(MessageMixerClient.delay, closure: self.pingMixerServer)

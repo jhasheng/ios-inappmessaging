@@ -21,7 +21,7 @@ class ConfigurationClient: HttpRequestable {
             return false
         }
 
-        guard let responseData = self.request(withUrl: configUrl, withHTTPMethod: .post) else {
+        guard let responseData = self.request(withUrl: configUrl, withHttpMethod: .post) else {
             print("InAppMessaging: Error calling server.")
             // Exponential backoff for pinging Configuration server.
             ConfigurationClient.delay = (ConfigurationClient.delay == 0) ? 10000 : ConfigurationClient.delay * 2
