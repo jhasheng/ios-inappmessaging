@@ -7,13 +7,13 @@ struct PermissionHelper: HttpRequestable {
             self.requestFromServer(
                 withUrl: (ConfigurationClient.endpoints?.displayPermission)!,
                 withHttpMethod: .post,
-                withOptionalParams: [:]) else {
+                withOptionalParams: campaignInfo) else {
                 
-                    return false
+                    return true
         }
         
         
-        return false
+        return true
     }
     
     /**

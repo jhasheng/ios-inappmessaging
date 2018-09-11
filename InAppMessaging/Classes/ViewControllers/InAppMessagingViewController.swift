@@ -25,6 +25,8 @@ class InAppMessagingViewController: UIViewController {
             "timestamp": Date().timeIntervalSince1970
         ]
         
+        PermissionHelper().checkPermission(withCampaignInfo: campaignInfo)
+        
         
         var view: Modal?
 

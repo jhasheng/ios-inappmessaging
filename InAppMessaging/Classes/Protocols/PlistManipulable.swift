@@ -13,10 +13,10 @@ protocol PlistManipulable {
     
     /**
      * Loads the plist file located in the plistURL directory.
-     * @returns { [String: [Any]] } dictionary with the plist file's content.
+     * @returns { [String: [T]] } dictionary with the plist file's content.
      * @throws error when plist file cannot be found.
      */
-    static func loadPropertyList() throws -> [String: [Any]]
+    static func loadPropertyList<T>() throws -> [T]?
     
     /**
      * Deletes the InAppMessaging's timestamp plist file.
@@ -35,10 +35,10 @@ extension PlistManipulable {
         try plistData.write(to: plistURL)
     }
     
-    static func loadPropertyList() throws -> [String: [Any]] {
+    static func loadPropertyList<T>() throws -> [T]? {
         let data = try Data(contentsOf: plistURL)
-        guard let plist = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String: [Any]] else {
-            return [String: [Any]]()
+        guard let plist = try PropertyListSerialization.propertyList(from: data, format: nil) as? [T] else {
+            return [T]()
         }
         
         return plist
