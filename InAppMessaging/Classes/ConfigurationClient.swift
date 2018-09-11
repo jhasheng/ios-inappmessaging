@@ -55,4 +55,32 @@ class ConfigurationClient: HttpRequestable {
         
         return enabled
     }
+    
+    /**
+     * Request body for Configuration client to get get-config endpoint.
+     */
+    internal func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data? {
+        
+        guard let locale = Locale.formattedCode,
+            let appVersion = Bundle.appBuildVersion,
+            let appId = Bundle.applicationId,
+            let sdkVersion = Bundle.inAppSdkVersion else {
+                
+                return nil
+        }
+        
+        let getConfigRequest = GetConfigRequest.init(
+            locale: locale,
+            appVersion: appVersion,
+            platform: "iOS",
+            appId: appId,
+            sdkVersion: sdkVersion)
+        
+        do {
+            return try JSONEncoder().encode(getConfigRequest)
+        } catch {
+            print("InAppMessaging: failed creating a request body.")
+        }
+        return nil
+    }
 }

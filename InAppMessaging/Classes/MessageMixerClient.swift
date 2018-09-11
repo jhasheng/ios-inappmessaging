@@ -49,4 +49,26 @@ class MessageMixerClient: HttpRequestable {
             WorkScheduler.scheduleTask(campaignResponse.nextPingMillis, closure: self.pingMixerServer)
         }
     }
+    
+    /**
+     * Request body for Message Mixer Client to hit ping endpoint.
+     */
+    internal func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data? {
+        
+        guard let subscriptionId = Bundle.inAppSubscriptionId else {
+            return nil
+        }
+        
+        let pingRequest = PingRequest.init(
+            subscriptionId: subscriptionId,
+            userIdentifiers: IndentificationManager.userIdentifiers)
+        
+        do {
+            return try JSONEncoder().encode(pingRequest)
+        } catch {
+            print("InAppMessaging: failed creating a request body.")
+        }
+        
+        return nil
+    }
 }

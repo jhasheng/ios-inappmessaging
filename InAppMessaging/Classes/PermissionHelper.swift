@@ -29,8 +29,6 @@ struct PermissionHelper: HttpRequestable {
                 
                 return nil
         }
-            
-            
 
         let permissionRequest = PermissionRequest.init(
             subscriptionId: subscriptionId,
@@ -43,10 +41,9 @@ struct PermissionHelper: HttpRequestable {
             events: EventLogger.eventLog)
         
         do {
-            let jsonData = try JSONEncoder().encode(permissionRequest)
-            return jsonData
+            return try JSONEncoder().encode(permissionRequest)
         } catch {
-            print("error")
+            print("InAppMessaging: failed creating a request body.")
         }
         
         return nil
