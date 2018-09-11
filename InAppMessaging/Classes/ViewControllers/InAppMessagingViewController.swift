@@ -22,7 +22,7 @@ class InAppMessagingViewController: UIViewController {
         let campaignInfo: [String: Any] = [
             "campaignId": campaignToDisplay.campaignId,
             "event": eventName,
-            "timestamp": Date().timeIntervalSince1970
+            "timestamp": Date().millisecondsSince1970
         ]
         
         PermissionHelper().checkPermission(withCampaignInfo: campaignInfo)

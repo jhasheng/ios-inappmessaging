@@ -2,11 +2,10 @@
  * Struct to handle logging events by the host application.
  */
 struct EventLogger: PlistManipulable {
-//    static var eventLog = [String: [Any]]()
     static var eventLog = [Event]()
     static var plistURL: URL {
         let documentDirectoryURL =  try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        return documentDirectoryURL.appendingPathComponent(Keys.File.TimestampPlist)
+        return documentDirectoryURL.appendingPathComponent(Keys.File.EventLogs)
     }
     
     /**
@@ -29,16 +28,15 @@ struct EventLogger: PlistManipulable {
             }
         }
         
+        // Append Event object to the event log.
+        eventLog.append(
+            Event(
+                name: eventName,
+                timestamp: Date().millisecondsSince1970
+            )
+        )
         
-        
-//        if eventLog[eventName] != nil {
-//            var tempLog = eventLog[eventName]
-//            tempLog?.append(Date().timeIntervalSince1970)
-//            eventLog[eventName] = tempLog
-//        } else {
-//            eventLog[eventName] = [Date().timeIntervalSince1970]
-//        }
-        
+        // Write to local storage.
         do {
             try savePropertyList(eventLog)
         } catch {
