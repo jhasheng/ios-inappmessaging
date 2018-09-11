@@ -4,4 +4,5 @@
 struct PingRequest: Codable {
     let subscriptionId: String
     let userIdentifiers: [UserIdentifier]
+    let appVersion: String
 }
