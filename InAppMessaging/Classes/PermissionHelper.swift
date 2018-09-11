@@ -1,17 +1,38 @@
 
 struct PermissionHelper: HttpRequestable {
     
-    func checkPermission(withCampaignInfo campaignInfo: [String: Any]) -> Bool {
+    func checkPermission(withCampaign campaign: [String: Any]) -> Bool {
         
         guard let responseFromDisplayPermission =
             self.requestFromServer(
                 withUrl: (ConfigurationClient.endpoints?.displayPermission)!,
                 withHttpMethod: .post,
-                withOptionalParams: campaignInfo) else {
+                withOptionalParams: campaign) else {
                 
                     return true
         }
         
+        do {
+            let decodedResponse = try JSONDecoder().decode(DisplayPermissionResponse.self, from: responseFromDisplayPermission)
+            
+            guard let permissionAction = PermissionAction(rawValue: decodedResponse.action) else {
+                return true
+            }
+            
+            //TODO(Daniel Tam) Add support for the actions in next PR.
+            switch permissionAction {
+                case .invalid:
+                    return true
+                case .show:
+                    return true
+                case .discard:
+                    return false
+                case .postpone:
+                    break
+            }
+        } catch {
+            print("InAppMessaging: error getting a response from display permission.")
+        }
         
         return true
     }
@@ -30,7 +51,7 @@ struct PermissionHelper: HttpRequestable {
                 return nil
         }
 
-        let permissionRequest = PermissionRequest.init(
+        let permissionRequest = DisplayPermissionRequest.init(
             subscriptionId: subscriptionId,
             campaignId: campaignId as! String,
             userIdentifiers: IndentificationManager.userIdentifiers,
@@ -48,5 +69,4 @@ struct PermissionHelper: HttpRequestable {
         
         return nil
     }
-    
 }

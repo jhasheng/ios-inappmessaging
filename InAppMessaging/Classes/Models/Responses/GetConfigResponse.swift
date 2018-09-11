@@ -1,7 +1,7 @@
 /**
  * Data model for configuration server response.
  */
-struct ConfigResponse: Decodable {
+struct GetConfigResponse: Decodable {
     let data: ConfigData
     
     enum CodingKeys: String, CodingKey {

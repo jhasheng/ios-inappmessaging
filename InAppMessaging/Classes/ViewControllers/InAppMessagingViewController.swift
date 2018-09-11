@@ -19,14 +19,15 @@ class InAppMessagingViewController: UIViewController {
         
         // Permission check here.
         // TODO(Daniel Tam) Refactor with Event object.
-        let campaignInfo: [String: Any] = [
+        let campaignToCheck: [String: Any] = [
             "campaignId": campaignToDisplay.campaignId,
             "event": EventLogger.eventLog,
             "timestamp": Date().millisecondsSince1970
         ]
         
-        PermissionHelper().checkPermission(withCampaignInfo: campaignInfo)
-        
+        if !PermissionHelper().checkPermission(withCampaign: campaignToCheck){
+            return
+        }
         
         var view: Modal?
 

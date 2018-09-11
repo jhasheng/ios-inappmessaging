@@ -10,10 +10,6 @@ struct IndentificationManager {
      * @param { id: String } value of the id.
      */
     static func registerId(_ idType: Identification, _ id: String) {
-//        self.userIdentifiers.append([
-//            "type": idType.rawValue,
-//            "id": id
-//        ])
         userIdentifiers.append(
             UserIdentifier(type: idType.rawValue, id: id)
         )

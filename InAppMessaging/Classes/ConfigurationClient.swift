@@ -41,8 +41,7 @@ class ConfigurationClient: HttpRequestable {
         var enabled: Bool = false
         
         do {
-            let decoder = JSONDecoder()
-            let response = try decoder.decode(ConfigResponse.self, from: configResponse)
+            let response = try JSONDecoder().decode(GetConfigResponse.self, from: configResponse)
             
             if response.data.enabled {
                 enabled = response.data.enabled

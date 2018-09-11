@@ -1,7 +1,7 @@
 /**
  * Model of the request body for displaying permission'.
  */
-struct PermissionRequest: Codable {
+struct DisplayPermissionRequest: Codable {
     let subscriptionId: String
     let campaignId: String
     let userIdentifiers: [UserIdentifier]

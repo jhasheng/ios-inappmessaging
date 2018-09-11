@@ -1,7 +1,7 @@
 /**
  * Data model for Campaign response.
  */
-struct CampaignResponse: Decodable {
+struct PingResponse: Decodable {
     let nextPingMillis: Int
     let data: [Campaign]
     

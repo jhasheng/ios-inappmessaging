@@ -33,11 +33,11 @@ class MessageMixerClient: HttpRequestable {
             return
         }
         
-        var decodedResponse: CampaignResponse?
+        var decodedResponse: PingResponse?
         
         do {
             let decoder = JSONDecoder()
-            decodedResponse = try decoder.decode(CampaignResponse.self, from: response)
+            decodedResponse = try decoder.decode(PingResponse.self, from: response)
         } catch let error {
             #if DEBUG
                 print("InAppMessaging: Failed to parse json:", error)
