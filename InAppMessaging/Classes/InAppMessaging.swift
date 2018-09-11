@@ -49,10 +49,14 @@
      * @param { name: String } name of the event.
      */
     public class func logEvent(_ name: String) {
+        let semaphore = DispatchSemaphore(value: 0)
+
         DispatchQueue.global(qos: .background).async {
             EventLogger.logEvent(name)
+            semaphore.signal()
         }
-
+        
+        semaphore.wait()
         InAppMessagingViewController.display(name)
     }
     

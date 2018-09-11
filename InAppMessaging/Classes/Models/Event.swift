@@ -3,7 +3,7 @@
  * Implements NSObject and NSCoding in order for it to be encoded/decoded
  * as a data type and store/load from a property list.
  */
-class Event: NSObject, NSCoding {
+class Event: NSObject, NSCoding, Codable {
     var name: String
     var timestamp: Int
     

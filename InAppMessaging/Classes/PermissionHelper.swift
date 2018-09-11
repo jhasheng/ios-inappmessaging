@@ -21,19 +21,35 @@ struct PermissionHelper: HttpRequestable {
      */
     internal func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data? {
         
-        // Create the dictionary with the variables assigned above.
-        var jsonDict = optionalParams ?? [:]
+        guard let subscriptionId = Bundle.inAppSubscriptionId,
+            let campaignId = optionalParams!["campaignId"],
+            let appVersion = Bundle.appBuildVersion,
+            let sdkVersion = Bundle.inAppSdkVersion,
+            let locale = Locale.formattedCode else {
+                
+                return nil
+        }
+            
+            
+
+        let permissionRequest = PermissionRequest.init(
+            subscriptionId: subscriptionId,
+            campaignId: campaignId as! String,
+            userIdentifiers: IndentificationManager.userIdentifiers,
+            platform: "iOS",
+            appVersion: appVersion,
+            sdkVersion: sdkVersion,
+            locale: locale,
+            events: EventLogger.eventLog)
         
-        jsonDict[Keys.Request.SubscriptionID] = Bundle.inAppSubscriptionId
-        jsonDict[Keys.Request.UserIdentifiers] = IndentificationManager.userIdentifiers
-        jsonDict[Keys.Request.AppID] = Bundle.applicationId
-        jsonDict[Keys.Request.Platform] = "iOS"
-        jsonDict[Keys.Request.AppVersion] = Bundle.appBuildVersion
-        jsonDict[Keys.Request.SDKVersion] = Bundle.inAppSdkVersion
-        jsonDict[Keys.Request.Locale] = Locale.formattedCode
+        do {
+            let jsonData = try JSONEncoder().encode(permissionRequest)
+            return jsonData
+        } catch {
+            print("error")
+        }
         
-        // Return the serialized JSON object.
-        return try? JSONSerialization.data(withJSONObject: jsonDict)
+        return nil
     }
     
 }

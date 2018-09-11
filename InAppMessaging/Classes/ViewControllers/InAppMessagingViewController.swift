@@ -21,7 +21,7 @@ class InAppMessagingViewController: UIViewController {
         // TODO(Daniel Tam) Refactor with Event object.
         let campaignInfo: [String: Any] = [
             "campaignId": campaignToDisplay.campaignId,
-            "event": eventName,
+            "event": EventLogger.eventLog,
             "timestamp": Date().millisecondsSince1970
         ]
         

@@ -25,6 +25,6 @@ struct EndpointURL: Decodable {
     
     enum CodingKeys: String, CodingKey {
         case ping
-        case displayPermission = "display_permission"
+        case displayPermission
     }
 }
