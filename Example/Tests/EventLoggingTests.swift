@@ -9,7 +9,7 @@ class EventLoggingTests: QuickSpec {
 
     struct MockEventLogger: PlistManipulable {
         static var plistURL: URL {
-            let documentDirectoryURL =  try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            let documentDirectoryURL =  try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             return documentDirectoryURL.appendingPathComponent(Keys.File.TestFileForEventLogs)
         }
     }
@@ -31,9 +31,9 @@ class EventLoggingTests: QuickSpec {
         context("Event logging") {
 
             it("should throw an exception because theres no existing .plist file") {
-
                 expect {
-                    try print(MockEventLogger.loadPropertyList())
+                    let eventLog: [Event] = try MockEventLogger.loadPropertyList()!
+                    return eventLog
                 }.to(throwError())
             }
 
@@ -42,9 +42,10 @@ class EventLoggingTests: QuickSpec {
                 do {
                     try MockEventLogger.savePropertyList([])
                 } catch {}
-
+                
                 expect {
-                    try print(MockEventLogger.loadPropertyList())
+                    let eventLog: [Event] = try MockEventLogger.loadPropertyList()!
+                    return eventLog
                 }.toNot(throwError())
             }
         }

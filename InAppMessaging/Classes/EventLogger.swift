@@ -4,7 +4,7 @@
 struct EventLogger: PlistManipulable {
     static var eventLog = [Event]()
     static var plistURL: URL {
-        let documentDirectoryURL =  try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        let documentDirectoryURL =  try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         return documentDirectoryURL.appendingPathComponent(Keys.File.EventLogs)
     }
     
