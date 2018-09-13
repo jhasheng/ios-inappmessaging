@@ -30,6 +30,7 @@ struct PermissionClient: HttpRequestable {
                     executeShowAction(campaign)
                     return true
                 case .discard:
+                    executeDiscardAction(campaign)
                     return false
                 case .postpone:
                     break
@@ -51,14 +52,28 @@ struct PermissionClient: HttpRequestable {
         CampaignHelper.appendShownCampaign(campaignId: campaignData.campaignId)
         
         // Delete the campaign from the campaign list feed.
-        var triggerNames = [String]()
-        for trigger in campaignData.triggers {
-            triggerNames.append(trigger.event)
-        }
-        
+        let triggerNames = createTriggerNameList(withCampaign: campaignData)
         if !triggerNames.isEmpty {
             CampaignHelper.deleteCampaign(withId: campaignData.campaignId, andTriggerNames: triggerNames)
         }
+    }
+    
+    fileprivate func executeDiscardAction(_ campaignData: CampaignData) {
+        // Delete the campaign from the campaign list feed.
+        let triggerNames = createTriggerNameList(withCampaign: campaignData)
+        if !triggerNames.isEmpty {
+            CampaignHelper.deleteCampaign(withId: campaignData.campaignId, andTriggerNames: triggerNames)
+        }
+    }
+    
+    fileprivate func createTriggerNameList(withCampaign campaign: CampaignData) -> [String] {
+        // Delete the campaign from the campaign list feed.
+        var triggerNames = [String]()
+        for trigger in campaign.triggers {
+            triggerNames.append(trigger.event)
+        }
+        
+        return triggerNames
     }
     
     /**
