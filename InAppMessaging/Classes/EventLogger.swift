@@ -45,4 +45,18 @@ struct EventLogger: PlistManipulable {
             #endif
         }
     }
+    
+    /**
+     * Clear the in-memory eventLogs and the plist file.
+     */
+    static internal func clearLogs() {
+        eventLog.removeAll()
+        do {
+            try self.deletePropertyList()
+        } catch {
+            #if DEBUG
+                print("InAppMessaging: failed clearing event logs.")
+            #endif
+        }
+    }
 }

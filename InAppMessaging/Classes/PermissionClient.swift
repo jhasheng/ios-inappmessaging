@@ -25,6 +25,9 @@ struct PermissionClient: HttpRequestable {
                     return true
         }
         
+        // Clear the event log after dumping it to display_permission.
+        EventLogger.clearLogs()
+        
         // Parse and handle the response.
         do {
             let decodedResponse = try JSONDecoder().decode(DisplayPermissionResponse.self, from: responseFromDisplayPermission)
