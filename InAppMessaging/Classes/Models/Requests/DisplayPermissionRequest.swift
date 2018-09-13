@@ -1,5 +1,5 @@
 /**
- * Model of the request body for displaying permission'.
+ * Model of the request body for 'display-permission'.
  */
 struct DisplayPermissionRequest: Codable {
     let subscriptionId: String

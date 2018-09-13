@@ -32,4 +32,3 @@ extension Modal where Self: UIView {
         self.removeFromSuperview()
     }
 }
-

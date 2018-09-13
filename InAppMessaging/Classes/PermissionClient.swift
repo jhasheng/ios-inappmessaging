@@ -1,7 +1,10 @@
+/**
+ * Struct to handle permission checking before displaying a campaign.
+ */
 struct PermissionClient: HttpRequestable {
     
     /**
-     * Function that will handle communicating with the display_permission endpoint and handles the response.
+     * Function that will handle communicating with the display-permission endpoint and handles the response.
      * By default, if anything goes wrong with the communication, return true and show the campaign.
      * @param { campaign: CampaignData } campaign that is about to be shown.
      * @returns { Bool } boolean to signal the SDK to either show or don't show the campaign.
@@ -12,7 +15,7 @@ struct PermissionClient: HttpRequestable {
             Keys.Request.CampaignID: campaign.campaignId
         ]
         
-        // Call display_permission endpoint.
+        // Call display-permission endpoint.
         guard let responseFromDisplayPermission =
             self.requestFromServer(
                 withUrl: (ConfigurationClient.endpoints?.displayPermission)!,
@@ -44,7 +47,9 @@ struct PermissionClient: HttpRequestable {
                     break
             }
         } catch {
-            print("InAppMessaging: error getting a response from display permission.")
+            #if DEBUG
+                print("InAppMessaging: error getting a response from display permission.")
+            #endif
         }
         
         return true
@@ -68,7 +73,7 @@ struct PermissionClient: HttpRequestable {
     }
     
     /**
-     * This method will be executed when the display_permission endpoint returns a 'discard' value.
+     * This method will be executed when the display-permission endpoint returns a 'discard' value.
      * This function will just delete the campaignId from the list of campaign IDs.
      * @param { campaignData: CampaignData } data of the campaign that was permission checked.
      */

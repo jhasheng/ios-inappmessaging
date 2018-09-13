@@ -36,7 +36,6 @@ extension PlistManipulable {
     }
     
     static func loadPropertyList<T>() throws -> [T]? {
-        
         let plistData = try Data(contentsOf: plistURL)
         guard let plist = NSKeyedUnarchiver.unarchiveObject(with: plistData) as? [T] else {
             return nil

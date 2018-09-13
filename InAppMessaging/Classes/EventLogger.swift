@@ -23,7 +23,7 @@ struct EventLogger: PlistManipulable {
                 eventLog = try loadPropertyList() ?? eventLog
             } catch {
                 #if DEBUG
-                print("InAppMessaging: \(error)")
+                    print("InAppMessaging: \(error)")
                 #endif
             }
         }
@@ -41,7 +41,7 @@ struct EventLogger: PlistManipulable {
             try savePropertyList(eventLog)
         } catch {
             #if DEBUG
-            print("InAppMessaging: \(error)")
+                print("InAppMessaging: \(error)")
             #endif
         }
     }

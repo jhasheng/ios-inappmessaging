@@ -57,6 +57,8 @@ class ConfigurationClient: HttpRequestable {
     
     /**
      * Request body for Configuration client to get get-config endpoint.
+     * @param { optionalParams: [String: Any]? } additional params to be added to the request body.
+     * @returns { Data? } optional serialized data for the request body.
      */
     internal func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data? {
         

@@ -1,5 +1,5 @@
 /**
- * Model of the request body for ping request..
+ * Model of the request body for ping request.
  */
 struct PingRequest: Codable {
     let subscriptionId: String

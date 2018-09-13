@@ -52,12 +52,15 @@ class MessageMixerClient: HttpRequestable {
     
     /**
      * Request body for Message Mixer Client to hit ping endpoint.
+     * @param { optionalParams: [String: Any]? } additional params to be added to the request body.
+     * @returns { Data? } optional serialized data for the request body.
      */
     internal func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data? {
         
         guard let subscriptionId = Bundle.inAppSubscriptionId,
             let appVersion = Bundle.appBuildVersion else {
-            return nil
+                
+                return nil
         }
         
         let pingRequest = PingRequest.init(

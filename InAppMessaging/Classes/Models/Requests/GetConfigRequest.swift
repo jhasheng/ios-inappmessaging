@@ -1,5 +1,5 @@
 /**
- * Model of the request body for ping request..
+ * Model of the request body for 'get-config'
  */
 struct GetConfigRequest: Codable {
     let locale: String
