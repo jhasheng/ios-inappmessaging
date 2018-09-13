@@ -22,6 +22,7 @@ struct Keys {
         static let Locale = "locale"
         static let SubscriptionID = "subscriptionId"
         static let UserIdentifiers = "userIdentifiers"
+        static let CampaignID = "campaignId"
         
         /**
          * Constants for Event object.

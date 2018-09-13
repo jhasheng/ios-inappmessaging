@@ -5,34 +5,12 @@
 struct CampaignHelper {
     
     /**
-     * Search through list of all campaigns' triggers to find the first matching campaign to return.
-     * @param { trigger: String } The trigger name logged by the host app.
-     * @param { campaignListOptional: [CampaignList]? } Optional array of the list of campaigns.
-     * @returns { CampaignData? } Optional campaign with the matching trigger name.
-     */
-    static func findMatchingTrigger(trigger: String, campaignListOptional: [Campaign]?) -> CampaignData? {
-        guard let campaignList = campaignListOptional else {
-            return nil
-        }
-        
-        for campaign in campaignList {
-            for campaignTrigger in campaign.campaignData.triggers {
-                if trigger == campaignTrigger.event {
-                    return campaign.campaignData
-                }
-            }
-        }
-
-        return nil
-    }
-    
-    /**
      * Map campaign list returned by message mixer to a hashmap of trigger names to array of campaigns.
      * @param { campaignList: [Campaign] } list of campaign sent by Message Mixer server.
      * @returns { [String: [Campaign]] } Hashmap of event names to list of campaigns.
      */
-    static func mapCampaign(campaignList: [Campaign]) -> [String: [Campaign]] {
-        var campaignDict = [String: [Campaign]]()
+    static func mapCampaign(campaignList: Set<Campaign>) -> [String: Set<Campaign>] {
+        var campaignDict = [String: Set<Campaign>]()
         
         for campaign in campaignList {
             for campaignTrigger in campaign.campaignData.triggers {
@@ -40,7 +18,7 @@ struct CampaignHelper {
                 let triggerName = campaignTrigger.event
                 
                 if campaignDict[triggerName] != nil {
-                    campaignDict[triggerName]?.append(campaign)
+                    campaignDict[triggerName]?.insert(campaign)
                 } else {
                     campaignDict[triggerName] = [campaign]
                 }
@@ -57,7 +35,7 @@ struct CampaignHelper {
      * @returns { CampaignData? } optional CampaignData that matches the two conditions.
      */
     static func fetchCampaign(withEventName: String) -> CampaignData? {
-        if let campaignList = MessageMixerClient.campaignDict[withEventName] {
+        if let campaignList = MessageMixerClient.mappedCampaigns[withEventName] {
             for campaign in campaignList {
                 if !self.isCampaignShown(campaignId: campaign.campaignData.campaignId) {
                     return campaign.campaignData
@@ -93,4 +71,17 @@ struct CampaignHelper {
     static func findViewType(campaign: CampaignData) -> CampaignDisplayType? {
         return CampaignDisplayType(rawValue: campaign.type)
     }
+    
+    /**
+     * Parses through the dictionary of trigger names to campaigns and delete the campaign from the whole dictionary.
+     * @param { campaignId: String } campaignId to delete.
+     * @param { triggerNames: [String] } array of trigger names that were previously mapped.
+     */
+//    static func deleteCampaign(withCampaignId campaignId: String, andTriggerName triggerNames: [String]) {
+//        for triggerName in triggerNames {
+//            if MessageMixerClient.mappedCampaigns[triggerName] != nil && {
+//
+//            }
+//        }
+//    }
 }

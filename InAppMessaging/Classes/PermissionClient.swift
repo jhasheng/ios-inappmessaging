@@ -1,13 +1,16 @@
-
-struct PermissionHelper: HttpRequestable {
+struct PermissionClient: HttpRequestable {
     
-    func checkPermission(withCampaign campaign: [String: Any]) -> Bool {
+    func checkPermission(withCampaign campaign: CampaignData) -> Bool {
+        
+        let requestParams = [
+            Keys.Request.CampaignID: campaign.campaignId
+        ]
         
         guard let responseFromDisplayPermission =
             self.requestFromServer(
                 withUrl: (ConfigurationClient.endpoints?.displayPermission)!,
                 withHttpMethod: .post,
-                withOptionalParams: campaign) else {
+                withOptionalParams: requestParams) else {
                 
                     return true
         }
@@ -38,16 +41,27 @@ struct PermissionHelper: HttpRequestable {
     }
     
     /**
+     * This method will be executed when the display_permission endpoint returns a 'show' value.
+     * This function will show the campaign and then delete the campaignId from the list of campaign IDs.
+     */
+    fileprivate func executeShowAction() {
+        
+    }
+    
+    /**
      * Request body for display permission check.
      */
     internal func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data? {
         
         guard let subscriptionId = Bundle.inAppSubscriptionId,
-            let campaignId = optionalParams!["campaignId"],
+            let campaignId = optionalParams![Keys.Request.CampaignID],
             let appVersion = Bundle.appBuildVersion,
             let sdkVersion = Bundle.inAppSdkVersion,
             let locale = Locale.formattedCode else {
                 
+                #if DEBUG
+                    print("InAppMessaging: error while building request body for display_permssion.")
+                #endif
                 return nil
         }
 

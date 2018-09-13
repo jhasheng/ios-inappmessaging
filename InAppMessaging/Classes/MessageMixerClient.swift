@@ -4,7 +4,7 @@
 class MessageMixerClient: HttpRequestable {
     
     private static var delay: Int = 0 // Milliseconds before pinging Message Mixer server.
-    static var campaignDict = [String: [Campaign]]()
+    static var mappedCampaigns = [String: Set<Campaign>]()
     static var listOfShownCampaigns = [String]()
     
     /**
@@ -45,7 +45,7 @@ class MessageMixerClient: HttpRequestable {
         }
         
         if let campaignResponse = decodedResponse {
-            MessageMixerClient.campaignDict = CampaignHelper.mapCampaign(campaignList: campaignResponse.data)
+            MessageMixerClient.mappedCampaigns = CampaignHelper.mapCampaign(campaignList: campaignResponse.data)
             WorkScheduler.scheduleTask(campaignResponse.nextPingMillis, closure: self.pingMixerServer)
         }
     }

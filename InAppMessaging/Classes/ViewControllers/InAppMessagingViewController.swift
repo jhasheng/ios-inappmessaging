@@ -18,21 +18,15 @@ class InAppMessagingViewController: UIViewController {
         }
         
         // Permission check here.
-        // TODO(Daniel Tam) Refactor with Event object.
-        let campaignToCheck: [String: Any] = [
-            "campaignId": campaignToDisplay.campaignId,
-            "event": EventLogger.eventLog,
-            "timestamp": Date().millisecondsSince1970
-        ]
-        
-        if !PermissionHelper().checkPermission(withCampaign: campaignToCheck){
+        if !PermissionClient().checkPermission(withCampaign: campaignToDisplay){
             return
         }
         
-        var view: Modal?
-
-        // TODO(daniel.tam) Add the other view types.
-        switch campaignViewType {
+        DispatchQueue.main.async {
+            var view: Modal?
+            
+            // TODO(daniel.tam) Add the other view types.
+            switch campaignViewType {
             case .modal:
                 view = ModalView(campaign: campaignToDisplay)
                 break
@@ -44,12 +38,13 @@ class InAppMessagingViewController: UIViewController {
                 break
             case .html:
                 break
-        }
-        
-        // Display the campaign if the view exists and add the campaign ID to the shown ID list.
-        if let viewToDisplay = view {
-            viewToDisplay.show()
-            CampaignHelper.appendShownCampaign(campaignId: campaignToDisplay.campaignId)
+            }
+            
+            // Display the campaign if the view exists and add the campaign ID to the shown ID list.
+            if let viewToDisplay = view {
+                viewToDisplay.show()
+                CampaignHelper.appendShownCampaign(campaignId: campaignToDisplay.campaignId)
+            }
         }
     }
 }
