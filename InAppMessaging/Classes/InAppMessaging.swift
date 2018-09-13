@@ -49,9 +49,11 @@
      * @param { name: String } name of the event.
      */
     public class func logEvent(_ name: String) {
-        DispatchQueue.global(qos: .background).async {
-            EventLogger.logEvent(name)
-            InAppMessagingViewController.display(name)
+        if InAppMessaging.isEnabled {
+            DispatchQueue.global(qos: .background).async {
+                EventLogger.logEvent(name)
+                InAppMessagingViewController.display(name)
+            }
         }
     }
     
