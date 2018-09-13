@@ -77,7 +77,7 @@ struct CampaignHelper {
      * @param { campaignId: String } campaignId to delete.
      * @param { triggerNames: [String] } array of trigger names that were previously mapped.
      */
-    static func deleteCampaign(withId campaignId: String, andTriggerName triggerNames: [String]) {
+    static func deleteCampaign(withId campaignId: String, andTriggerNames triggerNames: [String]) {
         for triggerName in triggerNames {
             if let setOfCampaignIdsByTriggerName = MessageMixerClient.mappedCampaigns[triggerName] {
                 for campaign in setOfCampaignIdsByTriggerName {

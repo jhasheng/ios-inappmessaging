@@ -27,6 +27,7 @@ struct PermissionClient: HttpRequestable {
                 case .invalid:
                     return true
                 case .show:
+                    executeShowAction(campaign)
                     return true
                 case .discard:
                     return false
@@ -44,8 +45,20 @@ struct PermissionClient: HttpRequestable {
      * This method will be executed when the display_permission endpoint returns a 'show' value.
      * This function will show the campaign and then delete the campaignId from the list of campaign IDs.
      */
-    fileprivate func executeShowAction() {
+    fileprivate func executeShowAction(_ campaignData: CampaignData) {
         
+        // Append campaign ID to list of shown campaigns.
+        CampaignHelper.appendShownCampaign(campaignId: campaignData.campaignId)
+        
+        // Delete the campaign from the campaign list feed.
+        var triggerNames = [String]()
+        for trigger in campaignData.triggers {
+            triggerNames.append(trigger.event)
+        }
+        
+        if !triggerNames.isEmpty {
+            CampaignHelper.deleteCampaign(withId: campaignData.campaignId, andTriggerNames: triggerNames)
+        }
     }
     
     /**
