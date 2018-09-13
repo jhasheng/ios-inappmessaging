@@ -1,11 +1,18 @@
 struct PermissionClient: HttpRequestable {
     
+    /**
+     * Function that will handle communicating with the display_permission endpoint and handles the response.
+     * By default, if anything goes wrong with the communication, return true and show the campaign.
+     * @param { campaign: CampaignData } campaign that is about to be shown.
+     * @returns { Bool } boolean to signal the SDK to either show or don't show the campaign.
+     */
     func checkPermission(withCampaign campaign: CampaignData) -> Bool {
         
         let requestParams = [
             Keys.Request.CampaignID: campaign.campaignId
         ]
         
+        // Call display_permission endpoint.
         guard let responseFromDisplayPermission =
             self.requestFromServer(
                 withUrl: (ConfigurationClient.endpoints?.displayPermission)!,
@@ -15,6 +22,7 @@ struct PermissionClient: HttpRequestable {
                     return true
         }
         
+        // Parse and handle the response.
         do {
             let decodedResponse = try JSONDecoder().decode(DisplayPermissionResponse.self, from: responseFromDisplayPermission)
             
@@ -22,17 +30,17 @@ struct PermissionClient: HttpRequestable {
                 return true
             }
             
-            //TODO(Daniel Tam) Add support for the actions in next PR.
             switch permissionAction {
                 case .invalid:
                     return true
                 case .show:
-                    executeShowAction(campaign)
+                    executeShowAction(withCampaign: campaign)
                     return true
                 case .discard:
-                    executeDiscardAction(campaign)
+                    executeDiscardAction(withCampaign: campaign)
                     return false
                 case .postpone:
+                    return false
                     break
             }
         } catch {
@@ -44,9 +52,10 @@ struct PermissionClient: HttpRequestable {
     
     /**
      * This method will be executed when the display_permission endpoint returns a 'show' value.
-     * This function will show the campaign and then delete the campaignId from the list of campaign IDs.
+     * This function, after showing the campaign, will then delete the campaignId from the list of campaign IDs.
+     * @param { campaignData: CampaignData } data of the campaign that was permission checked.
      */
-    fileprivate func executeShowAction(_ campaignData: CampaignData) {
+    fileprivate func executeShowAction(withCampaign campaignData: CampaignData) {
         
         // Append campaign ID to list of shown campaigns.
         CampaignHelper.appendShownCampaign(campaignId: campaignData.campaignId)
@@ -58,7 +67,12 @@ struct PermissionClient: HttpRequestable {
         }
     }
     
-    fileprivate func executeDiscardAction(_ campaignData: CampaignData) {
+    /**
+     * This method will be executed when the display_permission endpoint returns a 'discard' value.
+     * This function will just delete the campaignId from the list of campaign IDs.
+     * @param { campaignData: CampaignData } data of the campaign that was permission checked.
+     */
+    fileprivate func executeDiscardAction(withCampaign campaignData: CampaignData) {
         // Delete the campaign from the campaign list feed.
         let triggerNames = createTriggerNameList(withCampaign: campaignData)
         if !triggerNames.isEmpty {
@@ -66,8 +80,14 @@ struct PermissionClient: HttpRequestable {
         }
     }
     
+    /**
+     * In order to delete a campaignId from MessageMixer.mappedCampaigns, which potentially can have multiple occurences,
+     * it will be more efficient if we already have a list of trigger names that the campaignId is mapped to.
+     * This function generates that list of triggerNames that the campaign was previously mapped to.
+     * @param { campaign: CampaignData } A specific campaign that includes all the trigger names that it was mapped to.
+     * @returns { [String] } List of trigger names.
+     */
     fileprivate func createTriggerNameList(withCampaign campaign: CampaignData) -> [String] {
-        // Delete the campaign from the campaign list feed.
         var triggerNames = [String]()
         for trigger in campaign.triggers {
             triggerNames.append(trigger.event)
@@ -78,6 +98,8 @@ struct PermissionClient: HttpRequestable {
     
     /**
      * Request body for display permission check.
+     * @param { optionalParams: [String: Any]? } additional params to be added to the request body.
+     * @returns { Data? } optional serialized data for the request body.
      */
     internal func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data? {
         
@@ -106,7 +128,9 @@ struct PermissionClient: HttpRequestable {
         do {
             return try JSONEncoder().encode(permissionRequest)
         } catch {
-            print("InAppMessaging: failed creating a request body.")
+            #if DEBUG
+                print("InAppMessaging: failed creating a request body.")
+            #endif
         }
         
         return nil
