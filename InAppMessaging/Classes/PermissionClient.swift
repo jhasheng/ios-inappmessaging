@@ -37,10 +37,10 @@ struct PermissionClient: HttpRequestable {
                 case .invalid:
                     return true
                 case .show:
-                    executeShowAction(withCampaign: campaign)
+                    removeCampaign(campaign)
                     return true
                 case .discard:
-                    executeDiscardAction(withCampaign: campaign)
+                    removeCampaign(campaign)
                     return false
                 case .postpone:
                     return false
@@ -56,28 +56,11 @@ struct PermissionClient: HttpRequestable {
     }
     
     /**
-     * This method will be executed when the display_permission endpoint returns a 'show' value.
-     * This function, after showing the campaign, will then delete the campaignId from the list of campaign IDs.
+     * This method will be executed when the display-permission endpoint returns a 'show' or 'discard' value.
+     * This function will delete the campaignId from the list of campaign IDs.
      * @param { campaignData: CampaignData } data of the campaign that was permission checked.
      */
-    fileprivate func executeShowAction(withCampaign campaignData: CampaignData) {
-        
-        // Append campaign ID to list of shown campaigns.
-        CampaignHelper.appendShownCampaign(campaignId: campaignData.campaignId)
-        
-        // Delete the campaign from the campaign list feed.
-        let triggerNames = createTriggerNameList(withCampaign: campaignData)
-        if !triggerNames.isEmpty {
-            CampaignHelper.deleteCampaign(withId: campaignData.campaignId, andTriggerNames: triggerNames)
-        }
-    }
-    
-    /**
-     * This method will be executed when the display-permission endpoint returns a 'discard' value.
-     * This function will just delete the campaignId from the list of campaign IDs.
-     * @param { campaignData: CampaignData } data of the campaign that was permission checked.
-     */
-    fileprivate func executeDiscardAction(withCampaign campaignData: CampaignData) {
+    fileprivate func removeCampaign(_ campaignData: CampaignData) {
         // Delete the campaign from the campaign list feed.
         let triggerNames = createTriggerNameList(withCampaign: campaignData)
         if !triggerNames.isEmpty {

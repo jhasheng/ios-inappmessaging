@@ -42,6 +42,7 @@ class InAppMessagingViewController: UIViewController {
             
             // Display the campaign if the view exists.
             if let viewToDisplay = view {
+                CampaignHelper.appendShownCampaign(campaignId: campaignToDisplay.campaignId)
                 viewToDisplay.show()
             }
         }
