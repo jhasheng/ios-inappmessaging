@@ -60,7 +60,7 @@ struct CampaignHelper {
      * @param { campaignId: String } ID of the campaign to append.
      */
     static func appendShownCampaign(campaignId: String) {
-        MessageMixerClient.listOfShownCampaigns.append(campaignId)
+        MessageMixerClient.listOfShownCampaigns.insert(campaignId)
     }
     
     /**
@@ -77,11 +77,15 @@ struct CampaignHelper {
      * @param { campaignId: String } campaignId to delete.
      * @param { triggerNames: [String] } array of trigger names that were previously mapped.
      */
-//    static func deleteCampaign(withCampaignId campaignId: String, andTriggerName triggerNames: [String]) {
-//        for triggerName in triggerNames {
-//            if MessageMixerClient.mappedCampaigns[triggerName] != nil && {
-//
-//            }
-//        }
-//    }
+    static func deleteCampaign(withId campaignId: String, andTriggerName triggerNames: [String]) {
+        for triggerName in triggerNames {
+            if let setOfCampaignIdsByTriggerName = MessageMixerClient.mappedCampaigns[triggerName] {
+                for campaign in setOfCampaignIdsByTriggerName {
+                    if campaign.campaignData.campaignId == campaignId {
+                        MessageMixerClient.mappedCampaigns[triggerName]?.remove(campaign)
+                    }
+                }
+            }
+        }
+    }
 }
