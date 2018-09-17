@@ -13,7 +13,7 @@ struct CampaignHelper {
         var campaignDict = [String: Set<Campaign>]()
         
         for campaign in campaignList {
-            for campaignTrigger in campaign.campaignData.triggers {
+            for campaignTrigger in campaign.campaignData.trigger.conditions {
                 
                 let triggerName = campaignTrigger.event
                 

@@ -31,13 +31,13 @@ struct CampaignData: Decodable, Equatable {
     
     let campaignId: String
     let type: Int
-    let triggers: [Trigger]
+    let trigger: Trigger
     let messagePayload: MessagePayload
     
     enum CodingKeys: String, CodingKey {
         case campaignId
         case type
-        case triggers
+        case trigger
         case messagePayload
     }
     
@@ -48,13 +48,25 @@ struct CampaignData: Decodable, Equatable {
 
 struct Trigger: Decodable {
     let type: Int
-    let event: String
     let displayDelay: Int
+    let conditions: [Condition]
     
     enum CodingKeys: String, CodingKey {
         case type
-        case event
         case displayDelay
+        case conditions
+    }
+}
+
+struct Condition: Decodable {
+    let event: String
+    let occurrence: Int?
+    let timeFrame: Int?
+    
+    enum CodingKeys: String, CodingKey {
+        case event
+        case occurrence
+        case timeFrame
     }
 }
 
