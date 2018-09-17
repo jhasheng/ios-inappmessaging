@@ -20,9 +20,9 @@ struct PermissionClient: HttpRequestable {
             self.requestFromServer(
                 withUrl: (ConfigurationClient.endpoints?.displayPermission)!,
                 withHttpMethod: .post,
-                withOptionalParams: requestParams) else {
-                
-                    return true
+                withOptionalParams: requestParams)
+        else {
+            return true
         }
         
         // Clear the event log after dumping it to display_permission.
@@ -98,12 +98,12 @@ struct PermissionClient: HttpRequestable {
             let campaignId = optionalParams![Keys.Request.CampaignID],
             let appVersion = Bundle.appBuildVersion,
             let sdkVersion = Bundle.inAppSdkVersion,
-            let locale = Locale.formattedCode else {
-                
-                #if DEBUG
-                    print("InAppMessaging: error while building request body for display_permssion.")
-                #endif
-                return nil
+            let locale = Locale.formattedCode
+        else {
+            #if DEBUG
+                print("InAppMessaging: error while building request body for display_permssion.")
+            #endif
+            return nil
         }
 
         let permissionRequest = DisplayPermissionRequest.init(
@@ -114,7 +114,8 @@ struct PermissionClient: HttpRequestable {
             appVersion: appVersion,
             sdkVersion: sdkVersion,
             locale: locale,
-            events: EventLogger.eventLog)
+            events: EventLogger.eventLog
+        )
         
         do {
             return try JSONEncoder().encode(permissionRequest)

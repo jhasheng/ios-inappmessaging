@@ -65,9 +65,9 @@ class ConfigurationClient: HttpRequestable {
         guard let locale = Locale.formattedCode,
             let appVersion = Bundle.appBuildVersion,
             let appId = Bundle.applicationId,
-            let sdkVersion = Bundle.inAppSdkVersion else {
-                
-                return nil
+            let sdkVersion = Bundle.inAppSdkVersion
+        else {
+            return nil
         }
         
         let getConfigRequest = GetConfigRequest.init(
@@ -75,7 +75,8 @@ class ConfigurationClient: HttpRequestable {
             appVersion: appVersion,
             platform: "iOS",
             appId: appId,
-            sdkVersion: sdkVersion)
+            sdkVersion: sdkVersion
+        )
         
         do {
             return try JSONEncoder().encode(getConfigRequest)

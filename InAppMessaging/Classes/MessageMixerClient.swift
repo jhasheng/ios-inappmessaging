@@ -58,15 +58,16 @@ class MessageMixerClient: HttpRequestable {
     internal func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data? {
         
         guard let subscriptionId = Bundle.inAppSubscriptionId,
-            let appVersion = Bundle.appBuildVersion else {
-                
-                return nil
+            let appVersion = Bundle.appBuildVersion
+        else {
+            return nil
         }
         
         let pingRequest = PingRequest.init(
             subscriptionId: subscriptionId,
             userIdentifiers: IndentificationManager.userIdentifiers,
-            appVersion: appVersion)
+            appVersion: appVersion
+        )
         
         do {
             return try JSONEncoder().encode(pingRequest)
