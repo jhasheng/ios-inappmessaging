@@ -6,21 +6,21 @@ import Nimble
  * Tests for behavior when registering IDs to the SDK.
  */
 class IdRegistrationTests: QuickSpec {
-    
+
     override func spec() {
-        
+
         beforeEach {
-            IndentificationManager.idList.removeAll()
+            IndentificationManager.userIdentifiers.removeAll()
         }
-        
+
         context("ID Registration") {
-            
+
             it("should not have any matching id type or id value") {
-                let expected = [[String: String]]()
-                
-                expect(expected).toEventually(equal(IndentificationManager.idList))
+                let expected = [UserIdentifier]()
+
+                expect(expected).toEventually(equal(IndentificationManager.userIdentifiers))
             }
-            
+
             /**
              * The two tests below calls directly from IndentificationManager.registerId() rather than
              * InAppMessaging.registerId() because the asynchronous nature in the public method causes
@@ -32,13 +32,10 @@ class IdRegistrationTests: QuickSpec {
                 IndentificationManager.registerId(.easyId, "whales and dolphins")
 
                 // Build the expected object.
-                var expected = [[String: AnyHashable]]()
-                var map = [String: AnyHashable]()
-                map["type"] = 2
-                map["id"] = "whales and dolphins"
-                expected.append(map)
+                var expected = [UserIdentifier]()
+                expected.append(UserIdentifier(type: 2, id: "whales and dolphins"))
 
-                expect(expected).to(equal(IndentificationManager.idList))
+                expect(expected).to(equal(IndentificationManager.userIdentifiers))
             }
 
             it("should have two matching id type and id value") {
@@ -47,19 +44,12 @@ class IdRegistrationTests: QuickSpec {
                 IndentificationManager.registerId(.rakutenId, "tigers and zebras")
 
                 // Build the expected object.
-                var expected = [[String: AnyHashable]]()
+                var expected = [UserIdentifier]()
+                
+                expected.append(UserIdentifier(type: 2, id: "whales and dolphins"))
+                expected.append(UserIdentifier(type: 1, id: "tigers and zebras"))
 
-                var firstId = [String: AnyHashable]()
-                firstId["type"] = 2
-                firstId["id"] = "whales and dolphins"
-                expected.append(firstId)
-
-                var secondId = [String: AnyHashable]()
-                secondId["type"] = 1
-                secondId["id"] = "tigers and zebras"
-                expected.append(secondId)
-
-                expect(expected).to(equal(IndentificationManager.idList))
+                expect(expected).to(equal(IndentificationManager.userIdentifiers))
             }
         }
     }

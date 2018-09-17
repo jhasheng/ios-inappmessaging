@@ -28,33 +28,38 @@ protocol HttpRequestable {
     
     /**
      * Generic method for calling an API.
-     * @param { withUrl: String} the URL of the API to call.
+     * @param { withUrl: String } the URL of the API to call.
      * @param { withHTTPMethod: String } the HTTP method used. E.G "POST" / "GET"
      * @returns { Optional [String: Any] } returns either nil or the response in a dictionary.
      */
-    func request(withUrl: String, withHTTPMethod: HttpMethod) -> Data?
+    func requestFromServer(withUrl url: String,
+                 withHttpMethod httpMethod: HttpMethod,
+                 withOptionalParams optionalParams: [String: Any]) -> Data?
     
     /**
      * Build out the request body for talking to configuration server.
      * @returns { Optional Data } of serialized JSON object with the required fields.
      */
-    func buildHttpBody() -> Data?
+    func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data?
 }
 
 /**
  * Default implementation of HttpRequestable.
  */
 extension HttpRequestable {
-    func request(withUrl: String, withHTTPMethod: HttpMethod) -> Data? {
+    func requestFromServer(withUrl url: String,
+                 withHttpMethod httpMethod: HttpMethod,
+                 withOptionalParams optionalParams: [String: Any] = [:]) -> Data? {
+        
         var dataToReturn: Data?
         
-        if let requestUrl = URL(string: withUrl) {
+        if let requestUrl = URL(string: url) {
             
             // Add in the HTTP headers and body.
             var request = URLRequest(url: requestUrl)
-            request.httpMethod = withHTTPMethod.stringValue
+            request.httpMethod = httpMethod.stringValue
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.httpBody = self.buildHttpBody()
+            request.httpBody = self.buildHttpBody(withOptionalParams: optionalParams)
             
             // Semaphore added for synchronous HTTP calls.
             let semaphore = DispatchSemaphore(value: 0)
@@ -84,42 +89,5 @@ extension HttpRequestable {
         }
         
         return dataToReturn
-    }
-}
-
-/**
- * Request body for Message Mixer Client.
- */
-extension HttpRequestable where Self: MessageMixerClient {
-    internal func buildHttpBody() -> Data? {
-        
-        // Create the dictionary with the variables assigned above.
-        let jsonDict: [String: Any] = [
-            Keys.Request.SubscriptionID: Bundle.inAppSubscriptionId as Any,
-            Keys.Request.UserID: IndentificationManager.idList
-        ]
-        
-        // Return the serialized JSON object.
-        return try? JSONSerialization.data(withJSONObject: jsonDict)
-    }
-}
-
-/**
- * Request body for Configuration client.
- */
-extension HttpRequestable where Self: ConfigurationClient {
-    internal func buildHttpBody() -> Data? {
-        
-        // Create the dictionary with the variables assigned above.
-        let jsonDict: [String: Any] = [
-            Keys.Request.AppID: Bundle.applicationId as Any,
-            Keys.Request.Platform: "iOS",
-            Keys.Request.AppVersion: Bundle.appBuildVersion as Any,
-            Keys.Request.SDKVersion: Bundle.inAppSdkVersion as Any,
-            Keys.Request.Locale: Locale.formattedCode as Any
-        ]
-        
-        // Return the serialized JSON object.
-        return try? JSONSerialization.data(withJSONObject: jsonDict)
     }
 }

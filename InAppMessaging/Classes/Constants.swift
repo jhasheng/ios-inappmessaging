@@ -21,14 +21,24 @@ struct Keys {
         static let SDKVersion = "sdkVersion"
         static let Locale = "locale"
         static let SubscriptionID = "subscriptionId"
-        static let UserID = "userId"
+        static let UserIdentifiers = "userIdentifiers"
+        static let CampaignID = "campaignId"
+        
+        /**
+         * Constants for Event object.
+         */
+        struct Event {
+            static let name = "name"
+            static let timestamp = "timestamp"
+        }
     }
     
     /**
      * Directories used for SDK.
      */
     struct File {
-        static let TimestampPlist = "InAppMessagingTimestamps.plist"
+        static let EventLogs = "InAppMessagingEventLogs.plist"
+        static let TestFileForEventLogs = "InAppTests.plist"
     }
     
     /**

@@ -1,9 +1,9 @@
 /**
  * Data model for Campaign response.
  */
-struct CampaignResponse: Decodable {
+struct PingResponse: Decodable {
     let nextPingMillis: Int
-    let data: [Campaign]
+    let data: Set<Campaign>
     
     enum CodingKeys: String, CodingKey {
         case nextPingMillis
@@ -11,15 +11,24 @@ struct CampaignResponse: Decodable {
     }
 }
 
-struct Campaign: Decodable {
+struct Campaign: Decodable, Hashable {
+
     let campaignData: CampaignData
+    var hashValue: Int {
+        return campaignData.campaignId.hashValue
+    }
     
     enum CodingKeys: String, CodingKey {
         case campaignData
     }
+    
+    static func == (lhs: Campaign, rhs: Campaign) -> Bool {
+        return lhs.campaignData == rhs.campaignData
+    }
 }
 
-struct CampaignData: Decodable {
+struct CampaignData: Decodable, Equatable {
+    
     let campaignId: String
     let type: Int
     let triggers: [Trigger]
@@ -30,6 +39,10 @@ struct CampaignData: Decodable {
         case type
         case triggers
         case messagePayload
+    }
+    
+    static func == (lhs: CampaignData, rhs: CampaignData) -> Bool {
+        return lhs.campaignId == rhs.campaignId
     }
 }
 
@@ -131,7 +144,7 @@ struct Button: Decodable {
 
 struct ButtonBehavior: Decodable {
     let action: Int
-    let uri: String
+    let uri: String?
     
     enum CodingKeys: String, CodingKey {
         case action

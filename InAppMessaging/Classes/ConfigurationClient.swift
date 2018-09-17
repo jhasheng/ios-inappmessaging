@@ -21,7 +21,7 @@ class ConfigurationClient: HttpRequestable {
             return false
         }
 
-        guard let responseData = self.request(withUrl: configUrl, withHTTPMethod: .post) else {
+        guard let responseData = self.requestFromServer(withUrl: configUrl, withHttpMethod: .post) else {
             print("InAppMessaging: Error calling server.")
             // Exponential backoff for pinging Configuration server.
             ConfigurationClient.delay = (ConfigurationClient.delay == 0) ? 10000 : ConfigurationClient.delay * 2
@@ -41,8 +41,7 @@ class ConfigurationClient: HttpRequestable {
         var enabled: Bool = false
         
         do {
-            let decoder = JSONDecoder()
-            let response = try decoder.decode(ConfigResponse.self, from: configResponse)
+            let response = try JSONDecoder().decode(GetConfigResponse.self, from: configResponse)
             
             if response.data.enabled {
                 enabled = response.data.enabled
@@ -54,5 +53,36 @@ class ConfigurationClient: HttpRequestable {
         }
         
         return enabled
+    }
+    
+    /**
+     * Request body for Configuration client to get get-config endpoint.
+     * @param { optionalParams: [String: Any]? } additional params to be added to the request body.
+     * @returns { Data? } optional serialized data for the request body.
+     */
+    internal func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data? {
+        
+        guard let locale = Locale.formattedCode,
+            let appVersion = Bundle.appBuildVersion,
+            let appId = Bundle.applicationId,
+            let sdkVersion = Bundle.inAppSdkVersion
+        else {
+            return nil
+        }
+        
+        let getConfigRequest = GetConfigRequest.init(
+            locale: locale,
+            appVersion: appVersion,
+            platform: "iOS",
+            appId: appId,
+            sdkVersion: sdkVersion
+        )
+        
+        do {
+            return try JSONEncoder().encode(getConfigRequest)
+        } catch {
+            print("InAppMessaging: failed creating a request body.")
+        }
+        return nil
     }
 }

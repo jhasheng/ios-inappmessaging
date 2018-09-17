@@ -189,6 +189,7 @@ class ModalView: UIView, Modal {
                         self.uri = button.buttonBehavior.uri
                         buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnRedirect)))
                     case .deeplink:
+                        self.uri = button.buttonBehavior.uri
                         buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnDeeplink)))
                     case .close:
                         buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnExitButton)))

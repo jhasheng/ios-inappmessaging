@@ -4,8 +4,8 @@
 class MessageMixerClient: HttpRequestable {
     
     private static var delay: Int = 0 // Milliseconds before pinging Message Mixer server.
-    static var campaignDict = [String: [Campaign]]()
-    static var listOfShownCampaigns = [String]()
+    static var mappedCampaigns = [String: Set<Campaign>]()
+    static var listOfShownCampaigns = Set<String>()
     
     /**
      * Starts the first ping to Message Mixer server.
@@ -26,18 +26,18 @@ class MessageMixerClient: HttpRequestable {
             return
         }
         
-        guard let response = self.request(withUrl: mixerServerUrl, withHTTPMethod: .post) else {
+        guard let response = self.requestFromServer(withUrl: mixerServerUrl, withHttpMethod: .post) else {
             // Exponential backoff for pinging Message Mixer server.
             MessageMixerClient.delay = (MessageMixerClient.delay == 0) ? 10000 : MessageMixerClient.delay * 2
             WorkScheduler.scheduleTask(MessageMixerClient.delay, closure: self.pingMixerServer)
             return
         }
         
-        var decodedResponse: CampaignResponse?
+        var decodedResponse: PingResponse?
         
         do {
             let decoder = JSONDecoder()
-            decodedResponse = try decoder.decode(CampaignResponse.self, from: response)
+            decodedResponse = try decoder.decode(PingResponse.self, from: response)
         } catch let error {
             #if DEBUG
                 print("InAppMessaging: Failed to parse json:", error)
@@ -45,8 +45,36 @@ class MessageMixerClient: HttpRequestable {
         }
         
         if let campaignResponse = decodedResponse {
-            MessageMixerClient.campaignDict = CampaignHelper.mapCampaign(campaignList: campaignResponse.data)
+            MessageMixerClient.mappedCampaigns = CampaignHelper.mapCampaign(campaignList: campaignResponse.data)
             WorkScheduler.scheduleTask(campaignResponse.nextPingMillis, closure: self.pingMixerServer)
         }
+    }
+    
+    /**
+     * Request body for Message Mixer Client to hit ping endpoint.
+     * @param { optionalParams: [String: Any]? } additional params to be added to the request body.
+     * @returns { Data? } optional serialized data for the request body.
+     */
+    internal func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data? {
+        
+        guard let subscriptionId = Bundle.inAppSubscriptionId,
+            let appVersion = Bundle.appBuildVersion
+        else {
+            return nil
+        }
+        
+        let pingRequest = PingRequest.init(
+            subscriptionId: subscriptionId,
+            userIdentifiers: IndentificationManager.userIdentifiers,
+            appVersion: appVersion
+        )
+        
+        do {
+            return try JSONEncoder().encode(pingRequest)
+        } catch {
+            print("InAppMessaging: failed creating a request body.")
+        }
+        
+        return nil
     }
 }
