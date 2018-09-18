@@ -80,9 +80,6 @@ struct PermissionClient: HttpRequestable {
     fileprivate func createTriggerNameList(withCampaign campaign: CampaignData) -> [Int] {
         var eventTypes = [Int]()
         for trigger in campaign.triggers {
-//            if let eventName = EventType(rawValue: trigger.eventType)?.name {
-//                eventTypes.append(eventName)
-//            }
             eventTypes.append(trigger.eventType)
         }
         

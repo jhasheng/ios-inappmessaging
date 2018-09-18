@@ -7,22 +7,17 @@ struct CampaignHelper {
     /**
      * Map campaign list returned by message mixer to a hashmap of trigger names to array of campaigns.
      * @param { campaignList: Set<Campaign> } list of campaign sent by Message Mixer server.
-     * @returns { [Int: Set<Campaign>] } Hashmap of event names to list of campaigns.
+     * @returns { [Int: Set<Campaign>] } Hashmap of event type to list of campaigns.
      */
     static func mapCampaign(campaignList: Set<Campaign>) -> [Int: Set<Campaign>] {
         var campaignDict = [Int: Set<Campaign>]()
         
         for campaign in campaignList {
             for campaignTrigger in campaign.campaignData.triggers {
-                
-                guard let eventType = EventType(rawValue: campaignTrigger.eventType)?.rawValue else {
-                    return campaignDict
-                }
-                
-                if campaignDict[eventType] != nil {
-                    campaignDict[eventType]?.insert(campaign)
+                if campaignDict[campaignTrigger.eventType] != nil {
+                    campaignDict[campaignTrigger.eventType]?.insert(campaign)
                 } else {
-                    campaignDict[eventType] = [campaign]
+                    campaignDict[campaignTrigger.eventType] = [campaign]
                 }
             }
         }
@@ -32,12 +27,12 @@ struct CampaignHelper {
     
     /**
      * Fetches a campaign based on two conditions -- campaign has not been shown before
-     * and the event name matches.
-     * @param { withEventName: Int } event type of the event to fetch.
+     * and the event type matches.
+     * @param { eventType: Int } event type to fetch from campaign list.
      * @returns { CampaignData? } optional CampaignData that matches the two conditions.
      */
-    static func fetchCampaign(withEventName: Int) -> CampaignData? {
-        if let campaignList = MessageMixerClient.mappedCampaigns[withEventName] {
+    static func fetchCampaign(withEventType eventType: Int) -> CampaignData? {
+        if let campaignList = MessageMixerClient.mappedCampaigns[eventType] {
             for campaign in campaignList {
                 if !self.isCampaignShown(campaignId: campaign.campaignData.campaignId) {
                     return campaign.campaignData
@@ -75,7 +70,7 @@ struct CampaignHelper {
     }
     
     /**
-     * Parses through the dictionary of trigger names to campaigns and delete the campaign from the whole dictionary.
+     * Parses through the dictionary of trigger event types to campaigns and delete the campaign from the whole dictionary.
      * @param { campaignId: String } campaignId to delete.
      * @param { triggers: [Int] } array of trigger event types that were previously mapped.
      */
