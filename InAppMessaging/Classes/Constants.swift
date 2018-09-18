@@ -23,14 +23,15 @@ struct Keys {
         static let SubscriptionID = "subscriptionId"
         static let UserIdentifiers = "userIdentifiers"
         static let CampaignID = "campaignId"
-        
-        /**
-         * Constants for Event object.
-         */
-        struct Event {
-            static let name = "name"
-            static let timestamp = "timestamp"
-        }
+    }
+    
+    /**
+     * Constants for Event object.
+     */
+    struct Event {
+        static let eventType = "eventType"
+        static let timestamp = "timestamp"
+        static let customAttributes = "customAttributes"
     }
     
     /**

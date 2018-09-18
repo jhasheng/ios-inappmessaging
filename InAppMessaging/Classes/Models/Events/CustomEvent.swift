@@ -21,11 +21,6 @@ public class CustomEvent: Event {
         case customAttributes
     }
     
-    //TODO(Daniel Tam) Fix decodable issue.
-    required public init(from decoder: Decoder) throws {
-        fatalError("init(from:) has not been implemented")
-    }
-    
     /**
      * Override encode() to due to an Codable issue when inheriting.
      * More information here: https://bugs.swift.org/browse/SR-5125 and

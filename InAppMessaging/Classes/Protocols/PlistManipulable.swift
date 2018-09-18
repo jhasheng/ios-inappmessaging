@@ -6,18 +6,17 @@ protocol PlistManipulable {
     
     /**
      * Save any object into the plist file located in plistURL directory.
-     * @param { plist: T } object to encode and save to the plist.
+     * @param { plist: T } object to encode and save to the plist. T is guarantee to conform to Encodable.
      * @throws when plist fails to serialize
      */
     static func savePropertyList<T: Encodable>(_ plist: T) throws
     
     /**
      * Loads the plist file located in the plistURL directory.
-     * @param { anyType: T.Type } type of the object to decode with.
-     * @returns { [T]? } array of the decoded objects.
+     * @returns { [[String: Any]]? } array of raw data from plist.
      * @throws error when plist file cannot be found.
      */
-    static func loadPropertyList<T: Decodable>(withType anyType: T.Type) throws -> [T]?
+    static func loadPropertyList() throws -> [[String: Any]]?
     
     /**
      * Deletes the InAppMessaging's timestamp plist file.
@@ -36,15 +35,9 @@ extension PlistManipulable {
         try plistData.write(to: plistURL)
     }
     
-    static func loadPropertyList<T: Decodable>(withType anyType: T.Type) throws -> [T]? {
+    static func loadPropertyList() throws -> [[String: Any]]? {
         let plistData = try Data(contentsOf: plistURL)
-
-        guard let plist = try? PropertyListDecoder().decode(anyType.self, from: plistData) as? [T] else {
-            return nil
-        }
-        
-        return plist
-        
+        return try PropertyListSerialization.propertyList(from: plistData, options: [], format:nil) as? [[String: Any]]
     }
     
     static func deletePropertyList() throws {
