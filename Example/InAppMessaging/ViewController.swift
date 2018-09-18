@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func showModalButton(_ sender: Any) {
-        InAppMessaging.logEvent("purchase_successful")
+//        InAppMessaging.logEvent("purchase_successful")
+        InAppMessaging.logEvent(AppStartEvent.init(withCustomAttributes: nil))
     }
 }
-

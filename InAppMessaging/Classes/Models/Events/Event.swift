@@ -3,7 +3,7 @@
  * Implements NSObject and NSCoding in order for it to be encoded/decoded
  * as a data type and store/load from a property list.
  */
-public class Event: NSObject, NSCoding, Codable {
+public class Event: Codable {
     var eventType: EventType
     var name: String
     var timestamp: Int
@@ -14,19 +14,35 @@ public class Event: NSObject, NSCoding, Codable {
         self.eventType = eventType
         self.timestamp = Date().millisecondsSince1970
         self.customAttributes = customAttributes ?? nil
+//        self.init(name: eventType.name, eventType: eventType, timestamp: Date().millisecondsSince1970, customAttributes: customAttributes ?? nil)
     }
     
-    required convenience public init?(coder aDecoder: NSCoder) {
-        let eventType = aDecoder.decodeObject(forKey: "eventType") as! EventType
-        let customAttributes = aDecoder.decodeObject(forKey: "customAttributes") as! [String: String]?
-        
-        self.init(eventType: eventType, customAttributes: customAttributes)
+    init(name: String, eventType: EventType, timestamp: Int, customAttributes: [String: String]?) {
+        self.name = name
+        self.eventType = eventType
+        self.timestamp = timestamp
+        self.customAttributes = customAttributes ?? nil
     }
+
     
-    public func encode(with aCoder: NSCoder) {
-        aCoder.encode(eventType, forKey: "eventType")
-        aCoder.encode(name, forKey: "name")
-        aCoder.encode(timestamp, forKey: "timestamp")
-        aCoder.encode(customAttributes, forKey: "customAttributes")
-    }
+//    public required convenience init?(coder aDecoder: NSCoder) {
+//        let name = aDecoder.decodeObject(forKey: "name") as! String
+//        let eventType = aDecoder.decodeInteger(forKey: "eventType")
+//        let timestamp = aDecoder.decodeInteger(forKey: "timestamp")
+//        let customAttributes = aDecoder.decodeObject(forKey: "customAttributes") as! [String: String]?
+//        
+//        self.init(
+//            name: name,
+//            eventType: EventType.init(rawValue: eventType) ?? EventType(rawValue: 0)!,
+//            timestamp: timestamp,
+//            customAttributes: customAttributes
+//        )
+//    }
+//    
+//    public func encode(with aCoder: NSCoder) {
+//        aCoder.encode(name, forKey: "name")
+//        aCoder.encode(eventType.rawValue, forKey: "eventType")
+//        aCoder.encode(timestamp, forKey: "timestamp")
+//        aCoder.encode(customAttributes, forKey: "customAttributes")
+//    }
 }

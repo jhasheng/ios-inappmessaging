@@ -51,7 +51,7 @@
     public class func logEvent(_ event: Event) {
         if InAppMessaging.isEnabled {
             DispatchQueue.global(qos: .background).async {
-                EventLogger.logEvent(name)
+                EventLogger.logEvent(event)
 //                InAppMessagingViewController.display(event.name)
             }
         }
