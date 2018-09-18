@@ -75,17 +75,18 @@ struct PermissionClient: HttpRequestable {
      * it will be more efficient if we already have a list of trigger names that the campaignId is mapped to.
      * This function generates that list of triggerNames that the campaign was previously mapped to.
      * @param { campaign: CampaignData } A specific campaign that includes all the trigger names that it was mapped to.
-     * @returns { [String] } List of trigger names.
+     * @returns { [Int] } List of event types.
      */
-    fileprivate func createTriggerNameList(withCampaign campaign: CampaignData) -> [String] {
-        var triggerNames = [String]()
+    fileprivate func createTriggerNameList(withCampaign campaign: CampaignData) -> [Int] {
+        var eventTypes = [Int]()
         for trigger in campaign.triggers {
-            if let eventName = EventType(rawValue: trigger.eventType)?.name {
-                triggerNames.append(eventName)
-            }
+//            if let eventName = EventType(rawValue: trigger.eventType)?.name {
+//                eventTypes.append(eventName)
+//            }
+            eventTypes.append(trigger.eventType)
         }
         
-        return triggerNames
+        return eventTypes
     }
     
     /**

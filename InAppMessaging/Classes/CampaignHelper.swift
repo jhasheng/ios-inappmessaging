@@ -7,22 +7,22 @@ struct CampaignHelper {
     /**
      * Map campaign list returned by message mixer to a hashmap of trigger names to array of campaigns.
      * @param { campaignList: Set<Campaign> } list of campaign sent by Message Mixer server.
-     * @returns { [String: Set<Campaign>] } Hashmap of event names to list of campaigns.
+     * @returns { [Int: Set<Campaign>] } Hashmap of event names to list of campaigns.
      */
-    static func mapCampaign(campaignList: Set<Campaign>) -> [String: Set<Campaign>] {
-        var campaignDict = [String: Set<Campaign>]()
+    static func mapCampaign(campaignList: Set<Campaign>) -> [Int: Set<Campaign>] {
+        var campaignDict = [Int: Set<Campaign>]()
         
         for campaign in campaignList {
             for campaignTrigger in campaign.campaignData.triggers {
                 
-                guard let eventTypeName = EventType(rawValue: campaignTrigger.eventType)?.name else {
+                guard let eventType = EventType(rawValue: campaignTrigger.eventType)?.rawValue else {
                     return campaignDict
                 }
                 
-                if campaignDict[eventTypeName] != nil {
-                    campaignDict[eventTypeName]?.insert(campaign)
+                if campaignDict[eventType] != nil {
+                    campaignDict[eventType]?.insert(campaign)
                 } else {
-                    campaignDict[eventTypeName] = [campaign]
+                    campaignDict[eventType] = [campaign]
                 }
             }
         }
@@ -33,10 +33,10 @@ struct CampaignHelper {
     /**
      * Fetches a campaign based on two conditions -- campaign has not been shown before
      * and the event name matches.
-     * @param { withEventName: String } name of the event to fetch.
+     * @param { withEventName: Int } event type of the event to fetch.
      * @returns { CampaignData? } optional CampaignData that matches the two conditions.
      */
-    static func fetchCampaign(withEventName: String) -> CampaignData? {
+    static func fetchCampaign(withEventName: Int) -> CampaignData? {
         if let campaignList = MessageMixerClient.mappedCampaigns[withEventName] {
             for campaign in campaignList {
                 if !self.isCampaignShown(campaignId: campaign.campaignData.campaignId) {
@@ -77,14 +77,14 @@ struct CampaignHelper {
     /**
      * Parses through the dictionary of trigger names to campaigns and delete the campaign from the whole dictionary.
      * @param { campaignId: String } campaignId to delete.
-     * @param { triggerNames: [String] } array of trigger names that were previously mapped.
+     * @param { triggers: [Int] } array of trigger event types that were previously mapped.
      */
-    static func deleteCampaign(withId campaignId: String, andTriggerNames triggerNames: [String]) {
-        for triggerName in triggerNames {
-            if let setOfCampaignIdsByTriggerName = MessageMixerClient.mappedCampaigns[triggerName] {
+    static func deleteCampaign(withId campaignId: String, andTriggerNames triggers: [Int]) {
+        for eventType in triggers {
+            if let setOfCampaignIdsByTriggerName = MessageMixerClient.mappedCampaigns[eventType] {
                 for campaign in setOfCampaignIdsByTriggerName {
                     if campaign.campaignData.campaignId == campaignId {
-                        MessageMixerClient.mappedCampaigns[triggerName]?.remove(campaign)
+                        MessageMixerClient.mappedCampaigns[eventType]?.remove(campaign)
                     }
                 }
             }

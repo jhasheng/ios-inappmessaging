@@ -3,11 +3,14 @@
  */
 public class CustomEvent: Event {
     
-    public init(withName name: String, withCustomAttributes customAttributes: [String: String]?) {
+    public init(withName name: String, withCustomAttributes customAttributesOptional: [String: String]?) {
+        
+        var customAttributes = customAttributesOptional ?? [String: String]()
+        customAttributes["name"] = name
+        
         super.init(
             eventType: EventType.custom,
-            name: name,
-            customAttributes: customAttributes ?? nil
+            customAttributes: customAttributes
         )
     }
     

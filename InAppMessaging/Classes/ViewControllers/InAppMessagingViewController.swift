@@ -6,12 +6,12 @@ class InAppMessagingViewController: UIViewController {
     /**
      * Contains logic to display the correct view type -- modal, slideup, fullscreen, html -- and create
      * a view controller to present.
-     * @param { eventName: String } name of the event.
+     * @param { eventName: Int } Enum value of the event type.
      */
-    internal class func display(_ eventName: String) {
+    internal class func display(_ eventType: Int) {
         
         // Fetch matching campaign and get its view type.
-        guard let campaignToDisplay = CampaignHelper.fetchCampaign(withEventName: eventName),
+        guard let campaignToDisplay = CampaignHelper.fetchCampaign(withEventName: eventType),
             let campaignViewType = CampaignHelper.findViewType(campaign: campaignToDisplay) else {
             
                 return
