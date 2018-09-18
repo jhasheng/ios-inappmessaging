@@ -52,7 +52,7 @@
         if InAppMessaging.isEnabled {
             DispatchQueue.global(qos: .background).async {
                 EventLogger.logEvent(event)
-//                InAppMessagingViewController.display(event.name)
+                InAppMessagingViewController.display(event.name)
             }
         }
     }

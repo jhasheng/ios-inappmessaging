@@ -13,10 +13,11 @@ protocol PlistManipulable {
     
     /**
      * Loads the plist file located in the plistURL directory.
+     * @param { anyType: T.Type } type of the object to decode with.
      * @returns { [String: [T]] } dictionary with the plist file's content.
      * @throws error when plist file cannot be found.
      */
-    static func loadPropertyList<T: Decodable>() throws -> [T]?
+    static func loadPropertyList<T: Decodable>(withType anyType: T.Type) throws -> [T]?
     
     /**
      * Deletes the InAppMessaging's timestamp plist file.
@@ -31,9 +32,8 @@ protocol PlistManipulable {
 extension PlistManipulable {
     
     static func savePropertyList<T: Encodable>(_ plist: T) throws {
-//        let plistData: Data = NSKeyedArchiver.archivedData(withRootObject: plist)
         do {
-            let plistData: Data = try JSONEncoder().encode(plist)
+            let plistData: Data = try PropertyListEncoder().encode(plist)
             try plistData.write(to: plistURL)
 
         } catch {
@@ -41,16 +41,15 @@ extension PlistManipulable {
         }
     }
     
-    static func loadPropertyList<T: Decodable>() throws -> [T]? {
+    static func loadPropertyList<T: Decodable>(withType anyType: T.Type) throws -> [T]? {
         let plistData = try Data(contentsOf: plistURL)
-//        guard let plist = NSKeyedUnarchiver.unarchiveObject(with: plistData) as? [T] else {
-//            return nil
-//        }
-        guard let plist = try? JSONDecoder().decode(T.self, from: plistData) else {
+
+        guard let plist = try? PropertyListDecoder().decode(anyType.self, from: plistData) else {
             return nil
         }
         
         return [plist]
+        
     }
     
     static func deletePropertyList() throws {

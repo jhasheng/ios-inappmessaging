@@ -13,14 +13,16 @@ struct CampaignHelper {
         var campaignDict = [String: Set<Campaign>]()
         
         for campaign in campaignList {
-            for campaignTrigger in campaign.campaignData.trigger.conditions {
+            for campaignTrigger in campaign.campaignData.triggers {
                 
-                let triggerName = campaignTrigger.event
+                guard let eventTypeName = EventType(rawValue: campaignTrigger.eventType)?.name else {
+                    return campaignDict
+                }
                 
-                if campaignDict[triggerName] != nil {
-                    campaignDict[triggerName]?.insert(campaign)
+                if campaignDict[eventTypeName] != nil {
+                    campaignDict[eventTypeName]?.insert(campaign)
                 } else {
-                    campaignDict[triggerName] = [campaign]
+                    campaignDict[eventTypeName] = [campaign]
                 }
             }
         }

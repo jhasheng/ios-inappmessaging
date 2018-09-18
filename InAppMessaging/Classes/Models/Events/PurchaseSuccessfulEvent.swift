@@ -1,8 +1,8 @@
-public class AppStartEvent: Event {
-
+public class PurchaseSuccessfulEvent: Event {
+    
     public init(withCustomAttributes customAttributes: [String: String]?) {
         super.init(
-            eventType: EventType.appStart,
+            eventType: EventType.purchaseSuccessful,
             customAttributes: customAttributes ?? nil
         )
     }

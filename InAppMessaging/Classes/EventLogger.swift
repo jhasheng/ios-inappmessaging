@@ -20,7 +20,7 @@ struct EventLogger: PlistManipulable {
         // Retrieve local logs if exists.
         if eventLog.isEmpty {
             do {
-                eventLog = try loadPropertyList() ?? eventLog
+                eventLog = try loadPropertyList(withType: Event.self) ?? eventLog
             } catch {
                 #if DEBUG
                     print("InAppMessaging: \(error)")
@@ -29,14 +29,7 @@ struct EventLogger: PlistManipulable {
         }
         
         // Append Event object to the event log.
-        eventLog.append(
-            event
-            
-//            Event(
-//                name: eventName,
-//                timestamp: Date().millisecondsSince1970
-//            )
-        )
+        eventLog.append(event)
         
         // Write to local storage.
         do {
