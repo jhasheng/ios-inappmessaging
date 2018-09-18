@@ -34,7 +34,7 @@ extension PlistManipulable {
 //        let plistData: Data = NSKeyedArchiver.archivedData(withRootObject: plist)
         do {
             let plistData: Data = try JSONEncoder().encode(plist)
-//            try plistData.write(to: plistURL)
+            try plistData.write(to: plistURL)
 
         } catch {
             print(error)
