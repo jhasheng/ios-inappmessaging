@@ -39,11 +39,11 @@ extension PlistManipulable {
     static func loadPropertyList<T: Decodable>(withType anyType: T.Type) throws -> [T]? {
         let plistData = try Data(contentsOf: plistURL)
 
-        guard let plist = try? PropertyListDecoder().decode(anyType.self, from: plistData) else {
+        guard let plist = try? PropertyListDecoder().decode(anyType.self, from: plistData) as? [T] else {
             return nil
         }
         
-        return [plist]
+        return plist
         
     }
     
