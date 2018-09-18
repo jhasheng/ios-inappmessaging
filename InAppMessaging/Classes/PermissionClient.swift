@@ -47,7 +47,6 @@ struct PermissionClient: HttpRequestable {
                     return false
                 case .postpone:
                     return false
-                    break
             }
         } catch {
             #if DEBUG

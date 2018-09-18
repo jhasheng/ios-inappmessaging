@@ -1,3 +1,6 @@
+/**
+ * Pre-defined event that is used to signal the success of a login action.
+ */
 public class LoginSuccessfulEvent: Event {
     
     public init(withCustomAttributes customAttributes: [String: String]?) {

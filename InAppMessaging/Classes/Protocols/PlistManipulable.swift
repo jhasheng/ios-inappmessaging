@@ -6,7 +6,7 @@ protocol PlistManipulable {
     
     /**
      * Save any object into the plist file located in plistURL directory.
-     * @param { plist: T } object to save.
+     * @param { plist: T } object to encode and save to the plist.
      * @throws when plist fails to serialize
      */
     static func savePropertyList<T: Encodable>(_ plist: T) throws
@@ -14,7 +14,7 @@ protocol PlistManipulable {
     /**
      * Loads the plist file located in the plistURL directory.
      * @param { anyType: T.Type } type of the object to decode with.
-     * @returns { [String: [T]] } dictionary with the plist file's content.
+     * @returns { [T]? } array of the decoded objects.
      * @throws error when plist file cannot be found.
      */
     static func loadPropertyList<T: Decodable>(withType anyType: T.Type) throws -> [T]?
@@ -32,13 +32,8 @@ protocol PlistManipulable {
 extension PlistManipulable {
     
     static func savePropertyList<T: Encodable>(_ plist: T) throws {
-        do {
-            let plistData: Data = try PropertyListEncoder().encode(plist)
-            try plistData.write(to: plistURL)
-
-        } catch {
-            print(error)
-        }
+        let plistData: Data = try PropertyListEncoder().encode(plist)
+        try plistData.write(to: plistURL)
     }
     
     static func loadPropertyList<T: Decodable>(withType anyType: T.Type) throws -> [T]? {

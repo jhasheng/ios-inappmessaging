@@ -1,8 +1,12 @@
+/**
+ * Custom event that the host app can call with a custom event name.
+ */
 public class CustomEvent: Event {
     
-    public init(withCustomAttributes customAttributes: [String: String]?) {
+    public init(withName name: String, withCustomAttributes customAttributes: [String: String]?) {
         super.init(
             eventType: EventType.custom,
+            name: name,
             customAttributes: customAttributes ?? nil
         )
     }

@@ -12,16 +12,16 @@ enum EventType: Int, Codable {
     var name: String {
         get {
             switch(self) {
-            case .invalid:
-                return "invalid"
-            case .appStart:
-                return "appStart"
-            case .loginSuccessful:
-                return "loginSuccessful"
-            case .purchaseSuccessful:
-                return "purchaseSuccessful"
-            case .custom:
-                return "custom"
+                case .invalid:
+                    return "invalid"
+                case .appStart:
+                    return "appStart"
+                case .loginSuccessful:
+                    return "loginSuccessful"
+                case .purchaseSuccessful:
+                    return "purchaseSuccessful"
+                case .custom:
+                    return "custom"
             }
         }
     }

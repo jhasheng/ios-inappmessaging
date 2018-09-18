@@ -23,5 +23,6 @@ class ViewController: UIViewController {
     
     @IBAction func showModalButton(_ sender: Any) {
         InAppMessaging.logEvent(PurchaseSuccessfulEvent(withCustomAttributes: ["hi":"bye"]))
+        InAppMessaging.logEvent(CustomEvent(withName: "custom name here", withCustomAttributes: nil))
     }
 }
