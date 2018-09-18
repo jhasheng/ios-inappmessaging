@@ -6,21 +6,18 @@ struct CampaignHelper {
     
     /**
      * Map campaign list returned by message mixer to a hashmap of trigger names to array of campaigns.
-     * @param { campaignList: [Campaign] } list of campaign sent by Message Mixer server.
-     * @returns { [String: [Campaign]] } Hashmap of event names to list of campaigns.
+     * @param { campaignList: Set<Campaign> } list of campaign sent by Message Mixer server.
+     * @returns { [Int: Set<Campaign>] } Hashmap of event type to list of campaigns.
      */
-    static func mapCampaign(campaignList: Set<Campaign>) -> [String: Set<Campaign>] {
-        var campaignDict = [String: Set<Campaign>]()
+    static func mapCampaign(campaignList: Set<Campaign>) -> [Int: Set<Campaign>] {
+        var campaignDict = [Int: Set<Campaign>]()
         
         for campaign in campaignList {
             for campaignTrigger in campaign.campaignData.triggers {
-                
-                let triggerName = campaignTrigger.event
-                
-                if campaignDict[triggerName] != nil {
-                    campaignDict[triggerName]?.insert(campaign)
+                if campaignDict[campaignTrigger.eventType] != nil {
+                    campaignDict[campaignTrigger.eventType]?.insert(campaign)
                 } else {
-                    campaignDict[triggerName] = [campaign]
+                    campaignDict[campaignTrigger.eventType] = [campaign]
                 }
             }
         }
@@ -30,12 +27,12 @@ struct CampaignHelper {
     
     /**
      * Fetches a campaign based on two conditions -- campaign has not been shown before
-     * and the event name matches.
-     * @param { withEventName: String } name of the event to fetch.
+     * and the event type matches.
+     * @param { eventType: Int } event type to fetch from campaign list.
      * @returns { CampaignData? } optional CampaignData that matches the two conditions.
      */
-    static func fetchCampaign(withEventName: String) -> CampaignData? {
-        if let campaignList = MessageMixerClient.mappedCampaigns[withEventName] {
+    static func fetchCampaign(withEventType eventType: Int) -> CampaignData? {
+        if let campaignList = MessageMixerClient.mappedCampaigns[eventType] {
             for campaign in campaignList {
                 if !self.isCampaignShown(campaignId: campaign.campaignData.campaignId) {
                     return campaign.campaignData
@@ -66,23 +63,23 @@ struct CampaignHelper {
     /**
      * Parses the campaign passed in for the view type. E.G modal/slideup/etc.
      * @param { campaign: CampaignData } campaign to parse through.
-     * @returns { ViewType? } optional value of the view type field of the campaign.
+     * @returns { CampaignDisplayType? } optional value of the view type field of the campaign.
      */
     static func findViewType(campaign: CampaignData) -> CampaignDisplayType? {
         return CampaignDisplayType(rawValue: campaign.type)
     }
     
     /**
-     * Parses through the dictionary of trigger names to campaigns and delete the campaign from the whole dictionary.
+     * Parses through the dictionary of trigger event types to campaigns and delete the campaign from the whole dictionary.
      * @param { campaignId: String } campaignId to delete.
-     * @param { triggerNames: [String] } array of trigger names that were previously mapped.
+     * @param { triggers: [Int] } array of trigger event types that were previously mapped.
      */
-    static func deleteCampaign(withId campaignId: String, andTriggerNames triggerNames: [String]) {
-        for triggerName in triggerNames {
-            if let setOfCampaignIdsByTriggerName = MessageMixerClient.mappedCampaigns[triggerName] {
+    static func deleteCampaign(withId campaignId: String, andTriggerNames triggers: [Int]) {
+        for eventType in triggers {
+            if let setOfCampaignIdsByTriggerName = MessageMixerClient.mappedCampaigns[eventType] {
                 for campaign in setOfCampaignIdsByTriggerName {
                     if campaign.campaignData.campaignId == campaignId {
-                        MessageMixerClient.mappedCampaigns[triggerName]?.remove(campaign)
+                        MessageMixerClient.mappedCampaigns[eventType]?.remove(campaign)
                     }
                 }
             }

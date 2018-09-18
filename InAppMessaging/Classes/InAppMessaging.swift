@@ -48,11 +48,11 @@
      * Log the event name passed in and also pass the event name to the view controller to display a matching campaign.
      * @param { name: String } name of the event.
      */
-    public class func logEvent(_ name: String) {
+    public class func logEvent(_ event: Event) {
         if InAppMessaging.isEnabled {
             DispatchQueue.global(qos: .background).async {
-                EventLogger.logEvent(name)
-                InAppMessagingViewController.display(name)
+                EventLogger.logEvent(event)
+                InAppMessagingViewController.display(event.eventType.rawValue)
             }
         }
     }
