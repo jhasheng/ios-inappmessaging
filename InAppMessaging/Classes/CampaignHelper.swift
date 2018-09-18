@@ -6,8 +6,8 @@ struct CampaignHelper {
     
     /**
      * Map campaign list returned by message mixer to a hashmap of trigger names to array of campaigns.
-     * @param { campaignList: [Campaign] } list of campaign sent by Message Mixer server.
-     * @returns { [String: [Campaign]] } Hashmap of event names to list of campaigns.
+     * @param { campaignList: Set<Campaign> } list of campaign sent by Message Mixer server.
+     * @returns { [String: Set<Campaign>] } Hashmap of event names to list of campaigns.
      */
     static func mapCampaign(campaignList: Set<Campaign>) -> [String: Set<Campaign>] {
         var campaignDict = [String: Set<Campaign>]()
@@ -66,7 +66,7 @@ struct CampaignHelper {
     /**
      * Parses the campaign passed in for the view type. E.G modal/slideup/etc.
      * @param { campaign: CampaignData } campaign to parse through.
-     * @returns { ViewType? } optional value of the view type field of the campaign.
+     * @returns { CampaignDisplayType? } optional value of the view type field of the campaign.
      */
     static func findViewType(campaign: CampaignData) -> CampaignDisplayType? {
         return CampaignDisplayType(rawValue: campaign.type)

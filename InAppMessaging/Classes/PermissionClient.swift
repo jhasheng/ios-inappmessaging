@@ -72,7 +72,7 @@ struct PermissionClient: HttpRequestable {
     }
     
     /**
-     * In order to delete a campaignId from MessageMixer.mappedCampaigns, which potentially can have multiple occurences,
+     * In order to delete a campaignId from MessageMixer.mappedCampaigns, which potentially can have multiple occurrences,
      * it will be more efficient if we already have a list of trigger names that the campaignId is mapped to.
      * This function generates that list of triggerNames that the campaign was previously mapped to.
      * @param { campaign: CampaignData } A specific campaign that includes all the trigger names that it was mapped to.
