@@ -57,9 +57,9 @@ struct EventLogger: PlistManipulable {
     
     /**
      * Converts the array of un-decoded Event objects from the plist into actual Event objects.
-     * This is due to a potential bug that causes data loss when decoding a subclass straight from
+     * This is due to a bug that causes data loss when decoding a subclass straight from
      * a data type. In this case, we cannot decode pre-defined events properly.
-     * More information: https://bugs.swift.org/browse/SR-4772
+     * More information: https://stackoverflow.com/questions/44553934/using-decodable-in-swift-4-with-inheritance
      * This method will append these Event objects to the eventLog.
      * @param { plistArrayOptional: [[String: Any]] } the optional array that is returned by deserializing the plist.
      */
@@ -79,7 +79,6 @@ struct EventLogger: PlistManipulable {
                 let event = Event(eventType: EventType(rawValue: eventType)!, customAttributes: customAttributes)
                 event.timestamp = timestamp
                 eventLog.append(event)
-                
             }
         }
     }
