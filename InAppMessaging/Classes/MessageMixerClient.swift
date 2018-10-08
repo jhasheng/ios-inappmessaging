@@ -62,6 +62,9 @@ class MessageMixerClient: HttpRequestable {
         guard let subscriptionId = Bundle.inAppSubscriptionId,
             let appVersion = Bundle.appBuildVersion
         else {
+            #if DEBUG
+                assertionFailure("InAppMessaging: Make sure there is a valid 'InAppMessagingSubscriptionID' key in your info.plist.")
+            #endif
             return nil
         }
         
