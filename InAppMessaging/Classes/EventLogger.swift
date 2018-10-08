@@ -20,7 +20,7 @@ struct EventLogger: PlistManipulable {
         // Retrieve local logs if exists.
         if eventLog.isEmpty {
             do {
-                eventLog = try loadPropertyList(withType: Event.self) ?? eventLog
+                convertPropertyList(try loadPropertyList())
             } catch {
                 #if DEBUG
                     print("InAppMessaging: \(error)")
@@ -52,6 +52,34 @@ struct EventLogger: PlistManipulable {
             #if DEBUG
                 print("InAppMessaging: failed clearing event logs.")
             #endif
+        }
+    }
+    
+    /**
+     * Converts the array of un-decoded Event objects from the plist into actual Event objects.
+     * This is due to a bug that causes data loss when decoding a subclass straight from
+     * a data type. In this case, we cannot decode pre-defined events properly.
+     * More information: https://stackoverflow.com/questions/44553934/using-decodable-in-swift-4-with-inheritance
+     * This method will append these Event objects to the eventLog.
+     * @param { plistArrayOptional: [[String: Any]] } the optional array that is returned by deserializing the plist.
+     */
+    static internal func convertPropertyList(_ plistArrayOptional: [[String: Any]]?) {
+        
+        if let plistArray = plistArrayOptional {
+            for plistObject in plistArray {
+                
+                guard let eventType = plistObject[Keys.Event.eventType] as? Int,
+                    let timestamp = plistObject[Keys.Event.timestamp] as? Int
+                else {
+                        return
+                }
+                
+                let customAttributes: [String: String]? = plistObject[Keys.Event.customAttributes] as? [String: String]
+                
+                let event = Event(eventType: EventType(rawValue: eventType)!, customAttributes: customAttributes)
+                event.timestamp = timestamp
+                eventLog.append(event)
+            }
         }
     }
 }
