@@ -48,7 +48,7 @@
      * Log the event name passed in and also pass the event name to the view controller to display a matching campaign.
      * @param { name: String } name of the event.
      */
-    public class func logEvent(_ event: Event) {
+    @objc public class func logEvent(_ event: Event) {
         if InAppMessaging.isEnabled {
             DispatchQueue.global(qos: .background).async {
                 EventLogger.logEvent(event)
@@ -62,7 +62,7 @@
      * @param { idType: Identification } the type of ID. E.G RakutenID or EasyID.
      * @param { id: String } the string value of the ID.
      */
-    public class func registerId(idType: Identification, id: String) {
+    @objc public class func registerId(idType: Identification, id: String) {
         DispatchQueue.global(qos: .userInitiated).async {
             IndentificationManager.registerId(idType, id)
         }

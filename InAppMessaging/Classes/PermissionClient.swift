@@ -16,11 +16,12 @@ struct PermissionClient: HttpRequestable {
         ]
         
         // Call display-permission endpoint.
-        guard let responseFromDisplayPermission =
-            self.requestFromServer(
-                withUrl: (ConfigurationClient.endpoints?.displayPermission)!,
-                withHttpMethod: .post,
-                withOptionalParams: requestParams)
+        guard let displayPermissionUrl = ConfigurationClient.endpoints?.displayPermission,
+            let responseFromDisplayPermission =
+                self.requestFromServer(
+                    withUrl: displayPermissionUrl,
+                    withHttpMethod: .post,
+                    withOptionalParams: requestParams)
         else {
             return true
         }

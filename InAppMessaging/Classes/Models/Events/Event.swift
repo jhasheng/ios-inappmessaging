@@ -3,7 +3,7 @@
  * Implements Codable in order for it to be encoded/decoded
  * as a data type and store/load from a property list.
  */
-public class Event: Encodable {
+@objc public class Event: NSObject, Encodable {
     var eventType: EventType
     var timestamp: Int
     var customAttributes: [String: String]?
