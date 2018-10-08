@@ -12,6 +12,8 @@ class MessageMixerClient: HttpRequestable {
      */
     internal func enable() {
         WorkScheduler.scheduleTask(0, closure: self.pingMixerServer)
+        // TODO(Daniel Tam) Clarify if custom attributes should be defaulted to nil or not for app start event.
+        InAppMessaging.logEvent(AppStartEvent(withCustomAttributes: nil))
     }
     
     /**
