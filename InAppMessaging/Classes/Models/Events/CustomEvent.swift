@@ -1,7 +1,7 @@
 /**
  * Custom event that the host app can call with a custom event name.
  */
-public class CustomEvent: Event {
+@objc public class CustomEvent: Event {
     
     public init(withName name: String, withCustomAttributes customAttributesOptional: [String: String]?) {
         

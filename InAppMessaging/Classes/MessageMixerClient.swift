@@ -4,6 +4,7 @@
 class MessageMixerClient: HttpRequestable {
     
     private static var delay: Int = 0 // Milliseconds before pinging Message Mixer server.
+    private static var isFirstPing = true;
     static var mappedCampaigns = [Int: Set<Campaign>]()
     static var listOfShownCampaigns = Set<String>()
     
@@ -48,6 +49,14 @@ class MessageMixerClient: HttpRequestable {
             MessageMixerClient.mappedCampaigns = CampaignHelper.mapCampaign(campaignList: campaignResponse.data)
             WorkScheduler.scheduleTask(campaignResponse.nextPingMillis, closure: self.pingMixerServer)
         }
+        
+        // After the first ping to message mixer, log the AppStartEvent.
+        // This is to handle the async nature of both the ping and displayPermissions endpoint.
+        if MessageMixerClient.isFirstPing {
+            // TODO(Daniel Tam) Clarify if custom attributes should be defaulted to nil or not for app start event.
+            InAppMessaging.logEvent(AppStartEvent(withCustomAttributes: nil))
+            MessageMixerClient.isFirstPing = false;
+        }
     }
     
     /**
@@ -60,6 +69,9 @@ class MessageMixerClient: HttpRequestable {
         guard let subscriptionId = Bundle.inAppSubscriptionId,
             let appVersion = Bundle.appBuildVersion
         else {
+            #if DEBUG
+                assertionFailure("InAppMessaging: Make sure there is a valid '\(Keys.Bundle.SubscriptionID)' key in your info.plist.")
+            #endif
             return nil
         }
         

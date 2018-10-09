@@ -1,7 +1,7 @@
 /**
  * Pre-defined event that is used to signal the success of a purchase action.
  */
-public class PurchaseSuccessfulEvent: Event {
+@objc public class PurchaseSuccessfulEvent: Event {
     
     public init(withCustomAttributes customAttributes: [String: String]?) {
         super.init(

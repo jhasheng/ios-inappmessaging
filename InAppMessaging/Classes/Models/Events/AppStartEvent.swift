@@ -1,7 +1,7 @@
 /**
  * Pre-defined event that is used to signal the startup of the host application.
  */
-public class AppStartEvent: Event {
+@objc public class AppStartEvent: Event {
 
     public init(withCustomAttributes customAttributes: [String: String]?) {
         super.init(

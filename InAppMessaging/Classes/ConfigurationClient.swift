@@ -15,7 +15,7 @@ class ConfigurationClient: HttpRequestable {
         
         guard let configUrl = Bundle.inAppConfigUrl else {
             #if DEBUG
-                print("InAppMessaging: '\(Keys.URL.ConfigServerURL)' is not valid.")
+                assertionFailure("InAppMessaging: Make sure there is a valid '\(Keys.URL.ConfigServerURL)' key in your info.plist")
             #endif
             
             return false
@@ -67,6 +67,9 @@ class ConfigurationClient: HttpRequestable {
             let appId = Bundle.applicationId,
             let sdkVersion = Bundle.inAppSdkVersion
         else {
+            #if DEBUG
+                assertionFailure("InAppMessaging: Make sure there is a valid 'InAppMessagingSDKVersion' key in your info.plist.")
+            #endif
             return nil
         }
         
