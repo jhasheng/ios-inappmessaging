@@ -25,23 +25,46 @@ struct CampaignHelper {
         return campaignDict
     }
     
+    // Return a list of campaign data instead.
+    
     /**
      * Fetches a campaign based on two conditions -- campaign has not been shown before
      * and the event type matches.
      * @param { eventType: Int } event type to fetch from campaign list.
      * @returns { CampaignData? } optional CampaignData that matches the two conditions.
      */
-    static func fetchCampaign(withEventType eventType: Int) -> CampaignData? {
+    static func fetchCampaigns(withEventType eventType: Int) -> [CampaignData] {
+        
+        var listOfMatchingCampaigns: [CampaignData] = []
+        
         if let campaignList = MessageMixerClient.mappedCampaigns[eventType] {
             for campaign in campaignList {
                 if !self.isCampaignShown(campaignId: campaign.campaignData.campaignId) {
-                    return campaign.campaignData
+                    listOfMatchingCampaigns.append(campaign.campaignData)
                 }
             }
         }
         
-        return nil
+        return listOfMatchingCampaigns
     }
+    
+//    /**
+//     * Fetches a campaign based on two conditions -- campaign has not been shown before
+//     * and the event type matches.
+//     * @param { eventType: Int } event type to fetch from campaign list.
+//     * @returns { CampaignData? } optional CampaignData that matches the two conditions.
+//     */
+//    static func fetchCampaign(withEventType eventType: Int) -> CampaignData? {
+//        if let campaignList = MessageMixerClient.mappedCampaigns[eventType] {
+//            for campaign in campaignList {
+//                if !self.isCampaignShown(campaignId: campaign.campaignData.campaignId) {
+//                    return campaign.campaignData
+//                }
+//            }
+//        }
+//
+//        return nil
+//    }
     
     /**
      * Checks if the campaign has already been displayed or not based on the campaign ID.

@@ -22,6 +22,7 @@ extension Modal where Self: UIView {
             }
             
             topController.view.addSubview(self)
+
         }
     }
     
@@ -30,5 +31,7 @@ extension Modal where Self: UIView {
      */
     internal func dismiss() {
         self.removeFromSuperview()
+        InAppMessagingViewController.displayIndividualCampaign()
+
     }
 }
