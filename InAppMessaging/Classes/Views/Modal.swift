@@ -26,7 +26,7 @@ extension Modal where Self: UIView {
     }
     
     /**
-     * Function that dismisses the qpresented modal view.
+     * Function that dismisses the presented modal view.
      */
     internal func dismiss() {
         self.removeFromSuperview()
