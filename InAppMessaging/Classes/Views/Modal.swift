@@ -22,16 +22,15 @@ extension Modal where Self: UIView {
             }
             
             topController.view.addSubview(self)
-
         }
     }
     
     /**
-     * Function that dismisses the presented modal view.
+     * Function that dismisses the qpresented modal view.
      */
     internal func dismiss() {
         self.removeFromSuperview()
-        InAppMessagingViewController.displayIndividualCampaign()
-
+        //TODO(Daniel Tam) Clarify on the time between showing campaigns.
+        WorkScheduler.scheduleTask(5000, closure: InAppMessagingViewController.displayIndividualCampaign)
     }
 }
