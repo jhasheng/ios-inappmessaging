@@ -30,5 +30,7 @@ extension Modal where Self: UIView {
      */
     internal func dismiss() {
         self.removeFromSuperview()
+        //TODO(Daniel Tam) Clarify on the time between showing campaigns.
+        WorkScheduler.scheduleTask(5000, closure: InAppMessagingViewController.displayIndividualCampaign)
     }
 }
