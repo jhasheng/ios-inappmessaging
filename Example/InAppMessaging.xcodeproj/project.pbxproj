@@ -521,7 +521,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.demo.InAppMessaging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/daniel.a.tam/Documents/ios-insights/InAppMessaging/Classes/Obj-C/InAppMessaging-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -540,7 +539,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.demo.InAppMessaging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/daniel.a.tam/Documents/ios-insights/InAppMessaging/Classes/Obj-C/InAppMessaging-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
