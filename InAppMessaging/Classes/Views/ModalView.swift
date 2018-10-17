@@ -102,13 +102,6 @@ class ModalView: UIView, Modal {
     }
     
     /**
-     * Obj-c selector to dismiss the modal view when the 'X' is tapped.
-     */
-    @objc fileprivate func didTappedOnExitButton(){
-        self.dismiss()
-    }
-    
-    /**
      * Append image view to dialog view.
      * @param { imageUrl: String } string of the image URL.
      */
@@ -187,10 +180,10 @@ class ModalView: UIView, Modal {
                         return
                     case .redirect:
                         self.uri = button.buttonBehavior.uri
-                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnRedirect)))
+                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnLink)))
                     case .deeplink:
                         self.uri = button.buttonBehavior.uri
-                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnDeeplink)))
+                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnLink)))
                     case .close:
                         buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnExitButton)))
                 }
@@ -221,19 +214,16 @@ class ModalView: UIView, Modal {
     }
     
     // Button selectors for modal view.
-    @objc fileprivate func didTappedOnRedirect(){
-        if let uri = self.uri, !uri.isEmpty {
-            UIApplication.shared.keyWindow?.rootViewController?.present(InAppMessagingWebViewController(uri: uri), animated: true, completion: nil)
-        }
-        
-        self.dismiss();
-    }
     
-    @objc fileprivate func didTappedOnDeeplink(){
+    /**
+     * Obj-c selector to handle both redirect and deeplink actions.
+     * When the URL fails to validate through canOpenUrl() or is empty, an alert message will pop up
+     * to warn about the navigation error.
+     */
+    @objc fileprivate func didTappedOnLink(){
         if let unwrappedUri = self.uri,
             let uriToOpen = URL(string: unwrappedUri),
             UIApplication.shared.canOpenURL(uriToOpen) {
-            
                 UIApplication.shared.openURL(uriToOpen)
         } else {
             let alert = UIAlertController(title: "Page not found", message: "Encountered error while navigating to the page.", preferredStyle: .alert)
@@ -241,5 +231,14 @@ class ModalView: UIView, Modal {
             UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
             self.dismiss()
         }
+        
+        self.dismiss();
+    }
+    
+    /**
+     * Obj-c selector to dismiss the modal view when the 'X' is tapped.
+     */
+    @objc fileprivate func didTappedOnExitButton(){
+        self.dismiss()
     }
 }
