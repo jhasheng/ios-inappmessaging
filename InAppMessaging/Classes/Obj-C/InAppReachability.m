@@ -9,7 +9,8 @@ ReachabilityManager* reach;
 
 @implementation InAppReachability
 
-+ (void)load {
++ (void)load
+{
     // Listener for network changes.
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reachabilityChanged)
@@ -19,13 +20,19 @@ ReachabilityManager* reach;
     [reach startNotifier];
 }
 
-+ (void)reachabilityChanged {
++ (void)reachabilityChanged
+{
     NetworkStatus remoteHostStatus = [reach currentReachabilityStatus];
     
     if (remoteHostStatus != NotReachable)
     {
         [InAppMessaging configure];
     }
+}
+
++(void)cleanUp
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

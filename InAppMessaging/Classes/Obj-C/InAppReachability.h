@@ -16,4 +16,9 @@
  */
 + (void)reachabilityChanged;
 
+/**
+ * Used to remove the observer for Reachability.
+ */
++(void)cleanUp;
+
 @end

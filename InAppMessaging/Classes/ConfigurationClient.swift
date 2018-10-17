@@ -29,6 +29,10 @@ class ConfigurationClient: HttpRequestable {
             return false
         }
         
+        // This will clean up the observer used for failures when hitting the config server.
+        // The code reaching to this line signifies that a response was successfully retrieved.
+        InAppReachability.cleanUp();
+        
         return self.parseConfigResponse(configResponse: responseData)
     }
     

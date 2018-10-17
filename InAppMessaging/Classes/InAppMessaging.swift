@@ -7,7 +7,7 @@
     
     private let configurationClient: ConfigurationClient
     private let messageMixerClient: MessageMixerClient
-    private static var isEnabled = false;
+    private static var isEnabled = false
     
     init(
         configurationClient: ConfigurationClient = InjectionContainer.container.resolve(ConfigurationClient.self)!,
@@ -35,7 +35,7 @@
     internal func initializeSdk() {
         // Return and exit thread if SDK were to be disabled.
         if !self.configurationClient.isConfigEnabled() {
-            return;
+            return
         }
         
         InAppMessaging.isEnabled = true;
