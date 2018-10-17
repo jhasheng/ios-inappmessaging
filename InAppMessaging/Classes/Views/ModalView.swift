@@ -219,6 +219,9 @@ class ModalView: UIView, Modal {
      * Obj-c selector to handle both redirect and deeplink actions.
      * When the URL fails to validate through canOpenUrl() or is empty, an alert message will pop up
      * to warn about the navigation error.
+     * NOTE: The openUrl() method used here is deprecated and is being used because the SDK has to support iOS 9.
+     * When iOS 10 becomes the minimum version supported by the SDK, please refer to:
+     * https://developer.apple.com/documentation/uikit/uiapplication/1648685-openurl?language=objc
      */
     @objc fileprivate func didTappedOnLink(){
         if let unwrappedUri = self.uri,
