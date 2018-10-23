@@ -1,12 +1,10 @@
 /**
  * Repository to store all the campaigns that are ready to be shown.
  */
-struct ReadyCampaignRepository: RepositoryStorable {
-    typealias Item = Campaign
-
-     static var list: [Campaign] = []
+struct ReadyCampaignRepository: CampaignStorable {
+     static var list: Set<Campaign> = []
     
     mutating func addItem(item: Campaign) {
-        ReadyCampaignRepository.list.append(item)
+        ReadyCampaignRepository.list.insert(item)
     }
 }
