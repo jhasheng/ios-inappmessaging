@@ -4,7 +4,7 @@
 struct CampaignRepository: CampaignStorable {
     static var list: Set<Campaign> = []
     
-    mutating func addItem(item: Campaign) {
-        CampaignRepository.list.insert(item)
+    static func addCampaign(campaign: Campaign) {
+        CampaignRepository.list.insert(campaign)
     }
 }

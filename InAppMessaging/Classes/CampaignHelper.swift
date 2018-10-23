@@ -46,6 +46,24 @@ struct CampaignHelper {
         return listOfMatchingCampaigns
     }
     
+    static func fetchTestCampaigns() -> [CampaignData] {
+        
+        var listOfMatchingCampaigns: [CampaignData] = []
+        
+        if let campaignList = MessageMixerClient.mappedCampaigns[EventType.appStart.rawValue] {
+            for campaign in campaignList {
+//                if !self.isCampaignShown(campaignId: campaign.campaignData.campaignId) {
+//                    listOfMatchingCampaigns.append(campaign.campaignData)
+//                }
+                if campaign.campaignData.isTest {
+                    listOfMatchingCampaigns.append(campaign.campaignData)
+                }
+            }
+        }
+        
+        return listOfMatchingCampaigns
+    }
+    
     /**
      * Checks if the campaign has already been displayed or not based on the campaign ID.
      * @param { campaignId: String } ID of the campaign to check.
