@@ -1,9 +1,7 @@
 /**
  * Repository to store all the events that were logged from the host app.
  */
-struct EventRepository: RepositoryStorable {
-    typealias Item = Event
-
+struct EventRepository: EventStorable {
     static var list: [Event] = []
     
     mutating func addItem(item: Event) {
