@@ -4,9 +4,9 @@
 struct ReadyCampaignRepository: RepositoryStorable {
     typealias Item = Campaign
 
-    var list: [Campaign]
+     static var list: [Campaign] = []
     
     mutating func addItem(item: Campaign) {
-        list.append(item)
+        ReadyCampaignRepository.list.append(item)
     }
 }
