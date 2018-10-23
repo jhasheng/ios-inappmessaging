@@ -24,4 +24,7 @@ class ViewController: UIViewController {
     @IBAction func showModalButton(_ sender: Any) {
         InAppMessaging.logEvent(PurchaseSuccessfulEvent(withCustomAttributes: nil))
     }
+    @IBAction func loginSuccessfulButton(_ sender: Any) {
+        InAppMessaging.logEvent(LoginSuccessfulEvent(withCustomAttributes: nil))
+    }
 }
