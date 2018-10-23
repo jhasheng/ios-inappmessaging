@@ -52,6 +52,7 @@
         if InAppMessaging.isEnabled {
             DispatchQueue.global(qos: .background).async {
                 EventLogger.logEvent(event)
+                EventRepository.addEvent(event)
                 InAppMessagingViewController.display(event.eventType.rawValue)
             }
         }

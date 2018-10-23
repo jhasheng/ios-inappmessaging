@@ -4,7 +4,7 @@
 struct EventRepository: EventStorable {
     static var list: [Event] = []
     
-    mutating func addItem(item: Event) {
-        EventRepository.list.append(item)
+    static func addEvent(_ event: Event) {
+        EventRepository.list.append(event)
     }
 }

@@ -3,5 +3,5 @@ protocol CampaignStorable {
     static var list: Set<Campaign> { get set }
     
     // Add items into the list.
-    mutating func addItem(item: Campaign)
+    static func addCampaign(campaign: Campaign)
 }
