@@ -4,10 +4,9 @@
 struct EventRepository: RepositoryStorable {
     typealias Item = Event
 
-    var list: [Event]
+    static var list: [Event] = []
     
     mutating func addItem(item: Event) {
-        list.append(item)
+        EventRepository.list.append(item)
     }
-    
 }

@@ -3,7 +3,7 @@ protocol RepositoryStorable {
     associatedtype Item
     
     // List of Item objects.
-    var list: [Item] { get set }
+    static var list: [Item] { get set }
     
     // Add items into the list.
     mutating func addItem(item: Item)
