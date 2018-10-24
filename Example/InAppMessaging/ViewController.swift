@@ -27,4 +27,7 @@ class ViewController: UIViewController {
     @IBAction func loginSuccessfulButton(_ sender: Any) {
         InAppMessaging.logEvent(LoginSuccessfulEvent(withCustomAttributes: nil))
     }
+    @IBAction func customTestButton(_ sender: Any) {
+        InAppMessaging.logEvent(CustomEvent(withName: "custom_test"))
+    }
 }
