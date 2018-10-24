@@ -54,7 +54,6 @@
                 EventLogger.logEvent(event)
                 EventRepository.addEvent(event)
                 CampaignReconciliation.reconciliate()
-                print(EventParser.getCustomEventName(CustomEvent(withName: "ABCDBCD", withCustomAttributes: nil)))
                 InAppMessagingViewController.display(event.eventType.rawValue)
             }
         }

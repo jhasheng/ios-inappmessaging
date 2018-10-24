@@ -3,17 +3,12 @@
  */
 @objc public class CustomEvent: Event {
     
-    public init(withName name: String, withCustomAttributes customAttributesOptional: [Attribute]?) {
-        
-        var customAttributes = customAttributesOptional ?? [Attribute]()
-        
-        
-        customAttributes.append(Attribute(withKeyName: Keys.Event.eventName, withValue: name))
+    public init(withName name: String) {
         
         super.init(
             eventType: EventType.custom,
             eventName: name,
-            customAttributes: customAttributes
+            customAttributes: nil
         )
     }
     
