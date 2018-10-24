@@ -10,6 +10,7 @@
         
         super.init(
             eventType: EventType.custom,
+            eventName: name,
             customAttributes: customAttributes
         )
     }

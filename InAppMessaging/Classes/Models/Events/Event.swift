@@ -6,11 +6,13 @@
 @objc public class Event: NSObject, Encodable {
     var eventType: EventType
     var timestamp: Int
+    var eventName: String
     var customAttributes: [String: String]?
     
-    init(eventType: EventType, customAttributes: [String: String]?) {
+    init(eventType: EventType, eventName: String, customAttributes: [String: String]?) {
         self.eventType = eventType
         self.timestamp = Date().millisecondsSince1970
+        self.eventName = eventName
         self.customAttributes = customAttributes ?? nil
     }
 }
