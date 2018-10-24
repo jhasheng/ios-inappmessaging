@@ -3,7 +3,7 @@
  */
 @objc public class LoginSuccessfulEvent: Event {
     
-    public init(withCustomAttributes customAttributes: [String: String]?) {
+    public init(withCustomAttributes customAttributes: [Attribute]?) {
         super.init(
             eventType: EventType.loginSuccessful,
             eventName: Keys.Event.loginSuccessful,

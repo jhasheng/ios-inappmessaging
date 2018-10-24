@@ -7,9 +7,9 @@
     var eventType: EventType
     var timestamp: Int
     var eventName: String
-    var customAttributes: [String: String]?
+    var customAttributes: [Attribute]?
     
-    init(eventType: EventType, eventName: String, customAttributes: [String: String]?) {
+    init(eventType: EventType, eventName: String, customAttributes: [Attribute]?) {
         self.eventType = eventType
         self.timestamp = Date().millisecondsSince1970
         self.eventName = eventName

@@ -6,7 +6,9 @@ struct EventParser {
         }
         
         for attribute in attributes {
-//            if attribute
+            if attribute.name == "name" {
+                return attribute.value
+            }
         }
         
         return nil

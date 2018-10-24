@@ -75,7 +75,7 @@ struct EventLogger: PlistManipulable {
                         return
                 }
                 
-                let customAttributes: [String: String]? = plistObject[Keys.Event.customAttributes] as? [String: String]
+                let customAttributes: [Attribute]? = plistObject[Keys.Event.customAttributes] as? [Attribute]
                 
                 let event = Event(eventType: EventType(rawValue: eventType)!, eventName: eventName, customAttributes: customAttributes)
                 event.timestamp = timestamp
