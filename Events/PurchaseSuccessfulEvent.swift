@@ -3,7 +3,7 @@
  */
 @objc public class PurchaseSuccessfulEvent: Event {
     
-    public init(withCustomAttributes customAttributes: [String: String]?) {
+    public init(withCustomAttributes customAttributes: [Attribute]?) {
         super.init(
             eventType: EventType.purchaseSuccessful,
             eventName: Keys.Event.purchaseSuccessful,
