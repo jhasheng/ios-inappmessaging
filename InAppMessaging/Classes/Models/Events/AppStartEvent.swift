@@ -6,6 +6,7 @@
     public init(withCustomAttributes customAttributes: [String: String]?) {
         super.init(
             eventType: EventType.appStart,
+            eventName: Keys.Event.appStart,
             customAttributes: customAttributes ?? nil
         )
     }

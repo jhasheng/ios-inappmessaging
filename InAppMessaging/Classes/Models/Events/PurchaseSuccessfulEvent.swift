@@ -6,6 +6,7 @@
     public init(withCustomAttributes customAttributes: [String: String]?) {
         super.init(
             eventType: EventType.purchaseSuccessful,
+            eventName: Keys.Event.purchaseSuccessful,
             customAttributes: customAttributes ?? nil
         )
     }

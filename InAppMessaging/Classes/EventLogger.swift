@@ -69,14 +69,15 @@ struct EventLogger: PlistManipulable {
             for plistObject in plistArray {
                 
                 guard let eventType = plistObject[Keys.Event.eventType] as? Int,
-                    let timestamp = plistObject[Keys.Event.timestamp] as? Int
+                    let timestamp = plistObject[Keys.Event.timestamp] as? Int,
+                    let eventName = plistObject[Keys.Event.eventName] as? String
                 else {
                         return
                 }
                 
                 let customAttributes: [String: String]? = plistObject[Keys.Event.customAttributes] as? [String: String]
                 
-                let event = Event(eventType: EventType(rawValue: eventType)!, customAttributes: customAttributes)
+                let event = Event(eventType: EventType(rawValue: eventType)!, eventName: eventName, customAttributes: customAttributes)
                 event.timestamp = timestamp
                 eventLog.append(event)
             }

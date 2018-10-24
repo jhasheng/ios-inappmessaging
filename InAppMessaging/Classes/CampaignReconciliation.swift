@@ -17,18 +17,46 @@ struct CampaignReconciliation {
      * both must be triggered.
      */
     static func reconciliate() {
+//        let campaignList = CampaignRepository.list
+//        let eventList = EventRepository.list
+        
+        // Create an unique list of event by their eventType. If it is a 4, it will be by name.
+        
+        
+        
+
         for campaign in CampaignRepository.list {
-            middleLoop: for trigger in campaign.campaignData.triggers {
+            for trigger in campaign.campaignData.triggers {
                 for event in EventRepository.list {
-                    if trigger.eventType != event.eventType.rawValue {
-                        break middleLoop;
-                    }
                     
-                    
+
                 } // Event
-                ReadyCampaignRepository.addCampaign(campaign)
             } // Trigger
-            
+            ReadyCampaignRepository.addCampaign(campaign)
         } // Campaign
+        print("TEST: \(ReadyCampaignRepository.list)")
+        print("TEST: \(ReadyCampaignRepository.list.count)")
+
+    }
+    
+    /**
+     * Helps reconciliation process by creating an list of of unique events to match.
+     */
+    private func generateUniqueEventList() {
+        var eventTypes: Set<EventType> = [] // To store event types that aren't custom.
+        var eventNames: Set<String> = [] // To store custom event type.
+        
+        for event in EventRepository.list {
+            if event.eventType != EventType.custom {
+                eventTypes.insert(event.eventType)
+            } else {
+                // Grab string name.
+            }
+        }
+        
     }
 }
+
+/**
+ * If matched, move to next trigger.
+ */
