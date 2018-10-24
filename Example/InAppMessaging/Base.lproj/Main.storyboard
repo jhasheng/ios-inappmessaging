@@ -53,6 +53,13 @@
                                     <action selector="loginSuccessfulButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="ubt-aO-0Sa"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zzZ-Cb-5PD">
+                                <rect key="frame" x="145" y="292" width="84" height="30"/>
+                                <state key="normal" title="custom_test"/>
+                                <connections>
+                                    <action selector="customTestButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="ehl-RW-0kA"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -60,8 +67,10 @@
                             <constraint firstItem="He8-N3-cSd" firstAttribute="top" secondItem="gVB-nV-Xh6" secondAttribute="bottom" constant="20" id="7Gx-Da-DIg"/>
                             <constraint firstItem="IoV-pG-Oba" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="7rt-qH-UAS"/>
                             <constraint firstItem="IoV-pG-Oba" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="8QT-SJ-cdG"/>
+                            <constraint firstItem="zzZ-Cb-5PD" firstAttribute="centerX" secondItem="He8-N3-cSd" secondAttribute="centerX" id="QkX-AR-F4i"/>
                             <constraint firstItem="IoV-pG-Oba" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="13" id="R3v-Ma-oMy"/>
                             <constraint firstItem="gVB-nV-Xh6" firstAttribute="top" secondItem="IoV-pG-Oba" secondAttribute="bottom" constant="97" id="XI1-7f-xAc"/>
+                            <constraint firstItem="zzZ-Cb-5PD" firstAttribute="top" secondItem="He8-N3-cSd" secondAttribute="bottom" constant="18" id="mDk-uI-kIT"/>
                             <constraint firstItem="IoV-pG-Oba" firstAttribute="centerX" secondItem="gVB-nV-Xh6" secondAttribute="centerX" id="uAj-uc-5Vo"/>
                         </constraints>
                     </view>
