@@ -11,9 +11,7 @@ struct CampaignReconciliation {
      * 2) Hostapp logs an event.
      */
     static func reconciliate() {
-        
-        print(Thread.current)
-        
+                
         // Create an unique list of event by their eventType and eventName.
         let uniqueList = generateUniqueEventList()
         
