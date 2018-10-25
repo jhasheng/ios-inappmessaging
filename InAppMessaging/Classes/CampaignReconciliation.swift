@@ -48,6 +48,9 @@ struct CampaignReconciliation {
      * 1) Campaign was not shown before.
      * 2) Campaign has all of its triggers activated. E.G If there are two triggers in a campaign,
      * both must be triggered.
+     * @param { campaign: Campaign } the campaign to check.
+     * @param { (uniqueEventTypes: Set<Int>, uniqueEventNames: Set<String>) } the tuple of unique eventTypes/eventNames.
+     * @param { Bool } true if campaign is ready to be displayed, else false.
      */
     private static func isCampaignReady(
         _ campaign: Campaign,

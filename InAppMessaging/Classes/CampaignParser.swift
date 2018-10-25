@@ -4,7 +4,9 @@
 struct CampaignParser {
     
     /**
-     * Parses a campaign's trigger for it's event name
+     * Parses a campaign's trigger for it's event name.
+     * @param { trigger: Trigger } the trigger to parse.
+     * @returns { String? } the eventName of the trigger or nil.
      */
     static func getCustomEventName(_ trigger: Trigger) -> String? {
         let attributes = trigger.attributes
