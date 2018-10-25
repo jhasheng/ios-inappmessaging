@@ -11,35 +11,30 @@ struct CampaignReconciliation {
     /**
      * Cross references the list of campaigns from CampaignRepository
      * and the list of events in EventRepository and check if any campaigns are
-     * ready to be displayed. There are two requirements for a campaign to be 'ready':
-     * 1) Campaign was not shown before
-     * 2) Campaign has all of its triggers activated. E.G If there are two triggers in a campaign,
-     * both must be triggered.
+     * ready to be displayed. This method is called when:
+     * 1) MessageMixerClient retrieves a new list from the ping endpoint.
+     * 2) Hostapp logs an event.
      */
     static func reconciliate() {
         
-        // Create an unique list of event by their eventType. If it is a 4, it will be by name.
+        // Create an unique list of event by their eventType and eventName if it is a custom event.
         let uniqueList = generateUniqueEventList()
         
+        // Loop through every campaign in the list and check if it is ready to be displayed.
         for campaign in CampaignRepository.list {
             if isCampaignReady(campaign, uniqueList) {
                 ReadyCampaignRepository.addCampaign(campaign)
             }
         }
-        
-        
-        
-        print("TEST: \(ReadyCampaignRepository.list)")
-        print("TEST: \(ReadyCampaignRepository.list.count)")
-
     }
     
     /**
-     * Helps reconciliation process by creating an list of of unique events to match.
+     * Helps reconciliation process by creating an list of of unique eventType and eventName to match.
+     * @returns { (uniqueEventTypes: Set<Int>, uniqueEventNames: Set<String>) } Tuple of unique event types and names set.
      */
     private static func generateUniqueEventList() -> (uniqueEventTypes: Set<Int>, uniqueEventNames: Set<String>) {
         var eventTypes: Set<Int> = [] // To store event types that aren't custom.
-        var eventNames: Set<String> = [] // To store custom event type.
+        var eventNames: Set<String> = [] // To store custom event names.
         
         for event in EventRepository.list {
             if event.eventType != EventType.custom {
@@ -50,15 +45,22 @@ struct CampaignReconciliation {
         }
         
         return (eventTypes,eventNames)
- 
     }
     
     /**
      * Method to check if campaign is ready to be displayed or not.
+     * There are two requirements for a campaign to be 'ready':
+     * 1) Campaign was not shown before.
+     * 2) Campaign has all of its triggers activated. E.G If there are two triggers in a campaign,
+     * both must be triggered.
      */
     private static func isCampaignReady(
         _ campaign: Campaign,
         _ list: (uniqueEventTypes: Set<Int>, uniqueEventNames: Set<String>)) -> Bool {
+        
+            if ShownRepository.contains(campaign) {
+                return false
+            }
         
             for trigger in campaign.campaignData.triggers {
                 // If the trigger is not custom, check the uniqueEventTypes list for matches.
