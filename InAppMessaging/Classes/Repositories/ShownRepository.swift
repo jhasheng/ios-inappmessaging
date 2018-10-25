@@ -1,3 +1,7 @@
+/**
+ * Repository to store all the campaigns that were shown before.
+ * TODO(Daniel Tam) At the moment, this is stored in-memory and not locally.
+ */
 struct ShownRepository: CampaignStorable {
     static var list: Set<Campaign> = []
     

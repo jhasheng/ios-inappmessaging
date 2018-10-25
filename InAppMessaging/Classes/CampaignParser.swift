@@ -1,13 +1,16 @@
+/**
+ * Utility struct to provide methods for anything campaign related.
+ */
 struct CampaignParser {
     
     /**
-     *
+     * Parses a campaign's trigger for it's event name
      */
     static func getCustomEventName(_ trigger: Trigger) -> String? {
         let attributes = trigger.attributes
 
         for attribute in attributes {
-            if attribute.name == "eventName" {
+            if attribute.name == Keys.Event.eventName {
                 return attribute.value
             }
         }

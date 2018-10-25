@@ -46,7 +46,6 @@ class MessageMixerClient: HttpRequestable {
         }
         
         if let campaignResponse = decodedResponse {
-//            MessageMixerClient.mappedCampaigns = CampaignHelper.mapCampaign(campaignList: campaignResponse.data)
             CampaignRepository.list = campaignResponse.data
             WorkScheduler.scheduleTask(campaignResponse.nextPingMillis, closure: self.pingMixerServer)
         }
