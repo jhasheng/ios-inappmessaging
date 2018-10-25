@@ -10,10 +10,8 @@ class InAppMessagingViewController: UIViewController {
      * and then display the returned campaigns.
      * @param { eventType: Int } Enum value of the event type.
      */
-    internal class func display(_ eventType: Int) {
-        // Fetch matching campaigns.
-//        self.campaigns = CampaignHelper.fetchCampaigns(withEventType: eventType)
-        
+    internal class func display() {
+
         // Display first campaign if the ready campaign list is not empty.
         if let firstCampaign = ReadyCampaignRepository.getFirst() {
             displayIndividualCampaign(firstCampaign)
@@ -27,12 +25,13 @@ class InAppMessagingViewController: UIViewController {
     internal class func displayIndividualCampaign(_ campaign: Campaign) {
         
         // Display first campaign.
-        guard let campaignViewType = CampaignHelper.findViewType(campaign: campaign.campaignData) else {
+        guard let campaignViewType = CampaignParser.findViewType(campaign: campaign.campaignData) else {
             return
         }
         
+        // TODO(Daniel Tam) Uncomment when specs are more clear for this function.
         // Permission check here.
-//        if !PermissionClient().checkPermission(withCampaign: firstCampaignInlist){
+//        if !PermissionClient().checkPermission(withCampaign: campaign){
 //            return
 //        }
         
@@ -56,11 +55,10 @@ class InAppMessagingViewController: UIViewController {
             
             // Display the campaign if the view exists.
             if let viewToDisplay = view {
-//                CampaignHelper.appendShownCampaign(campaignId: firstCampaignInlist.campaignId)
                 ShownRepository.addCampaign(campaign)
                 viewToDisplay.show()
                 ReadyCampaignRepository.removeFirst()
-//                self.campaigns.removeFirst()
             }
-        }    }
+        }
+    }
 }
