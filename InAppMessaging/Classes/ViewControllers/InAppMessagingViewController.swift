@@ -2,13 +2,9 @@
  * Handle all the displaying logic of the SDK.
  */
 class InAppMessagingViewController: UIViewController {
-    
-//    internal static var campaigns: [CampaignData] = []
-    
+
     /**
-     * Fetches a list of campaigns that matches the eventType
-     * and then display the returned campaigns.
-     * @param { eventType: Int } Enum value of the event type.
+     * Checks if there are any campaigns in the ReadyCampaignRepository and display them.
      */
     internal class func display() {
 
@@ -21,6 +17,7 @@ class InAppMessagingViewController: UIViewController {
     /**
      * Contains logic to display the correct view type -- modal, slideup, fullscreen, html -- and create
      * a view controller to present a single campaign.
+     * @param { ampaign: Campaign } the campaign object to display.
      */
     internal class func displayIndividualCampaign(_ campaign: Campaign) {
         

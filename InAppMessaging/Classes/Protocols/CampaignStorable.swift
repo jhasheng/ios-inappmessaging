@@ -1,7 +1,10 @@
+/**
+ * Protocol for repositories that stores Campaign types.
+ */
 protocol CampaignStorable {
-    // List of Item objects.
+    // List of Campaign objects.
     static var list: Set<Campaign> { get set }
     
-    // Add items into the list.
+    // Add campaigns into the list.
     static func addCampaign(_ campaign: Campaign)
 }

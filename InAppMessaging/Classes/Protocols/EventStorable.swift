@@ -1,3 +1,6 @@
+/**
+ * Protocol for repositories that stores Event types.
+ */
 protocol EventStorable {
     // List of Item objects.
     static var list: [Event] { get set }
