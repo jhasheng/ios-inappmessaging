@@ -46,6 +46,10 @@ class MessageMixerClient: HttpRequestable {
         if let campaignResponse = decodedResponse {
             CampaignRepository.list = campaignResponse.data
             WorkScheduler.scheduleTask(campaignResponse.nextPingMillis, closure: self.pingMixerServer)
+            
+            if !MessageMixerClient.isFirstPing {
+                CampaignReconciliation.reconciliate()
+            }
         }
         
         // After the first ping to message mixer, log the AppStartEvent.
