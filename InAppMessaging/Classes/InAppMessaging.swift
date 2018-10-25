@@ -46,7 +46,7 @@
     
     /**
      * Log the event name passed in and also pass the event name to the view controller to display a matching campaign.
-     * @param { name: String } name of the event.
+     * @param { event: Event } Event object to log.
      */
     @objc public class func logEvent(_ event: Event) {
         if InAppMessaging.isEnabled {

@@ -5,8 +5,6 @@ class MessageMixerClient: HttpRequestable {
     
     private static var delay: Int = 0 // Milliseconds before pinging Message Mixer server.
     private static var isFirstPing = true;
-    static var mappedCampaigns = [Int: Set<Campaign>]()
-    static var listOfShownCampaigns = Set<String>()
     
     /**
      * Starts the first ping to Message Mixer server.

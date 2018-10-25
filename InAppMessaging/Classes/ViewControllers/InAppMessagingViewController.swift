@@ -17,7 +17,7 @@ class InAppMessagingViewController: UIViewController {
     /**
      * Contains logic to display the correct view type -- modal, slideup, fullscreen, html -- and create
      * a view controller to present a single campaign.
-     * @param { ampaign: Campaign } the campaign object to display.
+     * @param { campaign: Campaign } the campaign object to display.
      */
     internal class func displayIndividualCampaign(_ campaign: Campaign) {
         
