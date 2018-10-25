@@ -14,6 +14,6 @@ struct InjectionContainer {
         
         container.register(MessageMixerClient.self) { _ in MessageMixerClient() }
         
-        container.register(CampaignHelper.self) { _ in CampaignHelper() }
+        container.register(CampaignParser.self) { _ in CampaignParser() }
     }
 }

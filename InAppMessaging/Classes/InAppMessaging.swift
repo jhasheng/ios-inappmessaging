@@ -54,7 +54,7 @@
                 EventLogger.logEvent(event)
                 EventRepository.addEvent(event)
                 CampaignReconciliation.reconciliate()
-                InAppMessagingViewController.display(event.eventType.rawValue)
+                InAppMessagingViewController.display()
             }
         }
     }

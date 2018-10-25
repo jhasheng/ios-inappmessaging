@@ -1,10 +1,5 @@
 /**
- * Cross references the list of campaigns from CampaignRepository
- * and the list of events in EventRepository and check if any campaigns are
- * ready to be displayed. There are two requirements for a campaign to be 'ready':
- * 1) Campaign was not shown before
- * 2) Campaign has all of its triggers activated. E.G If there are two triggers in a campaign,
- * both must be triggered.
+ * Class to handle the logic of checking if a campaign is ready to be displayed.
  */
 struct CampaignReconciliation {
     
@@ -58,6 +53,7 @@ struct CampaignReconciliation {
         _ campaign: Campaign,
         _ list: (uniqueEventTypes: Set<Int>, uniqueEventNames: Set<String>)) -> Bool {
         
+            // If the campaign has already been shown before, don't show it again.
             if ShownRepository.contains(campaign) {
                 return false
             }
@@ -69,7 +65,7 @@ struct CampaignReconciliation {
                         return false
                     }
                 } else {
-                    guard let eventName = trigger.eventName else {
+                    guard let eventName = CampaignParser.getCustomEventName(trigger) else {
                         return false
                     }
                     
