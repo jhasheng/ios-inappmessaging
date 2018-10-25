@@ -12,7 +12,7 @@ struct CampaignReconciliation {
      */
     static func reconciliate() {
         
-        // Create an unique list of event by their eventType and eventName if it is a custom event.
+        // Create an unique list of event by their eventType and eventName.
         let uniqueList = generateUniqueEventList()
         
         // Loop through every campaign in the list and check if it is ready to be displayed.
