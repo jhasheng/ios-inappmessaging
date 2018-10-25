@@ -17,8 +17,6 @@ struct CampaignReconciliation {
      * both must be triggered.
      */
     static func reconciliate() {
-//        let campaignList = CampaignRepository.list
-//        let eventList = EventRepository.list
         
         // Create an unique list of event by their eventType. If it is a 4, it will be by name.
         let uniqueList = generateUniqueEventList()
