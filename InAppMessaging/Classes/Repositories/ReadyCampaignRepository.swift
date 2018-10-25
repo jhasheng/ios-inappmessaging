@@ -7,5 +7,19 @@ struct ReadyCampaignRepository: CampaignStorable {
     static func addCampaign(_ campaign: Campaign) {
         ReadyCampaignRepository.list.insert(campaign)
     }
+    
+    static func getFirst() -> Campaign? {
+        if let firstCampaign = ReadyCampaignRepository.list.first {
+            return firstCampaign
+        }
+        
+        return nil
+    }
+    
+    static func removeFirst() {
+        if !ReadyCampaignRepository.list.isEmpty {
+            list.removeFirst()
+        }
+    }
 }
     
