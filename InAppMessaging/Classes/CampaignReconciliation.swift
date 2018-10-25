@@ -57,7 +57,7 @@ struct CampaignReconciliation {
         _ list: (uniqueEventTypes: Set<Int>, uniqueEventNames: Set<String>)) -> Bool {
         
             // If the campaign has already been shown before, don't show it again.
-            if ShownRepository.contains(campaign) {
+            if ShownCampaignRepository.contains(campaign) {
                 return false
             }
         
