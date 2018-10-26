@@ -53,7 +53,8 @@ class MessageMixerClient: HttpRequestable {
             ReadyCampaignRepository.clear()
             
             if !MessageMixerClient.isFirstPing {
-                CampaignReconciliation.reconciliate()
+                CommonUtility.lock(objects: [CampaignRepository.list as AnyObject, EventRepository.list as AnyObject, ReadyCampaignRepository.list as AnyObject], closure: CampaignReconciliation.reconciliate)
+//                CampaignReconciliation.reconciliate()
             }
         }
         
