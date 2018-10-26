@@ -2,7 +2,7 @@
  * Repository to store all the campaigns that were shown before.
  * TODO(Daniel Tam) At the moment, this is stored in-memory and not locally.
  */
-struct ShownCampaignRepository: CampaignStorable {
+struct DisplayedCampaignRepository: CampaignStorable {
     static var list: Set<Campaign> = []
     
     static func addCampaign(_ campaign: Campaign) {
@@ -15,5 +15,9 @@ struct ShownCampaignRepository: CampaignStorable {
         }
         
         return false
+    }
+    
+    static func clear() {
+        list.removeAll()
     }
 }

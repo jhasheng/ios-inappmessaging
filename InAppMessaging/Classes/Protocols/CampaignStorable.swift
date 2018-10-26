@@ -7,4 +7,7 @@ protocol CampaignStorable {
     
     // Add campaigns into the list.
     static func addCampaign(_ campaign: Campaign)
+    
+    // Clear the list.
+    static func clear()
 }
