@@ -7,4 +7,8 @@ struct CampaignRepository: CampaignStorable {
     static func addCampaign(_ campaign: Campaign) {
         CampaignRepository.list.insert(campaign)
     }
+    
+    static func clear() {
+        list.removeAll()
+    }
 }

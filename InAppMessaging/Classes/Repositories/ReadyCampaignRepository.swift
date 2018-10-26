@@ -21,4 +21,8 @@ struct ReadyCampaignRepository: CampaignStorable {
             list.removeFirst()
         }
     }
+    
+    static func clear() {
+        list.removeAll()
+    }
 }

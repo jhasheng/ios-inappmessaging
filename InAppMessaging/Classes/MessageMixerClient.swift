@@ -43,9 +43,14 @@ class MessageMixerClient: HttpRequestable {
             #endif
         }
         
+        // If new ping response is decoded properly.
         if let campaignResponse = decodedResponse {
             CampaignRepository.list = campaignResponse.data
             WorkScheduler.scheduleTask(campaignResponse.nextPingMillis, closure: self.pingMixerServer)
+            
+            // Clear existing CampaignRepository and ReadyCampaignRepository.
+            CampaignRepository.clear()
+            ReadyCampaignRepository.clear()
             
             if !MessageMixerClient.isFirstPing {
                 CampaignReconciliation.reconciliate()
@@ -55,7 +60,6 @@ class MessageMixerClient: HttpRequestable {
         // After the first ping to message mixer, log the AppStartEvent.
         // This is to handle the async nature of both the ping and displayPermissions endpoint.
         if MessageMixerClient.isFirstPing {
-            // TODO(Daniel Tam) Clarify if custom attributes should be defaulted to nil or not for app start event.
             InAppMessaging.logEvent(AppStartEvent(withCustomAttributes: nil))
             MessageMixerClient.isFirstPing = false;
         }
