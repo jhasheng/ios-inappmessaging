@@ -45,17 +45,13 @@ class MessageMixerClient: HttpRequestable {
         
         // If new ping response is decoded properly.
         if let campaignResponse = decodedResponse {
-            CampaignRepository.list = campaignResponse.data
-            WorkScheduler.scheduleTask(campaignResponse.nextPingMillis, closure: self.pingMixerServer)
-            
-            // Clear existing CampaignRepository and ReadyCampaignRepository.
-            CampaignRepository.clear()
-            ReadyCampaignRepository.clear()
-            
-            if !MessageMixerClient.isFirstPing {
-                CommonUtility.lock(objects: [CampaignRepository.list as AnyObject, EventRepository.list as AnyObject, ReadyCampaignRepository.list as AnyObject], closure: CampaignReconciliation.reconciliate)
-//                CampaignReconciliation.reconciliate()
-            }
+            CommonUtility.lock(
+                objects: [
+                    CampaignRepository.list as AnyObject,
+                    EventRepository.list as AnyObject,
+                    ReadyCampaignRepository.list as AnyObject],
+                pingResponse: campaignResponse,
+                closure: self.handleNewPingResponse)
         }
         
         // After the first ping to message mixer, log the AppStartEvent.
@@ -63,6 +59,21 @@ class MessageMixerClient: HttpRequestable {
         if MessageMixerClient.isFirstPing {
             InAppMessaging.logEvent(AppStartEvent(withCustomAttributes: nil))
             MessageMixerClient.isFirstPing = false;
+        }
+    }
+    
+    private func handleNewPingResponse(pingResponse: PingResponse) {
+        // Clear existing CampaignRepository and ReadyCampaignRepository.
+        CampaignRepository.clear()
+        ReadyCampaignRepository.clear()
+        
+        // Renew repository with new response.
+        CampaignRepository.list = pingResponse.data
+        WorkScheduler.scheduleTask(pingResponse.nextPingMillis, closure: self.pingMixerServer)
+        
+        // Start campaign reconciliation process.
+        if !MessageMixerClient.isFirstPing {
+            CampaignReconciliation.reconciliate()
         }
     }
     
