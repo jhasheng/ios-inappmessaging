@@ -52,6 +52,8 @@ class MessageMixerClient: HttpRequestable {
                     ReadyCampaignRepository.list as AnyObject],
                 pingResponse: campaignResponse,
                 closure: self.handleNewPingResponse)
+            
+            WorkScheduler.scheduleTask(campaignResponse.nextPingMillis, closure: self.pingMixerServer)
         }
         
         // After the first ping to message mixer, log the AppStartEvent.
@@ -62,14 +64,19 @@ class MessageMixerClient: HttpRequestable {
         }
     }
     
+    /**
+     * Logic to handle new ping responses. It will clear the existing repositories and
+     * insert the new campaigns. On every ping that isn't the first, start the
+     * reconciliation process.
+     * @param { pingResponse: PingResponse } the new ping response.
+     */
     private func handleNewPingResponse(pingResponse: PingResponse) {
         // Clear existing CampaignRepository and ReadyCampaignRepository.
         CampaignRepository.clear()
         ReadyCampaignRepository.clear()
         
-        // Renew repository with new response.
+        // Renew repository with new response.        
         CampaignRepository.list = pingResponse.data
-        WorkScheduler.scheduleTask(pingResponse.nextPingMillis, closure: self.pingMixerServer)
         
         // Start campaign reconciliation process.
         if !MessageMixerClient.isFirstPing {
