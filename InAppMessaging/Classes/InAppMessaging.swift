@@ -53,7 +53,14 @@
             DispatchQueue.global(qos: .background).async {
                 EventLogger.logEvent(event)
                 EventRepository.addEvent(event)
-                CampaignReconciliation.reconciliate()
+                
+                CommonUtility.lock(
+                    objects: [
+                        CampaignRepository.list as AnyObject,
+                        EventRepository.list as AnyObject,
+                        ReadyCampaignRepository.list as AnyObject],
+                    closure: CampaignReconciliation.reconciliate)
+                
                 InAppMessagingViewController.display()
             }
         }
