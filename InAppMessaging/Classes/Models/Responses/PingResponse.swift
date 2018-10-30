@@ -31,7 +31,7 @@ struct CampaignData: Decodable, Equatable {
     
     let campaignId: String
     let type: Int
-    let triggers: [Trigger]
+    let triggers: [Trigger]?
     let isTest: Bool
     let messagePayload: MessagePayload
     
