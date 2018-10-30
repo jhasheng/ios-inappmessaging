@@ -61,7 +61,12 @@ struct CampaignReconciliation {
                 return false
             }
         
-            for trigger in campaign.campaignData.triggers {
+            // Secondary check for test campaigns. If theres no triggers, it has to be a test campaign.
+            guard let triggers = campaign.campaignData.triggers else {
+                return true
+            }
+        
+            for trigger in triggers {
                 // If the trigger is not custom, check the uniqueEventTypes list for matches.
                 if trigger.eventType != EventType.custom.rawValue {
                     if !list.uniqueEventTypes.contains(trigger.eventType) {
