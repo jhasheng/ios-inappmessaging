@@ -32,12 +32,14 @@ struct CampaignData: Decodable, Equatable {
     let campaignId: String
     let type: Int
     let triggers: [Trigger]
+    let isTest: Bool
     let messagePayload: MessagePayload
     
     enum CodingKeys: String, CodingKey {
         case campaignId
         case type
         case triggers
+        case isTest
         case messagePayload
     }
     
