@@ -31,7 +31,11 @@ struct Keys {
     struct Event {
         static let eventType = "eventType"
         static let timestamp = "timestamp"
+        static let eventName = "eventName"
         static let customAttributes = "customAttributes"
+        static let appStart = "APP_START"
+        static let loginSuccessful = "LOGIN_SUCCESSFUL"
+        static let purchaseSuccessful = "PURCHASE_SUCCESSFUL"
     }
     
     /**

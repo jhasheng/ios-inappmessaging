@@ -2,68 +2,59 @@
  * Handle all the displaying logic of the SDK.
  */
 class InAppMessagingViewController: UIViewController {
-    
-    internal static var campaigns: [CampaignData] = []
-    
+
     /**
-     * Fetches a list of campaigns that matches the eventType
-     * and then display the returned campaigns.
-     * @param { eventType: Int } Enum value of the event type.
+     * Checks if there are any campaigns in the ReadyCampaignRepository and display them.
      */
-    internal class func display(_ eventType: Int) {
-        // Fetch matching campaigns.
-        self.campaigns = CampaignHelper.fetchCampaigns(withEventType: eventType)
-        
-        // Display first campaign if the list is not empty.
-        if !self.campaigns.isEmpty {
-            displayIndividualCampaign()
+    internal class func display() {
+
+        // Display first campaign if the ready campaign list is not empty.
+        if let firstCampaign = ReadyCampaignRepository.getFirst() {
+            displayIndividualCampaign(firstCampaign)
         }
     }
     
     /**
      * Contains logic to display the correct view type -- modal, slideup, fullscreen, html -- and create
      * a view controller to present a single campaign.
+     * @param { campaign: Campaign } the campaign object to display.
      */
-    internal class func displayIndividualCampaign() {
+    internal class func displayIndividualCampaign(_ campaign: Campaign) {
         
         // Display first campaign.
-        if !self.campaigns.isEmpty {
+        guard let campaignViewType = CampaignParser.findViewType(campaign: campaign.campaignData) else {
+            return
+        }
+        
+        // TODO(Daniel Tam) Uncomment when specs are more clear for this function.
+        // Permission check here.
+//        if !PermissionClient().checkPermission(withCampaign: campaign){
+//            return
+//        }
+        
+        DispatchQueue.main.async {
+            var view: Modal?
             
-            guard let firstCampaignInlist = self.campaigns.first,
-                let campaignViewType = CampaignHelper.findViewType(campaign: firstCampaignInlist)
-            else {
-                    return
+            // TODO(daniel.tam) Add the other view types.
+            switch campaignViewType {
+            case .modal:
+                view = ModalView(campaign.campaignData)
+                break
+            case .invalid:
+                break
+            case .full:
+                break
+            case .slide:
+                break
+            case .html:
+                break
             }
             
-            // Permission check here.
-            if !PermissionClient().checkPermission(withCampaign: firstCampaignInlist){
-                return
-            }
-            
-            DispatchQueue.main.async {
-                var view: Modal?
-                
-                // TODO(daniel.tam) Add the other view types.
-                switch campaignViewType {
-                case .modal:
-                    view = ModalView(campaign: firstCampaignInlist)
-                    break
-                case .invalid:
-                    break
-                case .full:
-                    break
-                case .slide:
-                    break
-                case .html:
-                    break
-                }
-                
-                // Display the campaign if the view exists.
-                if let viewToDisplay = view {
-                    CampaignHelper.appendShownCampaign(campaignId: firstCampaignInlist.campaignId)
-                    viewToDisplay.show()
-                    self.campaigns.removeFirst()
-                }
+            // Display the campaign if the view exists.
+            if let viewToDisplay = view {
+                DisplayedCampaignRepository.addCampaign(campaign)
+                viewToDisplay.show()
+                ReadyCampaignRepository.removeFirst()
             }
         }
     }

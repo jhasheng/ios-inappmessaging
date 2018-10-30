@@ -5,8 +5,6 @@ class MessageMixerClient: HttpRequestable {
     
     private static var delay: Int = 0 // Milliseconds before pinging Message Mixer server.
     private static var isFirstPing = true;
-    static var mappedCampaigns = [Int: Set<Campaign>]()
-    static var listOfShownCampaigns = Set<String>()
     
     /**
      * Starts the first ping to Message Mixer server.
@@ -45,17 +43,44 @@ class MessageMixerClient: HttpRequestable {
             #endif
         }
         
+        // If new ping response is decoded properly.
         if let campaignResponse = decodedResponse {
-            MessageMixerClient.mappedCampaigns = CampaignHelper.mapCampaign(campaignList: campaignResponse.data)
+            CommonUtility.lock(
+                objects: [
+                    CampaignRepository.list as AnyObject,
+                    EventRepository.list as AnyObject,
+                    ReadyCampaignRepository.list as AnyObject],
+                pingResponse: campaignResponse,
+                closure: self.handleNewPingResponse)
+            
             WorkScheduler.scheduleTask(campaignResponse.nextPingMillis, closure: self.pingMixerServer)
         }
         
         // After the first ping to message mixer, log the AppStartEvent.
         // This is to handle the async nature of both the ping and displayPermissions endpoint.
         if MessageMixerClient.isFirstPing {
-            // TODO(Daniel Tam) Clarify if custom attributes should be defaulted to nil or not for app start event.
             InAppMessaging.logEvent(AppStartEvent(withCustomAttributes: nil))
             MessageMixerClient.isFirstPing = false;
+        }
+    }
+    
+    /**
+     * Logic to handle new ping responses. It will clear the existing repositories and
+     * insert the new campaigns. On every ping that isn't the first, start the
+     * reconciliation process.
+     * @param { pingResponse: PingResponse } the new ping response.
+     */
+    private func handleNewPingResponse(pingResponse: PingResponse) {
+        // Clear existing CampaignRepository and ReadyCampaignRepository.
+        CampaignRepository.clear()
+        ReadyCampaignRepository.clear()
+        
+        // Renew repository with new response.        
+        CampaignRepository.list = pingResponse.data
+        
+        // Start campaign reconciliation process.
+        if !MessageMixerClient.isFirstPing {
+            CampaignReconciliation.reconciliate()
         }
     }
     

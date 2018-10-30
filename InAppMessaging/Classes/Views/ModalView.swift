@@ -25,7 +25,7 @@ class ModalView: UIView, Modal {
     // Will increment as more subviews are populated.
     var dialogViewCurrentHeight: CGFloat = 0
     
-    convenience init(campaign: CampaignData) {
+    convenience init(_ campaign: CampaignData) {
         self.init(frame: UIScreen.main.bounds)
         
         self.initialize(campaign: campaign)

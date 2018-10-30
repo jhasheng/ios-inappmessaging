@@ -23,4 +23,45 @@ struct CommonUtility {
         
         return dataToReturn
     }
+    
+    /**
+     * Provides a way to lock objects when performing a function.
+     * @param { objects: [AnyObject] } list of objects to lock.
+     * @param { pingResponse: PingResponse } new ping response to reconciliate.
+     * @param { closure: () -> () } the function to perform with the objects locked.
+     */
+    static func lock(objects: [AnyObject], pingResponse: PingResponse, closure: (_ pingResponse: PingResponse) -> ()) {
+        // Lock all the objects passed in.
+        for object in objects {
+            objc_sync_enter(object)
+        }
+        
+        // Run closure.
+        closure(pingResponse)
+        
+        // Unlock all the objects when done.
+        for object in objects {
+            objc_sync_exit(object)
+        }
+    }
+    
+    /**
+     * Provides a way to lock objects when performing a function.
+     * @param { objects: [AnyObject] } list of objects to lock.
+     * @param { closure: () -> () } the function to perform with the objects locked.
+     */
+    static func lock(objects: [AnyObject], closure: () -> ()) {
+        // Lock all the objects passed in.
+        for object in objects {
+            objc_sync_enter(object)
+        }
+        
+        // Run closure.
+        closure()
+        
+        // Unlock all the objects when done.
+        for object in objects {
+            objc_sync_exit(object)
+        }
+    }
 }
