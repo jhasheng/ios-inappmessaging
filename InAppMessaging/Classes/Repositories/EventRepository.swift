@@ -7,4 +7,8 @@ struct EventRepository: EventStorable {
     static func addEvent(_ event: Event) {
         EventRepository.list.append(event)
     }
+    
+    static func clear() {
+        list.removeAll()
+    }
 }

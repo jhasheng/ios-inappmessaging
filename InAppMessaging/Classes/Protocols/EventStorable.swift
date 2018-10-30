@@ -7,4 +7,7 @@ protocol EventStorable {
     
     // Add items into the list.
     static func addEvent(_ event: Event)
+    
+    // Clear the list.
+    static func clear()
 }
