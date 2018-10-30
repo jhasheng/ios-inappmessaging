@@ -28,4 +28,24 @@ struct CampaignParser {
     static func findViewType(campaign: CampaignData) -> CampaignDisplayType? {
         return CampaignDisplayType(rawValue: campaign.type)
     }
+    
+    /**
+     * Method to parse through each campaign and separate test campaigns from non-tests campaigns.
+     * @param { campaigns: Set<Campaign> } the set of campaigns to parse through.
+     * @returns { (testCampaigns: Set<Campaign>, nonTestCampaigns: Set<Campaign>) } set of test and non-test campaigns.
+     */
+    static func splitCampaigns(campaigns: Set<Campaign>) -> (testCampaigns: Set<Campaign>, nonTestCampaigns: Set<Campaign>) {
+        var testCampaigns: Set<Campaign> = []
+        var nonTestCampaigns: Set<Campaign> = []
+        
+        for campaign in campaigns {
+            if(campaign.campaignData.isTest) {
+                testCampaigns.insert(campaign)
+            } else {
+                nonTestCampaigns.insert(campaign)
+            }
+        }
+        
+        return (testCampaigns, nonTestCampaigns)
+    }
 }

@@ -75,8 +75,10 @@ class MessageMixerClient: HttpRequestable {
         CampaignRepository.clear()
         ReadyCampaignRepository.clear()
         
-        // Renew repository with new response.        
-        CampaignRepository.list = pingResponse.data
+        // Renew repository with new response.
+        let campaignList = CampaignParser.splitCampaigns(campaigns: pingResponse.data)
+        CampaignRepository.list = campaignList.nonTestCampaigns
+        ReadyCampaignRepository.list = campaignList.testCampaigns
         
         // Start campaign reconciliation process.
         if !MessageMixerClient.isFirstPing {
