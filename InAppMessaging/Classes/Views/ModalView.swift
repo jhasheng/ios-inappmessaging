@@ -85,7 +85,7 @@ class ModalView: UIView, Modal {
         exitButton.isUserInteractionEnabled = true
         exitButton.layer.cornerRadius = exitButton.frame.width / 2
         exitButton.layer.masksToBounds = true
-        exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnExitButton)))
+        exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
         self.dialogView.addSubview(exitButton)
         
         // The dialog view which is the rounded rectangle in the center.
@@ -99,13 +99,6 @@ class ModalView: UIView, Modal {
         if !hasImage {
             self.appendSubViews()
         }
-    }
-    
-    /**
-     * Obj-c selector to dismiss the modal view when the 'X' is tapped.
-     */
-    @objc fileprivate func didTappedOnExitButton(){
-        self.dismiss()
     }
     
     /**
@@ -187,12 +180,12 @@ class ModalView: UIView, Modal {
                         return
                     case .redirect:
                         self.uri = button.buttonBehavior.uri
-                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnRedirect)))
+                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnLink)))
                     case .deeplink:
                         self.uri = button.buttonBehavior.uri
-                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnDeeplink)))
+                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnLink)))
                     case .close:
-                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTappedOnExitButton)))
+                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
                 }
                 
                 //TODO(Daniel Tam) Remove hardcoded colors when backend is ready.
@@ -221,19 +214,19 @@ class ModalView: UIView, Modal {
     }
     
     // Button selectors for modal view.
-    @objc fileprivate func didTappedOnRedirect(){
-        if let uri = self.uri, !uri.isEmpty {
-            UIApplication.shared.keyWindow?.rootViewController?.present(InAppMessagingWebViewController(uri: uri), animated: true, completion: nil)
-        }
-        
-        self.dismiss();
-    }
     
-    @objc fileprivate func didTappedOnDeeplink(){
+    /**
+     * Obj-c selector to handle both redirect and deeplink actions.
+     * When the URL fails to validate through canOpenUrl() or is empty, an alert message will pop up
+     * to warn about the navigation error.
+     * NOTE: The openUrl() method used here is deprecated and is being used because the SDK has to support iOS 9.
+     * When iOS 10 becomes the minimum version supported by the SDK, please refer to:
+     * https://developer.apple.com/documentation/uikit/uiapplication/1648685-openurl?language=objc
+     */
+    @objc fileprivate func didTapOnLink(){
         if let unwrappedUri = self.uri,
             let uriToOpen = URL(string: unwrappedUri),
             UIApplication.shared.canOpenURL(uriToOpen) {
-            
                 UIApplication.shared.openURL(uriToOpen)
         } else {
             let alert = UIAlertController(title: "Page not found", message: "Encountered error while navigating to the page.", preferredStyle: .alert)
@@ -241,5 +234,14 @@ class ModalView: UIView, Modal {
             UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
             self.dismiss()
         }
+        
+        self.dismiss();
+    }
+    
+    /**
+     * Obj-c selector to dismiss the modal view when the 'X' is tapped.
+     */
+    @objc fileprivate func didTapOnExitButton(){
+        self.dismiss()
     }
 }
