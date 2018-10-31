@@ -12,7 +12,7 @@ struct CampaignParser {
         let attributes = trigger.attributes
 
         for attribute in attributes {
-            if attribute.name == Keys.Event.eventName {
+            if attribute.key == Keys.Event.eventName {
                 return attribute.value
             }
         }

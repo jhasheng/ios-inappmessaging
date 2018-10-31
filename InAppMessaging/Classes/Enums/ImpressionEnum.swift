@@ -1,7 +1,7 @@
 /**
  * Enum of impression events.
  */
-enum Impression: Int {
+enum ImpressionType: Int {
     case invalid = 0
     case impression = 1
     case exitButton = 2

@@ -1,9 +1,9 @@
 /**
  * Model of the request body for impression request.
  */
-struct ImpressionRequest: Codable {
+struct ImpressionRequest {
     let campaignId: String
-    let subscriptionId: String
+    let hostAppData: [Attribute]
+    let impressions: [ImpressionType]
     let userIdentifiers: [UserIdentifier]
-    let appVersion: String
 }
