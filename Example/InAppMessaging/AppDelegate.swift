@@ -17,8 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        InAppMessaging.registerId(idType: .userId, id: "pointtest99")
         InAppMessaging.configure()
-        InAppMessaging.registerId(idType: .easyId, id: "testing")
         return true
     }
 
