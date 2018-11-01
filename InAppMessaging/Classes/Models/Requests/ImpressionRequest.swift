@@ -3,7 +3,11 @@
  */
 struct ImpressionRequest {
     let campaignId: String
-    let hostAppData: [Attribute]
-    let impressions: [ImpressionType]
+    let isTest: Bool
+    let subscriptionId: String
+    let appVersion: String
+    let sdkVersion: String
+    let properties: [Attribute]
+    let impressions: [Impression]
     let userIdentifiers: [UserIdentifier]
 }
