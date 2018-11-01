@@ -10,24 +10,31 @@ protocol ImpressionTrackable {
     /**
      *
      */
-    func logImpression()
+    func logImpression(withImpressionType type: ImpressionType, withProperties properties: [Property])
+    
+    func sendImpression()
     
 }
 
-extension ImpressionTrackable where Self: Modal {
-    
-    mutating func logImpression(withImpressionType type: ImpressionType, withProperties properties: [Property]) {
-        
-        // Log the impression.
-        self.impressions.append(
-            Impression(
-                type: type,
-                ts: Date().millisecondsSince1970
-            )
-        )
-        
-        // Log the properties.
-        self.properties = properties
+extension ImpressionTrackable {
+    func sendImpression() {
+        ImpressionClient.pingImpression(self.impressions)
     }
-    
 }
+
+//extension ImpressionTrackable where Self: Modal {
+//
+//     func logImpression(withImpressionType type: ImpressionType, withProperties properties: [Property]) {
+//
+//        // Log the impression.
+//        impressions.append(
+//            Impression(
+//                type: type,
+//                ts: Date().millisecondsSince1970
+//            )
+//        )
+//
+//        // Log the properties.
+////        self.properties = properties
+//    }
+//}

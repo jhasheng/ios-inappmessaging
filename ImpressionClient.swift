@@ -3,7 +3,7 @@
  */
 struct ImpressionClient: HttpRequestable {
     
-    static func sendImpression(_ impressions: [Impression]) {
+    static func pingImpression(_ impressions: [Impression]) {
         
     }
     
