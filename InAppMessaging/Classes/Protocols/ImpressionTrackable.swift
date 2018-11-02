@@ -9,10 +9,16 @@ protocol ImpressionTrackable {
     var campaign: CampaignData? { get set }
     
     /**
-     *
+     * Log the impression of a campaign.
+     * @param { type: ImpressionType } enum type of the impression.
+     * @param { properties: [Property] } optional properties to send.
      */
     func logImpression(withImpressionType type: ImpressionType, withProperties properties: [Property])
     
+    /**
+     * Called at the end of an action function from a campaign. This will pack
+     * up all the neccessary data and send it to the impression endpoint.
+     */
     func sendImpression()
     
 }

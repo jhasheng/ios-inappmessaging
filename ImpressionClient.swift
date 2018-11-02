@@ -11,6 +11,13 @@ class ImpressionClient: HttpRequestable {
     final let propertyKey = "properties"
     final let campaignKey = "campaign"
     
+    /**
+     * Retrieves the impression URL and sends it to the backend.
+     * Packs up neccessary data to create the request body.
+     * @param { impressions: [Impression] } list of impressions to send.
+     * @param { properties: [Property] } list of properties to send.
+     * @param { campaign: CampaignData } campaign data to parse for fields.
+     */
     func pingImpression(
         withImpressions impressions: [Impression],
         withProperties properties: [Property],
@@ -23,19 +30,17 @@ class ImpressionClient: HttpRequestable {
                 return
             }
         
-            let optionalParams = [
+            let optionalParams: [String : Any] = [
                 impressionKey: impressions,
                 propertyKey: properties,
                 campaignKey: campaign
-                ] as [String : Any]
+            ]
         
-            guard let response = self.requestFromServer(
+            // Send data back to impression endpoint.
+            self.requestFromServer(
                 withUrl: pingImpressionEndpoint,
                 withHttpMethod: .post,
                 withOptionalParams: optionalParams)
-            else {
-                return;
-            }
     }
     
     /**
@@ -78,6 +83,4 @@ class ImpressionClient: HttpRequestable {
 
         return nil
     }
-    
-    
 }
