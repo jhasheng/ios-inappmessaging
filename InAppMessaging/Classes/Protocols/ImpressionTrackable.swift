@@ -6,6 +6,7 @@ protocol ImpressionTrackable {
     
     var impressions: [Impression] { get set }
     var properties: [Property] { get set }
+    var campaign: CampaignData? { get set }
     
     /**
      *
@@ -18,23 +19,17 @@ protocol ImpressionTrackable {
 
 extension ImpressionTrackable {
     func sendImpression() {
-        ImpressionClient.pingImpression(self.impressions)
+    
+        guard let campaign = self.campaign else {
+            #if DEBUG
+                print("InAppMessaging: Error sending impression.")
+            #endif
+            return
+        }
+        
+        ImpressionClient().pingImpression(
+            withImpressions: impressions,
+            withProperties: properties,
+            withCampaign: campaign)
     }
 }
-
-//extension ImpressionTrackable where Self: Modal {
-//
-//     func logImpression(withImpressionType type: ImpressionType, withProperties properties: [Property]) {
-//
-//        // Log the impression.
-//        impressions.append(
-//            Impression(
-//                type: type,
-//                ts: Date().millisecondsSince1970
-//            )
-//        )
-//
-//        // Log the properties.
-////        self.properties = properties
-//    }
-//}

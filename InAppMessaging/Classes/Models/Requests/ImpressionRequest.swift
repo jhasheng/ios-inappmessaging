@@ -1,7 +1,7 @@
 /**
  * Model of the request body for impression request.
  */
-struct ImpressionRequest {
+struct ImpressionRequest: Encodable{
     let campaignId: String
     let isTest: Bool
     let subscriptionId: String

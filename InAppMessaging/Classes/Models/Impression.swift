@@ -1,7 +1,7 @@
 /**
  * Model for an impression object.
  */
-struct Impression {
+struct Impression: Encodable {
     let type: ImpressionType
     let ts: Int
 }

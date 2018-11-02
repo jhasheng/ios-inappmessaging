@@ -5,9 +5,10 @@ import SDWebImage
  * Class that initializes the modal view using the passed in campaign information to build the UI.
  */
 class ModalView: UIView, Modal, ImpressionTrackable {
-    
+
     var impressions: [Impression] = []
     var properties: [Property] = []
+    var campaign: CampaignData?
     
     var backgroundView = UIView()
     var dialogView = UIView()
@@ -31,7 +32,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     
     convenience init(_ campaign: CampaignData) {
         self.init(frame: UIScreen.main.bounds)
-        
+        self.campaign = campaign
         self.initialize(campaign: campaign)
     }
     
@@ -89,6 +90,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         exitButton.isUserInteractionEnabled = true
         exitButton.layer.cornerRadius = exitButton.frame.width / 2
         exitButton.layer.masksToBounds = true
+        exitButton.tag = ImpressionType.exitButton.rawValue
         exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
         self.dialogView.addSubview(exitButton)
         
@@ -255,7 +257,14 @@ class ModalView: UIView, Modal, ImpressionTrackable {
      * Obj-c selector to dismiss the modal view when the 'X' is tapped.
      */
     @objc fileprivate func didTapOnExitButton(_ sender: UIGestureRecognizer){
-        print(sender.view!.tag)
+        
+        // To log and send impression.
+        if let tag = sender.view?.tag,
+            let type = ImpressionType(rawValue: tag) {
+            logImpression(withImpressionType: type, withProperties: [])
+            sendImpression()
+        }
+        
         self.dismiss()
     }
     

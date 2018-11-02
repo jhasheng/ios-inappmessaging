@@ -53,5 +53,12 @@ struct Keys {
         static let SDKVersion = "InAppMessagingSDKVersion"
         static let SubscriptionID = "InAppMessagingSubscriptionID"
     }
+    
+    /**
+     * Key names for key value pairs.
+     */
+    struct KVObject {
+        static let campaign = "campaign"
+    }
 }
 
