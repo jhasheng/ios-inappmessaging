@@ -110,13 +110,18 @@ class ModalView: UIView, Modal {
         let imageView = UIImageView(frame: CGRect(x: 0, y: self.dialogViewCurrentHeight, width: self.dialogViewWidth, height: self.dialogViewWidth / 2.9))
         imageView.contentMode = .scaleAspectFit
         
-        imageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil) { (image, error, SDImageCacheType, url) in
+        // URL encoding to read urls with space characters in the link.
+        guard let encodedUrl = imageUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+            return
+        }
+        
+        imageView.sd_setImage(with: URL(string: encodedUrl), placeholderImage: nil) { (image, error, SDImageCacheType, url) in
             self.appendSubViews()
         }
         
         self.dialogView.addSubview(imageView)
         
-        self.dialogViewCurrentHeight += imageView.frame.height
+        self.dialogViewCurrentHeight += imageView.frame.height + 8
     }
     
     /**
