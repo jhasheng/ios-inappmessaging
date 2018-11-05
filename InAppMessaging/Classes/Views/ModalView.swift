@@ -178,6 +178,7 @@ class ModalView: UIView, Modal {
                                                          height: buttonHeight))
                 
                 buttonToAdd.setTitle(button.buttonText, for: .normal)
+                buttonToAdd.titleLabel?.font = .boldSystemFont(ofSize: 12)
                 buttonToAdd.layer.cornerRadius = 6
                 
                 switch buttonAction {
