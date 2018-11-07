@@ -1,8 +1,9 @@
 /**
  * Class to handle communication with InAppMessaging Message Mixer Server.
  */
-class MessageMixerClient: HttpRequestable {
+class MessageMixerClient: HttpRequestable, TaskSchedulable {
     
+    static var workItemReference: DispatchWorkItem?
     private static var delay: Int = 0 // Milliseconds before pinging Message Mixer server.
     private static var isFirstPing = true;
     
@@ -10,7 +11,8 @@ class MessageMixerClient: HttpRequestable {
      * Starts the first ping to Message Mixer server.
      */
     internal func enable() {
-        WorkScheduler.scheduleTask(0, closure: self.pingMixerServer)
+//        WorkScheduler.scheduleTask(0, closure: self.pingMixerServer)
+        self.pingMixerServer()
     }
     
     /**
@@ -53,7 +55,9 @@ class MessageMixerClient: HttpRequestable {
                 pingResponse: campaignResponse,
                 closure: self.handleNewPingResponse)
             
-            WorkScheduler.scheduleTask(campaignResponse.nextPingMillis, closure: self.pingMixerServer)
+            let workItem = DispatchWorkItem { self.pingMixerServer() }
+            scheduleWorkItem(campaignResponse.nextPingMillis, task: workItem)
+//            WorkScheduler.scheduleTask(campaignResponse.nextPingMillis, closure: self.pingMixerServer)
         }
         
         // After the first ping to message mixer, log the AppStartEvent.
@@ -71,11 +75,6 @@ class MessageMixerClient: HttpRequestable {
      * @param { pingResponse: PingResponse } the new ping response.
      */
     private func handleNewPingResponse(pingResponse: PingResponse) {
-        // Clear existing CampaignRepository and ReadyCampaignRepository.
-        CampaignRepository.clear()
-        ReadyCampaignRepository.clear()
-        EventRepository.clear() 
-        
         // Renew repository with new response.
         let campaignList = CampaignParser.splitCampaigns(campaigns: pingResponse.data)
         CampaignRepository.list = campaignList.nonTestCampaigns
