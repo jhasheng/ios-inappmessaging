@@ -15,5 +15,4 @@ struct WorkScheduler {
             closure()
         }
     }
-    
 }
