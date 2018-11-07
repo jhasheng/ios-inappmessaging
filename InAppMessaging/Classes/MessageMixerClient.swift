@@ -11,7 +11,6 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
      * Starts the first ping to Message Mixer server.
      */
     internal func enable() {
-//        WorkScheduler.scheduleTask(0, closure: self.pingMixerServer)
         self.pingMixerServer()
     }
     
@@ -57,7 +56,6 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
             
             let workItem = DispatchWorkItem { self.pingMixerServer() }
             scheduleWorkItem(campaignResponse.nextPingMillis, task: workItem)
-//            WorkScheduler.scheduleTask(campaignResponse.nextPingMillis, closure: self.pingMixerServer)
         }
         
         // After the first ping to message mixer, log the AppStartEvent.
