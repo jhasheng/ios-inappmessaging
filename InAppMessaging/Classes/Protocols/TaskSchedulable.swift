@@ -6,7 +6,7 @@ protocol TaskSchedulable {
     /**
      * Schedules a task to be ran after a certain delay. Keeps reference of the DispatchWorkItem
      * so that the work can be cancelled at any time.
-     * @param { elay: Int } delay before running the task.
+     * @param { delay: Int } delay before running the task.
      * @param { task: DispatchWorkItem } a block of code to run after the delay.
      */
     func scheduleWorkItem(_ delay: Int, task: DispatchWorkItem)
