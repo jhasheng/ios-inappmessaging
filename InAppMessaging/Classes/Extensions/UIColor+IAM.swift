@@ -1,3 +1,6 @@
+/**
+ * Extension to UIColor class to provide addtional initializers required by InAppMessaging.
+ */
 extension UIColor {
     convenience init(hexFromString:String, alpha:CGFloat = 1.0) {
         var hexString:String = hexFromString.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
