@@ -9,6 +9,8 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     var impressions: [Impression] = []
     var properties: [Property] = []
     var campaign: CampaignData?
+
+    let heightOffset: CGFloat = 8 // Height offset for every UI element.
     
     var backgroundView = UIView()
     var dialogView = UIView()
@@ -97,7 +99,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         // The dialog view which is the rounded rectangle in the center.
         self.dialogView.frame.origin = CGPoint(x: 32, y: frame.height)
         self.dialogView.frame.size = CGSize(width: self.dialogViewWidth, height: self.dialogViewCurrentHeight)
-        self.dialogView.backgroundColor = .white
+        self.dialogView.backgroundColor = UIColor(hexFromString: campaign.messagePayload.backgroundColor)
         self.dialogView.layer.cornerRadius = 6
         self.dialogView.clipsToBounds = true
         self.dialogView.center  = self.center
@@ -116,13 +118,18 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         let imageView = UIImageView(frame: CGRect(x: 0, y: self.dialogViewCurrentHeight, width: self.dialogViewWidth, height: self.dialogViewWidth / 2.9))
         imageView.contentMode = .scaleAspectFit
         
-        imageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil) { (image, error, SDImageCacheType, url) in
+        // URL encoding to read urls with space characters in the link.
+        guard let encodedUrl = imageUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+            return
+        }
+        
+        imageView.sd_setImage(with: URL(string: encodedUrl), placeholderImage: nil) { (image, error, SDImageCacheType, url) in
             self.appendSubViews()
         }
         
         self.dialogView.addSubview(imageView)
         
-        self.dialogViewCurrentHeight += imageView.frame.height
+        self.dialogViewCurrentHeight += imageView.frame.height + heightOffset
     }
     
     /**
@@ -140,7 +147,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         headerMessageLabel.frame.size.height = headerMessageLabel.optimalHeight
         self.dialogView.addSubview(headerMessageLabel)
         
-        self.dialogViewCurrentHeight += headerMessageLabel.frame.height + 8
+        self.dialogViewCurrentHeight += headerMessageLabel.frame.height + heightOffset
     }
     
     /**
@@ -156,7 +163,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         bodyMessageLabel.frame.size.height = bodyMessageLabel.optimalHeight
         self.dialogView.addSubview(bodyMessageLabel)
         
-        self.dialogViewCurrentHeight += bodyMessageLabel.frame.height + 8
+        self.dialogViewCurrentHeight += bodyMessageLabel.frame.height + heightOffset
     }
     
     /**
@@ -179,8 +186,11 @@ class ModalView: UIView, Modal, ImpressionTrackable {
                                                          height: buttonHeight))
                 
                 buttonToAdd.setTitle(button.buttonText, for: .normal)
+                buttonToAdd.setTitleColor(UIColor(hexFromString: button.buttonTextColor), for: .normal)
+                buttonToAdd.titleLabel?.font = .boldSystemFont(ofSize: 12)
                 buttonToAdd.layer.cornerRadius = 6
                 buttonToAdd.tag = index == 0 ? ImpressionType.actionOneButton.rawValue : ImpressionType.actionTwoButton.rawValue
+                buttonToAdd.backgroundColor = UIColor(hexFromString: button.buttonBackgroundColor)
                 
                 switch buttonAction {
                     case .invalid:
@@ -195,21 +205,13 @@ class ModalView: UIView, Modal, ImpressionTrackable {
                         buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
                 }
                 
-                //TODO(Daniel Tam) Remove hardcoded colors when backend is ready.
-                if index == 0 {
-                    buttonToAdd.backgroundColor = .blue
-                    
-                } else if index == 1 {
-                    buttonToAdd.backgroundColor = .gray
-                }
-                
                 buttonHorizontalSpace += buttonToAdd.frame.width + 8
                 
                 self.dialogView.addSubview(buttonToAdd)
             }
         }
         
-        self.dialogViewCurrentHeight += buttonHeight + 8
+        self.dialogViewCurrentHeight += buttonHeight + heightOffset
     }
     
     /**
