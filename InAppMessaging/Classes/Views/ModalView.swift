@@ -5,6 +5,9 @@ import SDWebImage
  * Class that initializes the modal view using the passed in campaign information to build the UI.
  */
 class ModalView: UIView, Modal {
+    
+    let heightOffset: CGFloat = 8 // Height offset for every UI element.
+    
     var backgroundView = UIView()
     var dialogView = UIView()
     var webView = UIView()
@@ -91,7 +94,7 @@ class ModalView: UIView, Modal {
         // The dialog view which is the rounded rectangle in the center.
         self.dialogView.frame.origin = CGPoint(x: 32, y: frame.height)
         self.dialogView.frame.size = CGSize(width: self.dialogViewWidth, height: self.dialogViewCurrentHeight)
-        self.dialogView.backgroundColor = .white
+        self.dialogView.backgroundColor = UIColor(hexFromString: campaign.messagePayload.backgroundColor)
         self.dialogView.layer.cornerRadius = 6
         self.dialogView.clipsToBounds = true
         self.dialogView.center  = self.center
@@ -121,7 +124,7 @@ class ModalView: UIView, Modal {
         
         self.dialogView.addSubview(imageView)
         
-        self.dialogViewCurrentHeight += imageView.frame.height + 8
+        self.dialogViewCurrentHeight += imageView.frame.height + heightOffset
     }
     
     /**
@@ -139,7 +142,7 @@ class ModalView: UIView, Modal {
         headerMessageLabel.frame.size.height = headerMessageLabel.optimalHeight
         self.dialogView.addSubview(headerMessageLabel)
         
-        self.dialogViewCurrentHeight += headerMessageLabel.frame.height + 8
+        self.dialogViewCurrentHeight += headerMessageLabel.frame.height + heightOffset
     }
     
     /**
@@ -155,7 +158,7 @@ class ModalView: UIView, Modal {
         bodyMessageLabel.frame.size.height = bodyMessageLabel.optimalHeight
         self.dialogView.addSubview(bodyMessageLabel)
         
-        self.dialogViewCurrentHeight += bodyMessageLabel.frame.height + 8
+        self.dialogViewCurrentHeight += bodyMessageLabel.frame.height + heightOffset
     }
     
     /**
@@ -178,8 +181,10 @@ class ModalView: UIView, Modal {
                                                          height: buttonHeight))
                 
                 buttonToAdd.setTitle(button.buttonText, for: .normal)
+                buttonToAdd.setTitleColor(UIColor(hexFromString: button.buttonTextColor), for: .normal)
                 buttonToAdd.titleLabel?.font = .boldSystemFont(ofSize: 12)
                 buttonToAdd.layer.cornerRadius = 6
+                buttonToAdd.backgroundColor = UIColor(hexFromString: button.buttonBackgroundColor)
                 
                 switch buttonAction {
                     case .invalid:
@@ -194,21 +199,13 @@ class ModalView: UIView, Modal {
                         buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
                 }
                 
-                //TODO(Daniel Tam) Remove hardcoded colors when backend is ready.
-                if index == 0 {
-                    buttonToAdd.backgroundColor = .blue
-                    
-                } else if index == 1 {
-                    buttonToAdd.backgroundColor = .gray
-                }
-                
                 buttonHorizontalSpace += buttonToAdd.frame.width + 8
                 
                 self.dialogView.addSubview(buttonToAdd)
             }
         }
         
-        self.dialogViewCurrentHeight += buttonHeight + 8
+        self.dialogViewCurrentHeight += buttonHeight + heightOffset
     }
     
     /**
