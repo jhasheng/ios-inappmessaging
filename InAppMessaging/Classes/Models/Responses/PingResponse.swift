@@ -131,9 +131,9 @@ struct ControlSettings: Decodable {
 }
 
 struct Button: Decodable {
-    let buttonText: String?
-    let buttonTextColor: String?
-    let buttonBackgroundColor: String?
+    let buttonText: String
+    let buttonTextColor: String
+    let buttonBackgroundColor: String
     let buttonBehavior: ButtonBehavior
     
     enum CodingKeys: String, CodingKey {
