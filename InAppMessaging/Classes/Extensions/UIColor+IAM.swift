@@ -3,8 +3,8 @@
  */
 extension UIColor {
     convenience init(hexFromString:String, alpha:CGFloat = 1.0) {
-        var hexString:String = hexFromString.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-        var rgbValue:UInt32 = 16777215 // Default to white if string format is wrong.
+        var hexString: String = hexFromString.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        var rgbValue: UInt32 = UInt32("ffffff", radix: 16)! // Default to white if string format is wrong.
         
         if (hexString.hasPrefix("#")) {
             hexString.remove(at: hexString.startIndex)
