@@ -74,6 +74,11 @@
     @objc public class func registerId(idType: Identification, id: String) {
         DispatchQueue.global(qos: .userInitiated).async {
             IndentificationManager.registerId(idType, id)
+            
+            // Everytime a new ID is registered, send a ping request.
+            if InAppMessaging.isEnabled {
+                MessageMixerClient().enable()
+            }
         }
     }
 }
