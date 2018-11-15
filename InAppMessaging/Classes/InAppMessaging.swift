@@ -22,6 +22,8 @@
      * configures Rakuten InAppMessaging SDK.
      */
     @objc public class func configure() {
+//        let coreDataManager = CoreDataManager(customEvents: "CustomEvents")
+//        print(coreDataManager.managedObjectContext)
         if !InAppMessaging.isEnabled {
             DispatchQueue.global(qos: .userInitiated).async {
                 InAppMessaging().initializeSdk()

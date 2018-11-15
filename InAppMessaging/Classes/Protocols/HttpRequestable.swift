@@ -28,9 +28,9 @@ protocol HttpRequestable {
     
     /**
      * Generic method for calling an API.
-     * @param { withUrl: String } the URL of the API to call.
-     * @param { withHTTPMethod: String } the HTTP method used. E.G "POST" / "GET"
-     * @returns { Optional [String: Any] } returns either nil or the response in a dictionary.
+     * @param { url: String } the URL of the API to call.
+     * @param { httpMethod: String } the HTTP method used. E.G "POST" / "GET"
+     * @returns { Optional Data } returns either nil or the response in Data type.
      */
     func requestFromServer(withUrl url: String,
                  withHttpMethod httpMethod: HttpMethod,
@@ -41,6 +41,12 @@ protocol HttpRequestable {
      * @returns { Optional Data } of serialized JSON object with the required fields.
      */
     func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data?
+    
+    /**
+     * Append additional headers to the request body.
+     * @param { header: [Attribute]? }
+     */
+    func appendHeaders( withHeaders headers: inout [Attribute]?)
 }
 
 /**
@@ -49,7 +55,8 @@ protocol HttpRequestable {
 extension HttpRequestable {
     func requestFromServer(withUrl url: String,
                  withHttpMethod httpMethod: HttpMethod,
-                 withOptionalParams optionalParams: [String: Any] = [:]) -> Data? {
+                 withOptionalParams optionalParams: [String: Any] = [:],
+                 withAdditionalHeaders headers: [Attribute]?) -> Data? {
         
         var dataToReturn: Data?
         
@@ -89,5 +96,5 @@ extension HttpRequestable {
         }
         
         return dataToReturn
-    }
+    }    
 }
