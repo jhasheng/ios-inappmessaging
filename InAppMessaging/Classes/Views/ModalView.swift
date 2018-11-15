@@ -4,8 +4,12 @@ import SDWebImage
 /**
  * Class that initializes the modal view using the passed in campaign information to build the UI.
  */
-class ModalView: UIView, Modal {
-    
+class ModalView: UIView, Modal, ImpressionTrackable {
+
+    var impressions: [Impression] = []
+    var properties: [Property] = []
+    var campaign: CampaignData?
+
     let heightOffset: CGFloat = 8 // Height offset for every UI element.
     
     var backgroundView = UIView()
@@ -30,7 +34,7 @@ class ModalView: UIView, Modal {
     
     convenience init(_ campaign: CampaignData) {
         self.init(frame: UIScreen.main.bounds)
-        
+        self.campaign = campaign
         self.initialize(campaign: campaign)
     }
     
@@ -88,6 +92,7 @@ class ModalView: UIView, Modal {
         exitButton.isUserInteractionEnabled = true
         exitButton.layer.cornerRadius = exitButton.frame.width / 2
         exitButton.layer.masksToBounds = true
+        exitButton.tag = ImpressionType.exitButton.rawValue
         exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
         self.dialogView.addSubview(exitButton)
         
@@ -184,6 +189,7 @@ class ModalView: UIView, Modal {
                 buttonToAdd.setTitleColor(UIColor(hexFromString: button.buttonTextColor), for: .normal)
                 buttonToAdd.titleLabel?.font = .boldSystemFont(ofSize: 12)
                 buttonToAdd.layer.cornerRadius = 6
+                buttonToAdd.tag = index == 0 ? ImpressionType.actionOneButton.rawValue : ImpressionType.actionTwoButton.rawValue
                 buttonToAdd.backgroundColor = UIColor(hexFromString: button.buttonBackgroundColor)
                 
                 switch buttonAction {
@@ -214,6 +220,7 @@ class ModalView: UIView, Modal {
     fileprivate func appendSubViews() {
         self.addSubview(self.backgroundView)
         self.addSubview(self.dialogView)
+        logImpression(withImpressionType: .impression, withProperties: [])
     }
     
     // Button selectors for modal view.
@@ -226,7 +233,15 @@ class ModalView: UIView, Modal {
      * When iOS 10 becomes the minimum version supported by the SDK, please refer to:
      * https://developer.apple.com/documentation/uikit/uiapplication/1648685-openurl?language=objc
      */
-    @objc fileprivate func didTapOnLink(){
+    @objc fileprivate func didTapOnLink(_ sender: UIGestureRecognizer){
+        
+        // To log and send impression.
+        if let tag = sender.view?.tag,
+            let type = ImpressionType(rawValue: tag) {
+                logImpression(withImpressionType: type, withProperties: [])
+                sendImpression()
+        }
+        
         if let unwrappedUri = self.uri,
             let uriToOpen = URL(string: unwrappedUri),
             UIApplication.shared.canOpenURL(uriToOpen) {
@@ -235,7 +250,6 @@ class ModalView: UIView, Modal {
             let alert = UIAlertController(title: "Page not found", message: "Encountered error while navigating to the page.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
             UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
-            self.dismiss()
         }
         
         self.dismiss();
@@ -244,7 +258,31 @@ class ModalView: UIView, Modal {
     /**
      * Obj-c selector to dismiss the modal view when the 'X' is tapped.
      */
-    @objc fileprivate func didTapOnExitButton(){
+    @objc fileprivate func didTapOnExitButton(_ sender: UIGestureRecognizer){
+        
+        // To log and send impression.
+        if let tag = sender.view?.tag,
+            let type = ImpressionType(rawValue: tag) {
+            logImpression(withImpressionType: type, withProperties: [])
+            sendImpression()
+        }
+        
         self.dismiss()
+    }
+    
+    func logImpression(withImpressionType type: ImpressionType, withProperties properties: [Property]) {
+        
+        // Log the impression.
+        self.impressions.append(
+            Impression(
+                type: type,
+                ts: Date().millisecondsSince1970
+            )
+        )
+        
+         //Log the properties.
+        for property in properties {
+            self.properties.append(property)
+        }
     }
 }
