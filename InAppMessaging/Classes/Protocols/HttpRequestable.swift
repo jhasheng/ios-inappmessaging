@@ -104,6 +104,10 @@ extension HttpRequestable {
     }
     
     func appendHeaders(withHeaders headers: [Attribute]?, forRequest request: inout URLRequest) {
-        // Optional method to implement.
+        if let headers = headers {
+            for header in headers {
+                request.addValue(header.v, forHTTPHeaderField: header.k)
+            }
+        }
     }
 }

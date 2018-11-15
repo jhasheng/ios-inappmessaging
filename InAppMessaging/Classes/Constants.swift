@@ -23,6 +23,7 @@ struct Keys {
         static let SubscriptionID = "subscriptionId"
         static let UserIdentifiers = "userIdentifiers"
         static let CampaignID = "campaignId"
+        static let deviceID = "device_id"
     }
     
     /**
