@@ -23,7 +23,7 @@ struct Keys {
         static let SubscriptionID = "subscriptionId"
         static let UserIdentifiers = "userIdentifiers"
         static let CampaignID = "campaignId"
-        static let deviceID = "device_id"
+        static let deviceID = "device_id" // Snake_case rather than camelCase to unify with backend.
     }
     
     /**
