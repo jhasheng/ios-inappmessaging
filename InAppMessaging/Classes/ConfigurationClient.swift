@@ -2,7 +2,8 @@
  * Class to handle communication with the configuration server.
  */
 class ConfigurationClient: HttpRequestable {
-    
+
+
     private static var delay: Int = 0
     static var endpoints: EndpointURL?
     
@@ -21,12 +22,16 @@ class ConfigurationClient: HttpRequestable {
             return false
         }
 
-        guard let responseData = self.requestFromServer(withUrl: configUrl, withHttpMethod: .post) else {
-            print("InAppMessaging: Error calling server.")
-            // Exponential backoff for pinging Configuration server.
-            ConfigurationClient.delay = (ConfigurationClient.delay == 0) ? 10000 : ConfigurationClient.delay * 2
-            WorkScheduler.scheduleTask(ConfigurationClient.delay, closure: InAppMessaging.configure)
-            return false
+        guard let responseData = self.requestFromServer(
+            withUrl: configUrl,
+            withHttpMethod: .post,
+            withAdditionalHeaders: nil) else {
+                
+                print("InAppMessaging: Error calling server.")
+                // Exponential backoff for pinging Configuration server.
+                ConfigurationClient.delay = (ConfigurationClient.delay == 0) ? 10000 : ConfigurationClient.delay * 2
+                WorkScheduler.scheduleTask(ConfigurationClient.delay, closure: InAppMessaging.configure)
+                return false
         }
         
         // This will clean up the observer used for failures when hitting the config server.
