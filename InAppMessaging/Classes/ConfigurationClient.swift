@@ -3,7 +3,6 @@
  */
 class ConfigurationClient: HttpRequestable {
 
-
     private static var delay: Int = 0
     static var endpoints: EndpointURL?
     
