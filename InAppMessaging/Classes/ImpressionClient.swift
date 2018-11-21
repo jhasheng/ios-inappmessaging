@@ -40,7 +40,8 @@ class ImpressionClient: HttpRequestable {
             self.requestFromServer(
                 withUrl: pingImpressionEndpoint,
                 withHttpMethod: .post,
-                withOptionalParams: optionalParams)
+                withOptionalParams: optionalParams,
+                withAdditionalHeaders: nil)
     }
     
     /**

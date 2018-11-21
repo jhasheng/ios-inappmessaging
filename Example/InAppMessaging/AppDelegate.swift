@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         InAppMessaging.registerId(idType: .userId, id: "pointtest99")
         InAppMessaging.configure()
+    
         return true
     }
 

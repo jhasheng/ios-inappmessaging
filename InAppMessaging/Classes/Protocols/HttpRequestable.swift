@@ -28,19 +28,26 @@ protocol HttpRequestable {
     
     /**
      * Generic method for calling an API.
-     * @param { withUrl: String } the URL of the API to call.
-     * @param { withHTTPMethod: String } the HTTP method used. E.G "POST" / "GET"
-     * @returns { Optional [String: Any] } returns either nil or the response in a dictionary.
+     * @param { url: String } the URL of the API to call.
+     * @param { httpMethod: String } the HTTP method used. E.G "POST" / "GET"
+     * @returns { Optional Data } returns either nil or the response in Data type.
      */
     func requestFromServer(withUrl url: String,
                  withHttpMethod httpMethod: HttpMethod,
-                 withOptionalParams optionalParams: [String: Any]) -> Data?
+                 withOptionalParams optionalParams: [String: Any],
+                 withAdditionalHeaders addtionalHeaders: [Attribute]?) -> Data?
     
     /**
      * Build out the request body for talking to configuration server.
      * @returns { Optional Data } of serialized JSON object with the required fields.
      */
     func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data?
+    
+    /**
+     * Append additional headers to the request body.
+     * @param { header: [Attribute]? }
+     */
+    func appendHeaders(withHeaders headers: [Attribute]?, forRequest request: inout URLRequest)
 }
 
 /**
@@ -48,46 +55,59 @@ protocol HttpRequestable {
  */
 extension HttpRequestable {
     func requestFromServer(withUrl url: String,
-                 withHttpMethod httpMethod: HttpMethod,
-                 withOptionalParams optionalParams: [String: Any] = [:]) -> Data? {
+        withHttpMethod httpMethod: HttpMethod,
+        withOptionalParams optionalParams: [String: Any] = [:],
+        withAdditionalHeaders addtionalHeaders: [Attribute]?) -> Data? {
         
-        var dataToReturn: Data?
+            var dataToReturn: Data?
         
-        if let requestUrl = URL(string: url) {
-            
-            // Add in the HTTP headers and body.
-            var request = URLRequest(url: requestUrl)
-            request.httpMethod = httpMethod.stringValue
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.httpBody = self.buildHttpBody(withOptionalParams: optionalParams)
-            
-            // Semaphore added for synchronous HTTP calls.
-            let semaphore = DispatchSemaphore(value: 0)
-            
-            // Start HTTP call.
-            URLSession.shared.dataTask(with: request, completionHandler: {(data, response, error) in
+            if let requestUrl = URL(string: url) {
                 
-                if let err = error {
-                    print("InAppMessaging: \(err)")
-                    return
+                // Add in the HTTP headers and body.
+                var request = URLRequest(url: requestUrl)
+                request.httpMethod = httpMethod.stringValue
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.httpBody = self.buildHttpBody(withOptionalParams: optionalParams)
+                
+                if let headers = addtionalHeaders {
+                    self.appendHeaders(withHeaders: headers, forRequest: &request)
                 }
                 
-                guard let data = data else {
-                    print("InAppMessaging: data returned is nil")
+                // Semaphore added for synchronous HTTP calls.
+                let semaphore = DispatchSemaphore(value: 0)
+                
+                // Start HTTP call.
+                URLSession.shared.dataTask(with: request, completionHandler: {(data, response, error) in
+                    
+                    if let err = error {
+                        print("InAppMessaging: \(err)")
+                        return
+                    }
+                    
+                    guard let data = data else {
+                        print("InAppMessaging: data returned is nil")
+                        semaphore.signal()
+                        return
+                    }
+                    
+                    dataToReturn = data
+                    
+                    // Signal completion of HTTP request.
                     semaphore.signal()
-                    return
-                }
+                }).resume()
                 
-                dataToReturn = data
-                
-                // Signal completion of HTTP request.
-                semaphore.signal()
-            }).resume()
-            
-            // Pause execution until signal() is called
-            semaphore.wait()
-        }
+                // Pause execution until signal() is called
+                semaphore.wait()
+            }
         
-        return dataToReturn
+            return dataToReturn
+    }
+    
+    func appendHeaders(withHeaders headers: [Attribute]?, forRequest request: inout URLRequest) {
+        if let headers = headers {
+            for header in headers {
+                request.addValue(header.v, forHTTPHeaderField: header.k)
+            }
+        }
     }
 }
