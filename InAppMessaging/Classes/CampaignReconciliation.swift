@@ -56,10 +56,6 @@ struct CampaignReconciliation {
         _ campaign: Campaign,
         _ list: (uniqueEventTypes: Set<Int>, uniqueEventNames: Set<String>)) -> Bool {
         
-//            // If the campaign has already been shown before, don't show it again.
-//            if DisplayedCampaignRepository.contains(campaign) {
-//                return false
-//            }
             // If the campaign has reached max impression count within a session, don't show it again.
             if isImpressionMaxedOut(forCampaign: campaign) {
                 return false
