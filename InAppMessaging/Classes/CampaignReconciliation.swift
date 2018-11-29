@@ -90,7 +90,7 @@ struct CampaignReconciliation {
     /**
      * Verifies that the campaign that is being worked on has not reached its max impression count within a session.
      * @param { campaign: Campaign } campaign to check for impression count.
-     * @returns { Bool } returns false if the campaign's impression count has been reached and true if not.
+     * @returns { Bool } returns true if the campaign's impression count has been reached and false if not.
      */
     private static func isImpressionMaxedOut(forCampaign campaign: Campaign) -> Bool {
         
@@ -98,9 +98,9 @@ struct CampaignReconciliation {
         let currentImpressionCounter = DisplayedCampaignRepository.getDisplayCount(forCampaign: campaign)
         
         if currentImpressionCounter >= campaignMaxImpression {
-            return false
+            return true
         }
         
-        return true
+        return false
     }
 }
