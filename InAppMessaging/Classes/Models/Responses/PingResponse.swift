@@ -30,6 +30,7 @@ struct Campaign: Decodable, Hashable {
 struct CampaignData: Decodable, Equatable {
     
     let campaignId: String
+    let maxImpressions: Int
     let type: Int
     let triggers: [Trigger]?
     let isTest: Bool
@@ -37,6 +38,7 @@ struct CampaignData: Decodable, Equatable {
     
     enum CodingKeys: String, CodingKey {
         case campaignId
+        case maxImpressions
         case type
         case triggers
         case isTest

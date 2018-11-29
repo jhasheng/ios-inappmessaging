@@ -56,8 +56,12 @@ struct CampaignReconciliation {
         _ campaign: Campaign,
         _ list: (uniqueEventTypes: Set<Int>, uniqueEventNames: Set<String>)) -> Bool {
         
-            // If the campaign has already been shown before, don't show it again.
-            if DisplayedCampaignRepository.contains(campaign) {
+//            // If the campaign has already been shown before, don't show it again.
+//            if DisplayedCampaignRepository.contains(campaign) {
+//                return false
+//            }
+            // If the campaign has reached max impression count within a session, don't show it again.
+            if isImpressionMaxedOut(forCampaign: campaign) {
                 return false
             }
         
@@ -85,5 +89,22 @@ struct CampaignReconciliation {
             }
         
             return true
+    }
+    
+    /**
+     * Verifies that the campaign that is being worked on has not reached its max impression count within a session.
+     * @param { campaign: Campaign } campaign to check for impression count.
+     * @returns { Bool } returns false if the campaign's impression count has been reached and true if not.
+     */
+    private static func isImpressionMaxedOut(forCampaign campaign: Campaign) -> Bool {
+        
+        let campaignMaxImpression = campaign.campaignData.maxImpressions
+        let currentImpressionCounter = DisplayedCampaignRepository.getDisplayCount(forCampaign: campaign)
+        
+        if currentImpressionCounter >= campaignMaxImpression {
+            return false
+        }
+        
+        return true
     }
 }
