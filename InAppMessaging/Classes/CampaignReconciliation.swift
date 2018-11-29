@@ -97,10 +97,6 @@ struct CampaignReconciliation {
         let campaignMaxImpression = campaign.campaignData.maxImpressions
         let currentImpressionCounter = DisplayedCampaignRepository.getDisplayCount(forCampaign: campaign)
         
-        if currentImpressionCounter >= campaignMaxImpression {
-            return true
-        }
-        
-        return false
+        return currentImpressionCounter >= campaignMaxImpression
     }
 }
