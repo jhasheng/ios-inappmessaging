@@ -1,28 +1,11 @@
 /**
  * Repository to store all the campaigns that were shown before.
- * TODO(Daniel Tam) At the moment, this is stored in-memory and not locally.
  */
-//struct DisplayedCampaignRepository: CampaignStorable {
-//    static var list: Set<Campaign> = []
-//
-//    static func addCampaign(_ campaign: Campaign) {
-//        list.insert(campaign)
-//    }
-//
-//    static func contains(_ campaign: Campaign) -> Bool {
-//        if list.contains(campaign) {
-//            return true
-//        }
-//
-//        return false
-//    }
-//
-//    static func clear() {
-//        list.removeAll()
-//    }
-//}
-
 struct DisplayedCampaignRepository {
+    
+    // Mapping of the campaigns that are shown before.
+    // The mapping maps campaign id to a counter of how many times
+    // the campaign has been shown.
     static var map: [String: Int] = [:]
     
     static func addCampaign(_ campaign: Campaign) {
