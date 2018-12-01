@@ -57,7 +57,7 @@ struct CampaignReconciliation {
         _ list: (uniqueEventTypes: Set<Int>, uniqueEventNames: Set<String>)) -> Bool {
         
             // If the campaign has reached max impression count within a session, don't show it again.
-            if isImpressionMaxedOut(forCampaign: campaign) {
+            if isMaxImpressionReached(forCampaign: campaign) {
                 return false
             }
         
@@ -92,11 +92,7 @@ struct CampaignReconciliation {
      * @param { campaign: Campaign } campaign to check for impression count.
      * @returns { Bool } returns true if the campaign's impression count has been reached and false if not.
      */
-    private static func isImpressionMaxedOut(forCampaign campaign: Campaign) -> Bool {
-        
-        let campaignMaxImpression = campaign.campaignData.maxImpressions
-        let currentImpressionCounter = DisplayedCampaignRepository.getDisplayCount(forCampaign: campaign)
-        
-        return currentImpressionCounter >= campaignMaxImpression
+    private static func isMaxImpressionReached(forCampaign campaign: Campaign) -> Bool {
+        return DisplayedCampaignRepository.getDisplayedCount(forCampaign: campaign) >= campaign.campaignData.maxImpressions
     }
 }
