@@ -6,7 +6,7 @@ struct DisplayedCampaignRepository {
     // Mapping of the campaigns that are shown before.
     // The mapping maps campaign id to a counter of how many times
     // the campaign has been shown.
-    static var map: [String: Int] = [:]
+    static var timesShown: [String: Int] = [:]
     
     /**
      * Append a campaign to the mapping.
@@ -19,10 +19,10 @@ struct DisplayedCampaignRepository {
         let campaignId = campaign.campaignData.campaignId
         
         // Increment counter by 1 if exists, else set campaign count to 1
-        if map.keys.contains(campaignId) {
-            map[campaignId]! += 1
+        if timesShown.keys.contains(campaignId) {
+            timesShown[campaignId]! += 1
         } else {
-            map[campaignId] = 1
+            timesShown[campaignId] = 1
         }
     }
     
@@ -31,7 +31,7 @@ struct DisplayedCampaignRepository {
      * @param { campaign: Campaign } campaign to fetch impression count for.
      * @returns { Int } number of times the campaign has been shown.
      */
-    static func getDisplayCount(forCampaign campaign: Campaign) -> Int {
-        return map[campaign.campaignData.campaignId] ?? 0
+    static func getDisplayedCount(forCampaign campaign: Campaign) -> Int {
+        return timesShown[campaign.campaignData.campaignId] ?? 0
     }
 }
