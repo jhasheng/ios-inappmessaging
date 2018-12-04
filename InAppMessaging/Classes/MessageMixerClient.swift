@@ -10,7 +10,7 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
     /**
      * Starts the first ping to Message Mixer server.
      */
-    internal func enable() {
+    internal func ping() {
         self.pingMixerServer()
     }
     

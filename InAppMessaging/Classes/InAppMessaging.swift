@@ -41,7 +41,7 @@
         InAppMessaging.isEnabled = true;
         
         // Enable MessageMixerClient which starts beacon pinging message mixer server.
-        messageMixerClient.enable()
+        messageMixerClient.ping()
     }
     
     /**

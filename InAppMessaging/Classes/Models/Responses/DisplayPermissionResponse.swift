@@ -2,11 +2,11 @@
  * Data model for displaying campaign permission.
  */
 struct DisplayPermissionResponse: Decodable {
-    let action: Int
-    let actionName: String
+    let display: Bool
+    let performPing: Bool
     
     enum CodingKeys: String, CodingKey {
-        case action
-        case actionName
+        case display
+        case performPing
     }
 }

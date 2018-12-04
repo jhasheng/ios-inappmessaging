@@ -22,7 +22,7 @@ class ConfigurationTests: QuickSpec {
     class MockMessageMixer: MessageMixerClient {
         var enabledWasCalled = false
         
-        override func enable() {
+        override func ping() {
             self.enabledWasCalled = true
         }
     }
