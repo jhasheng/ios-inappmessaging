@@ -75,7 +75,7 @@ struct PermissionClient: HttpRequestable {
             appVersion: appVersion,
             sdkVersion: sdkVersion,
             locale: locale,
-            events: EventLogger.eventLog
+            events: EventRepository.list
         )
 
         do {

@@ -27,10 +27,10 @@ class InAppMessagingViewController: UIViewController {
         }
         
         // TODO(Daniel Tam) Uncomment when specs are more clear for this function.
-        // Permission check here.
-//        if !PermissionClient().checkPermission(withCampaign: campaign){
-//            return
-//        }
+        //Permission check here.
+        if !PermissionClient().checkPermission(withCampaign: campaign.campaignData){
+            return
+        }
         
         DispatchQueue.main.async {
             var view: Modal?
