@@ -4,7 +4,7 @@
 struct PermissionClient: HttpRequestable {
 
     /**
-     * Function that will handle communicating with the display-permission endpoint and handles the response.
+     * Function that will handle communicating with the display_permission endpoint and handling the response.
      * By default, if anything goes wrong with the communication, return true and show the campaign.
      * @param { campaign: CampaignData } campaign that is about to be shown.
      * @returns { Bool } boolean to signal the SDK to either show or don't show the campaign.
@@ -27,29 +27,18 @@ struct PermissionClient: HttpRequestable {
             return true
         }
 
-        // Clear the event log after dumping it to display_permission.
-        EventLogger.clearLogs()
-
         // Parse and handle the response.
         do {
             let decodedResponse = try JSONDecoder().decode(DisplayPermissionResponse.self, from: responseFromDisplayPermission)
-
-            guard let permissionAction = PermissionAction(rawValue: decodedResponse.action) else {
-                return true
+            
+            if decodedResponse.performPing {
+                // Perform a re-ping.
+                MessageMixerClient().ping()
             }
+            
+            // Return the response from the display_permission endpoint.
+            return decodedResponse.display
 
-            switch permissionAction {
-                case .invalid:
-                    return true
-                case .show:
-                    removeCampaign(campaign)
-                    return true
-                case .discard:
-                    removeCampaign(campaign)
-                    return false
-                case .postpone:
-                    return false
-            }
         } catch {
             #if DEBUG
                 print("InAppMessaging: error getting a response from display permission.")
@@ -57,35 +46,6 @@ struct PermissionClient: HttpRequestable {
         }
 
         return true
-    }
-
-    /**
-     * This method will be executed when the display-permission endpoint returns a 'show' or 'discard' value.
-     * This function will delete the campaignId from the list of campaign IDs.
-     * @param { campaignData: CampaignData } data of the campaign that was permission checked.
-     */
-    fileprivate func removeCampaign(_ campaignData: CampaignData) {
-        // Delete the campaign from the campaign list feed.
-        let triggerNames = createTriggerNameList(withCampaign: campaignData)
-        if !triggerNames.isEmpty {
-            CampaignHelper.deleteCampaign(withId: campaignData.campaignId, andTriggerNames: triggerNames)
-        }
-    }
-
-    /**
-     * In order to delete a campaignId from MessageMixer.mappedCampaigns, which potentially can have multiple occurrences,
-     * it will be more efficient if we already have a list of trigger names that the campaignId is mapped to.
-     * This function generates that list of triggerNames that the campaign was previously mapped to.
-     * @param { campaign: CampaignData } A specific campaign that includes all the trigger names that it was mapped to.
-     * @returns { [Int] } List of event types.
-     */
-    fileprivate func createTriggerNameList(withCampaign campaign: CampaignData) -> [Int] {
-        var eventTypes = [Int]()
-        for trigger in campaign.triggers {
-            eventTypes.append(trigger.eventType)
-        }
-
-        return eventTypes
     }
 
     /**
