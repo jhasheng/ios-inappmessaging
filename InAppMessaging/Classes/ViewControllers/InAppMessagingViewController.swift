@@ -26,7 +26,6 @@ class InAppMessagingViewController: UIViewController {
             return
         }
         
-        // TODO(Daniel Tam) Uncomment when specs are more clear for this function.
         //Permission check here.
         if !PermissionClient().checkPermission(withCampaign: campaign.campaignData){
             return
