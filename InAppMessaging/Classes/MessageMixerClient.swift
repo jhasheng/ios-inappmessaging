@@ -10,7 +10,7 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
     /**
      * Starts the first ping to Message Mixer server.
      */
-    internal func enable() {
+    internal func ping() {
         self.pingMixerServer()
     }
     
@@ -27,6 +27,8 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
         }
         
         var additionalHeaders: [Attribute] = []
+        
+        // Retrieve device ID and return in header of the request.
         if let deviceId = UIDevice.current.identifierForVendor?.uuidString {
             additionalHeaders.append(Attribute(withKeyName: Keys.Request.deviceID, withValue: deviceId))
         }

@@ -41,7 +41,7 @@
         InAppMessaging.isEnabled = true;
         
         // Enable MessageMixerClient which starts beacon pinging message mixer server.
-        messageMixerClient.enable()
+        messageMixerClient.ping()
     }
     
     /**
@@ -51,7 +51,6 @@
     @objc public class func logEvent(_ event: Event) {
         if InAppMessaging.isEnabled {
             DispatchQueue.global(qos: .background).async {
-                EventLogger.logEvent(event)
                 EventRepository.addEvent(event)
                 
                 CommonUtility.lock(
@@ -77,7 +76,7 @@
             
             // Everytime a new ID is registered, send a ping request.
             if InAppMessaging.isEnabled {
-                MessageMixerClient().enable()
+                MessageMixerClient().ping()
             }
         }
     }
