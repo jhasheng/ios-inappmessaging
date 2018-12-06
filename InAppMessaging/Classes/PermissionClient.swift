@@ -71,7 +71,7 @@ struct PermissionClient: HttpRequestable {
             subscriptionId: subscriptionId,
             campaignId: campaignId as! String,
             userIdentifiers: IndentificationManager.userIdentifiers,
-            platform: "iOS",
+            platform: PlatformEnum.ios.rawValue,
             appVersion: appVersion,
             sdkVersion: sdkVersion,
             locale: locale,

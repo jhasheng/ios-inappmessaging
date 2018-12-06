@@ -5,7 +5,7 @@ struct DisplayPermissionRequest: Encodable {
     let subscriptionId: String
     let campaignId: String
     let userIdentifiers: [UserIdentifier]
-    let platform: String
+    let platform: Int
     let appVersion: String
     let sdkVersion: String
     let locale: String
