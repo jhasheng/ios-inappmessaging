@@ -80,4 +80,13 @@
             }
         }
     }
+    
+    /**
+     * Register the access token retrieved from RAuthentication.
+     * The token will be in RAuthenticationAccount.token.accessToken.
+     * @param { token: String } value of the access token being passed in.
+     */
+    @objc public class func registerAccessToken(_ token: String) {
+        
+    }
 }
