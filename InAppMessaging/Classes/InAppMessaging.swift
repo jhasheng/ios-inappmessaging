@@ -23,7 +23,7 @@
      */
     @objc public class func configure() {
         if !InAppMessaging.isEnabled {
-            DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.global(qos: .background).async {
                 InAppMessaging().initializeSdk()
             }
         }
@@ -67,11 +67,11 @@
     
     /**
      * Register the ID of the user.
-     * @param { idType: Identification } the type of ID. E.G RakutenID or EasyID.
+     * @param { idType: Identification } the type of ID. E.G RakutenID or UserID.
      * @param { id: String } the string value of the ID.
      */
     @objc public class func registerId(idType: Identification, id: String) {
-        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global(qos: .background).async {
             IndentificationManager.registerId(idType, id)
             
             // Everytime a new ID is registered, send a ping request.
