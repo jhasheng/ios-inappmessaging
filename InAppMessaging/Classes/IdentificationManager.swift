@@ -3,6 +3,7 @@
  */
 struct IndentificationManager {
     static var userIdentifiers = [UserIdentifier]()
+    static var accessToken: String? // RAE Access token from RAuthentication.
     
     /**
      * Register the ID to the static userId field which will be used in request bodies.
@@ -32,4 +33,15 @@ struct IndentificationManager {
             }
         }
     }
+    
+    /**
+     * Register the access token with IAM.
+     * @param { token: String } value of the token.
+     */
+    static func registerAccessToken(_ token: String) {
+        if !token.isEmpty {
+            accessToken = token
+        }
+    }
 }
+

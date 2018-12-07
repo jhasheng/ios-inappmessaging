@@ -87,6 +87,8 @@
      * @param { token: String } value of the access token being passed in.
      */
     @objc public class func registerAccessToken(_ token: String) {
-        
+        DispatchQueue.global(qos: .background).async {
+            IndentificationManager.registerAccessToken(token)
+        }
     }
 }
