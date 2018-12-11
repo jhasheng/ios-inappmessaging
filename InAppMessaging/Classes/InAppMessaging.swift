@@ -39,7 +39,6 @@
             return
         }
         
-        
         // Enable MessageMixerClient which starts beacon pinging message mixer server.
         messageMixerClient.ping()
     }
@@ -78,24 +77,6 @@
             if InAppMessaging.isEnabled {
                 MessageMixerClient().ping()
             }
-        }
-    }
-    
-    /**
-     * Register the access token retrieved from RAuthentication.
-     * The token will be in RAuthenticationAccount.token.accessToken.
-     * @param { token: String } value of the access token being passed in.
-     */
-    @objc public class func registerAccessToken(_ token: String) {
-        
-        let test = InAppMessagingPreferenceBuilder()
-            .setUserId("dsf")
-            .setAccessToken("sdfsfsf")
-            .setRakutenId("sdfsf")
-            .build()
-        
-        DispatchQueue.global(qos: .background).async {
-            IndentificationManager.registerAccessToken(token)
         }
     }
 }
