@@ -34,11 +34,11 @@
      */
     internal func initializeSdk() {
         // Return and exit thread if SDK were to be disabled.
-        if !self.configurationClient.isConfigEnabled() {
+        InAppMessaging.isEnabled = self.configurationClient.isConfigEnabled()
+        if InAppMessaging.isEnabled {
             return
         }
         
-        InAppMessaging.isEnabled = true;
         
         // Enable MessageMixerClient which starts beacon pinging message mixer server.
         messageMixerClient.ping()
@@ -87,6 +87,13 @@
      * @param { token: String } value of the access token being passed in.
      */
     @objc public class func registerAccessToken(_ token: String) {
+        
+        let test = InAppMessagingPreferenceBuilder()
+            .setUserId("dsf")
+            .setAccessToken("sdfsfsf")
+            .setRakutenId("sdfsf")
+            .build()
+        
         DispatchQueue.global(qos: .background).async {
             IndentificationManager.registerAccessToken(token)
         }
