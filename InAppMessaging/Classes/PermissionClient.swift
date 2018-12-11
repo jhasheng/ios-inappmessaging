@@ -70,7 +70,7 @@ struct PermissionClient: HttpRequestable {
         let permissionRequest = DisplayPermissionRequest.init(
             subscriptionId: subscriptionId,
             campaignId: campaignId as! String,
-            userIdentifiers: IndentificationManager.userIdentifiers,
+            userIdentifiers: IAMPreferenceRepository.getUserIdentifiers(),
             platform: PlatformEnum.ios.rawValue,
             appVersion: appVersion,
             sdkVersion: sdkVersion,

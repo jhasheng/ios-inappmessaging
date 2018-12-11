@@ -71,7 +71,7 @@ class ImpressionClient: HttpRequestable {
             sdkVersion: sdkVersion,
             properties: properties,
             impressions: impressions,
-            userIdentifiers: IndentificationManager.userIdentifiers
+            userIdentifiers: IAMPreferenceRepository.getUserIdentifiers()
         )
         
         do {

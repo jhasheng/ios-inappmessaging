@@ -35,7 +35,7 @@
     internal func initializeSdk() {
         // Return and exit thread if SDK were to be disabled.
         InAppMessaging.isEnabled = self.configurationClient.isConfigEnabled()
-        if InAppMessaging.isEnabled {
+        if !InAppMessaging.isEnabled {
             return
         }
         
@@ -64,23 +64,34 @@
         }
     }
     
-    @objc public class func registerPreference(_ preference: IAMPreference) {
-        IAMPreferenceRepository.setPreference(with: preference)
-    }
-    
     /**
-     * Register the ID of the user.
-     * @param { idType: Identification } the type of ID. E.G RakutenID or UserID.
-     * @param { id: String } the string value of the ID.
+     * Register user preference to the IAM SDK.
+     * @param { preference: IAMPreference } preferences of the user.
      */
-    @objc public class func registerId(idType: Identification, id: String) {
+    @objc public class func registerPreference(_ preference: IAMPreference) {
         DispatchQueue.global(qos: .background).async {
-            IndentificationManager.registerId(idType, id)
-            
+            IAMPreferenceRepository.setPreference(with: preference)
+
             // Everytime a new ID is registered, send a ping request.
             if InAppMessaging.isEnabled {
                 MessageMixerClient().ping()
             }
         }
     }
+    
+//    /**
+//     * Register the ID of the user.
+//     * @param { idType: Identification } the type of ID. E.G RakutenID or UserID.
+//     * @param { id: String } the string value of the ID.
+//     */
+//    @objc public class func registerId(idType: Identification, id: String) {
+//        DispatchQueue.global(qos: .background).async {
+//            IndentificationManager.registerId(idType, id)
+//            
+//            // Everytime a new ID is registered, send a ping request.
+//            if InAppMessaging.isEnabled {
+//                MessageMixerClient().ping()
+//            }
+//        }
+//    }
 }
