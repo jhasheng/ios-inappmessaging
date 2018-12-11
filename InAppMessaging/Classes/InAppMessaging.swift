@@ -64,6 +64,10 @@
         }
     }
     
+    @objc public class func registerPreference(_ preference: IAMPreference) {
+        IAMPreferenceRepository.setPreference(with: preference)
+    }
+    
     /**
      * Register the ID of the user.
      * @param { idType: Identification } the type of ID. E.G RakutenID or UserID.
