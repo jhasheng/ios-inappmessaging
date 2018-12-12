@@ -1,3 +1,6 @@
+/**
+ * Builder for IAMPreference. 
+ */
 @objc public class IAMPreferenceBuilder: NSObject {
     
     private var preference: IAMPreference
