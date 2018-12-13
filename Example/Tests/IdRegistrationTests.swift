@@ -35,7 +35,6 @@ class IdRegistrationTests: QuickSpec {
                         .build()
                 )
                 
-
                 // Build the expected object.
                 var expected = [UserIdentifier]()
                 expected.append(UserIdentifier(type: 3, id: "whales and dolphins"))
