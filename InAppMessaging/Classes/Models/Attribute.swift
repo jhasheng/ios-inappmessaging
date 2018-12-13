@@ -1,7 +1,7 @@
 /**
  * Model to represent a custom attribute that is returned by the ping request in triggers.
  */
-public struct Attribute: Codable {
+@objc public class Attribute: NSObject, Codable {
     let k: String
     let v: String
     
