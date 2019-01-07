@@ -26,17 +26,10 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
             return
         }
         
-        var additionalHeaders: [Attribute] = []
-        
-        // Retrieve device ID and return in header of the request.
-        if let deviceId = UIDevice.current.identifierForVendor?.uuidString {
-            additionalHeaders.append(Attribute(withKeyName: Keys.Request.deviceID, withValue: deviceId))
-        }
-        
         guard let response = self.requestFromServer(
             withUrl: mixerServerUrl,
             withHttpMethod: .post,
-            withAdditionalHeaders: additionalHeaders) else {
+            withAdditionalHeaders: self.buildRequestHeader()) else {
                 
                 // Exponential backoff for pinging Message Mixer server.
                 MessageMixerClient.delay = (MessageMixerClient.delay == 0) ? 10000 : MessageMixerClient.delay * 2
@@ -113,7 +106,7 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
         
         let pingRequest = PingRequest.init(
             subscriptionId: subscriptionId,
-            userIdentifiers: IndentificationManager.userIdentifiers,
+            userIdentifiers: IAMPreferenceRepository.getUserIdentifiers(),
             appVersion: appVersion
         )
         
@@ -124,5 +117,20 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
         }
         
         return nil
+    }
+    
+    fileprivate func buildRequestHeader() -> [Attribute] {
+        var additionalHeaders: [Attribute] = []
+        
+        // Retrieve device ID and return in header of the request.
+        if let deviceId = UIDevice.current.identifierForVendor?.uuidString {
+            additionalHeaders.append(Attribute(withKeyName: Keys.Request.deviceID, withValue: deviceId))
+        }
+        
+        if let accessToken = IAMPreferenceRepository.getAccessToken() {
+            additionalHeaders.append(Attribute(withKeyName: Keys.Request.authorization, withValue: "OAuth2 \(accessToken)"))
+        }
+        
+        return additionalHeaders
     }
 }

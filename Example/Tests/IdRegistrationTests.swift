@@ -10,15 +10,15 @@ class IdRegistrationTests: QuickSpec {
     override func spec() {
 
         beforeEach {
-            IndentificationManager.userIdentifiers.removeAll()
+            IAMPreferenceRepository.setPreference(with: nil)
         }
 
         context("ID Registration") {
 
             it("should not have any matching id type or id value") {
                 let expected = [UserIdentifier]()
-
-                expect(expected).toEventually(equal(IndentificationManager.userIdentifiers))
+                
+                expect(expected).toEventually(equal(IAMPreferenceRepository.getUserIdentifiers()))
             }
 
             /**
@@ -29,27 +29,35 @@ class IdRegistrationTests: QuickSpec {
              */
             it("should have one matching id type and id value") {
 
-                IndentificationManager.registerId(.easyId, "whales and dolphins")
-
+                InAppMessaging.registerPreference(
+                    IAMPreferenceBuilder()
+                        .setUserId("whales and dolphins")
+                        .build()
+                )
+                
                 // Build the expected object.
                 var expected = [UserIdentifier]()
-                expected.append(UserIdentifier(type: 2, id: "whales and dolphins"))
+                expected.append(UserIdentifier(type: 3, id: "whales and dolphins"))
 
-                expect(expected).to(equal(IndentificationManager.userIdentifiers))
+                expect(expected).to(equal(IAMPreferenceRepository.getUserIdentifiers()))
             }
 
             it("should have two matching id type and id value") {
 
-                IndentificationManager.registerId(.easyId, "whales and dolphins")
-                IndentificationManager.registerId(.rakutenId, "tigers and zebras")
+                InAppMessaging.registerPreference(
+                    IAMPreferenceBuilder()
+                        .setUserId("tigers and zebras")
+                        .setRakutenId("whales and dolphins")
+                        .build()
+                )
 
                 // Build the expected object.
                 var expected = [UserIdentifier]()
-                
-                expected.append(UserIdentifier(type: 2, id: "whales and dolphins"))
-                expected.append(UserIdentifier(type: 1, id: "tigers and zebras"))
 
-                expect(expected).to(equal(IndentificationManager.userIdentifiers))
+                expected.append(UserIdentifier(type: 1, id: "whales and dolphins"))
+                expected.append(UserIdentifier(type: 3, id: "tigers and zebras"))
+
+                expect(expected).to(equal(IAMPreferenceRepository.getUserIdentifiers()))
             }
         }
     }

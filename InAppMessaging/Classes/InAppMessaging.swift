@@ -23,7 +23,7 @@
      */
     @objc public class func configure() {
         if !InAppMessaging.isEnabled {
-            DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.global(qos: .background).async {
                 InAppMessaging().initializeSdk()
             }
         }
@@ -34,11 +34,10 @@
      */
     internal func initializeSdk() {
         // Return and exit thread if SDK were to be disabled.
-        if !self.configurationClient.isConfigEnabled() {
+        InAppMessaging.isEnabled = self.configurationClient.isConfigEnabled()
+        if !InAppMessaging.isEnabled {
             return
         }
-        
-        InAppMessaging.isEnabled = true;
         
         // Enable MessageMixerClient which starts beacon pinging message mixer server.
         messageMixerClient.ping()
@@ -66,17 +65,17 @@
     }
     
     /**
-     * Register the ID of the user.
-     * @param { idType: Identification } the type of ID. E.G RakutenID or EasyID.
-     * @param { id: String } the string value of the ID.
+     * Register user preference to the IAM SDK.
+     * @param { preference: IAMPreference } preferences of the user.
      */
-    @objc public class func registerId(idType: Identification, id: String) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            IndentificationManager.registerId(idType, id)
-            
+    @objc public class func registerPreference(_ preference: IAMPreference) {
+        DispatchQueue.global(qos: .background).async {
+            IAMPreferenceRepository.setPreference(with: preference)
+
             // Everytime a new ID is registered, send a ping request.
             if InAppMessaging.isEnabled {
                 MessageMixerClient().ping()
+                InAppMessagingViewController.display()
             }
         }
     }
