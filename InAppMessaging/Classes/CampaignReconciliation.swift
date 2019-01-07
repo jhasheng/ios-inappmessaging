@@ -56,14 +56,14 @@ struct CampaignReconciliation {
         _ campaign: Campaign,
         _ list: (uniqueEventTypes: Set<Int>, uniqueEventNames: Set<String>)) -> Bool {
         
-            // If the campaign has reached max impression count within a session, don't show it again.
-            if isMaxImpressionReached(forCampaign: campaign) {
-                return false
-            }
-        
             // Secondary check for test campaigns. If theres no triggers, it has to be a test campaign.
             guard let triggers = campaign.campaignData.triggers else {
                 return true
+            }
+        
+            // If the campaign has reached max impression count within a session, don't show it again.
+            if isMaxImpressionReached(forCampaign: campaign) {
+                return false
             }
         
             for trigger in triggers {
