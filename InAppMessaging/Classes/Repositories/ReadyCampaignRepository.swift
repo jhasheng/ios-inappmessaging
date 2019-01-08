@@ -25,4 +25,12 @@ struct ReadyCampaignRepository: CampaignStorable {
     static func clear() {
         list.removeAll()
     }
+    
+    static func addAllCampaigns(_ campaigns: Set<Campaign>) {
+        if !campaigns.isEmpty {
+            for campaign in campaigns {
+                self.list.insert(campaign)
+            }
+        }
+    }
 }

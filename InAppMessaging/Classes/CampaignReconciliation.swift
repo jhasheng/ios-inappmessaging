@@ -11,20 +11,38 @@ struct CampaignReconciliation {
      * 2) Hostapp logs an event.
      */
     static func reconciliate() {
-                
+        
+        // Split the CampaignRepository into two different sets of test and non-test campaigns.
+        let campaignList = CampaignParser.splitCampaigns(campaigns: CampaignRepository.list)
+        
+        // Add all the test campaign into the ReadyCampaignRepository.
+        ReadyCampaignRepository.addAllCampaigns(campaignList.testCampaigns)
+        
+        // Iterate through all the non-test campaigns to verify each one.
+        for campaign in campaignList.nonTestCampaigns {
+            
+            // Check if maxImpressions has already been reached for this campaign.
+            if isMaxImpressionReached(forCampaign: campaign) {
+                break;
+            }
+            
+            // Find out how many times are the triggers satisfied for this campaign.
+            
+        }
+        
         // Create an unique list of event by their eventType and eventName.
         let uniqueList = generateUniqueEventList()
         
         // Loop through every campaign in the list and check if it is ready to be displayed.
-        for campaign in CampaignRepository.list {
-            if isCampaignReady(campaign, uniqueList) {
-                ReadyCampaignRepository.addCampaign(campaign)
-            }
-        }
+//        for campaign in CampaignRepository.list {
+//            if isCampaignReady(campaign, uniqueList) {
+//                ReadyCampaignRepository.addCampaign(campaign)
+//            }
+//        }
     }
     
     /**
-     * Helps reconciliation process by creating an list of of unique eventType and eventName to match.
+     * Helps reconciliation process by creating a set of unique eventType and eventName to match.
      * @returns { (uniqueEventTypes: Set<Int>, uniqueEventNames: Set<String>) } Tuple of unique event types and names set.
      */
     private static func generateUniqueEventList() -> (uniqueEventTypes: Set<Int>, uniqueEventNames: Set<String>) {
@@ -66,6 +84,9 @@ struct CampaignReconciliation {
                 return false
             }
         
+            // Check for the number of times the triggers are satisfied.
+        
+        
             for trigger in triggers {
                 // If the trigger is not custom, check the uniqueEventTypes list for matches.
                 if trigger.eventType != EventType.custom.rawValue {
@@ -95,4 +116,6 @@ struct CampaignReconciliation {
     private static func isMaxImpressionReached(forCampaign campaign: Campaign) -> Bool {
         return DisplayedCampaignRepository.getDisplayedCount(forCampaign: campaign) >= campaign.campaignData.maxImpressions
     }
+    
+    
 }
