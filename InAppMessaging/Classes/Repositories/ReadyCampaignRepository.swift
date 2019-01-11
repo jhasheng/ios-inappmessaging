@@ -1,11 +1,11 @@
 /**
  * Repository to store all the campaigns that are ready to be shown.
  */
-struct ReadyCampaignRepository: CampaignStorable {
-    static var list: Set<Campaign> = []
+struct ReadyCampaignRepository {
+    static var list: [Campaign] = []
     
     static func addCampaign(_ campaign: Campaign) {
-        ReadyCampaignRepository.list.insert(campaign)
+        ReadyCampaignRepository.list.append(campaign)
     }
     
     static func getFirst() -> Campaign? {
@@ -29,7 +29,7 @@ struct ReadyCampaignRepository: CampaignStorable {
     static func addAllCampaigns(_ campaigns: Set<Campaign>) {
         if !campaigns.isEmpty {
             for campaign in campaigns {
-                self.list.insert(campaign)
+                self.list.append(campaign)
             }
         }
     }

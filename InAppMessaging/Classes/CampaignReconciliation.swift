@@ -26,15 +26,9 @@ struct CampaignReconciliation {
                 continue
             }
             
-            // Check if the campaign have a list of triggers.
-            guard let campaignTriggers = campaign.campaignData.triggers else {
-                #if DEBUG
-                    print("InAppMessaging: campaign has no triggers.")
-                #endif
-                continue
-            }
-            
-            
+//            for _ in getNumberOfTimesToDisplay(campaign) {
+//                ReadyCampaignRepository.addCampaign(<#T##campaign: Campaign##Campaign#>)
+//            }
             
             // Find out how many times are the triggers satisfied for this campaign.
             // Add to ReadyCampaignRepo.
