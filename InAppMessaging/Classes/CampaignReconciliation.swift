@@ -23,10 +23,23 @@ struct CampaignReconciliation {
             
             // Check if maxImpressions has already been reached for this campaign.
             if isMaxImpressionReached(forCampaign: campaign) {
-                break;
+                break
+            }
+            
+            // Check if the campaign have a list of triggers.
+            guard let campaignTriggers = campaign.campaignData.triggers else {
+                #if DEBUG
+                    print("InAppMessaging: campaign has no triggers.")
+                #endif
+                break
             }
             
             // Find out how many times are the triggers satisfied for this campaign.
+            // Add to ReadyCampaignRepo.
+//            for _ in getNumberOfTimesToDisplay(campaign) {
+//
+//            }
+            
             
         }
         
@@ -39,6 +52,11 @@ struct CampaignReconciliation {
 //                ReadyCampaignRepository.addCampaign(campaign)
 //            }
 //        }
+    }
+    
+    private static func getNumberOfTimesToDisplay(_ campaign: Campaign) -> Int {
+        
+        return 0
     }
     
     /**
@@ -117,5 +135,29 @@ struct CampaignReconciliation {
         return DisplayedCampaignRepository.getDisplayedCount(forCampaign: campaign) >= campaign.campaignData.maxImpressions
     }
     
+    /**
+     * Create a hashmap of string to list of events. This helps reconciliation process
+     * by counting up the times an event has been logged by the host app.
+     * @param { eventList: [Event] } the list of event to create a mapping of.
+     * @returns { [String: [Event]] } dictionary of string to list of events.
+     */
+    private static func createEventMap(_ eventList: [Event]) -> [String: [Event]] {
+        var eventMap = [String: [Event]]()
+        
+        // Loop through the event list to create the mapping.
+        for event in eventList {
+            let eventName = event.eventName
+
+            // If the eventName already exist in the mapping, append the element.
+            if eventMap.keys.contains(eventName) {
+                eventMap[eventName]?.append(event)
+            } else {
+                // else, create a new field and list.
+                eventMap[eventName] = [event]
+            }
+        }
+        
+        return eventMap
+    }
     
 }
