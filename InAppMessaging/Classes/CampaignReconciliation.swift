@@ -23,7 +23,7 @@ struct CampaignReconciliation {
             
             // Check if maxImpressions has already been reached for this campaign.
             if isMaxImpressionReached(forCampaign: campaign) {
-                break
+                continue
             }
             
             // Check if the campaign have a list of triggers.
@@ -31,7 +31,7 @@ struct CampaignReconciliation {
                 #if DEBUG
                     print("InAppMessaging: campaign has no triggers.")
                 #endif
-                break
+                continue
             }
             
             
@@ -57,14 +57,18 @@ struct CampaignReconciliation {
     }
     
     private static func getNumberOfTimesToDisplay(_ campaign: Campaign) -> Int {
-        var timesToDisplay = 0
         let maxImpressions = campaign.campaignData.maxImpressions
+        let numberOfTimesTriggersAreSatisfied = getNumberOfTimesTriggersAreSatisfied(campaign)
         
+        // The number of times the campaign should be displayed is either the max impression
+        // if it the number is lower than the number of times the trigger are satisfied
+        // or the number of times satisfied if it is lower than the max impression.
+        var numberOfTimesShouldBeDisplayed =
+            maxImpressions < numberOfTimesTriggersAreSatisfied ?
+                maxImpressions : numberOfTimesTriggersAreSatisfied
         
-        // Max impression - times show already = Remaining times to display
-        //
-        
-        return 0
+        // Subtract the result with the amount of times already shown.
+        return numberOfTimesShouldBeDisplayed - DisplayedCampaignRepository.getDisplayedCount(forCampaign: campaign)
     }
     
 //    /**
