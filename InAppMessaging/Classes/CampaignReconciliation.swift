@@ -37,6 +37,16 @@ struct CampaignReconciliation {
         }
     }
     
+    /**
+     * Retrieve the number of times a campaign should be displayed.
+     * The logic involves checking three conditions:
+     * 1) The maxImpression value for a specific campaign.
+     * 2) The number of times a trigger is satisfied as a set.
+     *    E.G 1 set is satisfied if all the triggers for a campaign is satisfied once.
+     * 3) The number of times that the campaign has already been shown.
+     * @param { campaign: Campaign } the campaign to check.
+     * @returns { Int } the number of times to show this campaign.
+     */
     private static func getNumberOfTimesToDisplay(_ campaign: Campaign) -> Int {
         let maxImpressions = campaign.campaignData.maxImpressions
         let numberOfTimesTriggersAreSatisfied = getNumberOfTimesTriggersAreSatisfied(campaign)
@@ -86,6 +96,11 @@ struct CampaignReconciliation {
         return eventMap
     }
     
+    /**
+     * Retrieves the number of times a set of triggers is satisfied for a campaign.
+     * @param { campaign: Campaign } campaign to check for.
+     * @return { Int } the amount of times a set of trigger is satified.
+     */
     private static func getNumberOfTimesTriggersAreSatisfied(_ campaign: Campaign) -> Int {
         
         // Get the list of triggers off the campaign.
@@ -129,7 +144,7 @@ struct CampaignReconciliation {
                         satisfiedCountForEventType : lowestNumberOfTimesSatisfied
                 
             } else {
-                // else if theres no entry, then the campaign's trigger has not been fully satisfied.
+                // else if there is no entry, then the campaign's triggers have not been fully satisfied.
                 return 0
             }
         }
