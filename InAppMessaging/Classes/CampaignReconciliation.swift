@@ -23,31 +23,18 @@ struct CampaignReconciliation {
             
             // Check if maxImpressions has already been reached for this campaign.
             if isMaxImpressionReached(forCampaign: campaign) {
+                print("max imp reached")
                 continue
             }
             
-//            for _ in getNumberOfTimesToDisplay(campaign) {
-//                ReadyCampaignRepository.addCampaign(<#T##campaign: Campaign##Campaign#>)
-//            }
-            
-            // Find out how many times are the triggers satisfied for this campaign.
+            // Find out how many times should the campaign be added.
             // Add to ReadyCampaignRepo.
-//            for _ in getNumberOfTimesToDisplay(campaign) {
-//
-//            }
-            
-            
+            print("times to display: \(getNumberOfTimesToDisplay(campaign))")
+            for _ in 0..<getNumberOfTimesToDisplay(campaign) {
+                ReadyCampaignRepository.addCampaign(campaign)
+                print("Size: \(ReadyCampaignRepository.list.count)")
+            }
         }
-        
-        // Create an unique list of event by their eventType and eventName.
-//        let uniqueList = generateUniqueEventList()
-        
-        // Loop through every campaign in the list and check if it is ready to be displayed.
-//        for campaign in CampaignRepository.list {
-//            if isCampaignReady(campaign, uniqueList) {
-//                ReadyCampaignRepository.addCampaign(campaign)
-//            }
-//        }
     }
     
     private static func getNumberOfTimesToDisplay(_ campaign: Campaign) -> Int {
@@ -148,7 +135,7 @@ struct CampaignReconciliation {
      * @returns { [Int: [Event]] } dictionary of string to list of events.
      */
     private static func createEventMap(_ eventList: [Event]) -> [Int: [Event]] {
-        var eventMap = [Int: [Event]]()
+        var eventMap: [Int: [Event]] = [:]
         
         // Loop through the event list to create the mapping.
         for event in eventList {

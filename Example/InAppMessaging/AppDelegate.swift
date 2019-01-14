@@ -18,13 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         InAppMessaging.configure()
-        InAppMessaging.registerPreference(
-            IAMPreferenceBuilder()
-                .setRakutenId("rak id")
-                .setAccessToken("IgABM_DVUSvuAhIQ3rZ0REF4hpfRrTO2yXEeGhQ75_MJZCXhbxX")
-                .setUserId("user id")
-                .build()
-        )
+//        InAppMessaging.registerPreference(
+//            IAMPreferenceBuilder()
+//                .setRakutenId("rak id")
+//                .setAccessToken("IgABM_DVUSvuAhIQ3rZ0REF4hpfRrTO2yXEeGhQ75_MJZCXhbxX")
+//                .setUserId("usexr id")
+//                .build()
+//        )
     
         return true
     }
