@@ -29,10 +29,8 @@ struct CampaignReconciliation {
             
             // Find out how many times should the campaign be added.
             // Add to ReadyCampaignRepo.
-            print("times to display: \(getNumberOfTimesToDisplay(campaign))")
             for _ in 0..<getNumberOfTimesToDisplay(campaign) {
                 ReadyCampaignRepository.addCampaign(campaign)
-                print("Size: \(ReadyCampaignRepository.list.count)")
             }
         }
     }
