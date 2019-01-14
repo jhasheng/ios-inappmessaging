@@ -178,7 +178,7 @@ struct CampaignReconciliation {
             }
         }
         
-        var numberOfTimesSatisfied: Int?
+        var lowestNumberOfTimesSatisfied = Int.max
         
         // Divide the event mapping with satisfiedTriggersCountMapping to
         // get the number of times the set of triggers are satisfied.
@@ -187,14 +187,21 @@ struct CampaignReconciliation {
             // If the local event mapping contains an entry of the campaign's trigger.
             if let eventTypeMappingCount = localEventMapping[eventType]?.count {
                 // Swift, by default, rounds down for Int type when dividing.
-                numberOfTimesSatisfied = eventTypeMappingCount / count
+                let satisfiedCountForEventType = eventTypeMappingCount / count
+                
+                // Find the lowest count from the list of triggers. E.G If a campaign
+                // has 2 triggers; one satisfied 3 times and the other 2 times, return 2.
+                lowestNumberOfTimesSatisfied =
+                    lowestNumberOfTimesSatisfied > satisfiedCountForEventType ?
+                        satisfiedCountForEventType : lowestNumberOfTimesSatisfied
+                
             } else {
                 // else if theres no entry, then the campaign's trigger has not been fully satisfied.
                 return 0
             }
         }
 
-        return numberOfTimesSatisfied ?? 0
+        return lowestNumberOfTimesSatisfied ?? 0
     }
     
 }
