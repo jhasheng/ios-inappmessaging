@@ -54,7 +54,7 @@
                 
                 CommonUtility.lock(
                     objects: [
-                        CampaignRepository.list as AnyObject,
+                        PingResponseRepository.list as AnyObject,
                         EventRepository.list as AnyObject,
                         ReadyCampaignRepository.list as AnyObject],
                     closure: CampaignReconciliation.reconciliate)

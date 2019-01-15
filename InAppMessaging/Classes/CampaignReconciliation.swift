@@ -13,7 +13,7 @@ struct CampaignReconciliation {
     static func reconciliate() {
         
         // Split the CampaignRepository into two different sets of test and non-test campaigns.
-        let campaignList = CampaignParser.splitCampaigns(campaigns: CampaignRepository.list)
+        let campaignList = CampaignParser.splitCampaigns(campaigns: PingResponseRepository.list)
         
         // Add all the test campaign into the ReadyCampaignRepository.
         ReadyCampaignRepository.addAllCampaigns(campaignList.testCampaigns)

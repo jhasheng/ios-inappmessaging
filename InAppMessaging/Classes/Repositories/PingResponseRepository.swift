@@ -1,11 +1,12 @@
 /**
  * Repository to hold the raw campaigns retreived from MessageMixerClient.
  */
-struct CampaignRepository: CampaignStorable {
+struct PingResponseRepository: CampaignStorable {
     static var list: Set<Campaign> = []
+    static var currentPingInMillis: Int?
     
     static func addCampaign(_ campaign: Campaign) {
-        CampaignRepository.list.insert(campaign)
+        PingResponseRepository.list.insert(campaign)
     }
     
     static func clear() {
