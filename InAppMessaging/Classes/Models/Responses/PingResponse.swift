@@ -3,12 +3,12 @@
  */
 struct PingResponse: Decodable {
     let nextPingMillis: Int
-    let currentPingInMillis: Int
+    let currentPingMillis: Int
     let data: Set<Campaign>
     
     enum CodingKeys: String, CodingKey {
         case nextPingMillis
-        case currentPingInMillis
+        case currentPingMillis
         case data
     }
 }
