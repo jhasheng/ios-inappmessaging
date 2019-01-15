@@ -10,4 +10,6 @@ struct DisplayPermissionRequest: Encodable {
     let sdkVersion: String
     let locale: String
     let events: [Event]
+    let lastPingMillis: Int
+
 }

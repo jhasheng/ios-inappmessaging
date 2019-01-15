@@ -75,7 +75,8 @@ struct PermissionClient: HttpRequestable {
             appVersion: appVersion,
             sdkVersion: sdkVersion,
             locale: locale,
-            events: EventRepository.list
+            events: EventRepository.list,
+            lastPingMillis: PingResponseRepository.currentPingInMillis ?? 0
         )
 
         do {

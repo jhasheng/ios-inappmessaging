@@ -10,5 +10,4 @@ struct ImpressionRequest: Encodable{
     let properties: [Attribute]
     let impressions: [Impression]
     let userIdentifiers: [UserIdentifier]
-    let lastPingMillis: Int
 }
