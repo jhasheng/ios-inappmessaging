@@ -1,5 +1,5 @@
 /**
- * Repository to store all the events that were logged from the host app.
+ * Repository to store all the events that were satisfied from the host app.
  */
 struct EventRepository: EventStorable {
     static var list: [Event] = []
