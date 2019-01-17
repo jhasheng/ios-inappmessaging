@@ -23,7 +23,6 @@ struct CampaignReconciliation {
             
             // Check if maxImpressions has already been reached for this campaign.
             if isMaxImpressionReached(forCampaign: campaign) {
-                print("max imp reached")
                 continue
             }
             
