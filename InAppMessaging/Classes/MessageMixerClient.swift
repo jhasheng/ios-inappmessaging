@@ -79,7 +79,8 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
     private func handleNewPingResponse(pingResponse: PingResponse) {
         // Renew repository with new response.
         PingResponseRepository.list = pingResponse.data
-        PingResponseRepository.currentPingInMillis = pingResponse.currentPingMillis
+        PingResponseRepository.currentPingMillis = pingResponse.currentPingMillis
+        ReadyCampaignRepository.clear()
         
         // Start campaign reconciliation process.
         if !MessageMixerClient.isFirstPing {

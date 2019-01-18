@@ -3,7 +3,7 @@
  */
 struct PingResponseRepository: CampaignStorable {
     static var list: Set<Campaign> = []
-    static var currentPingInMillis: Int?
+    static var currentPingMillis: Int?
     
     static func addCampaign(_ campaign: Campaign) {
         PingResponseRepository.list.insert(campaign)
