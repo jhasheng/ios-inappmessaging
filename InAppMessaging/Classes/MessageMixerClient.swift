@@ -52,7 +52,7 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
         if let campaignResponse = decodedResponse {
             CommonUtility.lock(
                 objects: [
-                    CampaignRepository.list as AnyObject,
+                    PingResponseRepository.list as AnyObject,
                     EventRepository.list as AnyObject,
                     ReadyCampaignRepository.list as AnyObject],
                 pingResponse: campaignResponse,
@@ -78,7 +78,8 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
      */
     private func handleNewPingResponse(pingResponse: PingResponse) {
         // Renew repository with new response.
-        CampaignRepository.list = pingResponse.data
+        PingResponseRepository.list = pingResponse.data
+        PingResponseRepository.currentPingMillis = pingResponse.currentPingMillis
         ReadyCampaignRepository.clear()
         
         // Start campaign reconciliation process.
