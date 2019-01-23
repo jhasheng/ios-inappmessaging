@@ -121,7 +121,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
      */
     fileprivate func appendImageView(withUrl imageUrl: String) {
         //TODO(Daniel Tam) Update aspect ratio here when finalized.
-        let imageView = UIImageView(frame: CGRect(x: 0, y: self.dialogViewCurrentHeight, width: self.dialogViewWidth, height: self.dialogViewWidth / 2.9))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: self.dialogViewCurrentHeight, width: self.dialogViewWidth, height: self.dialogViewWidth / 1.3333))
         imageView.contentMode = .scaleAspectFit
         
         // URL encoding to read urls with space characters in the link.
