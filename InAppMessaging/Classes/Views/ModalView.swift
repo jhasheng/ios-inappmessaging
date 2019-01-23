@@ -11,10 +11,11 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     var campaign: CampaignData?
 
     let heightOffset: CGFloat = 8 // Height offset for every UI element.
+    let exitButtonHeightOffset: CGFloat = 30 // Height offset for exit button from the actual message.
+    let exitButtonSize: CGFloat = 20 // Size of the exit button.
     
     var backgroundView = UIView()
     var dialogView = UIView()
-    var webView = UIView()
     
     // Field obtained from button behavior payload.
     var uri: String?
@@ -83,8 +84,21 @@ class ModalView: UIView, Modal, ImpressionTrackable {
             self.appendButtons(withButtonList: buttonList)
         }
         
+        // The dialog view which is the rounded rectangle in the center.
+        self.dialogView.frame.origin = CGPoint(x: 32, y: frame.height)
+        self.dialogView.frame.size = CGSize(width: self.dialogViewWidth, height: self.dialogViewCurrentHeight)
+        self.dialogView.backgroundColor = UIColor(hexFromString: campaign.messagePayload.backgroundColor)
+        self.dialogView.layer.cornerRadius = 6
+//        self.dialogView.clipsToBounds = true
+        self.dialogView.center  = self.center
+        
         // The top right "X" button to dismiss.
-        let exitButton = UILabel(frame: CGRect(x: dialogViewWidth - 25, y: 4, width: 20, height: 20))
+        let exitButton = UILabel(
+            frame: CGRect(x: dialogView.frame.maxX - exitButtonSize,
+                          y: dialogView.frame.minY - exitButtonHeightOffset,
+                          width: exitButtonSize,
+                          height: exitButtonSize))
+        
         exitButton.text = "X"
         exitButton.backgroundColor = .gray
         exitButton.textColor = .white
@@ -94,15 +108,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         exitButton.layer.masksToBounds = true
         exitButton.tag = ImpressionType.exitButton.rawValue
         exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
-        self.dialogView.addSubview(exitButton)
-        
-        // The dialog view which is the rounded rectangle in the center.
-        self.dialogView.frame.origin = CGPoint(x: 32, y: frame.height)
-        self.dialogView.frame.size = CGSize(width: self.dialogViewWidth, height: self.dialogViewCurrentHeight)
-        self.dialogView.backgroundColor = UIColor(hexFromString: campaign.messagePayload.backgroundColor)
-        self.dialogView.layer.cornerRadius = 6
-        self.dialogView.clipsToBounds = true
-        self.dialogView.center  = self.center
+        self.backgroundView.addSubview(exitButton)
         
         if !hasImage {
             self.appendSubViews()
