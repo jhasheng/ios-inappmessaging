@@ -13,6 +13,8 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     let heightOffset: CGFloat = 8 // Height offset for every UI element.
     let exitButtonHeightOffset: CGFloat = 30 // Height offset for exit button from the actual message.
     let exitButtonSize: CGFloat = 20 // Size of the exit button.
+    let backgroundViewAlpha: CGFloat = 0.66 // Value to adjust the transparency of the background view.
+    let imageAspectRatio: CGFloat = 1.3333 // Aspect ratio of campaign image. Currently set to 4:3.
     
     var backgroundView = UIView()
     var dialogView = UIView()
@@ -99,7 +101,6 @@ class ModalView: UIView, Modal, ImpressionTrackable {
                           height: exitButtonSize))
         
         exitButton.text = "X"
-        exitButton.alpha = 1
         exitButton.backgroundColor = .white
         exitButton.textColor = .black
         exitButton.textAlignment = .center
@@ -120,8 +121,12 @@ class ModalView: UIView, Modal, ImpressionTrackable {
      * @param { imageUrl: String } string of the image URL.
      */
     fileprivate func appendImageView(withUrl imageUrl: String) {
-        //TODO(Daniel Tam) Update aspect ratio here when finalized.
-        let imageView = UIImageView(frame: CGRect(x: 0, y: self.dialogViewCurrentHeight, width: self.dialogViewWidth, height: self.dialogViewWidth / 1.3333))
+        let imageView = UIImageView(
+            frame: CGRect(x: 0,
+                          y: self.dialogViewCurrentHeight,
+                          width: self.dialogViewWidth,
+                          height: self.dialogViewWidth / imageAspectRatio))
+        
         imageView.contentMode = .scaleAspectFit
         
         // URL encoding to read urls with space characters in the link.
