@@ -54,8 +54,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     internal func initialize(campaign: CampaignData) {
         // The opaque black background of modals.
         self.backgroundView.frame = frame
-        self.backgroundView.backgroundColor = .black
-        self.backgroundView.alpha = 0.66
+        self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.66)
         
         // Set the initial width to -64 to leave spacing on the left and right side.
         self.dialogViewWidth = frame.width - 64
@@ -89,7 +88,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         self.dialogView.frame.size = CGSize(width: self.dialogViewWidth, height: self.dialogViewCurrentHeight)
         self.dialogView.backgroundColor = UIColor(hexFromString: campaign.messagePayload.backgroundColor)
         self.dialogView.layer.cornerRadius = 6
-//        self.dialogView.clipsToBounds = true
+        self.dialogView.clipsToBounds = true
         self.dialogView.center  = self.center
         
         // The top right "X" button to dismiss.
@@ -100,8 +99,9 @@ class ModalView: UIView, Modal, ImpressionTrackable {
                           height: exitButtonSize))
         
         exitButton.text = "X"
-        exitButton.backgroundColor = .gray
-        exitButton.textColor = .white
+        exitButton.alpha = 1
+        exitButton.backgroundColor = .white
+        exitButton.textColor = .black
         exitButton.textAlignment = .center
         exitButton.isUserInteractionEnabled = true
         exitButton.layer.cornerRadius = exitButton.frame.width / 2
@@ -163,6 +163,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     fileprivate func appendBodyMessage(withBody bodyMessage: String) {
         let bodyMessageLabel = UILabel(frame: CGRect(x: 8, y: self.dialogViewCurrentHeight, width: self.dialogViewWidth - 16, height: 0))
         bodyMessageLabel.text = bodyMessage
+        bodyMessageLabel.font = .boldSystemFont(ofSize: 14)
         bodyMessageLabel.textAlignment = .center
         bodyMessageLabel.lineBreakMode = .byWordWrapping
         bodyMessageLabel.numberOfLines = 0
@@ -193,7 +194,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
                 
                 buttonToAdd.setTitle(button.buttonText, for: .normal)
                 buttonToAdd.setTitleColor(UIColor(hexFromString: button.buttonTextColor), for: .normal)
-                buttonToAdd.titleLabel?.font = .boldSystemFont(ofSize: 12)
+                buttonToAdd.titleLabel?.font = .boldSystemFont(ofSize: 14)
                 buttonToAdd.layer.cornerRadius = 6
                 buttonToAdd.tag = index == 0 ? ImpressionType.actionOneButton.rawValue : ImpressionType.actionTwoButton.rawValue
                 buttonToAdd.backgroundColor = UIColor(hexFromString: button.buttonBackgroundColor)
