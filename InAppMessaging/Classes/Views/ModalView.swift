@@ -10,11 +10,22 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     var properties: [Property] = []
     var campaign: CampaignData?
 
+    // Constant values used for UI elements in model views.
     let heightOffset: CGFloat = 8 // Height offset for every UI element.
+    let exitButtonHeightOffset: CGFloat = 30 // Height offset for exit button from the actual message.
+    let exitButtonSize: CGFloat = 20 // Size of the exit button.
+    let backgroundViewAlpha: CGFloat = 0.66 // Value to adjust the transparency of the background view.
+    let imageAspectRatio: CGFloat = 1.3333 // Aspect ratio of campaign image. Currently set to 4:3.
+    let cornerRadiusForCircle: CGFloat = 6 // Adjust how round the edge of an element will be.
+    let headerMessageFontSize: CGFloat = 16 // Font size for the header message.
+    let bodyMessageFontSize: CGFloat = 14 // Font size for the body message.
+    let buttonTextFontSize: CGFloat = 14 // Font size for the button labels.
+    let singleButtonWidthOffset: CGFloat = 16 // Width offset when only one button is given.
+    let twoButtonWidthOffset: CGFloat = 12 // Width offset when two buttons are given.
+    let horizontalSpacingOffset: CGFloat = 8 // The spacing between dialog view and the children elements.
     
     var backgroundView = UIView()
     var dialogView = UIView()
-    var webView = UIView()
     
     // Field obtained from button behavior payload.
     var uri: String?
@@ -53,8 +64,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     internal func initialize(campaign: CampaignData) {
         // The opaque black background of modals.
         self.backgroundView.frame = frame
-        self.backgroundView.backgroundColor = .black
-        self.backgroundView.alpha = 0.66
+        self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(backgroundViewAlpha)
         
         // Set the initial width to -64 to leave spacing on the left and right side.
         self.dialogViewWidth = frame.width - 64
@@ -83,26 +93,31 @@ class ModalView: UIView, Modal, ImpressionTrackable {
             self.appendButtons(withButtonList: buttonList)
         }
         
+        // The dialog view which is the rounded rectangle in the center.
+        self.dialogView.frame.origin = CGPoint(x: 32, y: frame.height)
+        self.dialogView.frame.size = CGSize(width: self.dialogViewWidth, height: self.dialogViewCurrentHeight)
+        self.dialogView.backgroundColor = UIColor(hexFromString: campaign.messagePayload.backgroundColor)
+        self.dialogView.layer.cornerRadius = cornerRadiusForCircle
+        self.dialogView.clipsToBounds = true
+        self.dialogView.center  = self.center
+        
         // The top right "X" button to dismiss.
-        let exitButton = UILabel(frame: CGRect(x: dialogViewWidth - 25, y: 4, width: 20, height: 20))
+        let exitButton = UILabel(
+            frame: CGRect(x: dialogView.frame.maxX - exitButtonSize,
+                          y: dialogView.frame.minY - exitButtonHeightOffset,
+                          width: exitButtonSize,
+                          height: exitButtonSize))
+        
         exitButton.text = "X"
-        exitButton.backgroundColor = .gray
-        exitButton.textColor = .white
+        exitButton.backgroundColor = .white
+        exitButton.textColor = .black
         exitButton.textAlignment = .center
         exitButton.isUserInteractionEnabled = true
         exitButton.layer.cornerRadius = exitButton.frame.width / 2
         exitButton.layer.masksToBounds = true
         exitButton.tag = ImpressionType.exitButton.rawValue
         exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
-        self.dialogView.addSubview(exitButton)
-        
-        // The dialog view which is the rounded rectangle in the center.
-        self.dialogView.frame.origin = CGPoint(x: 32, y: frame.height)
-        self.dialogView.frame.size = CGSize(width: self.dialogViewWidth, height: self.dialogViewCurrentHeight)
-        self.dialogView.backgroundColor = UIColor(hexFromString: campaign.messagePayload.backgroundColor)
-        self.dialogView.layer.cornerRadius = 6
-        self.dialogView.clipsToBounds = true
-        self.dialogView.center  = self.center
+        self.backgroundView.addSubview(exitButton)
         
         if !hasImage {
             self.appendSubViews()
@@ -114,8 +129,12 @@ class ModalView: UIView, Modal, ImpressionTrackable {
      * @param { imageUrl: String } string of the image URL.
      */
     fileprivate func appendImageView(withUrl imageUrl: String) {
-        //TODO(Daniel Tam) Update aspect ratio here when finalized.
-        let imageView = UIImageView(frame: CGRect(x: 0, y: self.dialogViewCurrentHeight, width: self.dialogViewWidth, height: self.dialogViewWidth / 2.9))
+        let imageView = UIImageView(
+            frame: CGRect(x: 0,
+                          y: self.dialogViewCurrentHeight,
+                          width: self.dialogViewWidth,
+                          height: self.dialogViewWidth / imageAspectRatio))
+        
         imageView.contentMode = .scaleAspectFit
         
         // URL encoding to read urls with space characters in the link.
@@ -137,13 +156,17 @@ class ModalView: UIView, Modal, ImpressionTrackable {
      * @param { headerMessage: String } string of the header message.
      */
     fileprivate func appendHeaderMessage(withHeader headerMessage: String) {
-        let headerMessageLabel = UILabel(frame: CGRect(x: 8, y: self.dialogViewCurrentHeight, width: self.dialogViewWidth - 16, height: 0))
+        let headerMessageLabel = UILabel(
+            frame: CGRect(x: horizontalSpacingOffset,
+                          y: self.dialogViewCurrentHeight,
+                          width: self.dialogViewWidth - 16,
+                          height: 0))
+        
         headerMessageLabel.text = headerMessage
         headerMessageLabel.textAlignment = .center
         headerMessageLabel.lineBreakMode = .byWordWrapping
         headerMessageLabel.numberOfLines = 0
-        headerMessageLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        headerMessageLabel.font = headerMessageLabel.font.withSize(20)
+        headerMessageLabel.font = .boldSystemFont(ofSize: headerMessageFontSize)
         headerMessageLabel.frame.size.height = headerMessageLabel.optimalHeight
         self.dialogView.addSubview(headerMessageLabel)
         
@@ -155,8 +178,14 @@ class ModalView: UIView, Modal, ImpressionTrackable {
      * @param { bodyMessage: String } string of the body message.
      */
     fileprivate func appendBodyMessage(withBody bodyMessage: String) {
-        let bodyMessageLabel = UILabel(frame: CGRect(x: 8, y: self.dialogViewCurrentHeight, width: self.dialogViewWidth - 16, height: 0))
+        let bodyMessageLabel = UILabel(
+            frame: CGRect(x: horizontalSpacingOffset,
+                          y: self.dialogViewCurrentHeight,
+                          width: self.dialogViewWidth - 16,
+                          height: 0))
+        
         bodyMessageLabel.text = bodyMessage
+        bodyMessageLabel.font = .boldSystemFont(ofSize: bodyMessageFontSize)
         bodyMessageLabel.textAlignment = .center
         bodyMessageLabel.lineBreakMode = .byWordWrapping
         bodyMessageLabel.numberOfLines = 0
@@ -178,17 +207,18 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         for (index, button) in buttonList.enumerated() {
             if let buttonAction = ButtonActionType(rawValue: button.buttonBehavior.action) {
                 // Determine offset value based on numbers of buttons to display.
-                let buttonWidthOffset: CGFloat = buttonList.count == 1 ? 16 : 12
+                let buttonWidthOffset: CGFloat = buttonList.count == 1 ? singleButtonWidthOffset : twoButtonWidthOffset
                 
-                let buttonToAdd = UIButton(frame: CGRect(x: buttonHorizontalSpace,
-                                                         y: self.dialogViewCurrentHeight,
-                                                         width: ((self.dialogViewWidth / CGFloat(buttonList.count)) - buttonWidthOffset),
-                                                         height: buttonHeight))
+                let buttonToAdd = UIButton(
+                    frame: CGRect(x: buttonHorizontalSpace,
+                                  y: self.dialogViewCurrentHeight,
+                                  width: ((self.dialogViewWidth / CGFloat(buttonList.count)) - buttonWidthOffset),
+                                  height: buttonHeight))
                 
                 buttonToAdd.setTitle(button.buttonText, for: .normal)
                 buttonToAdd.setTitleColor(UIColor(hexFromString: button.buttonTextColor), for: .normal)
-                buttonToAdd.titleLabel?.font = .boldSystemFont(ofSize: 12)
-                buttonToAdd.layer.cornerRadius = 6
+                buttonToAdd.titleLabel?.font = .boldSystemFont(ofSize: buttonTextFontSize)
+                buttonToAdd.layer.cornerRadius = cornerRadiusForCircle
                 buttonToAdd.tag = index == 0 ? ImpressionType.actionOneButton.rawValue : ImpressionType.actionTwoButton.rawValue
                 buttonToAdd.backgroundColor = UIColor(hexFromString: button.buttonBackgroundColor)
                 
