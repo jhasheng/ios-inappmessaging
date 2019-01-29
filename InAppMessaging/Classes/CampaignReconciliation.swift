@@ -146,6 +146,6 @@ struct CampaignReconciliation {
             }
         }
 
-        return lowestNumberOfTimesSatisfied ?? 0
+        return lowestNumberOfTimesSatisfied != Int.max ? lowestNumberOfTimesSatisfied : 0
     }
 }
