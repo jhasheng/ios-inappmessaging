@@ -22,6 +22,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func showModalButton(_ sender: Any) {
+        
+        let arr = [Attribute(withKeyName: "itemName", withValue: "Rakuten Mug")]
+        
         InAppMessaging.logEvent(PurchaseSuccessfulEvent(withCustomAttributes: nil))
     }
     @IBAction func loginSuccessfulButton(_ sender: Any) {

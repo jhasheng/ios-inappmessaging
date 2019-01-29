@@ -18,6 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         InAppMessaging.configure()
+        
+let preference = IAMPreferenceBuilder
+    .init()
+    .setUserId("testaccount@gmail.com")
+    .setRakutenId("testaccount")
+    .setAccessToken("27364827346")
+    .build()
+
+InAppMessaging.registerPreference(preference)
     
         return true
     }
