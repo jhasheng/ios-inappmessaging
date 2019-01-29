@@ -68,7 +68,7 @@
      * Register user preference to the IAM SDK.
      * @param { preference: IAMPreference } preferences of the user.
      */
-    @objc public class func registerPreference(_ preference: IAMPreference) {
+    @objc public class func registerPreference(_ preference: IAMPreference?) {
         DispatchQueue.global(qos: .background).async {
             IAMPreferenceRepository.setPreference(with: preference)
 
