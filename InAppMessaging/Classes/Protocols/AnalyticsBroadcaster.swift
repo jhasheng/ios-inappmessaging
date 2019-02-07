@@ -11,11 +11,11 @@ protocol AnalyticsBroadcaster {
 }
 
 extension AnalyticsBroadcaster {
-    static func sendEventName(_ name: String, _ dataObject: [String: Any]?) {
+    func sendEventName(_ name: String, _ dataObject: [String: Any]?) {
         var parameters = [String: Any]()
         parameters["eventName"] = name
         if let data = dataObject {
-            parameters["eventData"] = dataObject
+            parameters["eventData"] = data
         }
         
         let notificationName = Notification.Name("com.rakuten.esd.sdk.events.custom")
