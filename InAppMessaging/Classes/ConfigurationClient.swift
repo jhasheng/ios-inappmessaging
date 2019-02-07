@@ -84,7 +84,7 @@ class ConfigurationClient: HttpRequestable {
         let getConfigRequest = GetConfigRequest.init(
             locale: locale,
             appVersion: appVersion,
-            platform: "ios",
+            platform: PlatformEnum.ios.rawValue,
             appId: appId,
             sdkVersion: sdkVersion
         )
