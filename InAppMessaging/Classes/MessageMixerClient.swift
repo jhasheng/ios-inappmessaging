@@ -128,7 +128,7 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
         }
         
         if let accessToken = IAMPreferenceRepository.getAccessToken() {
-            additionalHeaders.append(Attribute(withKeyName: Keys.Request.authorization, withValue: accessToken))
+            additionalHeaders.append(Attribute(withKeyName: Keys.Request.authorization, withValue: "OAuth2 \(accessToken)"))
         }
         
         return additionalHeaders
