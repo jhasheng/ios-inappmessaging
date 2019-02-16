@@ -142,7 +142,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
             return
         }
         
-        imageView.sd_setImage(with: URL(string: encodedUrl), placeholderImage: nil) { (image, error, SDImageCacheType, url) in
+        imageView.sd_setImage(with: URL(string: encodedUrl), placeholderImage: nil, options: []) { (image, error, SDImageCacheType, url) in
             self.appendSubViews()
         }
         
