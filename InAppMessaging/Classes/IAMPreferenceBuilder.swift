@@ -9,17 +9,17 @@
         self.preference = IAMPreference()
     }
     
-    public func setRakutenId(_ rakutenId: String) -> IAMPreferenceBuilder {
+    public func setRakutenId(_ rakutenId: String?) -> IAMPreferenceBuilder {
         self.preference.rakutenId = rakutenId
         return self
     }
 
-    public func setUserId(_ userId: String) -> IAMPreferenceBuilder {
+    public func setUserId(_ userId: String?) -> IAMPreferenceBuilder {
         self.preference.userId = userId
         return self
     }
 
-    public func setAccessToken(_ accessToken: String) -> IAMPreferenceBuilder {
+    public func setAccessToken(_ accessToken: String?) -> IAMPreferenceBuilder {
         self.preference.accessToken = accessToken
         return self
     }

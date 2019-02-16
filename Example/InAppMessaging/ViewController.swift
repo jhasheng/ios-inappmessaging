@@ -23,6 +23,8 @@ class ViewController: UIViewController {
     
     @IBAction func showModalButton(_ sender: Any) {
         InAppMessaging.logEvent(PurchaseSuccessfulEvent(withCustomAttributes: nil))
+        
+        InAppMessaging.registerPreference(IAMPreferenceBuilder.init().setAccessToken(nil).setUserId(nil).build())
     }
     @IBAction func loginSuccessfulButton(_ sender: Any) {
         InAppMessaging.logEvent(LoginSuccessfulEvent(withCustomAttributes: nil))
