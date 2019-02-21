@@ -19,11 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         InAppMessaging.configure()
         
-        InAppMessaging.registerPreference(IAMPreferenceBuilder.init()
-            .setAccessToken("ACCESS TOKEN HERE")
-            .build()
-        )
-        
         return true
     }
 
