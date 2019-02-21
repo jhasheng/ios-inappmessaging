@@ -29,7 +29,7 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
         guard let response = self.requestFromServer(
             withUrl: mixerServerUrl,
             withHttpMethod: .post,
-            withAdditionalHeaders: self.buildRequestHeader()) else {
+            withAdditionalHeaders: buildRequestHeader()) else {
                 
                 // Exponential backoff for pinging Message Mixer server.
                 MessageMixerClient.delay = (MessageMixerClient.delay == 0) ? 10000 : MessageMixerClient.delay * 2
@@ -127,6 +127,7 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
             additionalHeaders.append(Attribute(withKeyName: Keys.Request.deviceID, withValue: deviceId))
         }
         
+        // Retrieve access token and return in the header of the request.
         if let accessToken = IAMPreferenceRepository.getAccessToken() {
             additionalHeaders.append(Attribute(withKeyName: Keys.Request.authorization, withValue: "OAuth2 \(accessToken)"))
         }

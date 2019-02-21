@@ -41,7 +41,7 @@ class ImpressionClient: HttpRequestable {
                 withUrl: pingImpressionEndpoint,
                 withHttpMethod: .post,
                 withOptionalParams: optionalParams,
-                withAdditionalHeaders: nil)
+                withAdditionalHeaders: buildRequestHeader())
     }
     
     /**
@@ -83,5 +83,16 @@ class ImpressionClient: HttpRequestable {
         }
 
         return nil
+    }
+    
+    fileprivate func buildRequestHeader() -> [Attribute] {
+        var additionalHeaders: [Attribute] = []
+        
+        // Retrieve access token and return in the header of the request.
+        if let accessToken = IAMPreferenceRepository.getAccessToken() {
+            additionalHeaders.append(Attribute(withKeyName: Keys.Request.authorization, withValue: "OAuth2 \(accessToken)"))
+        }
+        
+        return additionalHeaders
     }
 }

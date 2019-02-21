@@ -22,7 +22,7 @@ struct PermissionClient: HttpRequestable {
                     withUrl: displayPermissionUrl,
                     withHttpMethod: .post,
                     withOptionalParams: requestParams,
-                    withAdditionalHeaders: nil)
+                    withAdditionalHeaders: buildRequestHeader())
         else {
             return true
         }
@@ -88,5 +88,16 @@ struct PermissionClient: HttpRequestable {
         }
 
         return nil
+    }
+    
+    fileprivate func buildRequestHeader() -> [Attribute] {
+        var additionalHeaders: [Attribute] = []
+
+        // Retrieve access token and return in the header of the request.
+        if let accessToken = IAMPreferenceRepository.getAccessToken() {
+            additionalHeaders.append(Attribute(withKeyName: Keys.Request.authorization, withValue: "OAuth2 \(accessToken)"))
+        }
+        
+        return additionalHeaders
     }
 }
