@@ -25,6 +25,7 @@ struct Keys {
         static let CampaignID = "campaignId"
         static let deviceID = "device_id" // Snake_case rather than camelCase to unify with backend.
         static let authorization = "Authorization" // HTTP header for access token.
+        static let subscriptionHeader = "Subscription-Id"// HTTP header for sub id.
     }
     
     /**
