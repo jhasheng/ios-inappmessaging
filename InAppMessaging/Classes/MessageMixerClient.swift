@@ -122,6 +122,11 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
     fileprivate func buildRequestHeader() -> [Attribute] {
         var additionalHeaders: [Attribute] = []
         
+        // Retrieve sub ID and return in header of the request.
+        if let subId = Bundle.inAppSubscriptionId {
+            additionalHeaders.append(Attribute(withKeyName: Keys.Request.subscriptionHeader, withValue: subId))
+        }
+        
         // Retrieve device ID and return in header of the request.
         if let deviceId = UIDevice.current.identifierForVendor?.uuidString {
             additionalHeaders.append(Attribute(withKeyName: Keys.Request.deviceID, withValue: deviceId))
