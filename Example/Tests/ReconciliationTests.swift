@@ -3,7 +3,7 @@ import Nimble
 @testable import InAppMessaging
 
 /**
- * Tests for behavior of the SDK when supplied with different configuration responses.
+ * Tests for reconciliation logic when provided different Ping responses.
  */
 class ReconciliationTests: QuickSpec {
     
