@@ -7,7 +7,26 @@ import Nimble
  */
 class ReconciliationTests: QuickSpec {
     
+    class MockConfigurationClient: ConfigurationClient {
+        var returnValueOfIsConfigEnabled: Bool
+        
+        init(isConfigEnabled: Bool) {
+            self.returnValueOfIsConfigEnabled = isConfigEnabled
+        }
+        
+        override func isConfigEnabled() -> Bool {
+            return self.returnValueOfIsConfigEnabled
+        }
+    }
+    
     override func spec() {
+        
+        beforeSuite {
+            let mockConfigurationClient = MockConfigurationClient(isConfigEnabled: true)
+            let mockMessageMixer = MessageMixerClient()
+            
+            InAppMessaging.init(configurationClient: mockConfigurationClient, messageMixerClient: mockMessageMixer).initializeSdk()
+        }
         
         beforeEach {
             PingResponseRepository.clear()
@@ -39,33 +58,10 @@ class ReconciliationTests: QuickSpec {
                 
                 CampaignReconciliation.reconciliate()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
-                
-                InAppMessaging.logEvent(PurchaseSuccessfulEvent.init(withCustomAttributes: nil))
-                CampaignReconciliation.reconciliate()
-                expect(ReadyCampaignRepository.list.count).to(equal(1))
 
+                InAppMessaging.logEvent(LoginSuccessfulEvent.init(withCustomAttributes: nil))
+                expect(ReadyCampaignRepository.list.count).toEventuallyNot(equal(1), timeout: 3.0, pollInterval: 0.1, description: nil)
             }
         }
-        
-//        context("InAppMessaging") {
-//            it("is disabled because configuration returned false") {
-//                let mockConfigurationClient = MockConfigurationClient(isConfigEnabled: false)
-//                let mockMessageMixer = MockMessageMixer()
-//
-//                InAppMessaging.init(configurationClient: mockConfigurationClient, messageMixerClient: mockMessageMixer).initializeSdk()
-//
-//                expect(mockMessageMixer.enabledWasCalled).to(equal(false))
-//
-//            }
-//
-//            it("is enabled because configuration returned true") {
-//                let mockConfigurationClient = MockConfigurationClient(isConfigEnabled: true)
-//                let mockMessageMixer = MockMessageMixer()
-//
-//                InAppMessaging.init(configurationClient: mockConfigurationClient, messageMixerClient: mockMessageMixer).initializeSdk()
-//
-//                expect(mockMessageMixer.enabledWasCalled).to(equal(true))
-//            }
-//        }
     }
 }
