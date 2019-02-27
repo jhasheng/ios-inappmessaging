@@ -26,9 +26,8 @@ struct CampaignReconciliation {
                 continue
             }
             
-            // Find out how many times should the campaign be added.
-            // Add to ReadyCampaignRepo.
-            for _ in 0..<getNumberOfTimesToDisplay(campaign) {
+            // Add to ReadyCampaignRepo if the campaign's set of triggers are satisfied.
+            if getNumberOfTimesToDisplay(campaign) > 0 {
                 ReadyCampaignRepository.addCampaign(campaign)
             }
         }

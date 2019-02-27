@@ -39,7 +39,7 @@ class IdRegistrationTests: QuickSpec {
                 var expected = [UserIdentifier]()
                 expected.append(UserIdentifier(type: 3, id: "whales and dolphins"))
 
-                expect(expected).to(equal(IAMPreferenceRepository.getUserIdentifiers()))
+                expect(expected).toEventually(equal(IAMPreferenceRepository.getUserIdentifiers()), timeout: 3.0, pollInterval: 0.1, description: nil)
             }
 
             it("should have two matching id type and id value") {
@@ -53,11 +53,11 @@ class IdRegistrationTests: QuickSpec {
 
                 // Build the expected object.
                 var expected = [UserIdentifier]()
-
                 expected.append(UserIdentifier(type: 1, id: "whales and dolphins"))
                 expected.append(UserIdentifier(type: 3, id: "tigers and zebras"))
+                Thread.sleep(forTimeInterval: 1)
 
-                expect(expected).to(equal(IAMPreferenceRepository.getUserIdentifiers()))
+                expect(expected).toEventually(equal(IAMPreferenceRepository.getUserIdentifiers()), timeout: 3.0, pollInterval: 0.1, description: nil)
             }
         }
     }
