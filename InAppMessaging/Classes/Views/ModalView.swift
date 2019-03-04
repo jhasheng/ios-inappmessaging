@@ -22,8 +22,8 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     let bodyMessageFontSize: CGFloat = 14 // Font size for the body message.
     let buttonTextFontSize: CGFloat = 14 // Font size for the button labels.
     let singleButtonWidthOffset: CGFloat = 0 // Width offset when only one button is given.
-    let twoButtonWidthOffset: CGFloat = 12 // Width offset when two buttons are given.
-    let horizontalSpacingOffset: CGFloat = 8 // The spacing between dialog view and the children elements.
+    let twoButtonWidthOffset: CGFloat = 24 // Width offset when two buttons are given.
+    let horizontalSpacingOffset: CGFloat = 20 // The spacing between dialog view and the children elements.
     
     var backgroundView = UIView()
     var dialogView = UIView()
@@ -160,7 +160,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         let headerMessageLabel = UILabel(
             frame: CGRect(x: horizontalSpacingOffset,
                           y: self.dialogViewCurrentHeight,
-                          width: self.dialogViewWidth - 16,
+                          width: self.dialogViewWidth - (horizontalSpacingOffset * 2),
                           height: 0))
         
         headerMessageLabel.text = headerMessage
@@ -183,7 +183,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         let bodyMessageLabel = UILabel(
             frame: CGRect(x: horizontalSpacingOffset,
                           y: self.dialogViewCurrentHeight,
-                          width: self.dialogViewWidth - 16,
+                          width: self.dialogViewWidth - (horizontalSpacingOffset * 2),
                           height: 0))
         
         bodyMessageLabel.text = bodyMessage
@@ -204,7 +204,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
      */
     fileprivate func appendButtons(withButtonList buttonList: [Button]) {
         
-        var buttonHorizontalSpace: CGFloat = 8 // Space for the left and right margin.
+        var buttonHorizontalSpace: CGFloat = 20 // Space for the left and right margin.
         let buttonHeight: CGFloat = 40 // Define the height to use for the button.
         
         for (index, button) in buttonList.enumerated() {
