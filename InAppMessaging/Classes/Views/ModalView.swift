@@ -11,7 +11,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     var campaign: CampaignData?
 
     // Constant values used for UI elements in model views.
-    let heightOffset: CGFloat = 8 // Height offset for every UI element.
+    let heightOffset: CGFloat = 20 // Height offset for every UI element.
     let exitButtonHeightOffset: CGFloat = 30 // Height offset for exit button from the actual message.
     let exitButtonSize: CGFloat = 20 // Size of the exit button.
     let backgroundViewAlpha: CGFloat = 0.66 // Value to adjust the transparency of the background view.
@@ -164,6 +164,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
                           height: 0))
         
         headerMessageLabel.text = headerMessage
+        headerMessageLabel.setLineSpacing(lineSpacing: 3.0)
         headerMessageLabel.textAlignment = .center
         headerMessageLabel.lineBreakMode = .byWordWrapping
         headerMessageLabel.numberOfLines = 0
@@ -186,7 +187,8 @@ class ModalView: UIView, Modal, ImpressionTrackable {
                           height: 0))
         
         bodyMessageLabel.text = bodyMessage
-        bodyMessageLabel.font = .boldSystemFont(ofSize: bodyMessageFontSize)
+        bodyMessageLabel.setLineSpacing(lineSpacing: 5.0)
+        bodyMessageLabel.font = .systemFont(ofSize: bodyMessageFontSize)
         bodyMessageLabel.textAlignment = .center
         bodyMessageLabel.lineBreakMode = .byWordWrapping
         bodyMessageLabel.numberOfLines = 0
@@ -203,17 +205,26 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     fileprivate func appendButtons(withButtonList buttonList: [Button]) {
         
         var buttonHorizontalSpace: CGFloat = 8 // Space for the left and right margin.
-        let buttonHeight: CGFloat = 30 // Define the height to use for the button.
+        let buttonHeight: CGFloat = 40 // Define the height to use for the button.
         
         for (index, button) in buttonList.enumerated() {
             if let buttonAction = ButtonActionType(rawValue: button.buttonBehavior.action) {
                 // Determine offset value based on numbers of buttons to display.
-                let buttonWidthOffset: CGFloat = buttonList.count == 1 ? singleButtonWidthOffset : twoButtonWidthOffset
+                var buttonWidthOffset: CGFloat
+                var xPositionForButton: CGFloat
                 
+                if buttonList.count == 1 {
+                    buttonWidthOffset = singleButtonWidthOffset
+                    xPositionForButton = (self.dialogViewWidth / 4) + (buttonWidthOffset / 2)
+                } else {
+                    buttonWidthOffset = twoButtonWidthOffset
+                    xPositionForButton = buttonHorizontalSpace
+                }
+
                 let buttonToAdd = UIButton(
-                    frame: CGRect(x: buttonHorizontalSpace,
+                    frame: CGRect(x: xPositionForButton,
                                   y: self.dialogViewCurrentHeight,
-                                  width: ((self.dialogViewWidth / CGFloat(buttonList.count)) - buttonWidthOffset),
+                                  width: ((self.dialogViewWidth / 2) - buttonWidthOffset),
                                   height: buttonHeight))
                 
                 buttonToAdd.setTitle(button.buttonText, for: .normal)
