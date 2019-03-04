@@ -233,6 +233,8 @@ class ModalView: UIView, Modal, ImpressionTrackable {
                 buttonToAdd.layer.cornerRadius = cornerRadiusForButtons
                 buttonToAdd.tag = index == 0 ? ImpressionType.actionOneButton.rawValue : ImpressionType.actionTwoButton.rawValue
                 buttonToAdd.backgroundColor = UIColor(hexFromString: button.buttonBackgroundColor)
+                buttonToAdd.layer.borderColor = UIColor(hexFromString: button.buttonTextColor).cgColor
+                buttonToAdd.layer.borderWidth = 1
                 
                 switch buttonAction {
                     case .invalid:
