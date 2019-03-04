@@ -21,7 +21,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     let headerMessageFontSize: CGFloat = 16 // Font size for the header message.
     let bodyMessageFontSize: CGFloat = 14 // Font size for the body message.
     let buttonTextFontSize: CGFloat = 14 // Font size for the button labels.
-    let singleButtonWidthOffset: CGFloat = 16 // Width offset when only one button is given.
+    let singleButtonWidthOffset: CGFloat = 0 // Width offset when only one button is given.
     let twoButtonWidthOffset: CGFloat = 12 // Width offset when two buttons are given.
     let horizontalSpacingOffset: CGFloat = 8 // The spacing between dialog view and the children elements.
     
@@ -76,7 +76,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
             self.appendImageView(withUrl: imageUrl)
         } else {
             // Append some space between the exit button and header.
-            self.dialogViewCurrentHeight += 20
+            self.dialogViewCurrentHeight += 30
         }
 
         // Header title.
@@ -214,7 +214,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
                 var xPositionForButton: CGFloat
                 
                 if buttonList.count == 1 {
-                    buttonWidthOffset = singleButtonWidthOffset
+                    buttonWidthOffset = frame.width
                     xPositionForButton = (self.dialogViewWidth / 4) + (buttonWidthOffset / 2)
                 } else {
                     buttonWidthOffset = twoButtonWidthOffset
