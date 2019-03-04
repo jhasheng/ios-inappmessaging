@@ -165,7 +165,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         
         headerMessageLabel.text = headerMessage
         headerMessageLabel.setLineSpacing(lineSpacing: 3.0)
-        headerMessageLabel.textAlignment = .center
+        headerMessageLabel.textAlignment = .left
         headerMessageLabel.lineBreakMode = .byWordWrapping
         headerMessageLabel.numberOfLines = 0
         headerMessageLabel.font = .boldSystemFont(ofSize: headerMessageFontSize)
@@ -189,7 +189,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         bodyMessageLabel.text = bodyMessage
         bodyMessageLabel.setLineSpacing(lineSpacing: 5.0)
         bodyMessageLabel.font = .systemFont(ofSize: bodyMessageFontSize)
-        bodyMessageLabel.textAlignment = .center
+        bodyMessageLabel.textAlignment = .left
         bodyMessageLabel.lineBreakMode = .byWordWrapping
         bodyMessageLabel.numberOfLines = 0
         bodyMessageLabel.frame.size.height = bodyMessageLabel.optimalHeight
