@@ -68,6 +68,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         
         // Set the initial width based on device -- either iPad or iPhone.
         if UIDevice.current.userInterfaceIdiom == .pad {
+            // Use 75% of iPad's width.
             self.dialogViewWidth = frame.width * 0.75
         } else {
             self.dialogViewWidth = frame.width - 64
@@ -105,7 +106,6 @@ class ModalView: UIView, Modal, ImpressionTrackable {
                 campaign.messagePayload.messageBody == nil {
                 
                     self.dialogViewCurrentHeight += heightOffset
-
             }
             
             self.appendButtons(withButtonList: buttonList)
