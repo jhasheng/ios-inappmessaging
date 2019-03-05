@@ -11,11 +11,10 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     var campaign: CampaignData?
 
     // Constant values used for UI elements in model views.
-    let heightOffset: CGFloat = 20 // Height offset for every UI element.
+    let heightOffset: CGFloat = 15 // Height offset for every UI element.
     let exitButtonHeightOffset: CGFloat = 30 // Height offset for exit button from the actual message.
     let exitButtonSize: CGFloat = 20 // Size of the exit button.
     let backgroundViewAlpha: CGFloat = 0.66 // Value to adjust the transparency of the background view.
-    let imageAspectRatio: CGFloat = 1.3333 // Aspect ratio of campaign image. Currently set to 4:3.
     let cornerRadiusForDialogView: CGFloat = 8 // Adjust how round the edge the dialog view will be.
     let cornerRadiusForButtons: CGFloat = 4 // Adjust how round the edge of the buttons will be.
     let headerMessageFontSize: CGFloat = 16 // Font size for the header message.
@@ -67,31 +66,50 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         self.backgroundView.frame = frame
         self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(backgroundViewAlpha)
         
-        // Set the initial width to -64 to leave spacing on the left and right side.
-        self.dialogViewWidth = frame.width - 64
+        // Set the initial width based on device -- either iPad or iPhone.
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            self.dialogViewWidth = frame.width * 0.75
+        } else {
+            self.dialogViewWidth = frame.width - 64
+        }
         
         // Image view.
         if let imageUrl = campaign.messagePayload.resource.imageUrl, !imageUrl.isEmpty {
             self.hasImage = true
             self.appendImageView(withUrl: imageUrl)
-        } else {
-            // Append some space between the exit button and header.
-            self.dialogViewCurrentHeight += 30
         }
 
         // Header title.
         if let headerMessage = campaign.messagePayload.header {
+            self.dialogViewCurrentHeight += heightOffset
             self.appendHeaderMessage(withHeader: headerMessage)
+            self.dialogViewCurrentHeight += heightOffset
         }
         
         // Body message.
         if let bodyMessage = campaign.messagePayload.messageBody {
+            // Handle spacing for when there is no header message.
+            if campaign.messagePayload.header == nil {
+                self.dialogViewCurrentHeight += heightOffset
+            }
+            
             self.appendBodyMessage(withBody: bodyMessage)
+            self.dialogViewCurrentHeight += heightOffset
         }
         
         // Buttons.
         if let buttonList = campaign.messagePayload.messageSettings.controlSettings?.buttons, !buttonList.isEmpty {
+            // Handle spacing for when there is only an image and buttons
+            if campaign.messagePayload.resource.imageUrl != nil &&
+                campaign.messagePayload.header == nil &&
+                campaign.messagePayload.messageBody == nil {
+                
+                    self.dialogViewCurrentHeight += heightOffset
+
+            }
+            
             self.appendButtons(withButtonList: buttonList)
+            self.dialogViewCurrentHeight += heightOffset
         }
         
         // The dialog view which is the rounded rectangle in the center.
@@ -134,9 +152,9 @@ class ModalView: UIView, Modal, ImpressionTrackable {
             frame: CGRect(x: 0,
                           y: self.dialogViewCurrentHeight,
                           width: self.dialogViewWidth,
-                          height: self.dialogViewWidth / imageAspectRatio))
+                          height: self.dialogViewWidth))
         
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleToFill
         
         // URL encoding to read urls with space characters in the link.
         guard let encodedUrl = imageUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
@@ -149,7 +167,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         
         self.dialogView.addSubview(imageView)
         
-        self.dialogViewCurrentHeight += imageView.frame.height + heightOffset
+        self.dialogViewCurrentHeight += imageView.frame.height
     }
     
     /**
@@ -172,7 +190,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         headerMessageLabel.frame.size.height = headerMessageLabel.optimalHeight
         self.dialogView.addSubview(headerMessageLabel)
         
-        self.dialogViewCurrentHeight += headerMessageLabel.frame.height + heightOffset
+        self.dialogViewCurrentHeight += headerMessageLabel.frame.height
     }
     
     /**
@@ -195,7 +213,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         bodyMessageLabel.frame.size.height = bodyMessageLabel.optimalHeight
         self.dialogView.addSubview(bodyMessageLabel)
         
-        self.dialogViewCurrentHeight += bodyMessageLabel.frame.height + heightOffset
+        self.dialogViewCurrentHeight += bodyMessageLabel.frame.height
     }
     
     /**
@@ -255,7 +273,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
             }
         }
         
-        self.dialogViewCurrentHeight += buttonHeight + heightOffset
+        self.dialogViewCurrentHeight += buttonHeight
     }
     
     /**
