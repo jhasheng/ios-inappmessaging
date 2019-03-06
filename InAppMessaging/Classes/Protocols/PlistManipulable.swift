@@ -32,7 +32,7 @@ extension PlistManipulable {
     
     static func savePropertyList<T: Encodable>(_ plist: T) throws {
         let plistData: Data = try PropertyListEncoder().encode(plist)
-        try plistData.write(to: plistURL)
+        try plistData.write(to: plistURL, options: .completeFileProtection)
     }
     
     static func loadPropertyList() throws -> [[String: Any]]? {
