@@ -7,9 +7,21 @@
         
         super.init(
             eventType: EventType.custom,
-            eventName: name,
-            customAttributes: nil
+            eventName: name
         )
+    }
+    
+    init(withName name: String, timestamp: Int) {
+        
+        super.init(
+            eventType: EventType.custom,
+            eventName: name,
+            timestamp: timestamp
+        )
+    }
+    
+    required public init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
     }
     
     override public func encode(to encoder: Encoder) throws {

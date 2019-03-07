@@ -10,9 +10,22 @@
 
         super.init(
             eventType: EventType.appStart,
-            eventName: Keys.Event.appStart,
-            customAttributes: nil
+            eventName: Keys.Event.appStart
         )
+    }
+    
+    init(isUserLoggedIn: Bool, timestamp: Int) {
+        self.isUserLoggedIn = isUserLoggedIn
+        
+        super.init(
+            eventType: EventType.appStart,
+            eventName: Keys.Event.appStart,
+            timestamp: timestamp
+        )
+    }
+    
+    required public init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
     }
     
     override public func encode(to encoder: Encoder) throws {

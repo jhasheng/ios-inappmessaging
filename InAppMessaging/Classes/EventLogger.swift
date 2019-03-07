@@ -68,18 +68,63 @@ struct EventLogger: PlistManipulable {
         if let plistArray = plistArrayOptional {
             for plistObject in plistArray {
                 
-                guard let eventType = plistObject[Keys.Event.eventType] as? Int,
-                    let timestamp = plistObject[Keys.Event.timestamp] as? Int,
-                    let eventName = plistObject[Keys.Event.eventName] as? String
-                else {
-                        return
+                guard let eventType = plistObject[Keys.Event.eventType] as? Int else {
+                    continue
                 }
                 
-                let customAttributes: [Attribute]? = plistObject[Keys.Event.customAttributes] as? [Attribute]
-                
-                let event = Event(eventType: EventType(rawValue: eventType)!, eventName: eventName, customAttributes: customAttributes)
-                event.timestamp = timestamp
-                eventLog.append(event)
+                switch eventType {
+                    case 1:
+                        guard let isUserLoggedIn = plistObject["isUserLoggedIn"] as? Bool,
+                            let timestamp = plistObject["timestamp"] as? Int
+                        else {
+                            break
+                        }
+                    
+                        eventLog.append(AppStartEvent.init(isUserLoggedIn: isUserLoggedIn, timestamp: timestamp))
+                    
+                    case 2:
+                        guard let timestamp = plistObject["timestamp"] as? Int else {
+                            break
+                    }
+                    
+                        eventLog.append(LoginSuccessfulEvent.init(timestamp: timestamp))
+                    
+                    case 3:
+                        guard let purchaseAmount = plistObject["purchaseAmount"] as? Int,
+                            let numberOfitems = plistObject["numberOfItems"] as? Int,
+                            let currencyCode = plistObject["currencyCode"] as? String,
+                            let itemList = plistObject["itemList"] as? [String],
+                            let timestamp = plistObject["timestamp"] as? Int
+                        else {
+                            break
+                        }
+                    
+                        eventLog.append(
+                            PurchaseSuccessfulEvent.init(
+                                withPurchaseAmount: purchaseAmount,
+                                withNumberOfItems: numberOfitems,
+                                withCurrencyCode: currencyCode,
+                                withItems: itemList,
+                                timestamp: timestamp
+                            )
+                        )
+                    
+                    case 4:
+                        guard let eventName = plistObject["eventName"] as? String,
+                            let timestamp = plistObject["timestamp"] as? Int
+                        else {
+                            break
+                        }
+                    
+                        eventLog.append(
+                            CustomEvent.init(
+                                withName: eventName,
+                                timestamp: timestamp
+                            )
+                        )
+                    default:
+                        break
+                }
             }
         }
     }

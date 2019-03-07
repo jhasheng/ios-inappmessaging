@@ -115,7 +115,11 @@ struct CampaignReconciliation {
             
             // If a trigger is already added in the mapping, increment it.
             if campaignTriggerListMapping.keys.contains(trigger.eventType) {
-                campaignTriggerListMapping[eventType]? += 1
+                // Increment only event types that are not AppStart event since AppStart
+                // should be logged only once and is required for every campaign.
+                if campaignTriggerListMapping[eventType] != EventType.appStart.rawValue {
+                    campaignTriggerListMapping[eventType]? += 1
+                }
             } else {
                 // else, add a new entry with the counter as 1.
                 campaignTriggerListMapping[eventType] = 1

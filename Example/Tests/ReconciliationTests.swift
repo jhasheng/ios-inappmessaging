@@ -59,7 +59,7 @@ class ReconciliationTests: QuickSpec {
                 CampaignReconciliation.reconciliate()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
 
-                InAppMessaging.logEvent(LoginSuccessfulEvent.init(withCustomAttributes: nil))
+//                InAppMessaging.logEvent(LoginSuccessfulEvent.init(withCustomAttributes: nil))
                 expect(ReadyCampaignRepository.list.count).toEventuallyNot(equal(1), timeout: 3.0, pollInterval: 0.1, description: nil)
             }
         }
