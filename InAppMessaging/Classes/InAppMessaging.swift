@@ -40,10 +40,7 @@
         }
         
         // Send back events endpoint.
-        do {
-            print(try EventLogger.loadPropertyList()) // simulate sending
-            EventLogger.clearLogs()
-        } catch {}
+        EventClient().reportEvents()
         
         // Enable MessageMixerClient which starts beacon pinging message mixer server.
         messageMixerClient.ping()

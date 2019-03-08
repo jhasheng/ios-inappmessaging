@@ -22,7 +22,7 @@ struct PermissionClient: HttpRequestable {
                     withUrl: displayPermissionUrl,
                     withHttpMethod: .post,
                     withOptionalParams: requestParams,
-                    withAdditionalHeaders: buildRequestHeader())
+                    withAdditionalHeaders: buildRequestHeader()).data
         else {
             return true
         }

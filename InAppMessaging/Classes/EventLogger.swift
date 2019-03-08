@@ -1,5 +1,5 @@
 /**
- * Struct to handle logging events by the host application.
+ * Struct to handle saving all the custom events for IAM's custom event endpoint and RAT.
  */
 struct EventLogger: PlistManipulable {
     static var eventLog = [Event]()
@@ -9,9 +9,8 @@ struct EventLogger: PlistManipulable {
     }
     
     /**
-     * Log the event sent by the host application in a hashmap of event name to list of timestamps.
+     * Log the event sent by the host application.
      * Saves into a plist file.
-     * TODO(daniel.tam) Clear file when it is dumped to a server.
      * @param { eventName: String } name of the event sent by the host application.
      */
     static internal func logEvent(_ event: Event) {
@@ -22,14 +21,14 @@ struct EventLogger: PlistManipulable {
             do {
                 convertPropertyList(try loadPropertyList())
             } catch {
-                #if DEBUG
-                    print("InAppMessaging: \(error)")
-                #endif
+                // This will be called when a new property list is made.
             }
         }
         
-        // Append Event object to the event log.
-        eventLog.append(event)
+        // Append only custom events.
+        if event.eventType.rawValue == EventType.custom.rawValue {
+            eventLog.append(event)
+        }
         
         // Write to local storage.
         do {
