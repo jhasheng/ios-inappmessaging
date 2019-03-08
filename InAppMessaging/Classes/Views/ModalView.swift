@@ -23,6 +23,9 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     let singleButtonWidthOffset: CGFloat = 0 // Width offset when only one button is given.
     let twoButtonWidthOffset: CGFloat = 24 // Width offset when two buttons are given.
     let horizontalSpacingOffset: CGFloat = 20 // The spacing between dialog view and the children elements.
+    let initialFrameWidthOffset: CGFloat = 80 // Margin between the left and right frame width and message.
+    let initialFrameWidthIPadMultiplier: CGFloat = 0.75 // Percentage size for iPad's to display
+    let imageAspectRatio: CGFloat = 1.25 // Aspect ratio for image. Currently set to 3:4.
     
     var backgroundView = UIView()
     var dialogView = UIView()
@@ -69,9 +72,9 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         // Set the initial width based on device -- either iPad or iPhone.
         if UIDevice.current.userInterfaceIdiom == .pad {
             // Use 75% of iPad's width.
-            self.dialogViewWidth = frame.width * 0.75
+            self.dialogViewWidth = frame.width * initialFrameWidthIPadMultiplier
         } else {
-            self.dialogViewWidth = frame.width - 64
+            self.dialogViewWidth = frame.width - initialFrameWidthOffset
         }
         
         // Image view.
@@ -152,7 +155,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
             frame: CGRect(x: 0,
                           y: self.dialogViewCurrentHeight,
                           width: self.dialogViewWidth,
-                          height: self.dialogViewWidth))
+                          height: self.dialogViewWidth * imageAspectRatio))
         
         imageView.contentMode = .scaleToFill
         
