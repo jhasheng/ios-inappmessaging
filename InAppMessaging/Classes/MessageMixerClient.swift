@@ -5,7 +5,6 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
     
     static var workItemReference: DispatchWorkItem?
     private static var delay: Int = 0 // Milliseconds before pinging Message Mixer server.
-//    private static var isFirstPing = true;
     
     /**
      * Starts the first ping to Message Mixer server.
@@ -63,13 +62,6 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
             let workItem = DispatchWorkItem { self.pingMixerServer() }
             scheduleWorkItem(campaignResponse.nextPingMillis, task: workItem)
         }
-        
-        // After the first ping to message mixer, log the AppStartEvent.
-        // This is to handle the async nature of both the ping and displayPermissions endpoint.
-//        if MessageMixerClient.isFirstPing {
-////            InAppMessaging.logEvent(AppStartEvent(withCustomAttributes: nil))
-//            MessageMixerClient.isFirstPing = false;
-//        }
     }
     
     /**
@@ -84,10 +76,7 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
         PingResponseRepository.currentPingMillis = pingResponse.currentPingMillis
         ReadyCampaignRepository.clear()
         
-//        // Start campaign reconciliation process.
-//        if !MessageMixerClient.isFirstPing {
-            CampaignReconciliation.reconciliate()
-//        }
+        CampaignReconciliation.reconciliate()
     }
     
     /**

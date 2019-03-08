@@ -31,8 +31,6 @@ class ViewController: UIViewController {
     }
     @IBAction func loginSuccessfulButton(_ sender: Any) {
         InAppMessaging.logEvent(LoginSuccessfulEvent())
-        InAppMessaging.logEvent(CustomEvent(withName: "custom_test2"))
-
     }
     @IBAction func customTestButton(_ sender: Any) {
         InAppMessaging.logEvent(CustomEvent(withName: "custom_test"))

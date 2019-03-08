@@ -1,3 +1,6 @@
+/**
+ * Handle the request for custom event endpoint.
+ */
 struct EventClient: HttpRequestable {
     
     /**
@@ -5,6 +8,10 @@ struct EventClient: HttpRequestable {
      */
     let eventsKey = "events"
     
+    /**
+     * Reports the saved custom events to IAM's backend.
+     * With a response code of 200, clear the saved events.
+     */
     func reportEvents() {
         guard let eventEndpoint = ConfigurationClient.endpoints?.customEvent else {
             #if DEBUG
@@ -36,10 +43,10 @@ struct EventClient: HttpRequestable {
         guard let params = optionalParams,
             let events = params[eventsKey] as? [Event]
         else {
-                #if DEBUG
-                    print("InAppMessaging: Error building impressions request body.")
-                #endif
-                return nil
+            #if DEBUG
+                print("InAppMessaging: Error building impressions request body.")
+            #endif
+            return nil
         }
         
         let eventsRequest = EventRequest(
