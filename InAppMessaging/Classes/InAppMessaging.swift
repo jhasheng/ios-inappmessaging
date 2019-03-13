@@ -39,9 +39,6 @@
             return
         }
         
-        // Send back events endpoint.
-        EventClient().reportEvents()
-        
         // Enable MessageMixerClient which starts beacon pinging message mixer server.
         messageMixerClient.ping()
     }
@@ -51,21 +48,20 @@
      * @param { event: Event } Event object to log.
      */
     @objc public class func logEvent(_ event: Event) {
-            DispatchQueue.global(qos: .background).async {
-                EventRepository.addEvent(event)
-                EventLogger.logEvent(event)
+        DispatchQueue.global(qos: .background).async {
+            EventRepository.addEvent(event)
+            
+            if InAppMessaging.isEnabled {
+                CommonUtility.lock(
+                    objects: [
+                        PingResponseRepository.list as AnyObject,
+                        EventRepository.list as AnyObject,
+                        ReadyCampaignRepository.list as AnyObject],
+                    closure: CampaignReconciliation.reconciliate)
                 
-                if InAppMessaging.isEnabled {
-                    CommonUtility.lock(
-                        objects: [
-                            PingResponseRepository.list as AnyObject,
-                            EventRepository.list as AnyObject,
-                            ReadyCampaignRepository.list as AnyObject],
-                        closure: CampaignReconciliation.reconciliate)
-                    
-                    InAppMessagingViewController.display()
-                }
+                InAppMessagingViewController.display()
             }
+        }
     }
     
     /**

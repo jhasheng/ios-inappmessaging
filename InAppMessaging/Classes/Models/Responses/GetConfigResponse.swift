@@ -23,12 +23,10 @@ struct EndpointURL: Decodable {
     let ping: String
     let displayPermission: String?
     let impression: String?
-    let customEvent: String?
     
     enum CodingKeys: String, CodingKey {
         case ping
         case displayPermission
         case impression
-        case customEvent
     }
 }
