@@ -13,7 +13,7 @@
     var currencyCode: String
     var itemList: [String]
     
-    var dictionary: [String: Any] {
+    var getDictionary: [String: Any] {
         return [
             "eventType": super.eventType,
             "eventName": super.eventName,

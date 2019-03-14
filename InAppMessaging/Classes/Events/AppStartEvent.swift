@@ -4,7 +4,7 @@
 @objc public class AppStartEvent: Event {
     
     var isUserLoggedIn: Bool
-    var dictionary: [String: Any] {
+    var getDictionary: [String: Any] {
         return [
             "eventType": super.eventType,
             "eventName": super.eventName,
@@ -30,10 +30,6 @@
             eventName: Keys.Event.appStart,
             timestamp: timestamp
         )
-    }
-    
-    func convertToDict() -> [String: Any] {
-        
     }
     
     required public init(from decoder: Decoder) throws {

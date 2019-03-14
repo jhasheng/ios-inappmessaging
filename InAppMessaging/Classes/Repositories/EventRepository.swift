@@ -7,6 +7,9 @@ struct EventRepository: EventStorable, AnalyticsBroadcaster {
     static func addEvent(_ event: Event) {
         // Appends to the list of events.
         self.list.append(event)
+        
+        // Broadcast event to RAT SDK.
+        EventRepository().sendEventName("inappmessaging_events", ["events": event.dictionary])
     }
     
     static func clear() {

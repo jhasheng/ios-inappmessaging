@@ -4,7 +4,7 @@
 @objc public class CustomEvent: Event {
     
     var customAttributes: [CustomAttribute]?
-    var dictionary: [String: Any] {
+    var getDictionary: [String: Any] {
         return [
             "eventType": super.eventType,
             "eventName": super.eventName,
