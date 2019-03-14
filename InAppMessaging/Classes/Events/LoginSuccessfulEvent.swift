@@ -11,6 +11,7 @@
         ]
     }
     
+    @objc
     public init() {
         super.init(
             eventType: EventType.loginSuccessful,

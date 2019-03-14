@@ -13,6 +13,7 @@
         ]
     }
 
+    @objc
     public init(isUserLoggedIn: Bool) {
         self.isUserLoggedIn = isUserLoggedIn
 

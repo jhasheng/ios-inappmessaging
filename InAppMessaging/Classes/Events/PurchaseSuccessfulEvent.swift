@@ -25,6 +25,7 @@
         ]
     }
     
+    @objc
     public init(
         withPurchaseAmount purchaseAmount: Int,
         withNumberOfItems numberOfItems: Int,

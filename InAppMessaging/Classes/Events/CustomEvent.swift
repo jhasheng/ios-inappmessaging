@@ -13,6 +13,7 @@
         ]
     }
     
+    @objc
     public init(withName name: String, withCustomAttributes customAttributes: [CustomAttribute]?) {
         
         self.customAttributes = customAttributes
