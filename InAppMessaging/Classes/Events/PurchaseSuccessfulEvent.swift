@@ -13,6 +13,18 @@
     var currencyCode: String
     var itemList: [String]
     
+    var dictionary: [String: Any] {
+        return [
+            "eventType": super.eventType,
+            "eventName": super.eventName,
+            "timestamp": super.timestamp,
+            "purchaseAmountMicros": self.purchaseAmount,
+            "numberOfItems": self.numberOfItems,
+            "currencyCode": self.currencyCode,
+            "itemIdList": self.itemList
+        ]
+    }
+    
     public init(
         withPurchaseAmount purchaseAmount: Int,
         withNumberOfItems numberOfItems: Int,

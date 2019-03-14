@@ -3,6 +3,14 @@
  */
 @objc public class LoginSuccessfulEvent: Event {
     
+    var dictionary: [String: Any] {
+        return [
+            "eventType": super.eventType,
+            "eventName": super.eventName,
+            "timestamp": super.timestamp
+        ]
+    }
+    
     public init() {
         super.init(
             eventType: EventType.loginSuccessful,

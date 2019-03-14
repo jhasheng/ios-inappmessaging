@@ -4,6 +4,14 @@
 @objc public class AppStartEvent: Event {
     
     var isUserLoggedIn: Bool
+    var dictionary: [String: Any] {
+        return [
+            "eventType": super.eventType,
+            "eventName": super.eventName,
+            "timestamp": super.timestamp,
+            "isUserLoggedIn": self.isUserLoggedIn
+        ]
+    }
 
     public init(isUserLoggedIn: Bool) {
         self.isUserLoggedIn = isUserLoggedIn
@@ -22,6 +30,10 @@
             eventName: Keys.Event.appStart,
             timestamp: timestamp
         )
+    }
+    
+    func convertToDict() -> [String: Any] {
+        
     }
     
     required public init(from decoder: Decoder) throws {

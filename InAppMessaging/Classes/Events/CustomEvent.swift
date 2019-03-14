@@ -4,6 +4,14 @@
 @objc public class CustomEvent: Event {
     
     var customAttributes: [CustomAttribute]?
+    var dictionary: [String: Any] {
+        return [
+            "eventType": super.eventType,
+            "eventName": super.eventName,
+            "timestamp": super.timestamp,
+            "customAttributes": self.customAttributes
+        ]
+    }
     
     public init(withName name: String, withCustomAttributes customAttributes: [CustomAttribute]?) {
         
