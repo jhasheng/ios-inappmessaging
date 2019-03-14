@@ -7,25 +7,25 @@ public class CustomAttribute: NSObject {
     let value: Any
     let type: Int
     
-    public init(withKeyName name: String, withValue value: String) {
+    public init(withKeyName name: String, withStringValue value: String) {
         self.name = name
         self.value = value
         self.type = AttributeType.string.rawValue
     }
     
-    public init(withKeyName name: String, withValue value: Int) {
+    public init(withKeyName name: String, withIntValue value: Int) {
         self.name = name
         self.value = value
         self.type = AttributeType.integer.rawValue
     }
     
-    public init(withKeyName name: String, withValue value: Double) {
+    public init(withKeyName name: String, withDoubleValue value: Double) {
         self.name = name
         self.value = value
         self.type = AttributeType.double.rawValue
     }
     
-    public init(withKeyName name: String, withValue value: Bool) {
+    public init(withKeyName name: String, withBoolValue value: Bool) {
         self.name = name
         self.value = value
         self.type = AttributeType.timeInMilli.rawValue
