@@ -322,14 +322,14 @@ class ModalView: UIView, Modal, ImpressionTrackable {
      */
     @objc fileprivate func didTapOnExitButton(_ sender: UIGestureRecognizer){
         
+        self.dismiss()
+        
         // To log and send impression.
         if let tag = sender.view?.tag,
             let type = ImpressionType(rawValue: tag) {
             logImpression(withImpressionType: type, withProperties: [])
             sendImpression()
         }
-        
-        self.dismiss()
     }
     
     func logImpression(withImpressionType type: ImpressionType, withProperties properties: [Property]) {

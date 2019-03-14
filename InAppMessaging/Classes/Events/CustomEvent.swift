@@ -3,7 +3,11 @@
  */
 @objc public class CustomEvent: Event {
     
-    public init(withName name: String) {
+    var customAttributes: [CustomAttribute]?
+    
+    public init(withName name: String, withCustomAttributes customAttributes: [CustomAttribute]?) {
+        
+        self.customAttributes = customAttributes
         
         super.init(
             eventType: EventType.custom,
@@ -11,7 +15,9 @@
         )
     }
     
-    init(withName name: String, timestamp: Int) {
+    init(withName name: String, withCustomAttributes customAttributes: [CustomAttribute]?, timestamp: Int) {
+        
+        self.customAttributes = customAttributes
         
         super.init(
             eventType: EventType.custom,
@@ -27,4 +33,4 @@
     override public func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
     }
-}
+}   

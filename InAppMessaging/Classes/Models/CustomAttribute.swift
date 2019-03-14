@@ -1,7 +1,8 @@
 /**
  * Model to represent a custom attribute that is returned by the ping request in triggers.
  */
-@objc public class CustomAttribute: NSObject {
+@objc
+public class CustomAttribute: NSObject {
     let name: String
     let value: Any
     let type: Int

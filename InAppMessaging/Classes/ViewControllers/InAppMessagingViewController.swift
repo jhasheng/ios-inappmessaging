@@ -10,6 +10,7 @@ class InAppMessagingViewController: UIViewController {
 
         // Display first campaign if the ready campaign list is not empty.
         if let firstCampaign = ReadyCampaignRepository.getFirst() {
+            ReadyCampaignRepository.removeFirst()
             displayIndividualCampaign(firstCampaign)
         }
     }
@@ -53,7 +54,6 @@ class InAppMessagingViewController: UIViewController {
             if let viewToDisplay = view {
                 DisplayedCampaignRepository.addCampaign(campaign)
                 viewToDisplay.show()
-                ReadyCampaignRepository.removeFirst()
             }
         }
     }
