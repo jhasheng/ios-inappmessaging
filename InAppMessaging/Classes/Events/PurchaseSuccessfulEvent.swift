@@ -15,7 +15,7 @@
     
     var getDictionary: [String: Any] {
         return [
-            "eventType": super.eventType,
+            "eventType": super.eventType.rawValue,
             "eventName": super.eventName,
             "timestamp": super.timestamp,
             "purchaseAmountMicros": self.purchaseAmount,
