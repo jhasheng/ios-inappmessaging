@@ -1,7 +1,7 @@
 /**
  * Handles hitting the impression endpoint.
  */
-class ImpressionClient: HttpRequestable {
+class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
     typealias Property = Attribute
     
     /**
@@ -36,12 +36,37 @@ class ImpressionClient: HttpRequestable {
                 campaignKey: campaign
             ]
         
-            // Send data back to impression endpoint.
+            // Broadcast impression data to RAnalytics.
+            self.sendEventName(
+                "inappmessaging_impressions",
+                ["impressionList": deconstructImpressionObject(impressionList: impressions)])
+        
+            // Send impression data back to impression endpoint.
             self.requestFromServer(
                 withUrl: pingImpressionEndpoint,
                 withHttpMethod: .post,
                 withOptionalParams: optionalParams,
                 withAdditionalHeaders: buildRequestHeader())
+    }
+    
+    /**
+     * Deconstruct impression object list to send back to RAnalytics.
+     * This is to solve the issue where RAnalytics cannot take in IAM's custom objects.
+     * @param { impressionList: [Impression] } array of impression objects.
+     * @returns { [Any] } array of primitive impression values.
+     */
+    func deconstructImpressionObject(impressionList: [Impression]) -> [Any] {
+        var results = [Any]()
+        
+        for impression in impressionList {
+            var tempImpression = [String : Any]()
+            tempImpression["type"] = impression.type.rawValue
+            tempImpression["ts"] = impression.ts
+            
+            results.append(tempImpression)
+        }
+        
+        return results
     }
     
     /**
