@@ -26,7 +26,9 @@
                     return purchaseSuccessfulEvent.getDictionary
                 }
             case .custom:
-                break
+                if let customEvent = self as? CustomEvent {
+                    return customEvent.getDictionary
+                }
             default:
                 break
         }
