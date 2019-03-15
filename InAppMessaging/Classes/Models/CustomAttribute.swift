@@ -7,6 +7,14 @@ public class CustomAttribute: NSObject {
     let value: Any
     let type: Int
     
+    var dictionary: [String: Any] {
+        return [
+            "name": name,
+            "value": value,
+            "type": type
+        ]
+    }
+    
     @objc
     public init(withKeyName name: String, withStringValue value: String) {
         self.name = name
