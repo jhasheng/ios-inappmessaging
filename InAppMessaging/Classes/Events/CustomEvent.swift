@@ -5,11 +5,19 @@
     
     var customAttributes: [CustomAttribute]?
     var getDictionary: [String: Any] {
+        
+        var attributesList = [Any]()
+        if let customAttributes = self.customAttributes {
+            for attribute in customAttributes {
+                attributesList.append(attribute.dictionary)
+            }
+        }
+        
         return [
             "eventType": super.eventType.rawValue,
             "eventName": super.eventName,
             "timestamp": super.timestamp,
-            "customAttributes": self.customAttributes
+            "customAttributes": attributesList
         ]
     }
     
