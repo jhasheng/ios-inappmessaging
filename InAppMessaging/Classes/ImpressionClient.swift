@@ -38,7 +38,7 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
         
             // Broadcast impression data to RAnalytics.
             self.sendEventName(
-                "inappmessaging_impressions",
+                Keys.RAnalytics.impressions,
                 ["impressionList": deconstructImpressionObject(impressionList: impressions)])
         
             // Send impression data back to impression endpoint.
@@ -55,18 +55,14 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
      * @param { impressionList: [Impression] } array of impression objects.
      * @returns { [Any] } array of primitive impression values.
      */
-    func deconstructImpressionObject(impressionList: [Impression]) -> [Any] {
-        var results = [Any]()
+    func deconstructImpressionObject(impressionList: [Impression]) -> [String: Any] {
+        var impressionMap = [String: Any]()
         
         for impression in impressionList {
-            var tempImpression = [String : Any]()
-            tempImpression["type"] = impression.type.rawValue
-            tempImpression["ts"] = impression.ts
-            
-            results.append(tempImpression)
+            impressionMap.updateValue(impression.ts, forKey: impression.type.description)
         }
         
-        return results
+        return impressionMap
     }
     
     /**

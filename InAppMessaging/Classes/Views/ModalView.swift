@@ -137,7 +137,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         exitButton.isUserInteractionEnabled = true
         exitButton.layer.cornerRadius = exitButton.frame.width / 2
         exitButton.layer.masksToBounds = true
-        exitButton.tag = ImpressionType.exitButton.rawValue
+        exitButton.tag = ImpressionType.EXIT.rawValue
         exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
         self.backgroundView.addSubview(exitButton)
         
@@ -252,7 +252,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
                 buttonToAdd.setTitleColor(UIColor(hexFromString: button.buttonTextColor), for: .normal)
                 buttonToAdd.titleLabel?.font = .boldSystemFont(ofSize: buttonTextFontSize)
                 buttonToAdd.layer.cornerRadius = cornerRadiusForButtons
-                buttonToAdd.tag = index == 0 ? ImpressionType.actionOneButton.rawValue : ImpressionType.actionTwoButton.rawValue
+                buttonToAdd.tag = index == 0 ? ImpressionType.ACTION_ONE.rawValue : ImpressionType.ACTION_TWO.rawValue
                 buttonToAdd.backgroundColor = UIColor(hexFromString: button.buttonBackgroundColor)
                 buttonToAdd.layer.borderColor = UIColor(hexFromString: button.buttonTextColor).cgColor
                 buttonToAdd.layer.borderWidth = 1
@@ -285,7 +285,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     fileprivate func appendSubViews() {
         self.addSubview(self.backgroundView)
         self.addSubview(self.dialogView)
-        logImpression(withImpressionType: .impression, withProperties: [])
+        logImpression(withImpressionType: .IMPRESSION, withProperties: [])
     }
     
     // Button selectors for modal view.

@@ -29,8 +29,6 @@
                 if let customEvent = self as? CustomEvent {
                     return customEvent.dict
                 }
-            default:
-                break
         }
         return [:]
     }
