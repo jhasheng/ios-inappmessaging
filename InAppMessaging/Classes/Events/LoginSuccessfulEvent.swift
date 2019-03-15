@@ -3,7 +3,7 @@
  */
 @objc public class LoginSuccessfulEvent: Event {
     
-    var getDictionary: [String: Any] {
+    var dict: [String: Any] {
         return [
             "eventType": super.eventType.rawValue,
             "eventName": super.eventName,

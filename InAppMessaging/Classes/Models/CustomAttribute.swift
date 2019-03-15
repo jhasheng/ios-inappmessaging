@@ -7,7 +7,7 @@ public class CustomAttribute: NSObject {
     let value: Any
     let type: Int
     
-    var dictionary: [String: Any] {
+    var convertToDict: [String: Any] {
         return [
             "name": name,
             "value": value,

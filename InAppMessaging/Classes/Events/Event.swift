@@ -15,19 +15,19 @@
                 break
             case .appStart:
                 if let appStartEvent = self as? AppStartEvent {
-                    return appStartEvent.getDictionary
+                    return appStartEvent.dict
                 }
             case .loginSuccessful:
                 if let loginSuccessfulEvent = self as? LoginSuccessfulEvent {
-                    return loginSuccessfulEvent.getDictionary
+                    return loginSuccessfulEvent.dict
                 }
             case .purchaseSuccessful:
                 if let purchaseSuccessfulEvent = self as? PurchaseSuccessfulEvent {
-                    return purchaseSuccessfulEvent.getDictionary
+                    return purchaseSuccessfulEvent.dict
                 }
             case .custom:
                 if let customEvent = self as? CustomEvent {
-                    return customEvent.getDictionary
+                    return customEvent.dict
                 }
             default:
                 break

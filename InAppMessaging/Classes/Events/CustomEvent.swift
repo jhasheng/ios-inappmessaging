@@ -4,12 +4,12 @@
 @objc public class CustomEvent: Event {
     
     var customAttributes: [CustomAttribute]?
-    var getDictionary: [String: Any] {
+    var dict: [String: Any] {
         
         var attributesList = [Any]()
         if let customAttributes = self.customAttributes {
             for attribute in customAttributes {
-                attributesList.append(attribute.dictionary)
+                attributesList.append(attribute.convertToDict)
             }
         }
         
