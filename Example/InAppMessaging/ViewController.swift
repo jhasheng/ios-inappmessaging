@@ -36,7 +36,7 @@ class ViewController: UIViewController {
         InAppMessaging.logEvent(
             CustomEvent(
                 withName: "custom_test",
-                withCustomAttributes: [CustomAttribute(withKeyName: "test", withValue: "value")]
+                withCustomAttributes: [CustomAttribute(withKeyName: "test", withStringValue: "value")]
             )
         )
     }
