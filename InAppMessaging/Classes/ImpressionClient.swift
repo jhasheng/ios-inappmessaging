@@ -39,7 +39,7 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
             // Broadcast impression data to RAnalytics.
             self.sendEventName(
                 Keys.RAnalytics.impressions,
-                deconstructImpressionObject(impressionList: impressions)
+                ["impressions": deconstructImpressionObject(impressionList: impressions)]
             )
         
             // Send impression data back to impression endpoint.
@@ -54,16 +54,20 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
      * Deconstruct impression object list to send back to RAnalytics.
      * This is to solve the issue where RAnalytics cannot take in IAM's custom objects.
      * @param { impressionList: [Impression] } array of impression objects.
-     * @returns { [String: Any] } object of primitive impression values mapping impression type name to timestamp.
+     * @returns { [Any] } array of primitive impression values.
      */
-    func deconstructImpressionObject(impressionList: [Impression]) -> [String: Any] {
-        var impressionMap = [String: Any]()
+    func deconstructImpressionObject(impressionList: [Impression]) -> [Any] {
+        var resultList = [Any]()
         
         for impression in impressionList {
-            impressionMap.updateValue(impression.ts, forKey: impression.type.description)
+            var tempImpression = [String: Any]()
+            tempImpression["ACTION"] =  impression.type.rawValue
+            tempImpression["ts"] = impression.ts
+            
+            resultList.append(tempImpression)
         }
         
-        return impressionMap
+        return resultList
     }
     
     /**
