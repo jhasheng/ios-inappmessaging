@@ -12,7 +12,7 @@
     }
 
     @objc
-    public init(isUserLoggedIn: Bool) {
+    public init() {
 
         super.init(
             eventType: EventType.appStart,
@@ -20,7 +20,7 @@
         )
     }
     
-    init(isUserLoggedIn: Bool, timestamp: Int) {
+    init(timestamp: Int) {
         
         super.init(
             eventType: EventType.appStart,
