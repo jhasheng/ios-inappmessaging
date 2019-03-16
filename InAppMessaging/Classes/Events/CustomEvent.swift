@@ -4,6 +4,8 @@
 @objc public class CustomEvent: Event {
     
     var customAttributes: [CustomAttribute]?
+    
+    // For broadcasting to RAT SDK. 'eventType' field will be removed.
     var dict: [String: Any] {
         
         var attributesList = [Any]()
@@ -14,7 +16,6 @@
         }
         
         return [
-            "eventType": super.eventType.rawValue,
             "eventName": super.eventName,
             "timestamp": super.timestamp,
             "customAttributes": attributesList

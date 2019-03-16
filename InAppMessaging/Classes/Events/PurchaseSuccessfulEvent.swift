@@ -13,9 +13,9 @@
     var currencyCode: String
     var itemList: [String]
     
+    // For broadcasting to RAT SDK. 'eventType' field will be removed.
     var dict: [String: Any] {
         return [
-            "eventType": super.eventType.rawValue,
             "eventName": super.eventName,
             "timestamp": super.timestamp,
             "purchaseAmountMicros": self.purchaseAmount,

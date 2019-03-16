@@ -3,19 +3,16 @@
  */
 @objc public class AppStartEvent: Event {
     
-    var isUserLoggedIn: Bool
+    // For broadcasting to RAT SDK. 'eventType' field will be removed.
     var dict: [String: Any] {
         return [
-            "eventType": super.eventType.rawValue,
             "eventName": super.eventName,
-            "timestamp": super.timestamp,
-            "isUserLoggedIn": self.isUserLoggedIn
+            "timestamp": super.timestamp
         ]
     }
 
     @objc
     public init(isUserLoggedIn: Bool) {
-        self.isUserLoggedIn = isUserLoggedIn
 
         super.init(
             eventType: EventType.appStart,
@@ -24,7 +21,6 @@
     }
     
     init(isUserLoggedIn: Bool, timestamp: Int) {
-        self.isUserLoggedIn = isUserLoggedIn
         
         super.init(
             eventType: EventType.appStart,

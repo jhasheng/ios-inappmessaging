@@ -7,11 +7,11 @@ public class CustomAttribute: NSObject {
     let value: Any
     let type: Int
     
+    // For broadcasting to RAT SDK. 'type' field will be removed.
     var convertToDict: [String: Any] {
         return [
             "name": name,
-            "value": value,
-            "type": type
+            "value": value
         ]
     }
     
