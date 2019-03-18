@@ -67,6 +67,7 @@ struct Trigger: Decodable {
 struct MessagePayload: Decodable {
     let title: String
     let messageBody: String?
+    let messageLowerBody: String?
     let header: String?
     let titleColor: String
     let headerColor: String
@@ -79,6 +80,7 @@ struct MessagePayload: Decodable {
     enum CodingKeys: String, CodingKey {
         case title
         case messageBody
+        case messageLowerBody
         case header
         case titleColor
         case headerColor
