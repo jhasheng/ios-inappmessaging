@@ -101,6 +101,17 @@ class ModalView: UIView, Modal, ImpressionTrackable {
             self.dialogViewCurrentHeight += heightOffset
         }
         
+        if let lowerBodyMessage = campaign.messagePayload.messageLowerBody {
+            // Handle spacing for when there is no header message.
+            if campaign.messagePayload.header == nil &&
+                campaign.messagePayload.messageBody == nil {
+                
+                    self.dialogViewCurrentHeight += heightOffset
+            }
+            
+//            self.
+        }
+        
         // Buttons.
         if let buttonList = campaign.messagePayload.messageSettings.controlSettings?.buttons, !buttonList.isEmpty {
             // Handle spacing for when there is only an image and buttons
