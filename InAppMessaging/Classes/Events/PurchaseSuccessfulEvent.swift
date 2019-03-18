@@ -13,6 +13,19 @@
     var currencyCode: String
     var itemList: [String]
     
+    // For broadcasting to RAT SDK. 'eventType' field will be removed.
+    var dict: [String: Any] {
+        return [
+            "eventName": super.eventName,
+            "timestamp": super.timestamp,
+            "purchaseAmountMicros": self.purchaseAmount,
+            "numberOfItems": self.numberOfItems,
+            "currencyCode": self.currencyCode,
+            "itemIdList": self.itemList
+        ]
+    }
+    
+    @objc
     public init(
         withPurchaseAmount purchaseAmount: Int,
         withNumberOfItems numberOfItems: Int,

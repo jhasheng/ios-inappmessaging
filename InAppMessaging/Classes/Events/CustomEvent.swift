@@ -5,6 +5,24 @@
     
     var customAttributes: [CustomAttribute]?
     
+    // For broadcasting to RAT SDK. 'eventType' field will be removed.
+    var dict: [String: Any] {
+        
+        var attributesList = [Any]()
+        if let customAttributes = self.customAttributes {
+            for attribute in customAttributes {
+                attributesList.append(attribute.convertToDict)
+            }
+        }
+        
+        return [
+            "eventName": super.eventName,
+            "timestamp": super.timestamp,
+            "customAttributes": attributesList
+        ]
+    }
+    
+    @objc
     public init(withName name: String, withCustomAttributes customAttributes: [CustomAttribute]?) {
         
         self.customAttributes = customAttributes

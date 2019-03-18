@@ -3,6 +3,15 @@
  */
 @objc public class LoginSuccessfulEvent: Event {
     
+    // For broadcasting to RAT SDK. 'eventType' field will be removed.
+    var dict: [String: Any] {
+        return [
+            "eventName": super.eventName,
+            "timestamp": super.timestamp
+        ]
+    }
+    
+    @objc
     public init() {
         super.init(
             eventType: EventType.loginSuccessful,

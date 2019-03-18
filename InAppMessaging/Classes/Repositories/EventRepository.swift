@@ -1,15 +1,18 @@
 /**
  * Repository to store all the events that were logged from the host app.
  */
-struct EventRepository: EventStorable {
+struct EventRepository: EventStorable, AnalyticsBroadcaster {
     static var list: [Event] = []
 
     static func addEvent(_ event: Event) {
         // Appends to the list of events.
-        list.append(event)
+        self.list.append(event)
+        
+        // Broadcast event to RAT SDK.
+        EventRepository().sendEventName(Keys.RAnalytics.events, event.dictionary)
     }
     
     static func clear() {
-        list.removeAll()
+        self.list.removeAll()
     }
 }

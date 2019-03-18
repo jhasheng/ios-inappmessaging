@@ -63,5 +63,13 @@ struct Keys {
     struct KVObject {
         static let campaign = "campaign"
     }
+    
+    /**
+     * Constants for RAT SDK event names.
+     */
+    struct RAnalytics {
+        static let impressions = "InAppMessaging_impressions"
+        static let events = "InAppMessaging_events"
+    }
 }
 
