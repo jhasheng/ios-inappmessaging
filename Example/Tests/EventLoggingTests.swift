@@ -39,7 +39,7 @@ class EventLoggingTests: QuickSpec {
             it("should not throw an exception because theres an existing .plist file") {
 
                 do {
-                    try MockEventLogger.savePropertyList(PurchaseSuccessfulEvent(withCustomAttributes: nil))
+                    try MockEventLogger.savePropertyList(LoginSuccessfulEvent.init())
                 } catch {}
                 
                 expect {

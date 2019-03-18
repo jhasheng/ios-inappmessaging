@@ -35,7 +35,7 @@ protocol HttpRequestable {
     func requestFromServer(withUrl url: String,
                  withHttpMethod httpMethod: HttpMethod,
                  withOptionalParams optionalParams: [String: Any],
-                 withAdditionalHeaders addtionalHeaders: [Attribute]?) -> Data?
+                 withAdditionalHeaders addtionalHeaders: [Attribute]?) -> (data: Data?, response: HTTPURLResponse?)
     
     /**
      * Build out the request body for talking to configuration server.
@@ -57,9 +57,10 @@ extension HttpRequestable {
     func requestFromServer(withUrl url: String,
         withHttpMethod httpMethod: HttpMethod,
         withOptionalParams optionalParams: [String: Any] = [:],
-        withAdditionalHeaders addtionalHeaders: [Attribute]?) -> Data? {
+        withAdditionalHeaders addtionalHeaders: [Attribute]?) -> (data: Data?, response: HTTPURLResponse?) {
         
             var dataToReturn: Data?
+            var serverResponse: HTTPURLResponse?
         
             if let requestUrl = URL(string: url) {
                 
@@ -84,13 +85,18 @@ extension HttpRequestable {
                         return
                     }
                     
-                    guard let data = data else {
-                        print("InAppMessaging: data returned is nil")
+                    guard let data = data,
+                        let response = response as? HTTPURLResponse
+                    else {
+                        #if DEBUG
+                            print("InAppMessaging: HTTP call failed.")
+                        #endif
                         semaphore.signal()
                         return
                     }
                     
                     dataToReturn = data
+                    serverResponse = response
                     
                     // Signal completion of HTTP request.
                     semaphore.signal()
@@ -100,7 +106,7 @@ extension HttpRequestable {
                 semaphore.wait()
             }
         
-            return dataToReturn
+            return (dataToReturn, serverResponse)
     }
     
     func appendHeaders(withHeaders headers: [Attribute]?, forRequest request: inout URLRequest) {

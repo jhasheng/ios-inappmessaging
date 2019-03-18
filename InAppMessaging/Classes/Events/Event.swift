@@ -3,16 +3,14 @@
  * Implements Codable in order for it to be encoded/decoded
  * as a data type and store/load from a property list.
  */
-@objc public class Event: NSObject, Encodable {
+@objc public class Event: NSObject, Codable {
     var eventType: EventType
     var timestamp: Int
     var eventName: String
-    var customAttributes: [Attribute]?
     
-    init(eventType: EventType, eventName: String, customAttributes: [Attribute]?) {
+    init(eventType: EventType, eventName: String, timestamp: Int = Date().millisecondsSince1970) {
         self.eventType = eventType
-        self.timestamp = Date().millisecondsSince1970
+        self.timestamp = timestamp
         self.eventName = eventName
-        self.customAttributes = customAttributes ?? nil
     }
 }

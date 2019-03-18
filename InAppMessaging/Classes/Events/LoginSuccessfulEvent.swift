@@ -3,12 +3,23 @@
  */
 @objc public class LoginSuccessfulEvent: Event {
     
-    public init(withCustomAttributes customAttributes: [Attribute]?) {
+    public init() {
+        super.init(
+            eventType: EventType.loginSuccessful,
+            eventName: Keys.Event.loginSuccessful
+        )
+    }
+    
+    init(timestamp: Int) {
         super.init(
             eventType: EventType.loginSuccessful,
             eventName: Keys.Event.loginSuccessful,
-            customAttributes: customAttributes ?? nil
+            timestamp: timestamp
         )
+    }
+    
+    required public init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
     }
     
     override public func encode(to encoder: Encoder) throws {

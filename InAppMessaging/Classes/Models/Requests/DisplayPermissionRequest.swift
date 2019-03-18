@@ -11,5 +11,4 @@ struct DisplayPermissionRequest: Encodable {
     let locale: String
     let events: [Event]
     let lastPingMillis: Int
-
 }

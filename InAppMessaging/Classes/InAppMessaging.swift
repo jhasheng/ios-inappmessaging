@@ -48,10 +48,10 @@
      * @param { event: Event } Event object to log.
      */
     @objc public class func logEvent(_ event: Event) {
-        if InAppMessaging.isEnabled {
-            DispatchQueue.global(qos: .background).async {
-                EventRepository.addEvent(event)
-                
+        DispatchQueue.global(qos: .background).async {
+            EventRepository.addEvent(event)
+            
+            if InAppMessaging.isEnabled {
                 CommonUtility.lock(
                     objects: [
                         PingResponseRepository.list as AnyObject,

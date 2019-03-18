@@ -1,11 +1,11 @@
 /**
- * Model to represent a custom attribute that is returned by the ping request in triggers.
+ * Model to represent a basic key value pair.
  */
-@objc public class Attribute: NSObject, Codable {
+struct Attribute: Codable {
     let k: String
     let v: String
     
-    public init(withKeyName k: String, withValue v: String) {
+    init(withKeyName k: String, withValue v: String) {
         self.k = k
         self.v = v
     }

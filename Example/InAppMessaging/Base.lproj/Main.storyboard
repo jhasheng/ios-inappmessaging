@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -20,11 +16,11 @@
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVB-nV-Xh6">
-                                <rect key="frame" x="116" y="194" width="143" height="30"/>
+                                <rect key="frame" x="228.5" y="194" width="143" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="ERa-tS-Yb1"/>
                                     <constraint firstAttribute="width" secondItem="gVB-nV-Xh6" secondAttribute="height" multiplier="143:30" id="jXJ-hd-x7w"/>
@@ -32,17 +28,17 @@
                                 </constraints>
                                 <state key="normal" title="purchase_successful"/>
                                 <connections>
-                                    <action selector="showModalButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="iI5-b1-W5l"/>
+                                    <action selector="purchaseSuccessfulButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="iI5-b1-W5l"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IAM" translatesAutoresizingMaskIntoConstraints="NO" id="IoV-pG-Oba">
-                                <rect key="frame" x="29" y="20" width="317" height="77"/>
+                                <rect key="frame" x="33" y="20" width="534" height="77"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="77" id="rzu-PU-EhI"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="He8-N3-cSd">
-                                <rect key="frame" x="131" y="244" width="113" height="30"/>
+                                <rect key="frame" x="243.5" y="244" width="113" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="113" id="9qa-ja-rKa"/>
                                     <constraint firstAttribute="height" constant="30" id="Lf5-DG-RNO"/>
@@ -54,7 +50,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zzZ-Cb-5PD">
-                                <rect key="frame" x="145" y="292" width="84" height="30"/>
+                                <rect key="frame" x="257.5" y="292" width="84" height="30"/>
                                 <state key="normal" title="custom_test"/>
                                 <connections>
                                     <action selector="customTestButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="ehl-RW-0kA"/>

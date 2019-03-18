@@ -21,13 +21,18 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func showModalButton(_ sender: Any) {
-        InAppMessaging.logEvent(PurchaseSuccessfulEvent(withCustomAttributes: nil))
+    @IBAction func purchaseSuccessfulButton(_ sender: Any) {
+        InAppMessaging.logEvent(
+            PurchaseSuccessfulEvent.init(
+                withPurchaseAmount: 20,
+                withNumberOfItems: 2,
+                withCurrencyCode: "USD",
+                withItems: []))
     }
     @IBAction func loginSuccessfulButton(_ sender: Any) {
-        InAppMessaging.logEvent(LoginSuccessfulEvent(withCustomAttributes: nil))
+        InAppMessaging.logEvent(LoginSuccessfulEvent())
     }
     @IBAction func customTestButton(_ sender: Any) {
-        InAppMessaging.logEvent(CustomEvent(withName: "custom_test"))
+        InAppMessaging.logEvent(CustomEvent(withName: "custom_test", withCustomAttributes: nil))
     }
 }
