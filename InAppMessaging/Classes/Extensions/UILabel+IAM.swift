@@ -12,7 +12,7 @@ extension UILabel
         label.lineBreakMode = self.lineBreakMode
         label.font = self.font
         label.text = self.text
-        label.setLineSpacing(lineSpacing: 5.0)
+        label.setLineSpacing(lineSpacing: 3.0)
         label.sizeToFit()
         
         return label.frame.height

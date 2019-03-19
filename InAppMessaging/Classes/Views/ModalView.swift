@@ -11,7 +11,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     var campaign: CampaignData?
 
     // Constant values used for UI elements in model views.
-    let heightOffset: CGFloat = 15 // Height offset for every UI element.
+    let heightOffset: CGFloat = 10 // Height offset for every UI element.
     let exitButtonHeightOffset: CGFloat = 30 // Height offset for exit button from the actual message.
     let exitButtonSize: CGFloat = 20 // Size of the exit button.
     let backgroundViewAlpha: CGFloat = 0.66 // Value to adjust the transparency of the background view.
@@ -23,7 +23,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     let singleButtonWidthOffset: CGFloat = 0 // Width offset when only one button is given.
     let twoButtonWidthOffset: CGFloat = 24 // Width offset when two buttons are given.
     let horizontalSpacingOffset: CGFloat = 20 // The spacing between dialog view and the children elements.
-    let initialFrameWidthOffset: CGFloat = 80 // Margin between the left and right frame width and message.
+    let initialFrameWidthOffset: CGFloat = 120 // Margin between the left and right frame width and message.
     let initialFrameWidthIPadMultiplier: CGFloat = 0.75 // Percentage size for iPad's to display
     let imageAspectRatio: CGFloat = 1.25 // Aspect ratio for image. Currently set to 3:4.
     
@@ -98,6 +98,18 @@ class ModalView: UIView, Modal, ImpressionTrackable {
             }
             
             self.appendBodyMessage(withBody: bodyMessage)
+            self.dialogViewCurrentHeight += heightOffset
+        }
+        
+        if let lowerBodyMessage = campaign.messagePayload.messageLowerBody {
+            // Handle spacing for when there is no header message.
+            if campaign.messagePayload.header == nil &&
+                campaign.messagePayload.messageBody == nil {
+                
+                    self.dialogViewCurrentHeight += heightOffset
+            }
+            
+            self.appendLowerBodyMessage(withBody: lowerBodyMessage)
             self.dialogViewCurrentHeight += heightOffset
         }
         
@@ -208,7 +220,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
                           height: 0))
         
         bodyMessageLabel.text = bodyMessage
-        bodyMessageLabel.setLineSpacing(lineSpacing: 5.0)
+        bodyMessageLabel.setLineSpacing(lineSpacing: 3.0)
         bodyMessageLabel.font = .systemFont(ofSize: bodyMessageFontSize)
         bodyMessageLabel.textAlignment = .left
         bodyMessageLabel.lineBreakMode = .byWordWrapping
@@ -217,6 +229,29 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         self.dialogView.addSubview(bodyMessageLabel)
         
         self.dialogViewCurrentHeight += bodyMessageLabel.frame.height
+    }
+    
+    /**
+     * Append lower body message to dialog view.
+     * @param { bodyMessage: String } string of the lower body message.
+     */
+    fileprivate func appendLowerBodyMessage(withBody lowerBodyMessage: String) {
+        let lowerBodyMessageLabel = UILabel(
+            frame: CGRect(x: horizontalSpacingOffset,
+                          y: self.dialogViewCurrentHeight,
+                          width: self.dialogViewWidth - (horizontalSpacingOffset * 2),
+                          height: 0))
+        
+        lowerBodyMessageLabel.text = lowerBodyMessage
+        lowerBodyMessageLabel.setLineSpacing(lineSpacing: 3.0)
+        lowerBodyMessageLabel.font = .systemFont(ofSize: bodyMessageFontSize)
+        lowerBodyMessageLabel.textAlignment = .left
+        lowerBodyMessageLabel.lineBreakMode = .byWordWrapping
+        lowerBodyMessageLabel.numberOfLines = 0
+        lowerBodyMessageLabel.frame.size.height = lowerBodyMessageLabel.optimalHeight
+        self.dialogView.addSubview(lowerBodyMessageLabel)
+        
+        self.dialogViewCurrentHeight += lowerBodyMessageLabel.frame.height
     }
     
     /**

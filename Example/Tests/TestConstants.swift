@@ -16,6 +16,7 @@ struct TestConstants {
                         messagePayload: MessagePayload.init(
                             title: "testTitle",
                             messageBody: "testBody",
+                            messageLowerBody:"testLowerBody",
                             header: "testHeader",
                             titleColor: "color",
                             headerColor: "color2",
@@ -46,6 +47,7 @@ struct TestConstants {
                         messagePayload: MessagePayload.init(
                             title: "testTitle",
                             messageBody: "testBody",
+                            messageLowerBody:"testLowerBody",
                             header: "testHeader",
                             titleColor: "color",
                             headerColor: "color2",
@@ -76,6 +78,7 @@ struct TestConstants {
                         messagePayload: MessagePayload.init(
                             title: "testTitle",
                             messageBody: "testBody",
+                            messageLowerBody:"testLowerBody",
                             header: "testHeader",
                             titleColor: "color",
                             headerColor: "color2",
@@ -113,6 +116,7 @@ struct TestConstants {
                         messagePayload: MessagePayload.init(
                             title: "testTitle",
                             messageBody: "testBody",
+                            messageLowerBody:"testLowerBody",
                             header: "testHeader",
                             titleColor: "color",
                             headerColor: "color2",
@@ -143,6 +147,7 @@ struct TestConstants {
                         messagePayload: MessagePayload.init(
                             title: "testTitle",
                             messageBody: "testBody",
+                            messageLowerBody:"testLowerBody",
                             header: "testHeader",
                             titleColor: "color",
                             headerColor: "color2",
@@ -186,6 +191,7 @@ struct TestConstants {
                         messagePayload: MessagePayload.init(
                             title: "testTitle",
                             messageBody: "testBody",
+                            messageLowerBody:"testLowerBody",
                             header: "testHeader",
                             titleColor: "color",
                             headerColor: "color2",
