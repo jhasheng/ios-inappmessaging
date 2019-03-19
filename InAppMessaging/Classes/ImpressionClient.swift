@@ -124,6 +124,11 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
             additionalHeaders.append(Attribute(withKeyName: Keys.Request.authorization, withValue: "OAuth2 \(accessToken)"))
         }
         
+        // Retrieve device ID and return in header of the request.
+        if let deviceId = UIDevice.current.identifierForVendor?.uuidString {
+            additionalHeaders.append(Attribute(withKeyName: Keys.Request.deviceID, withValue: deviceId))
+        }
+        
         return additionalHeaders
     }
 }

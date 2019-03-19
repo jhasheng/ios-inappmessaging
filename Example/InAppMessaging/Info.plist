@@ -28,6 +28,7 @@
 	<string>361ddcf0-4932-11e9-805a-d4896f936305</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>rakuten</string>
 		<string>youtube</string>
 		<string>instagram</string>
 		<string>fb</string>
