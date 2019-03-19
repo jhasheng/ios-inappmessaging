@@ -40,4 +40,8 @@ class ViewController: UIViewController {
             )
         )
     }
+    
+    @IBAction func appStartButton(_ sender: Any) {
+        InAppMessaging.logEvent(AppStartEvent())
+    }
 }
