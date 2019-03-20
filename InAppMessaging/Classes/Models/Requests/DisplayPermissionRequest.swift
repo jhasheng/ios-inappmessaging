@@ -9,6 +9,5 @@ struct DisplayPermissionRequest: Encodable {
     let appVersion: String
     let sdkVersion: String
     let locale: String
-    let events: [Event]
-    let lastPingMillis: Int
+    let lastPingInMillis: Int
 }

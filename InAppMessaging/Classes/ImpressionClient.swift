@@ -61,7 +61,7 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
         
         for impression in impressionList {
             var tempImpression = [String: Any]()
-            tempImpression["ACTION"] =  impression.type.rawValue
+            tempImpression["action"] =  impression.type.rawValue
             tempImpression["ts"] = impression.ts
             
             resultList.append(tempImpression)
@@ -122,6 +122,11 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
         // Retrieve access token and return in the header of the request.
         if let accessToken = IAMPreferenceRepository.getAccessToken() {
             additionalHeaders.append(Attribute(withKeyName: Keys.Request.authorization, withValue: "OAuth2 \(accessToken)"))
+        }
+        
+        // Retrieve device ID and return in header of the request.
+        if let deviceId = UIDevice.current.identifierForVendor?.uuidString {
+            additionalHeaders.append(Attribute(withKeyName: Keys.Request.deviceID, withValue: deviceId))
         }
         
         return additionalHeaders
