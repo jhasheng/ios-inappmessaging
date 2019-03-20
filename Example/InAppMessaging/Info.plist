@@ -21,7 +21,7 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>InAppMessagingConfigURL</key>
-	<string>https://iam-stg.westus.cloudapp.azure.com/config/get-config</string>
+	<string>http://danieltam.local:3000/config/get-config</string>
 	<key>InAppMessagingSDKVersion</key>
 	<string>0</string>
 	<key>InAppMessagingSubscriptionID</key>
