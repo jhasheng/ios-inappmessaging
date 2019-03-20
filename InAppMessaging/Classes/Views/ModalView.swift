@@ -24,8 +24,9 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     let twoButtonWidthOffset: CGFloat = 24 // Width offset when two buttons are given.
     let horizontalSpacingOffset: CGFloat = 20 // The spacing between dialog view and the children elements.
     let initialFrameWidthOffset: CGFloat = 120 // Margin between the left and right frame width and message.
-    let initialFrameWidthIPadMultiplier: CGFloat = 0.75 // Percentage size for iPad's to display
+    let initialFrameWidthIPadMultiplier: CGFloat = 0.60 // Percentage size for iPad's to display
     let imageAspectRatio: CGFloat = 1.25 // Aspect ratio for image. Currently set to 3:4.
+    let maxWindowHeightPercentage: CGFloat = 0.70 // The max height the window should take up before making text scrollable.
     
     var backgroundView = UIView()
     var dialogView = UIView()
@@ -92,50 +93,31 @@ class ModalView: UIView, Modal, ImpressionTrackable {
             campaign.messagePayload.messageBody != nil ||
             campaign.messagePayload.messageLowerBody != nil {
             
+            // Handle spacing case for when there is no header.
+            if campaign.messagePayload.header != nil {
                 self.dialogViewCurrentHeight += heightOffset
+            }
             
                 self.appendTextView(withMessage: campaign.messagePayload)
             
-                self.dialogViewCurrentHeight += self.textView.frame.height + heightOffset
+                self.dialogViewCurrentHeight += self.textView.frame.height
+            
+             // Handle spacing case for when there are no messages.
+            if campaign.messagePayload.messageBody != nil ||
+                campaign.messagePayload.messageLowerBody != nil {
+                
+                    self.dialogViewCurrentHeight += heightOffset
+            }
             
         }
-
-//        // Header title.
-//        if let headerMessage = campaign.messagePayload.header {
-//            self.dialogViewCurrentHeight += heightOffset
-//            self.appendHeaderMessage(withHeader: headerMessage)
-//            self.dialogViewCurrentHeight += heightOffset
-//        }
-//
-//        // Body message.
-//        if let bodyMessage = campaign.messagePayload.messageBody {
-//            // Handle spacing for when there is no header message.
-//            if campaign.messagePayload.header == nil {
-//                self.dialogViewCurrentHeight += heightOffset
-//            }
-//
-//            self.appendBodyMessage(withBody: bodyMessage)
-//            self.dialogViewCurrentHeight += heightOffset
-//        }
-//
-//        if let lowerBodyMessage = campaign.messagePayload.messageLowerBody {
-//            // Handle spacing for when there is no header message.
-//            if campaign.messagePayload.header == nil &&
-//                campaign.messagePayload.messageBody == nil {
-//
-//                    self.dialogViewCurrentHeight += heightOffset
-//            }
-//
-//            self.appendLowerBodyMessage(withBody: lowerBodyMessage)
-//            self.dialogViewCurrentHeight += heightOffset
-//        }
         
         // Buttons.
         if let buttonList = campaign.messagePayload.messageSettings.controlSettings?.buttons, !buttonList.isEmpty {
             // Handle spacing for when there is only an image and buttons
             if campaign.messagePayload.resource.imageUrl != nil &&
                 campaign.messagePayload.header == nil &&
-                campaign.messagePayload.messageBody == nil {
+                campaign.messagePayload.messageBody == nil &&
+                campaign.messagePayload.messageLowerBody == nil {
                 
                     self.dialogViewCurrentHeight += heightOffset
             }
@@ -175,33 +157,63 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         }
     }
     
+    /**
+     * Creates the text view to be displayed using the campaign information.
+     * @param { messagePayload: MessagePayload } the campaign's message payload.
+     */
     fileprivate func appendTextView(withMessage messagePayload: MessagePayload) {
-        self.textView.frame = CGRect(x: horizontalSpacingOffset,
-                                     y: self.dialogViewCurrentHeight,
-                                     width: self.dialogViewWidth - (horizontalSpacingOffset * 2),
-                                     height: 120)
-        
-        textView.isEditable = false
-        
         // Header title.
         if let headerMessage = messagePayload.header {
             self.appendHeaderMessage(withHeader: headerMessage)
+            self.textViewContentHeight += heightOffset
         }
-        
-        self.textViewContentHeight += heightOffset
         
         // Body message.
         if let bodyMessage = messagePayload.messageBody {
+            
+            if messagePayload.header == nil {
+                self.textViewContentHeight += heightOffset
+            }
+            
             self.appendBodyMessage(withBody: bodyMessage)
+            
+            if messagePayload.messageLowerBody != nil {
+                self.textViewContentHeight += heightOffset
+            }
         }
         
-        self.textViewContentHeight += heightOffset
-        
         if let lowerBodyMessage = messagePayload.messageLowerBody {
+            
+            if messagePayload.header == nil &&
+                messagePayload.messageBody == nil {
+                
+                self.textViewContentHeight += heightOffset
+            }
+            
             self.appendLowerBodyMessage(withBody: lowerBodyMessage)
         }
         
+        // Height of the current window.
+        let overallHeight = self.dialogViewCurrentHeight + self.textViewContentHeight
+        // The height of the frame when multipled with the cap.
+        let maxFrameHeight = self.frame.height * maxWindowHeightPercentage
+        
+        // Calculate the optimal height based on the amount of text.
+        // If the whole window were to exceed over 70% of the frame's height, then keep it at 70%
+        // and make text scrollable
+        let optimalHeight = overallHeight < maxFrameHeight ?
+            self.textViewContentHeight :
+            maxFrameHeight - self.dialogViewCurrentHeight
+
+        print("optimal height: \(optimalHeight)")
+
+        self.textView.frame = CGRect(x: horizontalSpacingOffset,
+                                     y: self.dialogViewCurrentHeight,
+                                     width: self.dialogViewWidth - (horizontalSpacingOffset * 2),
+                                     height: optimalHeight)
+        
         textView.contentSize.height = self.textViewContentHeight
+        textView.isEditable = false
         
         self.dialogView.addSubview(textView)
     }
@@ -229,7 +241,6 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         }
         
         self.dialogView.addSubview(imageView)
-        
         self.dialogViewCurrentHeight += imageView.frame.height
     }
     
@@ -253,7 +264,6 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         headerMessageLabel.frame.size.height = headerMessageLabel.optimalHeight
         self.textView.addSubview(headerMessageLabel)
         
-//        self.dialogViewCurrentHeight += headerMessageLabel.frame.height
         self.textViewContentHeight += headerMessageLabel.frame.height
     }
     
@@ -277,7 +287,6 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         bodyMessageLabel.frame.size.height = bodyMessageLabel.optimalHeight
         self.textView.addSubview(bodyMessageLabel)
         
-//        self.dialogViewCurrentHeight += bodyMessageLabel.frame.height
         self.textViewContentHeight += bodyMessageLabel.frame.height
     }
     
@@ -301,7 +310,6 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         lowerBodyMessageLabel.frame.size.height = lowerBodyMessageLabel.optimalHeight
         self.textView.addSubview(lowerBodyMessageLabel)
         
-//        self.dialogViewCurrentHeight += lowerBodyMessageLabel.frame.height
         self.textViewContentHeight += lowerBodyMessageLabel.frame.height
     }
     
