@@ -246,7 +246,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         
         headerMessageLabel.text = headerMessage
         headerMessageLabel.setLineSpacing(lineSpacing: 3.0)
-        headerMessageLabel.textAlignment = .left
+        headerMessageLabel.textAlignment = .center
         headerMessageLabel.lineBreakMode = .byWordWrapping
         headerMessageLabel.numberOfLines = 0
         headerMessageLabel.font = .boldSystemFont(ofSize: headerMessageFontSize)
