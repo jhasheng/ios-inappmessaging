@@ -182,6 +182,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
             }
         }
         
+        // Lower body message.
         if let lowerBodyMessage = messagePayload.messageLowerBody {
             
             if messagePayload.header == nil &&
@@ -204,8 +205,6 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         let optimalHeight = overallHeight < maxFrameHeight ?
             self.textViewContentHeight :
             maxFrameHeight - self.dialogViewCurrentHeight
-
-        print("optimal height: \(optimalHeight)")
 
         self.textView.frame = CGRect(x: horizontalSpacingOffset,
                                      y: self.dialogViewCurrentHeight,
