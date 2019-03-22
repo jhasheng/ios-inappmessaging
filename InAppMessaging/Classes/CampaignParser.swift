@@ -8,17 +8,17 @@ struct CampaignParser {
      * @param { trigger: Trigger } the trigger to parse.
      * @returns { String? } the eventName of the trigger or nil.
      */
-    static func getCustomEventName(_ trigger: Trigger) -> String? {
-        let attributes = trigger.attributes
-
-        for attribute in attributes {
-            if attribute.k == Keys.Event.eventName {
-                return attribute.v
-            }
-        }
-
-        return nil
-    }
+//    static func getCustomEventName(_ trigger: Trigger) -> String? {
+//        let attributes = trigger.attributes
+//
+//        for attribute in attributes {
+//            if attribute.k == Keys.Event.eventName {
+//                return attribute.v
+//            }
+//        }
+//
+//        return nil
+//    }
 
     /**
      * Parses the campaign passed in for the view type. E.G modal/slideup/etc.

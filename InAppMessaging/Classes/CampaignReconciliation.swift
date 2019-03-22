@@ -68,24 +68,25 @@ struct CampaignReconciliation {
     }
     
     /**
-     * Create a hashmap of eventType(int) to list of events. This helps reconciliation process
+     * Create a hashmap of eventName(String) to list of events. This helps reconciliation process
      * by counting up the times an event has been logged by the host app.
      * @param { eventList: [Event] } the list of event to create a mapping of.
-     * @returns { [Int: [Event]] } dictionary of string to list of events.
+     * @returns { [String: [Event]] } dictionary of string to list of events.
      */
-    private static func createEventMap(_ eventList: [Event]) -> [Int: [Event]] {
-        var eventMap: [Int: [Event]] = [:]
+    private static func createEventMap(_ eventList: [Event]) -> [String: [Event]] {
+        var eventMap: [String: [Event]] = [:]
         
         // Loop through the event list to create the mapping.
         for event in eventList {
-            let eventType = event.eventType.rawValue
+//            let eventType = event.eventType.rawValue
+            let eventName = event.eventName
 
             // If the eventName already exist in the mapping, append the element.
-            if eventMap.keys.contains(eventType) {
-                eventMap[eventType]?.append(event)
+            if eventMap.keys.contains(eventName) {
+                eventMap[eventName]?.append(event)
             } else {
                 // else, create a new field and list.
-                eventMap[eventType] = [event]
+                eventMap[eventName] = [event]
             }
         }
         
@@ -107,12 +108,18 @@ struct CampaignReconciliation {
             return 0
         }
         
-        let localEventMapping = createEventMap(EventRepository.list) // Mapping of local events.
-        var campaignTriggerListMapping = [Int: Int]() // Mapping of the counter for each trigger needed for a campaign.
+        let localEventMapping = createEventMap(EventRepository.list) // Mapping of local events. [String: [Event]]
         
+        
+//        for trigger in campaignTriggers {
+//            if localEventMapping.keys.contains(trigger.attributes)
+//        }
+        
+        var campaignTriggerListMapping = [Int: Int]() // Mapping of the counter for each trigger needed for a campaign.
+
         for trigger in campaignTriggers {
             let eventType = trigger.eventType
-            
+
             // If a trigger is already added in the mapping, increment it.
             if campaignTriggerListMapping.keys.contains(trigger.eventType) {
                 // Increment only event types that are not AppStart event since AppStart

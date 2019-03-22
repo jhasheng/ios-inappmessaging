@@ -55,11 +55,13 @@ struct CampaignData: Decodable, Equatable {
 struct Trigger: Decodable {
     let type: Int
     let eventType: Int
-    let attributes: [Attribute]
+    let eventName: String
+    let attributes: [TriggerAttribute]
     
     enum CodingKeys: String, CodingKey {
         case type
         case eventType
+        case eventName
         case attributes
     }
 }
