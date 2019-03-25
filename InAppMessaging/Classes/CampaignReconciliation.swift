@@ -18,6 +18,9 @@ struct CampaignReconciliation {
         // Add all the test campaign into the ReadyCampaignRepository.
         ReadyCampaignRepository.addAllCampaigns(campaignList.testCampaigns)
         
+        // Create a local event mapping used to quickly match event and trigger names.
+        let localEventMapping = createEventMap(EventRepository.list) // Mapping of local events. [String: [Event]]
+        
         // Iterate through all the non-test campaigns to verify each one.
         for campaign in campaignList.nonTestCampaigns {
             
@@ -28,7 +31,7 @@ struct CampaignReconciliation {
             
             // Add to ReadyCampaignRepo if the campaign's set of triggers are satisfied.
             // Message will not be added twice within one reconciliation process.
-            if getNumberOfTimesToDisplay(campaign) > 0 {
+            if isCampaignReady(campaign, localEventMapping){
                 ReadyCampaignRepository.addCampaign(campaign)
             }
         }
@@ -44,20 +47,20 @@ struct CampaignReconciliation {
      * @param { campaign: Campaign } the campaign to check.
      * @returns { Int } the number of times to show this campaign.
      */
-    private static func getNumberOfTimesToDisplay(_ campaign: Campaign) -> Int {
-        let maxImpressions = campaign.campaignData.maxImpressions
-        let numberOfTimesTriggersAreSatisfied = getNumberOfTimesTriggersAreSatisfied(campaign)
-        
-        // The number of times the campaign should be displayed is either the max impression
-        // if it the number is lower than the number of times the trigger are satisfied
-        // or the number of times satisfied if it is lower than the max impression.
-        var numberOfTimesShouldBeDisplayed =
-            maxImpressions < numberOfTimesTriggersAreSatisfied ?
-                maxImpressions : numberOfTimesTriggersAreSatisfied
-        
-        // Subtract the result with the amount of times already shown.
-        return numberOfTimesShouldBeDisplayed - DisplayedCampaignRepository.getDisplayedCount(forCampaign: campaign)
-    }
+//    private static func getNumberOfTimesToDisplay(_ campaign: Campaign) -> Int {
+//        let maxImpressions = campaign.campaignData.maxImpressions
+//        let numberOfTimesTriggersAreSatisfied = getNumberOfTimesTriggersAreSatisfied(campaign)
+//
+//        // The number of times the campaign should be displayed is either the max impression
+//        // if it the number is lower than the number of times the trigger are satisfied
+//        // or the number of times satisfied if it is lower than the max impression.
+//        var numberOfTimesShouldBeDisplayed =
+//            maxImpressions < numberOfTimesTriggersAreSatisfied ?
+//                maxImpressions : numberOfTimesTriggersAreSatisfied
+//
+//        // Subtract the result with the amount of times already shown.
+//        return numberOfTimesShouldBeDisplayed - DisplayedCampaignRepository.getDisplayedCount(forCampaign: campaign)
+//    }
     
     /**
      * Verifies that the campaign that is being worked on has not reached its max impression count within a session.
@@ -99,18 +102,15 @@ struct CampaignReconciliation {
      * @param { campaign: Campaign } campaign to check for.
      * @return { Int } the amount of times a set of trigger is satified.
      */
-    private static func getNumberOfTimesTriggersAreSatisfied(_ campaign: Campaign) -> Int {
+    private static func isCampaignReady(_ campaign: Campaign, _ localEventMapping: [String: [Event]]) -> Bool {
         
         // Get the list of triggers off the campaign.
         guard let campaignTriggers = campaign.campaignData.triggers else {
             #if DEBUG
                 print("InAppMessaging: campaign has no triggers.")
             #endif
-            return 0
+            return false
         }
-        
-        // Create a local event mapping used to quickly match event and trigger names.
-        let localEventMapping = createEventMap(EventRepository.list) // Mapping of local events. [String: [Event]]
         
         // Number of times the set of triggers must be satisfied.
         let numberOfTimesTriggersMustBeSatisfied = getNumberOfTimesTriggersMustBeSatisfied(campaign)
@@ -127,7 +127,7 @@ struct CampaignReconciliation {
             // Check if there is a record in the localEventMapping with the same trigger name.
             // If there is none, then the campaign's triggers cannot be fully satisfied.
             guard let listOfMatchingNameEvents  = localEventMapping[trigger.eventName] else {
-                return 0
+                return false
             }
             
             // Iterate through the list of events with matching event name.
@@ -165,22 +165,12 @@ struct CampaignReconciliation {
             // the requirement by the end iterating the list of event, then it
             // isn't fully satified and will return false.
             if (amountOfTimesSatisfied < numberOfTimesTriggersMustBeSatisfied) {
-                return 0; // false
+                return false
             }
-            
-            // Now, we know the amount of times each trigger was satisfied.
         }
         
-        
-            
-            // Match trigger name with the localEventMapping to grab the list of event
-            
-            // Iterate through list of event and check for any matching attribute, if any exists.
-            
-            // If any trigger attribute match, move onto next attribute.
-            // If the attribute between trigger and event dont match, move onto next event
-        return 1 // true
-        }
+        return true
+    }
     
     /**
      * By keeping track of used campaigns and saving the indices of the used events, check to make sure
@@ -188,11 +178,17 @@ struct CampaignReconciliation {
      */
     fileprivate static func isEventAlreadyUsed(event: Event, usedMapping: [String: [Int]]) -> Bool {
         
+        
         return false
     }
     
     fileprivate static func getNumberOfTimesTriggersMustBeSatisfied(_ campaign: Campaign) -> Int {
         let maxImpressions = campaign.campaignData.maxImpressions
+        let displayedCount = DisplayedCampaignRepository.getDisplayedCount(forCampaign: campaign)
+        
+        if displayedCount < maxImpressions {
+            return displayedCount + 1
+        }
         
         return 0
     }
