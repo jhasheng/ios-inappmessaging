@@ -25,7 +25,7 @@
         ]
     }
     
-    var attributeDict: [CustomAttribute] {
+    var customAttributes: [CustomAttribute] {
         return [
             CustomAttribute(withKeyName: PurchaseSuccessfulEvent.PURCHASE_AMOUNT_MICROS, withIntValue: self.purchaseAmount),
             CustomAttribute(withKeyName: PurchaseSuccessfulEvent.NUMBER_OF_ITEMS, withIntValue: self.numberOfItems),

@@ -27,6 +27,7 @@ struct CampaignReconciliation {
             }
             
             // Add to ReadyCampaignRepo if the campaign's set of triggers are satisfied.
+            // Message will not be added twice within one reconciliation process.
             if getNumberOfTimesToDisplay(campaign) > 0 {
                 ReadyCampaignRepository.addCampaign(campaign)
             }
@@ -108,31 +109,60 @@ struct CampaignReconciliation {
             return 0
         }
         
-        // Change all events to be similar to customEvents.
-        
+        // Create a local event mapping used to quickly match event and trigger names.
         let localEventMapping = createEventMap(EventRepository.list) // Mapping of local events. [String: [Event]]
         
+        // Number of times the set of triggers must be satisfied.
+        let numberOfTimesTriggersMustBeSatisfied = getNumberOfTimesTriggersMustBeSatisfied(campaign)
         
+        // Mapping of already used events and its index.
+        var mappingOfUsedEvents = [String: [Int]]()
+        
+        // Iterate through all the triggers for a specific campaign.
         for trigger in campaignTriggers {
-            let triggerName =  trigger.eventName
+            
+            // The amount of times that the current trigger that is being iterated upon has been satisfied.
+            var amountOfTimesSatisfied: Int = 0
             
             // Check if there is a record in the localEventMapping with the same trigger name.
-            if let listOfMatchingNameEvents  = localEventMapping[triggerName] {
+            // If there is none, then the campaign's triggers cannot be fully satisfied.
+            guard let listOfMatchingNameEvents  = localEventMapping[trigger.eventName] else {
+                return 0
+            }
+            
+            // Iterate through the list of events with matching event name.
+            // See how many times each trigger is satisfied.
+            for (index, event) in listOfMatchingNameEvents.enumerated() {
                 
-                // Convert
+                // Check if this event was already used for previous triggers.
+                // If it is, move onto the next event.
+                if isEventAlreadyUsed(event: event, usedMapping: mappingOfUsedEvents) {
+                    continue
+                }
                 
-                // Iterate through the list of events with matching event name.
-                for event in listOfMatchingNameEvents {
-                    // Logic for custom events.
-                    if event.eventType == .custom {
-                        
+                // If the trigger is satisfied.
+                if isTriggerSatisfied(trigger: trigger, event: event) {
+                    
+                    // Append this event to the mapping of used events so that it won't be used for other triggers.
+                    if mappingOfUsedEvents.keys.contains(trigger.eventName) {
+                        mappingOfUsedEvents[trigger.eventName]?.append(index)
                     } else {
-                        // Logic for non-custom events.
-                        
-                        
+                        mappingOfUsedEvents[trigger.eventName] = [index]
+                    }
+                    
+                    // Increment the amount satisfied for this trigger.
+                    amountOfTimesSatisfied += 1
+                    
+                    // If this trigger already exceeds the amount of times needed to be satified,
+                    // move onto the next trigger.
+                    if amountOfTimesSatisfied >= numberOfTimesTriggersMustBeSatisfied {
+                        break
                     }
                 }
             }
+            
+            // Now, we know the amount of times each trigger was satisfied.
+        }
             
             // Match trigger name with the localEventMapping to grab the list of event
             
@@ -140,7 +170,28 @@ struct CampaignReconciliation {
             
             // If any trigger attribute match, move onto next attribute.
             // If the attribute between trigger and event dont match, move onto next event
+        return 0
         }
+    
+    /**
+     * By keeping track of used campaigns and saving the indices of the used events, check to make sure
+     * the event passed in has never been used before.
+     */
+    fileprivate static func isEventAlreadyUsed(event: Event, usedMapping: [String: [Int]]) -> Bool {
+        
+        return false
+    }
+    
+    fileprivate static func getNumberOfTimesTriggersMustBeSatisfied(_ campaign: Campaign) -> Int {
+        let maxImpressions = campaign.campaignData.maxImpressions
+        
+        return 0
+    }
+    
+    fileprivate static func isTriggerSatisfied(trigger: Trigger, event: Event) -> Bool {
+    
+        return false
+    }
         
 //        var campaignTriggerListMapping = [Int: Int]() // Mapping of the counter for each trigger needed for a campaign.
 //
@@ -160,29 +211,31 @@ struct CampaignReconciliation {
 //            }
 //        }
         
-        var lowestNumberOfTimesSatisfied = Int.max
-        
-        // Divide the event mapping with satisfiedTriggersCountMapping to
-        // get the number of times the set of triggers are satisfied.
-        // Find the lowest count satisfied trigger by dividing local event mapping and satisfiedTriggersCountMapping.
-        for (eventType, count) in campaignTriggerListMapping {
-            // If the local event mapping contains an entry of the campaign's trigger.
-            if let eventTypeMappingCount = localEventMapping[eventType]?.count {
-                // Swift, by default, rounds down for Int type when dividing.
-                let satisfiedCountForEventType = eventTypeMappingCount / count
-                
-                // Find the lowest count from the list of triggers. E.G If a campaign
-                // has 2 triggers; one satisfied 3 times and the other 2 times, return 2.
-                lowestNumberOfTimesSatisfied =
-                    lowestNumberOfTimesSatisfied > satisfiedCountForEventType ?
-                        satisfiedCountForEventType : lowestNumberOfTimesSatisfied
-                
-            } else {
-                // else if there is no entry, then the campaign's triggers have not been fully satisfied.
-                return 0
-            }
-        }
+//        var lowestNumberOfTimesSatisfied = Int.max
+//
+//        // Divide the event mapping with satisfiedTriggersCountMapping to
+//        // get the number of times the set of triggers are satisfied.
+//        // Find the lowest count satisfied trigger by dividing local event mapping and satisfiedTriggersCountMapping.
+//        for (eventType, count) in campaignTriggerListMapping {
+//            // If the local event mapping contains an entry of the campaign's trigger.
+//            if let eventTypeMappingCount = localEventMapping[eventType]?.count {
+//                // Swift, by default, rounds down for Int type when dividing.
+//                let satisfiedCountForEventType = eventTypeMappingCount / count
+//
+//                // Find the lowest count from the list of triggers. E.G If a campaign
+//                // has 2 triggers; one satisfied 3 times and the other 2 times, return 2.
+//                lowestNumberOfTimesSatisfied =
+//                    lowestNumberOfTimesSatisfied > satisfiedCountForEventType ?
+//                        satisfiedCountForEventType : lowestNumberOfTimesSatisfied
+//
+//            } else {
+//                // else if there is no entry, then the campaign's triggers have not been fully satisfied.
+//                return 0
+//            }
+//        }
+//
+//        return lowestNumberOfTimesSatisfied != Int.max ? lowestNumberOfTimesSatisfied : 0
 
-        return lowestNumberOfTimesSatisfied != Int.max ? lowestNumberOfTimesSatisfied : 0
-    }
 }
+
+
