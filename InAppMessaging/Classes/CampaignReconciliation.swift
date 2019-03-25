@@ -161,8 +161,17 @@ struct CampaignReconciliation {
                 }
             }
             
+            // If the number of times the trigger must be satisfied doesnt meet
+            // the requirement by the end iterating the list of event, then it
+            // isn't fully satified and will return false.
+            if (amountOfTimesSatisfied < numberOfTimesTriggersMustBeSatisfied) {
+                return 0; // false
+            }
+            
             // Now, we know the amount of times each trigger was satisfied.
         }
+        
+        
             
             // Match trigger name with the localEventMapping to grab the list of event
             
@@ -170,7 +179,7 @@ struct CampaignReconciliation {
             
             // If any trigger attribute match, move onto next attribute.
             // If the attribute between trigger and event dont match, move onto next event
-        return 0
+        return 1 // true
         }
     
     /**
