@@ -108,30 +108,57 @@ struct CampaignReconciliation {
             return 0
         }
         
+        // Change all events to be similar to customEvents.
+        
         let localEventMapping = createEventMap(EventRepository.list) // Mapping of local events. [String: [Event]]
         
         
-//        for trigger in campaignTriggers {
-//            if localEventMapping.keys.contains(trigger.attributes)
-//        }
-        
-        var campaignTriggerListMapping = [Int: Int]() // Mapping of the counter for each trigger needed for a campaign.
-
         for trigger in campaignTriggers {
-            let eventType = trigger.eventType
-
-            // If a trigger is already added in the mapping, increment it.
-            if campaignTriggerListMapping.keys.contains(trigger.eventType) {
-                // Increment only event types that are not AppStart event since AppStart
-                // should be logged only once and is required for every campaign.
-                if campaignTriggerListMapping[eventType] != EventType.appStart.rawValue {
-                    campaignTriggerListMapping[eventType]? += 1
+            let triggerName =  trigger.eventName
+            
+            // Check if there is a record in the localEventMapping with the same trigger name.
+            if let listOfMatchingNameEvents  = localEventMapping[triggerName] {
+                
+                // Convert
+                
+                // Iterate through the list of events with matching event name.
+                for event in listOfMatchingNameEvents {
+                    // Logic for custom events.
+                    if event.eventType == .custom {
+                        
+                    } else {
+                        // Logic for non-custom events.
+                        
+                        
+                    }
                 }
-            } else {
-                // else, add a new entry with the counter as 1.
-                campaignTriggerListMapping[eventType] = 1
             }
+            
+            // Match trigger name with the localEventMapping to grab the list of event
+            
+            // Iterate through list of event and check for any matching attribute, if any exists.
+            
+            // If any trigger attribute match, move onto next attribute.
+            // If the attribute between trigger and event dont match, move onto next event
         }
+        
+//        var campaignTriggerListMapping = [Int: Int]() // Mapping of the counter for each trigger needed for a campaign.
+//
+//        for trigger in campaignTriggers {
+//            let eventType = trigger.eventType
+//
+//            // If a trigger is already added in the mapping, increment it.
+//            if campaignTriggerListMapping.keys.contains(trigger.eventType) {
+//                // Increment only event types that are not AppStart event since AppStart
+//                // should be logged only once and is required for every campaign.
+//                if campaignTriggerListMapping[eventType] != EventType.appStart.rawValue {
+//                    campaignTriggerListMapping[eventType]? += 1
+//                }
+//            } else {
+//                // else, add a new entry with the counter as 1.
+//                campaignTriggerListMapping[eventType] = 1
+//            }
+//        }
         
         var lowestNumberOfTimesSatisfied = Int.max
         

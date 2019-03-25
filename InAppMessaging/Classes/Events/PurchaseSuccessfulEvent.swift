@@ -25,6 +25,14 @@
         ]
     }
     
+    var attributeDict: [CustomAttribute] {
+        return [
+            CustomAttribute(withKeyName: PurchaseSuccessfulEvent.PURCHASE_AMOUNT_MICROS, withIntValue: self.purchaseAmount),
+            CustomAttribute(withKeyName: PurchaseSuccessfulEvent.NUMBER_OF_ITEMS, withIntValue: self.numberOfItems),
+            CustomAttribute(withKeyName: PurchaseSuccessfulEvent.CURRENCY_CODE, withStringValue: self.currencyCode)
+        ]
+    }
+    
     @objc
     public init(
         withPurchaseAmount purchaseAmount: Int,
