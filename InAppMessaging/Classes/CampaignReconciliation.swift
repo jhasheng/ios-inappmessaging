@@ -236,9 +236,23 @@ struct CampaignReconciliation {
     
     fileprivate static func isAttributeSatisfied(_ triggerAttribute: TriggerAttribute, _ eventAttribute: CustomAttribute) -> Bool {
         
+        // Make sure the attribute name and event attribute name is the same.
+        if triggerAttribute.key != eventAttribute.name {
+            return false
+        }
+        
+        // Make sure the value type between the attribute value and event value is the same.
+        if triggerAttribute.type != eventAttribute.type {
+            return false
+        }
+        
+//        let isSatisfied = isValueReconciled
+        
         return true
     }
-        
+    
+//    fileprivate statis func isValueReconciled(withValueType valueType: AttributeType, withOperator operator: AttributeOperator)
+    
 //        var campaignTriggerListMapping = [Int: Int]() // Mapping of the counter for each trigger needed for a campaign.
 //
 //        for trigger in campaignTriggers {

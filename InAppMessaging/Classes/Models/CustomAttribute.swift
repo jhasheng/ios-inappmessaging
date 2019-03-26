@@ -5,7 +5,7 @@
 public class CustomAttribute: NSObject {
     let name: String
     let value: Any
-    let type: Int
+    let type: AttributeType
     
     // For broadcasting to RAT SDK. 'type' field will be removed.
     var convertToDict: [String: Any] {
@@ -19,35 +19,35 @@ public class CustomAttribute: NSObject {
     public init(withKeyName name: String, withStringValue value: String) {
         self.name = name
         self.value = value
-        self.type = AttributeType.string.rawValue
+        self.type = .string
     }
     
     @objc
     public init(withKeyName name: String, withIntValue value: Int) {
         self.name = name
         self.value = value
-        self.type = AttributeType.integer.rawValue
+        self.type = .integer
     }
     
     @objc
     public init(withKeyName name: String, withDoubleValue value: Double) {
         self.name = name
         self.value = value
-        self.type = AttributeType.double.rawValue
+        self.type = .double
     }
     
     @objc
     public init(withKeyName name: String, withBoolValue value: Bool) {
         self.name = name
         self.value = value
-        self.type = AttributeType.boolean.rawValue
+        self.type = .boolean
     }
     
     @objc
     public init(withKeyName name: String, withTimeInMilliValue value: Int) {
         self.name = name
         self.value = value
-        self.type = AttributeType.timeInMilli.rawValue
+        self.type = .timeInMilli
     }
 }
 	

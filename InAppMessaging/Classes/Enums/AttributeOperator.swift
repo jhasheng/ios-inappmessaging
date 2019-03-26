@@ -1,7 +1,7 @@
 /**
  * Enum of operators for matching.
  */
-enum AttributeOperator: Int {
+enum AttributeOperator: Int, Codable {
     case INVALID = 0
     case EQUALS = 1
     case IS_NOT_EQUAL = 2

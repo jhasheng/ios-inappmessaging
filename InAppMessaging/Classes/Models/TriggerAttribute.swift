@@ -4,6 +4,6 @@
 struct TriggerAttribute: Codable {
     let key: String
     let value: String
-    let type: Int
-    let `operator`: Int
+    let type: AttributeType
+    let `operator`: AttributeOperator
 }
