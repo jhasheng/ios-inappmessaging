@@ -126,7 +126,7 @@ struct CampaignReconciliation {
             
             // Check if there is a record in the localEventMapping with the same trigger name.
             // If there is none, then the campaign's triggers cannot be fully satisfied.
-            guard let listOfMatchingNameEvents  = localEventMapping[trigger.eventName] else {
+            guard let listOfMatchingNameEvents  = extractRelevantEvents(trigger, localEventMapping) else {
                 return false
             }
             
@@ -141,7 +141,7 @@ struct CampaignReconciliation {
                 }
                 
                 // If the trigger is satisfied.
-                if isTriggerSatisfied(trigger: trigger, event: event) {
+                if isTriggerSatisfied(trigger, event) {
                     
                     // Append this event to the mapping of used events so that it won't be used for other triggers.
                     if mappingOfUsedEvents.keys.contains(trigger.eventName) {
@@ -172,6 +172,27 @@ struct CampaignReconciliation {
         return true
     }
     
+    fileprivate static func extractRelevantEvents(_ trigger: Trigger, _ localEventMap: [String: [Event]]) -> [Event]? {
+        let eventType = trigger.eventType
+        
+        // If type is INVALID, return nil.
+        if eventType == .invalid {
+            return nil
+        }
+        
+        var eventName: String
+        
+        // If event is a custom event, search by the name provided by the host app.
+        if eventType == .custom {
+            eventName = trigger.eventName
+        } else {
+            // If event is a pre-defined event, search by using the enum name.
+            eventName = eventType.name
+        }
+        
+        return localEventMap[eventName]
+    }
+    
     /**
      * By keeping track of used campaigns and saving the indices of the used events, check to make sure
      * the event passed in has never been used before.
@@ -193,9 +214,29 @@ struct CampaignReconciliation {
         return 0
     }
     
-    fileprivate static func isTriggerSatisfied(trigger: Trigger, event: Event) -> Bool {
+    fileprivate static func isTriggerSatisfied(_ trigger: Trigger, _ event: Event) -> Bool {
     
-        return false
+        // Iterate through all the trigger attributes.
+        for triggerAttribute in trigger.attributes {
+            
+            // Return false if there isnt a matching trigger name between the trigger and event.
+            guard let eventAttribute = event.getAttributeMap()?[trigger.eventName] else {
+                return false
+            }
+            
+            // Since there is a matching name between the trigger and event, see if the attributes are satisfied.
+            if !isAttributeSatisfied(triggerAttribute, eventAttribute) {
+                // If the attribute is not satisfied, then the trigger cannot be satisfied.
+                return false
+            }
+
+        }
+        return true
+    }
+    
+    fileprivate static func isAttributeSatisfied(_ triggerAttribute: TriggerAttribute, _ eventAttribute: CustomAttribute) -> Bool {
+        
+        return true
     }
         
 //        var campaignTriggerListMapping = [Int: Int]() // Mapping of the counter for each trigger needed for a campaign.

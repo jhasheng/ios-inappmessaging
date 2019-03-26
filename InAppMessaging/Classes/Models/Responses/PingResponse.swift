@@ -54,7 +54,7 @@ struct CampaignData: Decodable, Equatable {
 
 struct Trigger: Decodable {
     let type: Int
-    let eventType: Int
+    let eventType: EventType
     let eventName: String
     let attributes: [TriggerAttribute]
     
