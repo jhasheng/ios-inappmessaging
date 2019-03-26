@@ -10,7 +10,6 @@
     
     var dictionary: [String: Any] {
         switch self.eventType {
-
             case .invalid:
                 break
             case .appStart:
@@ -37,5 +36,12 @@
         self.eventType = eventType
         self.timestamp = timestamp
         self.eventName = eventName
+    }
+    
+    /**
+     * Let subclass override to retrieve attribute map.
+     */
+    func getAttributeMap() -> [String: CustomAttribute]? {
+        return nil
     }
 }

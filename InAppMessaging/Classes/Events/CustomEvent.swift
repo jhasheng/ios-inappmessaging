@@ -51,4 +51,21 @@
     override public func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
     }
+    
+    /**
+     * Let subclass override to retrieve attribute map.
+     */
+    override func getAttributeMap() -> [String: CustomAttribute]? {
+        guard let customAttributes = self.customAttributes else {
+            return nil
+        }
+        
+        var attributeMap: [String: CustomAttribute] = [:]
+
+        for attribute in customAttributes {
+            attributeMap[attribute.name] = attribute
+        }
+        
+        return attributeMap
+    }
 }   
