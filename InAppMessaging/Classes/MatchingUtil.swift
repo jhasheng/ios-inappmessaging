@@ -1,5 +1,7 @@
 struct MatchingUtil {
     
+    private static let TIME_IN_MILLIS_TOLERANCE = 1000
+    
     static func compareValues(
         withTriggerAttributeValue triggerAttributeValue: String,
         withEventAttributeValue eventAttributeValue: String,
@@ -93,6 +95,31 @@ struct MatchingUtil {
                 
                     return false
         }
+    }
+    
+    static func compareTimeValues(
+        withTriggerAttributeValue triggerAttributeValue: Int,
+        withEventAttributeValue eventAttributeValue: Int,
+        andOperator operatorType: AttributeOperator) -> Bool {
+        
+        switch operatorType {
+        
+            case .EQUALS:
+                return (eventAttributeValue - triggerAttributeValue).magnitude <= TIME_IN_MILLIS_TOLERANCE
+            case .IS_NOT_EQUAL:
+                return (eventAttributeValue - triggerAttributeValue).magnitude > TIME_IN_MILLIS_TOLERANCE
+            case .GREATER_THAN:
+                return (eventAttributeValue - triggerAttributeValue) > TIME_IN_MILLIS_TOLERANCE
+            case .LESS_THAN:
+                return (eventAttributeValue - triggerAttributeValue) < TIME_IN_MILLIS_TOLERANCE
+            case .INVALID,
+                 .IS_BLANK,
+                 .IS_NOT_BLANK,
+                 .MATCHES_REGEX,
+                 .DOES_NOT_MATCH_REGEX:
+                
+                    return false
+            }
     }
 }
 

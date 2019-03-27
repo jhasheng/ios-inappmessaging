@@ -264,6 +264,7 @@ struct CampaignReconciliation {
             
             case .INVALID:
                 return false
+            
             case .STRING:
                 guard let stringEventValue = eventValue as? String else {
                     #if DEBUG
@@ -326,66 +327,22 @@ struct CampaignReconciliation {
                 )
             
             case .TIME_IN_MILLI:
-                guard let timeEventValue = eventValue as? Int else {
+                guard let timeEventValue = eventValue as? Int,
+                    let timeTriggerValue = Int(triggerValue)
+                else {
                     #if DEBUG
                         print("InAppMessaging: Error converting value.")
                     #endif
                     return false
                 }
-            }
-        
-        
-        
-        
-        
-        return true
+            
+                return MatchingUtil.compareTimeValues(
+                    withTriggerAttributeValue: timeTriggerValue,
+                    withEventAttributeValue: timeEventValue,
+                    andOperator: operatorType
+                )
+        }
     }
-    
-    
-    
-//        var campaignTriggerListMapping = [Int: Int]() // Mapping of the counter for each trigger needed for a campaign.
-//
-//        for trigger in campaignTriggers {
-//            let eventType = trigger.eventType
-//
-//            // If a trigger is already added in the mapping, increment it.
-//            if campaignTriggerListMapping.keys.contains(trigger.eventType) {
-//                // Increment only event types that are not AppStart event since AppStart
-//                // should be logged only once and is required for every campaign.
-//                if campaignTriggerListMapping[eventType] != EventType.appStart.rawValue {
-//                    campaignTriggerListMapping[eventType]? += 1
-//                }
-//            } else {
-//                // else, add a new entry with the counter as 1.
-//                campaignTriggerListMapping[eventType] = 1
-//            }
-//        }
-        
-//        var lowestNumberOfTimesSatisfied = Int.max
-//
-//        // Divide the event mapping with satisfiedTriggersCountMapping to
-//        // get the number of times the set of triggers are satisfied.
-//        // Find the lowest count satisfied trigger by dividing local event mapping and satisfiedTriggersCountMapping.
-//        for (eventType, count) in campaignTriggerListMapping {
-//            // If the local event mapping contains an entry of the campaign's trigger.
-//            if let eventTypeMappingCount = localEventMapping[eventType]?.count {
-//                // Swift, by default, rounds down for Int type when dividing.
-//                let satisfiedCountForEventType = eventTypeMappingCount / count
-//
-//                // Find the lowest count from the list of triggers. E.G If a campaign
-//                // has 2 triggers; one satisfied 3 times and the other 2 times, return 2.
-//                lowestNumberOfTimesSatisfied =
-//                    lowestNumberOfTimesSatisfied > satisfiedCountForEventType ?
-//                        satisfiedCountForEventType : lowestNumberOfTimesSatisfied
-//
-//            } else {
-//                // else if there is no entry, then the campaign's triggers have not been fully satisfied.
-//                return 0
-//            }
-//        }
-//
-//        return lowestNumberOfTimesSatisfied != Int.max ? lowestNumberOfTimesSatisfied : 0
-
 }
 
 
