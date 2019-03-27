@@ -37,7 +37,7 @@ class ViewController: UIViewController {
             CustomEvent(
                 withName: "abcd",
                 withCustomAttributes: [
-                    CustomAttribute(withKeyName: "boom", withStringValue: "14")
+                    CustomAttribute(withKeyName: "boom", withStringValue: "15")
                 ]
             )
         )

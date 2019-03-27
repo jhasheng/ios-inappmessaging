@@ -15,7 +15,7 @@ struct MatchingUtil {
             case .EQUALS:
                 return eventValue == triggerValue
             case .IS_NOT_EQUAL:
-                return eventValue != eventValue
+                return eventValue != triggerValue
             case .INVALID,
                  .GREATER_THAN,
                  .LESS_THAN,
