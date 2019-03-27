@@ -333,7 +333,7 @@ struct CampaignReconciliation {
             
             case .BOOLEAN:
                 guard let boolEventValue = eventValue as? Bool,
-                    let boolTriggerValue = Bool(triggerValue)
+                    let boolTriggerValue = Bool(triggerValue.lowercased())
                 else {
                     #if DEBUG
                         print("InAppMessaging: Error converting value.")
