@@ -121,14 +121,23 @@ struct CampaignReconciliation {
         // Iterate through all the triggers for a specific campaign.
         for trigger in campaignTriggers {
             
-            // The amount of times that the current trigger that is being iterated upon has been satisfied.
-            var amountOfTimesSatisfied: Int = 0
-            
             // Check if there is a record in the localEventMapping with the same trigger name.
             // If there is none, then the campaign's triggers cannot be fully satisfied.
             guard let listOfMatchingNameEvents  = extractRelevantEvents(trigger, localEventMapping) else {
                 return false
             }
+            
+            // If the campaign trigger requires an APP_START event and a
+            // single APP_START event is logged, then it is satisfied because
+            // only one APP_START event should be logged. Continue to next trigger.
+            if trigger.eventType == .appStart &&
+                listOfMatchingNameEvents.count > 0 {
+
+                    continue
+            }
+            
+            // The amount of times that the current trigger that is being iterated upon has been satisfied.
+            var amountOfTimesSatisfied: Int = 0
             
             // Iterate through the list of events with matching event name.
             // See how many times each trigger is satisfied.
