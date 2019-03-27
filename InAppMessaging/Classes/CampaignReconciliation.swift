@@ -147,6 +147,8 @@ struct CampaignReconciliation {
                     // it won't be used for other triggers in this campaign.
                     if mappingOfUsedEvents.keys.contains(trigger.eventName) {
                         mappingOfUsedEvents[trigger.eventName]?.insert(index)
+                    } else {
+                        mappingOfUsedEvents[trigger.eventName] = [index]
                     }
                     
                     // Increment the amount satisfied for this trigger.
