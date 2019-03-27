@@ -246,12 +246,76 @@ struct CampaignReconciliation {
             return false
         }
         
-//        let isSatisfied = isValueReconciled
+        return isValueReconciled(
+            withValueType: triggerAttribute.type,
+            withOperator: triggerAttribute.operator,
+            withTriggerAttributeValue: triggerAttribute.value,
+            withEventAttributeValue: eventAttribute.value
+        )
+    }
+    
+    fileprivate static func isValueReconciled(
+        withValueType valueType: AttributeType,
+        withOperator operatorType: AttributeOperator,
+        withTriggerAttributeValue triggerValue: String,
+        withEventAttributeValue eventValue: Any) -> Bool {
+        
+        switch valueType {
+            
+            case .INVALID:
+                return false
+            case .STRING:
+                guard let stringEventValue = eventValue as? String else {
+                    #if DEBUG
+                        print("InAppMessaging: Error converting event value.")
+                    #endif
+                    return false
+                }
+            
+                return MatchingUtil.compareValues(
+                    withTriggerAttributeValue: triggerValue,
+                    withEventAttributeValue: stringEventValue,
+                    andOperator: operatorType
+                )
+            
+            case .INTEGER:
+                guard let intEventValue = eventValue as? Int else {
+                    #if DEBUG
+                        print("InAppMessaging: Error converting event value.")
+                    #endif
+                    return false
+                }
+            case .DOUBLE:
+                guard let doubleEventValue = eventValue as? Double else {
+                    #if DEBUG
+                        print("InAppMessaging: Error converting event value.")
+                    #endif
+                    return false
+                }
+            case .BOOLEAN:
+                guard let boolEventValue = eventValue as? Bool else {
+                    #if DEBUG
+                        print("InAppMessaging: Error converting event value.")
+                    #endif
+                    return false
+                }
+            case .TIME_IN_MILLI:
+                guard let timeEventValue = eventValue as? Int else {
+                    #if DEBUG
+                        print("InAppMessaging: Error converting event value.")
+                    #endif
+                    return false
+                }
+            }
+        
+        
+        
+        
         
         return true
     }
     
-//    fileprivate statis func isValueReconciled(withValueType valueType: AttributeType, withOperator operator: AttributeOperator)
+    
     
 //        var campaignTriggerListMapping = [Int: Int]() // Mapping of the counter for each trigger needed for a campaign.
 //

@@ -19,35 +19,35 @@ public class CustomAttribute: NSObject {
     public init(withKeyName name: String, withStringValue value: String) {
         self.name = name
         self.value = value
-        self.type = .string
+        self.type = .STRING
     }
     
     @objc
     public init(withKeyName name: String, withIntValue value: Int) {
         self.name = name
         self.value = value
-        self.type = .integer
+        self.type = .INTEGER
     }
     
     @objc
     public init(withKeyName name: String, withDoubleValue value: Double) {
         self.name = name
         self.value = value
-        self.type = .double
+        self.type = .DOUBLE
     }
     
     @objc
     public init(withKeyName name: String, withBoolValue value: Bool) {
         self.name = name
         self.value = value
-        self.type = .boolean
+        self.type = .BOOLEAN
     }
     
     @objc
     public init(withKeyName name: String, withTimeInMilliValue value: Int) {
         self.name = name
         self.value = value
-        self.type = .timeInMilli
+        self.type = .TIME_IN_MILLI
     }
 }
 	
