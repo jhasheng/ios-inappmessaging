@@ -241,7 +241,7 @@ struct CampaignReconciliation {
         for triggerAttribute in trigger.attributes {
             
             // Return false if there isnt a matching trigger name between the trigger and event.
-            guard let eventAttribute = event.getAttributeMap()?[trigger.eventName] else {
+            guard let eventAttribute = event.getAttributeMap()?[triggerAttribute.key] else {
                 return false
             }
             
