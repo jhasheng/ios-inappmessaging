@@ -280,7 +280,8 @@ struct CampaignReconciliation {
             
             case .INTEGER:
                 guard let intEventValue = eventValue as? Int,
-                    let intTriggerValue = Int(triggerValue) else {
+                    let intTriggerValue = Int(triggerValue)
+                else {
                     #if DEBUG
                         print("InAppMessaging: Error converting value.")
                     #endif
@@ -291,14 +292,23 @@ struct CampaignReconciliation {
                     withTriggerAttributeValue: intTriggerValue,
                     withEventAttributeValue: intEventValue,
                     andOperator: operatorType
-            )
+                )
             case .DOUBLE:
-                guard let doubleEventValue = eventValue as? Double else {
+                guard let doubleEventValue = eventValue as? Double,
+                    let doubleTriggerValue = Double(triggerValue)
+                else {
                     #if DEBUG
                         print("InAppMessaging: Error converting value.")
                     #endif
                     return false
                 }
+            
+                return MatchingUtil.compareValues(
+                    withTriggerAttributeValue: doubleTriggerValue,
+                    withEventAttributeValue: doubleEventValue,
+                    andOperator: operatorType
+                )
+            
             case .BOOLEAN:
                 guard let boolEventValue = eventValue as? Bool else {
                     #if DEBUG

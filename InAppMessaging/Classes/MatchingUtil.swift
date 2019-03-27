@@ -11,9 +11,9 @@ struct MatchingUtil {
         
         switch operatorType {
             case .EQUALS:
-                return triggerValue == eventValue
+                return eventValue == triggerValue
             case .IS_NOT_EQUAL:
-                return triggerValue != eventValue
+                return eventValue != eventValue
             case .INVALID,
                  .GREATER_THAN,
                  .LESS_THAN,
@@ -33,9 +33,9 @@ struct MatchingUtil {
         
         switch operatorType {
             case .EQUALS:
-                return triggerAttributeValue == eventAttributeValue
+                return eventAttributeValue == triggerAttributeValue
             case .IS_NOT_EQUAL:
-                return triggerAttributeValue != eventAttributeValue
+                return eventAttributeValue != triggerAttributeValue
             case .GREATER_THAN:
                 return eventAttributeValue > triggerAttributeValue
             case .LESS_THAN:
@@ -48,4 +48,37 @@ struct MatchingUtil {
                     return false
         }
     }
+    
+    static func compareValues(
+        withTriggerAttributeValue triggerAttributeValue: Double,
+        withEventAttributeValue eventAttributeValue: Double,
+        andOperator operatorType: AttributeOperator) -> Bool {
+        
+        switch operatorType {
+            case .EQUALS:
+                return eventAttributeValue.isEqual(to: triggerAttributeValue)
+            case .IS_NOT_EQUAL:
+                return !eventAttributeValue.isEqual(to: triggerAttributeValue)
+            case .GREATER_THAN:
+                return triggerAttributeValue.isLess(than: eventAttributeValue)
+            case .LESS_THAN:
+                return eventAttributeValue.isLess(than: triggerAttributeValue)
+            case .INVALID,
+                 .IS_BLANK,
+                 .IS_NOT_BLANK,
+                 .MATCHES_REGEX,
+                 .DOES_NOT_MATCH_REGEX:
+                
+                    return false
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
