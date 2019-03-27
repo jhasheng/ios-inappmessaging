@@ -116,7 +116,7 @@ struct CampaignReconciliation {
         let numberOfTimesTriggersMustBeSatisfied = getNumberOfTimesTriggersMustBeSatisfied(campaign)
         
         // Mapping of already used events and its index.
-        var mappingOfUsedEvents = [String: [Int]]()
+        var mappingOfUsedEvents = [String: Set<Int>]()
         
         // Iterate through all the triggers for a specific campaign.
         for trigger in campaignTriggers {
@@ -136,18 +136,17 @@ struct CampaignReconciliation {
                 
                 // Check if this event was already used for previous triggers.
                 // If it is, move onto the next event.
-                if isEventAlreadyUsed(event: event, usedMapping: mappingOfUsedEvents) {
+                if isEventAlreadyUsed(eventName: event.eventName, currentIndex: index, usedMapping: mappingOfUsedEvents) {
                     continue
                 }
                 
                 // If the trigger is satisfied.
                 if isTriggerSatisfied(trigger, event) {
                     
-                    // Append this event to the mapping of used events so that it won't be used for other triggers.
+                    // Append the index of this event to the mapping of used events so that
+                    // it won't be used for other triggers in this campaign.
                     if mappingOfUsedEvents.keys.contains(trigger.eventName) {
-                        mappingOfUsedEvents[trigger.eventName]?.append(index)
-                    } else {
-                        mappingOfUsedEvents[trigger.eventName] = [index]
+                        mappingOfUsedEvents[trigger.eventName]?.insert(index)
                     }
                     
                     // Increment the amount satisfied for this trigger.
@@ -197,9 +196,20 @@ struct CampaignReconciliation {
      * By keeping track of used campaigns and saving the indices of the used events, check to make sure
      * the event passed in has never been used before.
      */
-    fileprivate static func isEventAlreadyUsed(event: Event, usedMapping: [String: [Int]]) -> Bool {
+    fileprivate static func isEventAlreadyUsed(eventName: String, currentIndex: Int, usedMapping: [String: Set<Int>]) -> Bool {
         
+        // If there are no records of this eventName in the usedMapping, then
+        // the event was never used before.
+        guard let setOfEvents = usedMapping[eventName] else {
+            return true
+        }
         
+        // If the current index is in the used mapping, then it was used before
+        if setOfEvents.contains(currentIndex) {
+            return true
+        }
+        
+        // Return false if event was never used before.
         return false
     }
     
