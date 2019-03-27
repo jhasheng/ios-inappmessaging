@@ -145,10 +145,10 @@ struct CampaignReconciliation {
                     
                     // Append the index of this event to the mapping of used events so that
                     // it won't be used for other triggers in this campaign.
-                    if mappingOfUsedEvents.keys.contains(trigger.eventName) {
-                        mappingOfUsedEvents[trigger.eventName]?.insert(index)
+                    if mappingOfUsedEvents.keys.contains(event.eventName) {
+                        mappingOfUsedEvents[event.eventName]?.insert(index)
                     } else {
-                        mappingOfUsedEvents[trigger.eventName] = [index]
+                        mappingOfUsedEvents[event.eventName] = [index]
                     }
                     
                     // Increment the amount satisfied for this trigger.
@@ -203,7 +203,7 @@ struct CampaignReconciliation {
         // If there are no records of this eventName in the usedMapping, then
         // the event was never used before.
         guard let setOfEvents = usedMapping[eventName] else {
-            return true
+            return false
         }
         
         // If the current index is in the used mapping, then it was used before
