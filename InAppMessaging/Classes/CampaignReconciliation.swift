@@ -310,12 +310,21 @@ struct CampaignReconciliation {
                 )
             
             case .BOOLEAN:
-                guard let boolEventValue = eventValue as? Bool else {
+                guard let boolEventValue = eventValue as? Bool,
+                    let boolTriggerValue = Bool(triggerValue)
+                else {
                     #if DEBUG
                         print("InAppMessaging: Error converting value.")
                     #endif
                     return false
                 }
+            
+                return MatchingUtil.compareValues(
+                    withTriggerAttributeValue: boolTriggerValue,
+                    withEventAttributeValue: boolEventValue,
+                    andOperator: operatorType
+                )
+            
             case .TIME_IN_MILLI:
                 guard let timeEventValue = eventValue as? Int else {
                     #if DEBUG

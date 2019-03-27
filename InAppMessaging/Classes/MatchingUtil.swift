@@ -72,6 +72,28 @@ struct MatchingUtil {
                     return false
         }
     }
+    
+    static func compareValues(
+        withTriggerAttributeValue triggerAttributeValue: Bool,
+        withEventAttributeValue eventAttributeValue: Bool,
+        andOperator operatorType: AttributeOperator) -> Bool {
+        
+        switch operatorType {
+            case .EQUALS:
+                return eventAttributeValue == triggerAttributeValue
+            case .IS_NOT_EQUAL:
+                return eventAttributeValue != triggerAttributeValue
+            case .INVALID,
+                 .GREATER_THAN,
+                 .LESS_THAN,
+                 .IS_BLANK,
+                 .IS_NOT_BLANK,
+                 .MATCHES_REGEX,
+                 .DOES_NOT_MATCH_REGEX:
+                
+                    return false
+        }
+    }
 }
 
 
