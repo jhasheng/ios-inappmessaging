@@ -267,7 +267,7 @@ struct CampaignReconciliation {
             case .STRING:
                 guard let stringEventValue = eventValue as? String else {
                     #if DEBUG
-                        print("InAppMessaging: Error converting event value.")
+                        print("InAppMessaging: Error converting value.")
                     #endif
                     return false
                 }
@@ -279,30 +279,37 @@ struct CampaignReconciliation {
                 )
             
             case .INTEGER:
-                guard let intEventValue = eventValue as? Int else {
+                guard let intEventValue = eventValue as? Int,
+                    let intTriggerValue = Int(triggerValue) else {
                     #if DEBUG
-                        print("InAppMessaging: Error converting event value.")
+                        print("InAppMessaging: Error converting value.")
                     #endif
                     return false
                 }
+            
+                return MatchingUtil.compareValues(
+                    withTriggerAttributeValue: intTriggerValue,
+                    withEventAttributeValue: intEventValue,
+                    andOperator: operatorType
+            )
             case .DOUBLE:
                 guard let doubleEventValue = eventValue as? Double else {
                     #if DEBUG
-                        print("InAppMessaging: Error converting event value.")
+                        print("InAppMessaging: Error converting value.")
                     #endif
                     return false
                 }
             case .BOOLEAN:
                 guard let boolEventValue = eventValue as? Bool else {
                     #if DEBUG
-                        print("InAppMessaging: Error converting event value.")
+                        print("InAppMessaging: Error converting value.")
                     #endif
                     return false
                 }
             case .TIME_IN_MILLI:
                 guard let timeEventValue = eventValue as? Int else {
                     #if DEBUG
-                        print("InAppMessaging: Error converting event value.")
+                        print("InAppMessaging: Error converting value.")
                     #endif
                     return false
                 }
