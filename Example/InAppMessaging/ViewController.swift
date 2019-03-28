@@ -30,14 +30,22 @@ class ViewController: UIViewController {
                 withItems: []))
     }
     @IBAction func loginSuccessfulButton(_ sender: Any) {
-        InAppMessaging.logEvent(LoginSuccessfulEvent())
+//        InAppMessaging.logEvent(LoginSuccessfulEvent())
+        InAppMessaging.logEvent(
+            CustomEvent(
+                withName: "abcd",
+                withCustomAttributes: [
+                    CustomAttribute(withKeyName: "boom2", withIntValue: 2)
+                ]
+            )
+        )
     }
     @IBAction func customTestButton(_ sender: Any) {
         InAppMessaging.logEvent(
             CustomEvent(
                 withName: "abcd",
                 withCustomAttributes: [
-                    CustomAttribute(withKeyName: "boom", withStringValue: "15")
+                    CustomAttribute(withKeyName: "boom", withIntValue: 1002)
                 ]
             )
         )
