@@ -80,7 +80,7 @@
     }
     
     /**
-     * Let subclass override to retrieve attribute map.
+     * Create a mapping used to return a mapping of the customAttribute list.
      */
     override func getAttributeMap() -> [String: CustomAttribute]? {
         return [

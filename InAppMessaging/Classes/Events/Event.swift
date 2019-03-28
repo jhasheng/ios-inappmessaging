@@ -39,7 +39,8 @@
     }
     
     /**
-     * Let subclass override to retrieve attribute map.
+     * Used for custom atribute matching. Subclass will
+     * overwrite this if it uses CustomAttributes.
      */
     func getAttributeMap() -> [String: CustomAttribute]? {
         return nil

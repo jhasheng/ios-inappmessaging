@@ -1,3 +1,7 @@
+/**
+ * Utility class to handle value comparison and
+ * matching for the campaign reconciliation process.
+ */
 struct MatchingUtil {
     
     private static let TIME_IN_MILLIS_TOLERANCE = 1000
@@ -122,12 +126,3 @@ struct MatchingUtil {
             }
     }
 }
-
-
-
-
-
-
-
-
-
