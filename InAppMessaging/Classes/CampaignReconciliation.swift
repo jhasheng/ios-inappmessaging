@@ -388,5 +388,3 @@ struct CampaignReconciliation {
         }
     }
 }
-
-
