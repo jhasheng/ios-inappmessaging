@@ -35,10 +35,8 @@ class ViewController: UIViewController {
     @IBAction func customTestButton(_ sender: Any) {
         InAppMessaging.logEvent(
             CustomEvent(
-                withName: "abcd",
-                withCustomAttributes: [
-                    CustomAttribute(withKeyName: "test", withStringValue: "custom_test")
-                ]
+                withName: "custom_test",
+                withCustomAttributes: [CustomAttribute(withKeyName: "test", withStringValue: "value")]
             )
         )
     }
