@@ -20,13 +20,17 @@ struct MatchingUtil {
                 return eventValue == triggerValue
             case .IS_NOT_EQUAL:
                 return eventValue != triggerValue
+            case .IS_BLANK:
+                return eventValue.isEmpty
+            case .IS_NOT_BLANK:
+                return !eventValue.isEmpty
+            case .MATCHES_REGEX:
+                return matches(for: triggerValue, in: eventValue)
+            case .DOES_NOT_MATCH_REGEX:
+                return matches(for: triggerValue, in: eventValue)
             case .INVALID,
                  .GREATER_THAN,
-                 .LESS_THAN,
-                 .IS_BLANK,
-                 .IS_NOT_BLANK,
-                 .MATCHES_REGEX,
-                 .DOES_NOT_MATCH_REGEX:
+                 .LESS_THAN
                 
                 return false
         }
@@ -124,5 +128,23 @@ struct MatchingUtil {
                 
                 return false
             }
+    }
+    
+    /**
+     * Searches a string to see if it matches a regular expression or not.
+     * @param { regex: String } the regular expression.
+     * @param { text: String } the text to apply the regex to.
+     * @returns { Bool } whether or not the string matches the regex.
+     */
+    fileprivate static func matches(for regex: String, in text: String) -> Bool {
+        do {
+            let regex = try NSRegularExpression(pattern: regex)
+            let nsString = text as NSString
+            let results = regex.matches(in: text, range: NSRange(location: 0, length: nsString.length))
+            
+            return !results.isEmpty
+        } catch let error {
+            return false
+        }
     }
 }
