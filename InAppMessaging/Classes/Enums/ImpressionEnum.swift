@@ -18,7 +18,7 @@ enum ImpressionType: Int, Encodable {
             case .ACTION_ONE:
                 return "ACTION_ONE"
             case .ACTION_TWO:
-                    return "ACTION_TWO"
+                return "ACTION_TWO"
             case .EXIT:
                 return "EXIT"
             }

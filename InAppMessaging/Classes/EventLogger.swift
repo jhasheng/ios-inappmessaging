@@ -1,4 +1,5 @@
-// This class is currently commented out 
+// This class is currently commented out due to a change in specs.
+// Possible reusability in the future.
 
 ///**
 // * Struct to handle saving all the custom events for IAM's custom event endpoint and RAT.
