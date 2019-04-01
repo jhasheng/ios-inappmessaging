@@ -28,7 +28,7 @@ struct MatchingUtil {
                  .MATCHES_REGEX,
                  .DOES_NOT_MATCH_REGEX:
                 
-                    return false
+                return false
         }
     }
     
@@ -51,7 +51,7 @@ struct MatchingUtil {
                  .MATCHES_REGEX,
                  .DOES_NOT_MATCH_REGEX:
                 
-                    return false
+                return false
         }
     }
     
@@ -75,7 +75,7 @@ struct MatchingUtil {
                  .MATCHES_REGEX,
                  .DOES_NOT_MATCH_REGEX:
                 
-                    return false
+                return false
         }
     }
     
@@ -97,7 +97,7 @@ struct MatchingUtil {
                  .MATCHES_REGEX,
                  .DOES_NOT_MATCH_REGEX:
                 
-                    return false
+                return false
         }
     }
     
@@ -122,7 +122,7 @@ struct MatchingUtil {
                  .MATCHES_REGEX,
                  .DOES_NOT_MATCH_REGEX:
                 
-                    return false
+                return false
             }
     }
 }
