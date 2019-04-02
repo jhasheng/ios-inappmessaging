@@ -1,7 +1,7 @@
 PODS:
   - InAppMessaging (1.0.0):
     - SDWebImage
-    - Swinject
+    - Swinject (= 2.5.0)
   - Nimble (7.3.1)
   - Quick (1.3.2)
   - SDWebImage (4.4.2):
@@ -26,7 +26,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  InAppMessaging: 023fe9e22b37c6a74da258fd20451c6a7ef4a023
+  InAppMessaging: f754161f26af49d3df9043fec4692ee763abd2a3
   Nimble: 04f732da099ea4d153122aec8c2a88fd0c7219ae
   Quick: 2623cb30d7a7f41ca62f684f679586558f483d46
   SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
