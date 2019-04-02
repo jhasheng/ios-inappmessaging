@@ -27,10 +27,10 @@ struct MatchingUtil {
             case .MATCHES_REGEX:
                 return matches(for: triggerValue, in: eventValue)
             case .DOES_NOT_MATCH_REGEX:
-                return matches(for: triggerValue, in: eventValue)
+                return !matches(for: triggerValue, in: eventValue)
             case .INVALID,
                  .GREATER_THAN,
-                 .LESS_THAN
+                 .LESS_THAN:
                 
                 return false
         }
@@ -50,7 +50,8 @@ struct MatchingUtil {
                 return eventAttributeValue > triggerAttributeValue
             case .LESS_THAN:
                 return eventAttributeValue < triggerAttributeValue
-            case .INVALID,.IS_BLANK,
+            case .INVALID,
+                 .IS_BLANK,
                  .IS_NOT_BLANK,
                  .MATCHES_REGEX,
                  .DOES_NOT_MATCH_REGEX:
