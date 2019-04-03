@@ -11,9 +11,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     var campaign: CampaignData?
 
     // Constant values used for UI elements in model views.
-    let heightOffset: CGFloat = 15 // Height offset for every UI element.
-    let exitButtonHeightOffset: CGFloat = 30 // Height offset for exit button from the actual message.
-    let exitButtonSize: CGFloat = 20 // Size of the exit button.
+    let heightOffset: CGFloat = 18 // Height offset for every UI element.
     let backgroundViewAlpha: CGFloat = 0.66 // Value to adjust the transparency of the background view.
     let cornerRadiusForDialogView: CGFloat = 8 // Adjust how round the edge the dialog view will be.
     let cornerRadiusForButtons: CGFloat = 4 // Adjust how round the edge of the buttons will be.
@@ -27,6 +25,9 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     let initialFrameWidthIPadMultiplier: CGFloat = 0.60 // Percentage size for iPad's to display
     let imageAspectRatio: CGFloat = 1.25 // Aspect ratio for image. Currently set to 3:4.
     let maxWindowHeightPercentage: CGFloat = 0.70 // The max height the window should take up before making text scrollable.
+    var exitButtonSize: CGFloat = 0 // Size of the exit button.
+    var exitButtonHeightOffset: CGFloat = 0 // Height offset for exit button from the actual message.
+    var exitButtonFontSize: CGFloat = 0 // Font size of exit button.
     
     var backgroundView = UIView()
     var dialogView = UIView()
@@ -74,12 +75,18 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         self.backgroundView.frame = frame
         self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(backgroundViewAlpha)
         
-        // Set the initial width based on device -- either iPad or iPhone.
+        // Set different values based on device -- either iPad or iPhone.
         if UIDevice.current.userInterfaceIdiom == .pad {
             // Use 75% of iPad's width.
             self.dialogViewWidth = frame.width * initialFrameWidthIPadMultiplier
+            self.exitButtonSize = 22
+            self.exitButtonHeightOffset = 35
+            self.exitButtonFontSize = 16
         } else {
             self.dialogViewWidth = frame.width - initialFrameWidthOffset
+            self.exitButtonSize = 15
+            self.exitButtonHeightOffset = 25
+            self.exitButtonFontSize = 13
         }
         
         // Image view.
@@ -134,6 +141,15 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         self.dialogView.clipsToBounds = true
         self.dialogView.center  = self.center
         
+        // Add the exit button on the top right.
+        self.appendExitButton()
+        
+        if !hasImage {
+            self.appendSubViews()
+        }
+    }
+    
+    fileprivate func appendExitButton() {
         // The top right "X" button to dismiss.
         let exitButton = UILabel(
             frame: CGRect(x: dialogView.frame.maxX - exitButtonSize,
@@ -142,6 +158,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
                           height: exitButtonSize))
         
         exitButton.text = "X"
+        exitButton.font = .systemFont(ofSize: exitButtonFontSize)
         exitButton.backgroundColor = .white
         exitButton.textColor = .black
         exitButton.textAlignment = .center
@@ -151,10 +168,6 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         exitButton.tag = ImpressionType.EXIT.rawValue
         exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
         self.backgroundView.addSubview(exitButton)
-        
-        if !hasImage {
-            self.appendSubViews()
-        }
     }
     
     /**
