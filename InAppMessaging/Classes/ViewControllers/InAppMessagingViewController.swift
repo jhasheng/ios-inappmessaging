@@ -27,9 +27,12 @@ class InAppMessagingViewController: UIViewController {
             return
         }
         
-        //Permission check here.
-        if !PermissionClient().checkPermission(withCampaign: campaign.campaignData){
-            return
+        // Skip permission checking if campaign is a test.
+        if !campaign.campaignData.isTest {
+            //Permission check here.
+            if !PermissionClient().checkPermission(withCampaign: campaign.campaignData){
+                return
+            }
         }
         
         DispatchQueue.main.async {
