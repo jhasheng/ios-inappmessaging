@@ -59,11 +59,7 @@
                         ReadyCampaignRepository.list as AnyObject],
                     closure: CampaignReconciliation.reconciliate)
                 
-                
-                CommonUtility.lock(
-                    objects: [ReadyCampaignRepository.list as AnyObject],
-                    closure: InAppMessagingViewController.display)
-//                InAppMessagingViewController.display()
+                InAppMessagingViewController.display()
             }
         }
     }

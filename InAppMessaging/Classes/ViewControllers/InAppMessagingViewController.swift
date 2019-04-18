@@ -3,15 +3,17 @@
  */
 class InAppMessagingViewController: UIViewController {
     
-    static var isShowing = false
+    // Flag to make sure only one instance of the display logic is running.
+    // This is to prevent multiple campaign showing when events are logged
+    // at a rapid session.
+    static var isRunning = false
 
     /**
      * Checks if there are any campaigns in the ReadyCampaignRepository and display them.
      */
     internal class func display() {
-        
-        if !isShowing {
-            isShowing = true
+        if !isRunning {
+            isRunning = true
 
             // Display first campaign if the ready campaign list is not empty.
             if let firstCampaign = ReadyCampaignRepository.getFirst() {
@@ -19,14 +21,8 @@ class InAppMessagingViewController: UIViewController {
                 displayIndividualCampaign(firstCampaign)
             }
             
-            isShowing = false
+            isRunning = false
         }
-
-        // Display first campaign if the ready campaign list is not empty.
-//        if let firstCampaign = ReadyCampaignRepository.getFirst() {
-//            ReadyCampaignRepository.removeFirst()
-//            displayIndividualCampaign(firstCampaign)
-//        }
     }
     
     /**
