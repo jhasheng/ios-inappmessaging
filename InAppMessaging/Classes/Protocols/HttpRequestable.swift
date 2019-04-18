@@ -30,7 +30,10 @@ protocol HttpRequestable {
      * Generic method for calling an API.
      * @param { url: String } the URL of the API to call.
      * @param { httpMethod: String } the HTTP method used. E.G "POST" / "GET"
-     * @returns { Optional Data } returns either nil or the response in Data type.
+     * @param { optionalParams: [String: Any] } any extra parameters to be added into the request body.
+     * @param { addtionalHeaders: [Attribute]? } any extra parameters to be added into the request header.
+     * @param { shouldWait: Bool } whether or not should the program wait for the response before continuing execution.
+     * @returns { data: Data?, response: HTTPURLResponse? } returns optional data and optional HTTPURLResponse.
      */
     func requestFromServer(withUrl url: String,
                  withHttpMethod httpMethod: HttpMethod,
