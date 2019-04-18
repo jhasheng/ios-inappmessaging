@@ -35,7 +35,8 @@ protocol HttpRequestable {
     func requestFromServer(withUrl url: String,
                  withHttpMethod httpMethod: HttpMethod,
                  withOptionalParams optionalParams: [String: Any],
-                 withAdditionalHeaders addtionalHeaders: [Attribute]?) -> (data: Data?, response: HTTPURLResponse?)
+                 withAdditionalHeaders addtionalHeaders: [Attribute]?,
+                 withSemaphoreWait shouldWait: Bool) -> (data: Data?, response: HTTPURLResponse?)
     
     /**
      * Build out the request body for talking to configuration server.
@@ -57,7 +58,8 @@ extension HttpRequestable {
     func requestFromServer(withUrl url: String,
         withHttpMethod httpMethod: HttpMethod,
         withOptionalParams optionalParams: [String: Any] = [:],
-        withAdditionalHeaders addtionalHeaders: [Attribute]?) -> (data: Data?, response: HTTPURLResponse?) {
+        withAdditionalHeaders addtionalHeaders: [Attribute]?,
+        withSemaphoreWait shouldWait: Bool) -> (data: Data?, response: HTTPURLResponse?) {
         
             var dataToReturn: Data?
             var serverResponse: HTTPURLResponse?
@@ -102,8 +104,11 @@ extension HttpRequestable {
                     semaphore.signal()
                 }).resume()
                 
-                // Pause execution until signal() is called
-                semaphore.wait()
+                // Pause execution until signal() is called.
+                // if the request requires the response to act on.
+                if shouldWait {
+                    semaphore.wait()
+                }
             }
         
             return (dataToReturn, serverResponse)
