@@ -100,21 +100,21 @@ class ModalView: UIView, Modal, ImpressionTrackable {
             campaign.messagePayload.messageBody != nil ||
             campaign.messagePayload.messageLowerBody != nil {
             
-            // Handle spacing case for when there is no header.
-            if campaign.messagePayload.header != nil {
-                self.dialogViewCurrentHeight += heightOffset
-            }
+                // Handle spacing case for when there is no header.
+                if campaign.messagePayload.header != nil {
+                    self.dialogViewCurrentHeight += heightOffset
+                }
             
                 self.appendTextView(withMessage: campaign.messagePayload)
             
                 self.dialogViewCurrentHeight += self.textView.frame.height
             
-             // Handle spacing case for when there are no messages.
-            if campaign.messagePayload.messageBody != nil ||
-                campaign.messagePayload.messageLowerBody != nil {
-                
-                    self.dialogViewCurrentHeight += heightOffset
-            }
+                // Handle spacing case for when there are no messages.
+                if campaign.messagePayload.messageBody != nil ||
+                    campaign.messagePayload.messageLowerBody != nil {
+                    
+                        self.dialogViewCurrentHeight += heightOffset
+                }
             
         }
         
@@ -175,6 +175,9 @@ class ModalView: UIView, Modal, ImpressionTrackable {
      * @param { messagePayload: MessagePayload } the campaign's message payload.
      */
     fileprivate func appendTextView(withMessage messagePayload: MessagePayload) {
+        // Change textview background color
+        self.textView.backgroundColor = UIColor(hexFromString: messagePayload.backgroundColor)
+        
         // Header title.
         if let headerMessage = messagePayload.header {
             self.appendHeaderMessage(withHeader: headerMessage)

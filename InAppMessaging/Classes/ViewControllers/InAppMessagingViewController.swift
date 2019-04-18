@@ -2,17 +2,31 @@
  * Handle all the displaying logic of the SDK.
  */
 class InAppMessagingViewController: UIViewController {
+    
+    static var isShowing = false
 
     /**
      * Checks if there are any campaigns in the ReadyCampaignRepository and display them.
      */
     internal class func display() {
+        
+        if !isShowing {
+            isShowing = true
+
+            // Display first campaign if the ready campaign list is not empty.
+            if let firstCampaign = ReadyCampaignRepository.getFirst() {
+                ReadyCampaignRepository.removeFirst()
+                displayIndividualCampaign(firstCampaign)
+            }
+            
+            isShowing = false
+        }
 
         // Display first campaign if the ready campaign list is not empty.
-        if let firstCampaign = ReadyCampaignRepository.getFirst() {
-            ReadyCampaignRepository.removeFirst()
-            displayIndividualCampaign(firstCampaign)
-        }
+//        if let firstCampaign = ReadyCampaignRepository.getFirst() {
+//            ReadyCampaignRepository.removeFirst()
+//            displayIndividualCampaign(firstCampaign)
+//        }
     }
     
     /**
