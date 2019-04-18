@@ -104,7 +104,7 @@ extension HttpRequestable {
                     semaphore.signal()
                 }).resume()
                 
-                // Pause execution until signal() is called.
+                // Pause execution until signal() is called
                 // if the request requires the response to act on.
                 if shouldWait {
                     semaphore.wait()
