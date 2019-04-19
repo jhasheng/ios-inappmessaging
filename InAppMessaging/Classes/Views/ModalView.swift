@@ -9,7 +9,6 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     var impressions: [Impression] = []
     var properties: [Property] = []
     var campaign: CampaignData?
-    var image: UIImage?
 
     // Constant values used for UI elements in model views.
     let heightOffset: CGFloat = 18 // Height offset for every UI element.
@@ -56,8 +55,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     convenience init(withCampaign campaign: CampaignData, andImage image: UIImage?) {
         self.init(frame: UIScreen.main.bounds)
         self.campaign = campaign
-        self.image = image
-        self.initializeView(withCampaign: campaign)
+        self.initializeView(withCampaign: campaign, andImage: image)
     }
     
     override init(frame: CGRect) {
@@ -68,7 +66,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    internal func initializeView(withCampaign campaign: CampaignData) {
+    internal func initializeView(withCampaign campaign: CampaignData, andImage optionalImage: UIImage?) {
         // The opaque black background of modals.
         self.backgroundView.frame = frame
         self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(backgroundViewAlpha)
@@ -77,7 +75,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         self.setUpInitialValues()
 
         // Create the UIImageView first if there is an image.
-        if let image = self.image {
+        if let image = optionalImage {
             self.appendImageView(withImage: image)
         }
         
