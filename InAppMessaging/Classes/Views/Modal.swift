@@ -17,6 +17,7 @@ extension Modal where Self: UIView {
      */
     internal func show() {
         if let window =  UIApplication.shared.keyWindow {
+            InAppMessagingViewController.isRunning = true
             window.addSubview(self)
         }
     }
@@ -26,6 +27,8 @@ extension Modal where Self: UIView {
      */
     internal func dismiss() {
         self.removeFromSuperview()
+        InAppMessagingViewController.isRunning = false
+
         //TODO(Daniel Tam) Clarify on the time between showing campaigns.
         WorkScheduler.scheduleTask(5000, closure: InAppMessagingViewController.display)
     }

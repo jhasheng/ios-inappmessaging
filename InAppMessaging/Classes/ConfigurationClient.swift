@@ -24,7 +24,8 @@ class ConfigurationClient: HttpRequestable {
         guard let responseData = self.requestFromServer(
             withUrl: configUrl,
             withHttpMethod: .post,
-            withAdditionalHeaders: nil).data else {
+            withAdditionalHeaders: nil,
+            withSemaphoreWait: true).data else {
                 
                 print("InAppMessaging: Error calling server.")
                 // Exponential backoff for pinging Configuration server.

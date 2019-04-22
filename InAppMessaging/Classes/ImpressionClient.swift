@@ -47,7 +47,8 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
                 withUrl: pingImpressionEndpoint,
                 withHttpMethod: .post,
                 withOptionalParams: optionalParams,
-                withAdditionalHeaders: buildRequestHeader())
+                withAdditionalHeaders: buildRequestHeader(),
+                withSemaphoreWait: false)
     }
     
     /**

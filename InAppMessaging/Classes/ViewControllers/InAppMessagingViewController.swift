@@ -1,17 +1,29 @@
+import SDWebImage
+
 /**
  * Handle all the displaying logic of the SDK.
  */
 class InAppMessagingViewController: UIViewController {
+    
+    // Flag to make sure only one instance of the display logic is running.
+    // This is to prevent multiple campaign showing when events are logged
+    // at a rapid session.
+    static var isRunning = false
 
     /**
      * Checks if there are any campaigns in the ReadyCampaignRepository and display them.
      */
     internal class func display() {
+        if !isRunning {
+            isRunning = true
 
-        // Display first campaign if the ready campaign list is not empty.
-        if let firstCampaign = ReadyCampaignRepository.getFirst() {
-            ReadyCampaignRepository.removeFirst()
-            displayIndividualCampaign(firstCampaign)
+            // Display first campaign if the ready campaign list is not empty.
+            if let firstCampaign = ReadyCampaignRepository.getFirst() {
+                ReadyCampaignRepository.removeFirst()
+                displayIndividualCampaign(firstCampaign)
+            }
+            
+            isRunning = false
         }
     }
     
@@ -35,13 +47,24 @@ class InAppMessagingViewController: UIViewController {
                 return
         }
         
+        // Download the image beforehand on the background thread before passing it to the main thread to build UI.
+        let semaphore = DispatchSemaphore(value: 0)
+        var image: UIImage?
+        if let imageUrl = campaign.campaignData.messagePayload.resource.imageUrl {
+            SDWebImageDownloader.shared().downloadImage(with: URL(string: imageUrl), options: [], progress: nil) { (downloadedImage, data, error, bool) in
+                image = downloadedImage
+                semaphore.signal()
+            }
+            semaphore.wait()
+        }
+        
         DispatchQueue.main.async {
             var view: Modal?
             
             // TODO(daniel.tam) Add the other view types.
             switch campaignViewType {
             case .modal:
-                view = ModalView(campaign.campaignData)
+                view = ModalView(withCampaign: campaign.campaignData, andImage: image)
                 break
             case .invalid:
                 break
