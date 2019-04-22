@@ -1,3 +1,5 @@
+import SDWebImage
+
 /**
  * Handle all the displaying logic of the SDK.
  */
@@ -45,13 +47,24 @@ class InAppMessagingViewController: UIViewController {
                 return
         }
         
+        // Download the image beforehand on the background thread before passing it to the main thread to build UI.
+        let semaphore = DispatchSemaphore(value: 0)
+        var image: UIImage?
+        if let imageUrl = campaign.campaignData.messagePayload.resource.imageUrl {
+            SDWebImageDownloader.shared().downloadImage(with: URL(string: imageUrl), options: [], progress: nil) { (downloadedImage, data, error, bool) in
+                image = downloadedImage
+                semaphore.signal()
+            }
+            semaphore.wait()
+        }
+        
         DispatchQueue.main.async {
             var view: Modal?
             
             // TODO(daniel.tam) Add the other view types.
             switch campaignViewType {
             case .modal:
-                view = ModalView(campaign.campaignData)
+                view = ModalView(withCampaign: campaign.campaignData, andImage: image)
                 break
             case .invalid:
                 break
