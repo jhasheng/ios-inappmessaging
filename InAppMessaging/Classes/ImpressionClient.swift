@@ -63,7 +63,7 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
         for impression in impressionList {
             var tempImpression = [String: Any]()
             tempImpression["action"] =  impression.type.rawValue
-            tempImpression["ts"] = impression.ts
+            tempImpression["ts"] = impression.timestamp
             
             resultList.append(tempImpression)
         }

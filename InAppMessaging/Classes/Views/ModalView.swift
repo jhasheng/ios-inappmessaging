@@ -451,7 +451,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         self.impressions.append(
             Impression(
                 type: type,
-                ts: Date().millisecondsSince1970
+                timestamp: Date().millisecondsSince1970
             )
         )
         

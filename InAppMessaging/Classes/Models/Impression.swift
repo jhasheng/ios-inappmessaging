@@ -3,5 +3,5 @@
  */
 struct Impression: Encodable {
     let type: ImpressionType
-    let ts: Int
+    let timestamp: Int
 }
