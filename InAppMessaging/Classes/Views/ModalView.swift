@@ -345,7 +345,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
                 var xPositionForButton: CGFloat
                 
                 if buttonList.count == 1 {
-                    buttonWidthOffset = frame.width
+                    buttonWidthOffset = singleButtonWidthOffset
                     xPositionForButton = (self.dialogViewWidth / 4) + (buttonWidthOffset / 2)
                 } else {
                     buttonWidthOffset = twoButtonWidthOffset
