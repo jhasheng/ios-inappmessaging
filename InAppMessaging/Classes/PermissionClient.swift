@@ -22,7 +22,8 @@ struct PermissionClient: HttpRequestable {
                     withUrl: displayPermissionUrl,
                     withHttpMethod: .post,
                     withOptionalParams: requestParams,
-                    withAdditionalHeaders: buildRequestHeader()).data
+                    withAdditionalHeaders: buildRequestHeader(),
+                    withSemaphoreWait: true).data
         else {
             return true
         }

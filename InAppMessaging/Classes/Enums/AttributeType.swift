@@ -1,11 +1,11 @@
 /**
  * Enum of value type for custom event attributes.
  */
-enum AttributeType: Int {
-    case invalid = 0
-    case string = 1
-    case integer = 2
-    case double = 3
-    case boolean = 4
-    case timeInMilli = 5
+enum AttributeType: Int, Codable {
+    case INVALID = 0
+    case STRING = 1
+    case INTEGER = 2
+    case DOUBLE = 3
+    case BOOLEAN = 4
+    case TIME_IN_MILLI = 5
 }

@@ -11,9 +11,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     var campaign: CampaignData?
 
     // Constant values used for UI elements in model views.
-    let heightOffset: CGFloat = 15 // Height offset for every UI element.
-    let exitButtonHeightOffset: CGFloat = 30 // Height offset for exit button from the actual message.
-    let exitButtonSize: CGFloat = 20 // Size of the exit button.
+    let heightOffset: CGFloat = 18 // Height offset for every UI element.
     let backgroundViewAlpha: CGFloat = 0.66 // Value to adjust the transparency of the background view.
     let cornerRadiusForDialogView: CGFloat = 8 // Adjust how round the edge the dialog view will be.
     let cornerRadiusForButtons: CGFloat = 4 // Adjust how round the edge of the buttons will be.
@@ -27,6 +25,9 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     let initialFrameWidthIPadMultiplier: CGFloat = 0.60 // Percentage size for iPad's to display
     let imageAspectRatio: CGFloat = 1.25 // Aspect ratio for image. Currently set to 3:4.
     let maxWindowHeightPercentage: CGFloat = 0.70 // The max height the window should take up before making text scrollable.
+    var exitButtonSize: CGFloat = 0 // Size of the exit button.
+    var exitButtonHeightOffset: CGFloat = 0 // Height offset for exit button from the actual message.
+    var exitButtonFontSize: CGFloat = 0 // Font size of exit button.
     
     var backgroundView = UIView()
     var dialogView = UIView()
@@ -51,10 +52,10 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     // Set the text view's content height based on the height of the UILabels that it contains.
     var textViewContentHeight: CGFloat = 0
     
-    convenience init(_ campaign: CampaignData) {
+    convenience init(withCampaign campaign: CampaignData, andImage image: UIImage?) {
         self.init(frame: UIScreen.main.bounds)
         self.campaign = campaign
-        self.initialize(campaign: campaign)
+        self.initializeView(withCampaign: campaign, andImage: image)
     }
     
     override init(frame: CGRect) {
@@ -65,52 +66,67 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         fatalError("init(coder:) has not been implemented")
     }
     
+    internal func initializeView(withCampaign campaign: CampaignData, andImage optionalImage: UIImage?) {
+        // The opaque black background of modals.
+        self.backgroundView.frame = frame
+        self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(backgroundViewAlpha)
+
+        // Set up the initial values for UI based on device.
+        self.setUpInitialValues()
+
+        // Create the UIImageView first if there is an image.
+        if let image = optionalImage {
+            self.appendImageView(withImage: image)
+        }
+        
+        self.createMessageBody(campaign: campaign)
+        self.appendSubViews()
+    }
+    
+    fileprivate func setUpInitialValues() {
+        // Set different values based on device -- either iPad or iPhone.
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            // Use 75% of iPad's width.
+            self.dialogViewWidth = frame.width * initialFrameWidthIPadMultiplier
+            self.exitButtonSize = 22
+            self.exitButtonHeightOffset = 35
+            self.exitButtonFontSize = 16
+        } else {
+            self.dialogViewWidth = frame.width - initialFrameWidthOffset
+            self.exitButtonSize = 15
+            self.exitButtonHeightOffset = 25
+            self.exitButtonFontSize = 13
+        }
+    }
+    
     /**
      * Creates the modal view to be displayed using the campaign information.
      * @param { campaign: CampaignData } the campaign to be displayed.
      */
-    internal func initialize(campaign: CampaignData) {
-        // The opaque black background of modals.
-        self.backgroundView.frame = frame
-        self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(backgroundViewAlpha)
-        
-        // Set the initial width based on device -- either iPad or iPhone.
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            // Use 75% of iPad's width.
-            self.dialogViewWidth = frame.width * initialFrameWidthIPadMultiplier
-        } else {
-            self.dialogViewWidth = frame.width - initialFrameWidthOffset
-        }
-        
-        // Image view.
-        if let imageUrl = campaign.messagePayload.resource.imageUrl, !imageUrl.isEmpty {
-            self.hasImage = true
-            self.appendImageView(withUrl: imageUrl)
-        }
-        
+    internal func createMessageBody(campaign: CampaignData) {
         // Scroll view for header and messages.
         if campaign.messagePayload.header != nil ||
             campaign.messagePayload.messageBody != nil ||
             campaign.messagePayload.messageLowerBody != nil {
-            
-            // Handle spacing case for when there is no header.
-            if campaign.messagePayload.header != nil {
-                self.dialogViewCurrentHeight += heightOffset
-            }
-            
-                self.appendTextView(withMessage: campaign.messagePayload)
-            
-                self.dialogViewCurrentHeight += self.textView.frame.height
-            
-             // Handle spacing case for when there are no messages.
-            if campaign.messagePayload.messageBody != nil ||
-                campaign.messagePayload.messageLowerBody != nil {
-                
+
+                // Handle spacing case for when there is no header.
+                if campaign.messagePayload.header != nil {
                     self.dialogViewCurrentHeight += heightOffset
-            }
-            
+                }
+
+                self.appendTextView(withMessage: campaign.messagePayload)
+
+                self.dialogViewCurrentHeight += self.textView.frame.height
+
+                // Handle spacing case for when there are no messages.
+                if campaign.messagePayload.messageBody != nil ||
+                    campaign.messagePayload.messageLowerBody != nil {
+
+                        self.dialogViewCurrentHeight += heightOffset
+                }
+
         }
-        
+
         // Buttons.
         if let buttonList = campaign.messagePayload.messageSettings.controlSettings?.buttons, !buttonList.isEmpty {
             // Handle spacing for when there is only an image and buttons
@@ -118,14 +134,14 @@ class ModalView: UIView, Modal, ImpressionTrackable {
                 campaign.messagePayload.header == nil &&
                 campaign.messagePayload.messageBody == nil &&
                 campaign.messagePayload.messageLowerBody == nil {
-                
+
                     self.dialogViewCurrentHeight += heightOffset
             }
-            
+
             self.appendButtons(withButtonList: buttonList)
             self.dialogViewCurrentHeight += heightOffset
         }
-        
+
         // The dialog view which is the rounded rectangle in the center.
         self.dialogView.frame.origin = CGPoint(x: 32, y: frame.height)
         self.dialogView.frame.size = CGSize(width: self.dialogViewWidth, height: self.dialogViewCurrentHeight)
@@ -133,7 +149,12 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         self.dialogView.layer.cornerRadius = cornerRadiusForDialogView
         self.dialogView.clipsToBounds = true
         self.dialogView.center  = self.center
-        
+
+        // Add the exit button on the top right.
+        self.appendExitButton()
+    }
+    
+    fileprivate func appendExitButton() {
         // The top right "X" button to dismiss.
         let exitButton = UILabel(
             frame: CGRect(x: dialogView.frame.maxX - exitButtonSize,
@@ -142,6 +163,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
                           height: exitButtonSize))
         
         exitButton.text = "X"
+        exitButton.font = .systemFont(ofSize: exitButtonFontSize)
         exitButton.backgroundColor = .white
         exitButton.textColor = .black
         exitButton.textAlignment = .center
@@ -151,10 +173,6 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         exitButton.tag = ImpressionType.EXIT.rawValue
         exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
         self.backgroundView.addSubview(exitButton)
-        
-        if !hasImage {
-            self.appendSubViews()
-        }
     }
     
     /**
@@ -162,6 +180,9 @@ class ModalView: UIView, Modal, ImpressionTrackable {
      * @param { messagePayload: MessagePayload } the campaign's message payload.
      */
     fileprivate func appendTextView(withMessage messagePayload: MessagePayload) {
+        // Change textview background color
+        self.textView.backgroundColor = UIColor(hexFromString: messagePayload.backgroundColor)
+        
         // Header title.
         if let headerMessage = messagePayload.header {
             self.appendHeaderMessage(withHeader: headerMessage)
@@ -219,25 +240,21 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     
     /**
      * Append image view to dialog view.
-     * @param { imageUrl: String } string of the image URL.
+     * @param { iimage: UIImage } the image to display.
      */
-    fileprivate func appendImageView(withUrl imageUrl: String) {
+    fileprivate func appendImageView(withImage image: UIImage) {
+        
+        // Image ratio to calculate the height.
+        let imageRatio = self.dialogViewWidth / image.size.width
+        
         let imageView = UIImageView(
             frame: CGRect(x: 0,
                           y: self.dialogViewCurrentHeight,
                           width: self.dialogViewWidth,
-                          height: self.dialogViewWidth * imageAspectRatio))
+                          height: image.size.height * imageRatio))
         
-        imageView.contentMode = .scaleToFill
-        
-        // URL encoding to read urls with space characters in the link.
-        guard let encodedUrl = imageUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
-            return
-        }
-        
-        imageView.sd_setImage(with: URL(string: encodedUrl), placeholderImage: nil, options: []) { (image, error, SDImageCacheType, url) in
-            self.appendSubViews()
-        }
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = image
         
         self.dialogView.addSubview(imageView)
         self.dialogViewCurrentHeight += imageView.frame.height
@@ -328,7 +345,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
                 var xPositionForButton: CGFloat
                 
                 if buttonList.count == 1 {
-                    buttonWidthOffset = frame.width
+                    buttonWidthOffset = singleButtonWidthOffset
                     xPositionForButton = (self.dialogViewWidth / 4) + (buttonWidthOffset / 2)
                 } else {
                     buttonWidthOffset = twoButtonWidthOffset
@@ -434,7 +451,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         self.impressions.append(
             Impression(
                 type: type,
-                ts: Date().millisecondsSince1970
+                timestamp: Date().millisecondsSince1970
             )
         )
         

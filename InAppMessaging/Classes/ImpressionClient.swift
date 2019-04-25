@@ -47,7 +47,8 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
                 withUrl: pingImpressionEndpoint,
                 withHttpMethod: .post,
                 withOptionalParams: optionalParams,
-                withAdditionalHeaders: buildRequestHeader())
+                withAdditionalHeaders: buildRequestHeader(),
+                withSemaphoreWait: false)
     }
     
     /**
@@ -62,7 +63,7 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
         for impression in impressionList {
             var tempImpression = [String: Any]()
             tempImpression["action"] =  impression.type.rawValue
-            tempImpression["ts"] = impression.ts
+            tempImpression["timestamp"] = impression.timestamp
             
             resultList.append(tempImpression)
         }

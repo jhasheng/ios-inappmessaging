@@ -39,6 +39,8 @@ struct Keys {
         static let appStart = "APP_START"
         static let loginSuccessful = "LOGIN_SUCCESSFUL"
         static let purchaseSuccessful = "PURCHASE_SUCCESSFUL"
+        static let invalid = "INVALID"
+        static let custom = "CUSTOM"
     }
     
     /**

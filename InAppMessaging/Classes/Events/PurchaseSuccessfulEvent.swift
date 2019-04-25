@@ -3,10 +3,10 @@
  */
 @objc public class PurchaseSuccessfulEvent: Event {
     
-    static let PURCHASE_AMOUNT_MICROS = "purchaseAmountMicros"
-    static let NUMBER_OF_ITEMS = "numberOfItems"
-    static let CURRENCY_CODE = "currencyCode"
-    static let ITEM_ID_LIST = "itemIdList"
+    final let PURCHASE_AMOUNT_MICROS = "purchaseAmountMicros"
+    final let NUMBER_OF_ITEMS = "numberOfItems"
+    final let CURRENCY_CODE = "currencyCode"
+    final let ITEM_ID_LIST = "itemIdList"
     
     var purchaseAmount: Int
     var numberOfItems: Int
@@ -18,10 +18,19 @@
         return [
             "eventName": super.eventName,
             "timestamp": super.timestamp,
-            "purchaseAmountMicros": self.purchaseAmount,
-            "numberOfItems": self.numberOfItems,
-            "currencyCode": self.currencyCode,
-            "itemIdList": self.itemList
+            PURCHASE_AMOUNT_MICROS: self.purchaseAmount,
+            NUMBER_OF_ITEMS: self.numberOfItems,
+            CURRENCY_CODE: self.currencyCode,
+            ITEM_ID_LIST: self.itemList
+        ]
+    }
+    
+    var customAttributes: [CustomAttribute]? {
+        return [
+            CustomAttribute(withKeyName: PURCHASE_AMOUNT_MICROS, withIntValue: self.purchaseAmount),
+            CustomAttribute(withKeyName: NUMBER_OF_ITEMS, withIntValue: self.numberOfItems),
+            CustomAttribute(withKeyName: CURRENCY_CODE, withStringValue: self.currencyCode),
+            CustomAttribute(withKeyName: ITEM_ID_LIST, withStringValue: self.itemList.joined(separator: "|"))
         ]
     }
     
@@ -68,5 +77,17 @@
     
     override public func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
+    }
+    
+    /**
+     * Create a mapping used to return a mapping of the customAttribute list.
+     */
+    override func getAttributeMap() -> [String: CustomAttribute]? {
+        return [
+            PURCHASE_AMOUNT_MICROS: CustomAttribute(withKeyName: PURCHASE_AMOUNT_MICROS, withIntValue: self.purchaseAmount),
+            NUMBER_OF_ITEMS: CustomAttribute(withKeyName: NUMBER_OF_ITEMS, withIntValue: self.numberOfItems),
+            CURRENCY_CODE: CustomAttribute(withKeyName: CURRENCY_CODE, withStringValue: self.currencyCode),
+            ITEM_ID_LIST: CustomAttribute(withKeyName: ITEM_ID_LIST, withStringValue: self.itemList.joined(separator: "|"))
+        ]
     }
 }
