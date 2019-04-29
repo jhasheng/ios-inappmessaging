@@ -16,7 +16,7 @@
 
         super.init(
             eventType: EventType.appStart,
-            eventName: Keys.Event.appStart
+            eventName: Constants.Event.appStart
         )
     }
     
@@ -24,7 +24,7 @@
         
         super.init(
             eventType: EventType.appStart,
-            eventName: Keys.Event.appStart,
+            eventName: Constants.Event.appStart,
             timestamp: timestamp
         )
     }

@@ -12,7 +12,7 @@ struct PermissionClient: HttpRequestable {
     func checkPermission(withCampaign campaign: CampaignData) -> Bool {
 
         let requestParams = [
-            Keys.Request.CampaignID: campaign.campaignId
+            Constants.Request.CampaignID: campaign.campaignId
         ]
 
         // Call display-permission endpoint.
@@ -57,7 +57,7 @@ struct PermissionClient: HttpRequestable {
     internal func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data? {
 
         guard let subscriptionId = Bundle.inAppSubscriptionId,
-            let campaignId = optionalParams![Keys.Request.CampaignID],
+            let campaignId = optionalParams![Constants.Request.CampaignID],
             let appVersion = Bundle.appBuildVersion,
             let sdkVersion = Bundle.inAppSdkVersion,
             let locale = Locale.formattedCode
@@ -95,12 +95,12 @@ struct PermissionClient: HttpRequestable {
 
         // Retrieve sub ID and return in header of the request.
         if let subId = Bundle.inAppSubscriptionId {
-            additionalHeaders.append(Attribute(withKeyName: Keys.Request.subscriptionHeader, withValue: subId))
+            additionalHeaders.append(Attribute(withKeyName: Constants.Request.subscriptionHeader, withValue: subId))
         }
         
         // Retrieve access token and return in the header of the request.
         if let accessToken = IAMPreferenceRepository.getAccessToken() {
-            additionalHeaders.append(Attribute(withKeyName: Keys.Request.authorization, withValue: "OAuth2 \(accessToken)"))
+            additionalHeaders.append(Attribute(withKeyName: Constants.Request.authorization, withValue: "OAuth2 \(accessToken)"))
         }
         
         return additionalHeaders

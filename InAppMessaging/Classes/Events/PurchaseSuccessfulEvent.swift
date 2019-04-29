@@ -48,7 +48,7 @@
         
             super.init(
                 eventType: EventType.purchaseSuccessful,
-                eventName: Keys.Event.purchaseSuccessful
+                eventName: Constants.Event.purchaseSuccessful
             )
     }
     
@@ -66,7 +66,7 @@
         
             super.init(
                 eventType: EventType.purchaseSuccessful,
-                eventName: Keys.Event.purchaseSuccessful,
+                eventName: Constants.Event.purchaseSuccessful,
                 timestamp: timestamp
             )
     }

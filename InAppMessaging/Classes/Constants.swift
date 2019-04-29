@@ -1,14 +1,13 @@
 /**
  * Struct to organize all constants used by InAppMessaing SDK.
  */
-struct Keys {
+struct Constants {
     
     /**
      * InAppMessaging URLs.
      */
     struct URL {
-        static let ConfigServerURL = "InAppMessagingConfigURL"
-        static let MixerServerURL = "InAppMessagingMixerServerURL"
+        static let ConfigServerURL = "http://danieltam.local:3000/config/get-config"
     }
     
     /**

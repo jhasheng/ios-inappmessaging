@@ -10,7 +10,7 @@ class EventLoggingTests: QuickSpec {
     struct MockEventLogger: PlistManipulable {
         static var plistURL: URL {
             let documentDirectoryURL =  try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            return documentDirectoryURL.appendingPathComponent(Keys.File.TestFileForEventLogs)
+            return documentDirectoryURL.appendingPathComponent(Constants.File.TestFileForEventLogs)
         }
     }
 

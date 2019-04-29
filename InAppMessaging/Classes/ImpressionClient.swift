@@ -38,7 +38,7 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
         
             // Broadcast impression data to RAnalytics.
             self.sendEventName(
-                Keys.RAnalytics.impressions,
+                Constants.RAnalytics.impressions,
                 ["impressions": deconstructImpressionObject(impressionList: impressions)]
             )
         
@@ -117,17 +117,17 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
         
         // Retrieve sub ID and return in header of the request.
         if let subId = Bundle.inAppSubscriptionId {
-            additionalHeaders.append(Attribute(withKeyName: Keys.Request.subscriptionHeader, withValue: subId))
+            additionalHeaders.append(Attribute(withKeyName: Constants.Request.subscriptionHeader, withValue: subId))
         }
         
         // Retrieve access token and return in the header of the request.
         if let accessToken = IAMPreferenceRepository.getAccessToken() {
-            additionalHeaders.append(Attribute(withKeyName: Keys.Request.authorization, withValue: "OAuth2 \(accessToken)"))
+            additionalHeaders.append(Attribute(withKeyName: Constants.Request.authorization, withValue: "OAuth2 \(accessToken)"))
         }
         
         // Retrieve device ID and return in header of the request.
         if let deviceId = UIDevice.current.identifierForVendor?.uuidString {
-            additionalHeaders.append(Attribute(withKeyName: Keys.Request.deviceID, withValue: deviceId))
+            additionalHeaders.append(Attribute(withKeyName: Constants.Request.deviceID, withValue: deviceId))
         }
         
         return additionalHeaders

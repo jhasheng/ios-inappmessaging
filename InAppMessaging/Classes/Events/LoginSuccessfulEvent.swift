@@ -15,14 +15,14 @@
     public init() {
         super.init(
             eventType: EventType.loginSuccessful,
-            eventName: Keys.Event.loginSuccessful
+            eventName: Constants.Event.loginSuccessful
         )
     }
     
     init(timestamp: Int) {
         super.init(
             eventType: EventType.loginSuccessful,
-            eventName: Keys.Event.loginSuccessful,
+            eventName: Constants.Event.loginSuccessful,
             timestamp: timestamp
         )
     }
