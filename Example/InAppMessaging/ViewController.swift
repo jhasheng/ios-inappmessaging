@@ -44,4 +44,12 @@ class ViewController: UIViewController {
     @IBAction func appStartButton(_ sender: Any) {
         InAppMessaging.logEvent(AppStartEvent())
     }
+    
+    @IBAction func goToSecondPage(_ sender: Any) {
+        // Register Nib
+        let newViewController = SecondPageViewController(nibName: "SecondPageViewController", bundle: nil)
+        
+        // Present View "Modally"
+        self.present(newViewController, animated: true, completion: nil)
+    }
 }
