@@ -14,7 +14,6 @@ class SecondPageViewController: UIViewController {
     }
     
     @IBAction func returnToHomepage(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
         dismiss(animated: true, completion: nil)
     }
 }
