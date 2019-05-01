@@ -231,7 +231,7 @@ struct TestConstants {
                                 eventType: .custom,
                                 eventName: "testEvent",
                                 attributes: [
-                                    TriggerAttribute(key: "attributeOne", value: "attributeOneValue", type: .STRING, operator: .EQUALS)
+                                    TriggerAttribute(name: "attributeOne", value: "attributeOneValue", type: .STRING, operator: .EQUALS)
                                 ]
                             )
                         ],
@@ -278,7 +278,7 @@ struct TestConstants {
                                 eventType: .custom,
                                 eventName: "testEvent",
                                 attributes: [
-                                    TriggerAttribute(key: "attributeOne", value: "attributeOneValue", type: .STRING, operator: .IS_NOT_EQUAL)
+                                    TriggerAttribute(name: "attributeOne", value: "attributeOneValue", type: .STRING, operator: .IS_NOT_EQUAL)
                                 ]
                             )
                         ],
@@ -325,7 +325,7 @@ struct TestConstants {
                                 eventType: .custom,
                                 eventName: "testEvent",
                                 attributes: [
-                                    TriggerAttribute(key: "attributeOne", value: "123", type: .INTEGER, operator: .EQUALS)
+                                    TriggerAttribute(name: "attributeOne", value: "123", type: .INTEGER, operator: .EQUALS)
                                 ]
                             )
                         ],
@@ -372,7 +372,7 @@ struct TestConstants {
                                 eventType: .custom,
                                 eventName: "testEvent",
                                 attributes: [
-                                    TriggerAttribute(key: "attributeOne", value: "123", type: .INTEGER, operator: .IS_NOT_EQUAL)
+                                    TriggerAttribute(name: "attributeOne", value: "123", type: .INTEGER, operator: .IS_NOT_EQUAL)
                                 ]
                             )
                         ],
@@ -419,7 +419,7 @@ struct TestConstants {
                                 eventType: .custom,
                                 eventName: "testEvent",
                                 attributes: [
-                                    TriggerAttribute(key: "attributeOne", value: "123", type: .INTEGER, operator: .GREATER_THAN)
+                                    TriggerAttribute(name: "attributeOne", value: "123", type: .INTEGER, operator: .GREATER_THAN)
                                 ]
                             )
                         ],
@@ -466,7 +466,7 @@ struct TestConstants {
                                 eventType: .custom,
                                 eventName: "testEvent",
                                 attributes: [
-                                    TriggerAttribute(key: "attributeOne", value: "123", type: .INTEGER, operator: .LESS_THAN)
+                                    TriggerAttribute(name: "attributeOne", value: "123", type: .INTEGER, operator: .LESS_THAN)
                                 ]
                             )
                         ],
@@ -513,7 +513,7 @@ struct TestConstants {
                                 eventType: .custom,
                                 eventName: "testEvent",
                                 attributes: [
-                                    TriggerAttribute(key: "attributeOne", value: "123.0", type: .DOUBLE, operator: .EQUALS)
+                                    TriggerAttribute(name: "attributeOne", value: "123.0", type: .DOUBLE, operator: .EQUALS)
                                 ]
                             )
                         ],
@@ -560,7 +560,7 @@ struct TestConstants {
                                 eventType: .custom,
                                 eventName: "testEvent",
                                 attributes: [
-                                    TriggerAttribute(key: "attributeOne", value: "123.0", type: .DOUBLE, operator: .IS_NOT_EQUAL)
+                                    TriggerAttribute(name: "attributeOne", value: "123.0", type: .DOUBLE, operator: .IS_NOT_EQUAL)
                                 ]
                             )
                         ],
@@ -607,7 +607,7 @@ struct TestConstants {
                                 eventType: .custom,
                                 eventName: "testEvent",
                                 attributes: [
-                                    TriggerAttribute(key: "attributeOne", value: "123.0", type: .DOUBLE, operator: .GREATER_THAN)
+                                    TriggerAttribute(name: "attributeOne", value: "123.0", type: .DOUBLE, operator: .GREATER_THAN)
                                 ]
                             )
                         ],
@@ -654,7 +654,7 @@ struct TestConstants {
                                 eventType: .custom,
                                 eventName: "testEvent",
                                 attributes: [
-                                    TriggerAttribute(key: "attributeOne", value: "123.0", type: .DOUBLE, operator: .LESS_THAN)
+                                    TriggerAttribute(name: "attributeOne", value: "123.0", type: .DOUBLE, operator: .LESS_THAN)
                                 ]
                             )
                         ],
@@ -701,7 +701,7 @@ struct TestConstants {
                                 eventType: .custom,
                                 eventName: "testEvent",
                                 attributes: [
-                                    TriggerAttribute(key: "attributeOne", value: "true", type: .BOOLEAN, operator: .EQUALS)
+                                    TriggerAttribute(name: "attributeOne", value: "true", type: .BOOLEAN, operator: .EQUALS)
                                 ]
                             )
                         ],
@@ -748,7 +748,7 @@ struct TestConstants {
                                 eventType: .custom,
                                 eventName: "testEvent",
                                 attributes: [
-                                    TriggerAttribute(key: "attributeOne", value: "true", type: .BOOLEAN, operator: .IS_NOT_EQUAL)
+                                    TriggerAttribute(name: "attributeOne", value: "true", type: .BOOLEAN, operator: .IS_NOT_EQUAL)
                                 ]
                             )
                         ],
@@ -795,7 +795,7 @@ struct TestConstants {
                                 eventType: .custom,
                                 eventName: "testEvent",
                                 attributes: [
-                                    TriggerAttribute(key: "attributeOne", value: "1100", type: .TIME_IN_MILLI, operator: .EQUALS)
+                                    TriggerAttribute(name: "attributeOne", value: "1100", type: .TIME_IN_MILLI, operator: .EQUALS)
                                 ]
                             )
                         ],
@@ -842,7 +842,7 @@ struct TestConstants {
                                 eventType: .custom,
                                 eventName: "testEvent",
                                 attributes: [
-                                    TriggerAttribute(key: "attributeOne", value: "1100", type: .TIME_IN_MILLI, operator: .IS_NOT_EQUAL)
+                                    TriggerAttribute(name: "attributeOne", value: "1100", type: .TIME_IN_MILLI, operator: .IS_NOT_EQUAL)
                                 ]
                             )
                         ],
@@ -889,7 +889,7 @@ struct TestConstants {
                                 eventType: .custom,
                                 eventName: "testEvent",
                                 attributes: [
-                                    TriggerAttribute(key: "attributeOne", value: "1100", type: .TIME_IN_MILLI, operator: .GREATER_THAN)
+                                    TriggerAttribute(name: "attributeOne", value: "1100", type: .TIME_IN_MILLI, operator: .GREATER_THAN)
                                 ]
                             )
                         ],
@@ -936,7 +936,7 @@ struct TestConstants {
                                 eventType: .custom,
                                 eventName: "testEvent",
                                 attributes: [
-                                    TriggerAttribute(key: "attributeOne", value: "1100", type: .TIME_IN_MILLI, operator: .LESS_THAN)
+                                    TriggerAttribute(name: "attributeOne", value: "1100", type: .TIME_IN_MILLI, operator: .LESS_THAN)
                                 ]
                             )
                         ],

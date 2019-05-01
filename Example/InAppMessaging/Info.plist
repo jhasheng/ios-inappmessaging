@@ -21,11 +21,11 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>InAppMessagingConfigURL</key>
-	<string>http://danieltam.local:3000/config/get-config</string>
+	<string>https://iam-dev.westus.cloudapp.azure.com/config/get-config</string>
 	<key>InAppMessagingSDKVersion</key>
 	<string>0</string>
 	<key>InAppMessagingSubscriptionID</key>
-	<string>d63e78f1-a001-11e8-a2b3-3365f40a057b</string>
+	<string>752c6b02-2411-11e9-ab3b-d9875482cabe</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>rakuten</string>
