@@ -7,8 +7,8 @@ struct EventRepository: EventStorable, AnalyticsBroadcaster {
     static func addEvent(_ event: Event) {
         
         // Normalize event name so that it will be case-insensitive.
-        event.eventName = event.eventName.lowercased()
-        
+//        event.eventName = event.eventName.lowercased()
+//        
         // Appends to the list of events.
         self.list.append(event)
         

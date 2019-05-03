@@ -35,7 +35,7 @@
     init(eventType: EventType, eventName: String, timestamp: Int = Date().millisecondsSince1970) {
         self.eventType = eventType
         self.timestamp = timestamp
-        self.eventName = eventName
+        self.eventName = eventName.lowercased()
     }
     
     /**
