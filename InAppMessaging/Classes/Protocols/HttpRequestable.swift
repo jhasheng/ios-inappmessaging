@@ -99,9 +99,7 @@ extension HttpRequestable {
                         semaphore.signal()
                         return
                     }
-                    
-                    print(CommonUtility.convertDataToDictionary(data))
-                    
+                                        
                     dataToReturn = data
                     serverResponse = response
                     

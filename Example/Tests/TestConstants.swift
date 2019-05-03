@@ -1013,5 +1013,99 @@ struct TestConstants {
                 )
             ]
         )
+        
+        static let caseInsensitiveAttributeName = PingResponse.init(
+            nextPingMillis: 0,
+            currentPingMillis: 0,
+            data: [
+                Campaign.init(
+                    campaignData: CampaignData.init(
+                        campaignId: "testCampaignId",
+                        maxImpressions: 2,
+                        type: 1,
+                        triggers: [
+                            Trigger.init(
+                                type: 1,
+                                eventType: .custom,
+                                eventName: "testevent",
+                                attributes: [
+                                    TriggerAttribute(name: "attributeone", value: "hi", type: .STRING, operator: .EQUALS)
+                                ]
+                            )
+                        ],
+                        isTest: false,
+                        messagePayload: MessagePayload.init(
+                            title: "testTitle",
+                            messageBody: "testBody",
+                            messageLowerBody:"testLowerBody",
+                            header: "testHeader",
+                            titleColor: "color",
+                            headerColor: "color2",
+                            messageBodyColor: "color3",
+                            backgroundColor: "color4",
+                            frameColor: "color5",
+                            resource: Resource.init(
+                                assetsUrl: nil,
+                                imageUrl: nil,
+                                cropType: 1),
+                            messageSettings: MessageSettings.init(
+                                displaySettings: DisplaySettings.init(
+                                    orientation: 1,
+                                    slideFrom: 1,
+                                    endTimeMillis: 1,
+                                    textAlign: 1),
+                                controlSettings: nil)
+                        )
+                    )
+                )
+            ]
+        )
+        
+        static let caseSensitiveAttributeValue = PingResponse.init(
+            nextPingMillis: 0,
+            currentPingMillis: 0,
+            data: [
+                Campaign.init(
+                    campaignData: CampaignData.init(
+                        campaignId: "testCampaignId",
+                        maxImpressions: 2,
+                        type: 1,
+                        triggers: [
+                            Trigger.init(
+                                type: 1,
+                                eventType: .custom,
+                                eventName: "testevent",
+                                attributes: [
+                                    TriggerAttribute(name: "attributeone", value: "Hi", type: .STRING, operator: .EQUALS)
+                                ]
+                            )
+                        ],
+                        isTest: false,
+                        messagePayload: MessagePayload.init(
+                            title: "testTitle",
+                            messageBody: "testBody",
+                            messageLowerBody:"testLowerBody",
+                            header: "testHeader",
+                            titleColor: "color",
+                            headerColor: "color2",
+                            messageBodyColor: "color3",
+                            backgroundColor: "color4",
+                            frameColor: "color5",
+                            resource: Resource.init(
+                                assetsUrl: nil,
+                                imageUrl: nil,
+                                cropType: 1),
+                            messageSettings: MessageSettings.init(
+                                displaySettings: DisplaySettings.init(
+                                    orientation: 1,
+                                    slideFrom: 1,
+                                    endTimeMillis: 1,
+                                    textAlign: 1),
+                                controlSettings: nil)
+                        )
+                    )
+                )
+            ]
+        )
     }
 }

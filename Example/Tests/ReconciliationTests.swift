@@ -481,7 +481,7 @@ class ReconciliationTests: QuickSpec {
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
-            it("should have a campaign that is matched even with case-insensitive event names") {
+            it("should have a campaign that is matched even with a case-insensitive event name") {
                 let mockResponse = TestConstants.MockResponse.caseInsensitiveEventName
                 PingResponseRepository.list = mockResponse.data
                 
@@ -496,8 +496,36 @@ class ReconciliationTests: QuickSpec {
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
-            it("should have a campaign that is matched even with case-insensitive attribute names") {
+            it("should have a campaign that is matched even with a case-insensitive attribute name") {
+                let mockResponse = TestConstants.MockResponse.caseInsensitiveAttributeName
+                PingResponseRepository.list = mockResponse.data
                 
+                let customEvent = CustomEvent(
+                    withName: "TESTEVENT",
+                    withCustomAttributes: [
+                        CustomAttribute(withKeyName: "AtTriButeone", withStringValue: "hi")
+                    ]
+                )
+                
+                EventRepository.addEvent(customEvent)
+                CampaignReconciliation.reconciliate()
+                expect(ReadyCampaignRepository.list.count).to(equal(1))
+            }
+            
+            it("should not have a campaign because of case-sensitive attribute value mismatch") {
+                let mockResponse = TestConstants.MockResponse.caseSensitiveAttributeValue
+                PingResponseRepository.list = mockResponse.data
+                
+                let customEvent = CustomEvent(
+                    withName: "TESTEVENT",
+                    withCustomAttributes: [
+                        CustomAttribute(withKeyName: "AtTriButeone", withStringValue: "hi")
+                    ]
+                )
+                
+                EventRepository.addEvent(customEvent)
+                CampaignReconciliation.reconciliate()
+                expect(ReadyCampaignRepository.list.count).to(equal(0))
             }
         }
     }
