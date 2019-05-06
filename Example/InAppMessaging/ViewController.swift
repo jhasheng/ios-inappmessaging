@@ -35,8 +35,8 @@ class ViewController: UIViewController {
     @IBAction func customTestButton(_ sender: Any) {
         InAppMessaging.logEvent(
             CustomEvent(
-                withName: "custom_test",
-                withCustomAttributes: [CustomAttribute(withKeyName: "test", withStringValue: "value")]
+                withName: "second activity",
+                withCustomAttributes: [CustomAttribute(withKeyName: "click", withBoolValue: true)]
             )
         )
     }

@@ -17,35 +17,35 @@ public class CustomAttribute: NSObject {
     
     @objc
     public init(withKeyName name: String, withStringValue value: String) {
-        self.name = name
+        self.name = name.lowercased()
         self.value = value
         self.type = .STRING
     }
     
     @objc
     public init(withKeyName name: String, withIntValue value: Int) {
-        self.name = name
+        self.name = name.lowercased()
         self.value = value
         self.type = .INTEGER
     }
     
     @objc
     public init(withKeyName name: String, withDoubleValue value: Double) {
-        self.name = name
+        self.name = name.lowercased()
         self.value = value
         self.type = .DOUBLE
     }
     
     @objc
     public init(withKeyName name: String, withBoolValue value: Bool) {
-        self.name = name
+        self.name = name.lowercased()
         self.value = value
         self.type = .BOOLEAN
     }
     
     @objc
     public init(withKeyName name: String, withTimeInMilliValue value: Int) {
-        self.name = name
+        self.name = name.lowercased()
         self.value = value
         self.type = .TIME_IN_MILLI
     }
