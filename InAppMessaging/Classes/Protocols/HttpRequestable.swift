@@ -99,7 +99,7 @@ extension HttpRequestable {
                         semaphore.signal()
                         return
                     }
-                    
+                                        
                     dataToReturn = data
                     serverResponse = response
                     
