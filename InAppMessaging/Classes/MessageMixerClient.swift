@@ -88,7 +88,7 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
     internal func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data? {
         
         guard let subscriptionId = Bundle.inAppSubscriptionId,
-            let appVersion = Bundle.appVersionString
+            let appVersion = Bundle.appVersion
         else {
             #if DEBUG
                 assertionFailure("InAppMessaging: Make sure there is a valid '\(Constants.Bundle.SubscriptionID)' key in your info.plist.")

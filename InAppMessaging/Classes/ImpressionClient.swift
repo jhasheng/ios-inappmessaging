@@ -81,7 +81,7 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
             let properties = params[propertyKey] as? [Property],
             let campaign = params[campaignKey] as? CampaignData,
             let subscriptionId = Bundle.inAppSubscriptionId,
-            let appVersion = Bundle.appBuildVersion,
+            let appVersion = Bundle.appVersion,
             let sdkVersion = Bundle.inAppSdkVersion
         else {
             #if DEBUG
