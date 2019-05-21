@@ -12,7 +12,7 @@ extension Bundle {
     }
     
     static var inAppSdkVersion: String? {
-        return Bundle.main.infoDictionary?[Constants.Bundle.SDKVersion] as? String
+        return Bundle(identifier: "org.cocoapods.InAppMessaging")?.infoDictionary?["CFBundleShortVersionString"] as? String
     }
     
     static var inAppSubscriptionId: String? {
