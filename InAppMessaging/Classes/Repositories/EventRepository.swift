@@ -9,7 +9,7 @@ struct EventRepository: EventStorable, AnalyticsBroadcaster {
         self.list.append(event)
         
         // Broadcast event to RAT SDK.
-        EventRepository().sendEventName(Keys.RAnalytics.events, event.dictionary)
+        EventRepository().sendEventName(Constants.RAnalytics.events, event.dictionary)
     }
     
     static func clear() {

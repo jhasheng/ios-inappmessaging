@@ -16,14 +16,10 @@ extension Bundle {
     }
     
     static var inAppSdkVersion: String? {
-        return Bundle.main.infoDictionary?[Keys.Bundle.SDKVersion] as? String
+        return Bundle.main.infoDictionary?[Constants.Bundle.SDKVersion] as? String
     }
     
     static var inAppSubscriptionId: String? {
-        return Bundle.main.infoDictionary?[Keys.Bundle.SubscriptionID] as? String
-    }
-    
-    static var inAppConfigUrl: String? {
-        return Bundle.main.infoDictionary?[Keys.URL.ConfigServerURL] as? String
+        return Bundle.main.infoDictionary?[Constants.Bundle.SubscriptionID] as? String
     }
 }

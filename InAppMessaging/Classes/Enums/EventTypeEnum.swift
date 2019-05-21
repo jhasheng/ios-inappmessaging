@@ -13,15 +13,15 @@ enum EventType: Int, Codable {
         get {
             switch self {
             case .invalid:
-                return Keys.Event.invalid
+                return Constants.Event.invalid
             case .appStart:
-                return Keys.Event.appStart
+                return Constants.Event.appStart
             case .loginSuccessful:
-                return Keys.Event.loginSuccessful
+                return Constants.Event.loginSuccessful
             case .purchaseSuccessful:
-                return Keys.Event.purchaseSuccessful
+                return Constants.Event.purchaseSuccessful
             case .custom:
-                return Keys.Event.custom
+                return Constants.Event.custom
             }
         }
     }

@@ -1,14 +1,13 @@
 /**
  * Struct to organize all constants used by InAppMessaing SDK.
  */
-struct Keys {
+struct Constants {
     
     /**
      * InAppMessaging URLs.
      */
     struct URL {
-        static let ConfigServerURL = "InAppMessagingConfigURL"
-        static let MixerServerURL = "InAppMessagingMixerServerURL"
+        static let ConfigServerURL = "https://inappmessaging.rakapi.com/config/get-config"
     }
     
     /**
