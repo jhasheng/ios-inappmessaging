@@ -11,23 +11,19 @@ struct MatchingUtil {
         withEventAttributeValue eventAttributeValue: String,
         andOperator operatorType: AttributeOperator) -> Bool {
         
-        // Make both values to compare case-insensitive.
-        let triggerValue = triggerAttributeValue.lowercased()
-        let eventValue = eventAttributeValue.lowercased()
-        
         switch operatorType {
             case .EQUALS:
-                return eventValue == triggerValue
+                return eventAttributeValue == triggerAttributeValue
             case .IS_NOT_EQUAL:
-                return eventValue != triggerValue
+                return eventAttributeValue != triggerAttributeValue
             case .IS_BLANK:
-                return eventValue.isEmpty
+                return eventAttributeValue.isEmpty
             case .IS_NOT_BLANK:
-                return !eventValue.isEmpty
+                return !eventAttributeValue.isEmpty
             case .MATCHES_REGEX:
-                return matches(for: triggerValue, in: eventValue)
+                return matches(for: triggerAttributeValue, in: eventAttributeValue)
             case .DOES_NOT_MATCH_REGEX:
-                return !matches(for: triggerValue, in: eventValue)
+                return !matches(for: triggerAttributeValue, in: eventAttributeValue)
             case .INVALID,
                  .GREATER_THAN,
                  .LESS_THAN:

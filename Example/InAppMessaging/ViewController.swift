@@ -41,7 +41,7 @@ class ViewController: UIViewController {
         InAppMessaging.logEvent(
             CustomEvent(
                 withName: "second activity",
-                withCustomAttributes: [CustomAttribute(withKeyName: "Click", withBoolValue: true)]
+                withCustomAttributes: [CustomAttribute(withKeyName: "click", withBoolValue: true)]
             )
         )        
     }

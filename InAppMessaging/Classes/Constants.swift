@@ -35,11 +35,11 @@ struct Constants {
         static let timestamp = "timestamp"
         static let eventName = "eventName"
         static let customAttributes = "customAttributes"
-        static let appStart = "APP_START"
-        static let loginSuccessful = "LOGIN_SUCCESSFUL"
-        static let purchaseSuccessful = "PURCHASE_SUCCESSFUL"
-        static let invalid = "INVALID"
-        static let custom = "CUSTOM"
+        static let appStart = "app_start"
+        static let loginSuccessful = "login_successful"
+        static let purchaseSuccessful = "purchase_successful"
+        static let invalid = "invalid"
+        static let custom = "custom"
     }
     
     /**
