@@ -2,10 +2,7 @@
  * Protocol that is conformed to when impression tracking is needed.
  */
 protocol ImpressionTrackable {
-    typealias Property = Attribute
-    
     var impressions: [Impression] { get set }
-    var properties: [Property] { get set }
     var campaign: CampaignData? { get set }
     
     /**
@@ -13,7 +10,7 @@ protocol ImpressionTrackable {
      * @param { type: ImpressionType } enum type of the impression.
      * @param { properties: [Property] } optional properties to send.
      */
-    func logImpression(withImpressionType type: ImpressionType, withProperties properties: [Property])
+    func logImpression(withImpressionType type: ImpressionType)
     
     /**
      * Called at the end of an action function from a campaign. This will pack
@@ -35,7 +32,6 @@ extension ImpressionTrackable {
         
         ImpressionClient().pingImpression(
             withImpressions: impressions,
-            withProperties: properties,
             withCampaign: campaign)
     }
 }

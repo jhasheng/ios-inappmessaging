@@ -7,7 +7,6 @@ import SDWebImage
 class ModalView: UIView, Modal, ImpressionTrackable {
 
     var impressions: [Impression] = []
-    var properties: [Property] = []
     var campaign: CampaignData?
 
     // Constant values used for UI elements in model views.
@@ -395,7 +394,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
     fileprivate func appendSubViews() {
         self.addSubview(self.backgroundView)
         self.addSubview(self.dialogView)
-        logImpression(withImpressionType: .IMPRESSION, withProperties: [])
+        logImpression(withImpressionType: .IMPRESSION)
     }
     
     // Button selectors for modal view.
@@ -413,7 +412,7 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         // To log and send impression.
         if let tag = sender.view?.tag,
             let type = ImpressionType(rawValue: tag) {
-                logImpression(withImpressionType: type, withProperties: [])
+                logImpression(withImpressionType: type)
                 sendImpression()
         }
         
@@ -440,13 +439,12 @@ class ModalView: UIView, Modal, ImpressionTrackable {
         // To log and send impression.
         if let tag = sender.view?.tag,
             let type = ImpressionType(rawValue: tag) {
-            logImpression(withImpressionType: type, withProperties: [])
+            logImpression(withImpressionType: type)
             sendImpression()
         }
     }
     
-    func logImpression(withImpressionType type: ImpressionType, withProperties properties: [Property]) {
-        
+    func logImpression(withImpressionType type: ImpressionType) {
         // Log the impression.
         self.impressions.append(
             Impression(
@@ -454,10 +452,5 @@ class ModalView: UIView, Modal, ImpressionTrackable {
                 timestamp: Date().millisecondsSince1970
             )
         )
-        
-         //Log the properties.
-        for property in properties {
-            self.properties.append(property)
-        }
     }
 }
