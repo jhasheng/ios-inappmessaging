@@ -13,5 +13,5 @@ Pod::Spec.new do |s|
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'Swinject', "2.5.0"
-  s.dependency 'SDWebImage'
+  s.dependency 'SDWebImage', "5.0.3"
 end
