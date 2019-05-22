@@ -64,7 +64,7 @@ class ConfigurationClient: HttpRequestable {
     internal func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data? {
         
         guard let locale = Locale.formattedCode,
-            let appVersion = Bundle.appBuildVersion,
+            let appVersion = Bundle.appVersion,
             let appId = Bundle.applicationId,
             let sdkVersion = Bundle.inAppSdkVersion
         else {

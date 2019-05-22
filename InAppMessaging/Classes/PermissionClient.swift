@@ -58,7 +58,7 @@ struct PermissionClient: HttpRequestable {
 
         guard let subscriptionId = Bundle.inAppSubscriptionId,
             let campaignId = optionalParams![Constants.Request.CampaignID],
-            let appVersion = Bundle.appBuildVersion,
+            let appVersion = Bundle.appVersion,
             let sdkVersion = Bundle.inAppSdkVersion,
             let locale = Locale.formattedCode
         else {

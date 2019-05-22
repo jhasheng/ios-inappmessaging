@@ -54,7 +54,6 @@ struct Constants {
      * Key names for Info.plist.
      */
     struct Bundle {
-        static let SDKVersion = "InAppMessagingSDKVersion"
         static let SubscriptionID = "InAppMessagingSubscriptionID"
     }
     
