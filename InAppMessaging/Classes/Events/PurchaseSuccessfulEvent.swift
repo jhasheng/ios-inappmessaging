@@ -8,10 +8,10 @@
     final let CURRENCY_CODE = "currencyCode"
     final let ITEM_ID_LIST = "itemIdList"
     
-    var purchaseAmount: Int
-    var numberOfItems: Int
-    var currencyCode: String
-    var itemList: [String]
+    var purchaseAmount = -1
+    var numberOfItems = -1
+    var currencyCode = "UNKNOWN"
+    var itemList = [String]()
     
     // For broadcasting to RAT SDK. 'eventType' field will be removed.
     var dict: [String: Any] {
@@ -25,7 +25,7 @@
         ]
     }
     
-    var customAttributes: [CustomAttribute]? {
+    var customAttributes: [CustomAttribute] {
         return [
             CustomAttribute(withKeyName: PURCHASE_AMOUNT_MICROS, withIntValue: self.purchaseAmount),
             CustomAttribute(withKeyName: NUMBER_OF_ITEMS, withIntValue: self.numberOfItems),
@@ -35,21 +35,11 @@
     }
     
     @objc
-    public init(
-        withPurchaseAmount purchaseAmount: Int,
-        withNumberOfItems numberOfItems: Int,
-        withCurrencyCode currencyCode: String,
-        withItems itemList: [String]) {
-        
-            self.purchaseAmount = purchaseAmount
-            self.numberOfItems = numberOfItems
-            self.currencyCode = currencyCode
-            self.itemList = itemList
-        
-            super.init(
-                eventType: EventType.purchaseSuccessful,
-                eventName: Constants.Event.purchaseSuccessful
-            )
+    public init() {
+        super.init(
+            eventType: EventType.purchaseSuccessful,
+            eventName: Constants.Event.purchaseSuccessful
+        )
     }
     
     init(
@@ -79,10 +69,34 @@
         try super.encode(to: encoder)
     }
     
+    @objc
+    public func setPurchaseAmount(_ purchaseAmount: Int) -> PurchaseSuccessfulEvent {
+        self.purchaseAmount = purchaseAmount
+        return self
+    }
+    
+    @objc
+    public func setNumberOfItems(_ numberOfItems: Int) -> PurchaseSuccessfulEvent {
+        self.numberOfItems = numberOfItems
+        return self
+    }
+    
+    @objc
+    public func setCurrencyCode(_ currencyCode: String) -> PurchaseSuccessfulEvent {
+        self.currencyCode = currencyCode
+        return self
+    }
+    
+    @objc
+    public func setItemList(_ itemList: [String]) -> PurchaseSuccessfulEvent {
+        self.itemList = itemList
+        return self
+    }
+    
     /**
      * Create a mapping used to return a mapping of the customAttribute list.
      */
-    override func getAttributeMap() -> [String: CustomAttribute]? {
+    override func getAttributeMap() -> [String: CustomAttribute] {
         return [
             PURCHASE_AMOUNT_MICROS: CustomAttribute(withKeyName: PURCHASE_AMOUNT_MICROS, withIntValue: self.purchaseAmount),
             NUMBER_OF_ITEMS: CustomAttribute(withKeyName: NUMBER_OF_ITEMS, withIntValue: self.numberOfItems),
