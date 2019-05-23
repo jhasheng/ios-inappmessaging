@@ -7,7 +7,7 @@ struct Constants {
      * InAppMessaging URLs.
      */
     struct URL {
-        static let ConfigServerURL = "https://inappmessag   ing.rakapi.com/config/get-config"
+        static let ConfigServerURL = "https://inappmessaging.rakapi.com/config/get-config"
     }
     
     /**
