@@ -27,12 +27,14 @@ class ViewController: UIViewController {
     }
     
     @IBAction func purchaseSuccessfulButton(_ sender: Any) {
-        InAppMessaging.logEvent(
-            PurchaseSuccessfulEvent.init(
-                withPurchaseAmount: 20,
-                withNumberOfItems: 2,
-                withCurrencyCode: "USD",
-                withItems: []))
+        
+        let purchaseEvent = PurchaseSuccessfulEvent()
+        purchaseEvent.setPurchaseAmount(50)
+        purchaseEvent.setItemList(["box", "hammer"])
+        purchaseEvent.setCurrencyCode("USD")
+        purchaseEvent.setNumberOfItems(2)
+        
+        InAppMessaging.logEvent(purchaseEvent)
     }
     @IBAction func loginSuccessfulButton(_ sender: Any) {
         InAppMessaging.logEvent(LoginSuccessfulEvent())
