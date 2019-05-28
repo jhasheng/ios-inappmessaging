@@ -1,12 +1,9 @@
 # InAppMessaging
+Version 1.2.0
 
 ## Installation
 
-https://confluence.rakuten-it.com/confluence/display/SSEDPT/iOS+IAM+SDK+Usage+Tutorial
-
-## Author
-
-Daniel Tam, daniel.a.tam@rakuten.com
+https://developers.rakuten.com/intra/node/311/revisions/2368/view
 
 ## License
 
