@@ -18,12 +18,21 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>jp.co.rakuten.inappmessaging.demo</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>iamdemo</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>InAppMessagingConfigURL</key>
-	<string>http://danieltam.local:3000/config/get-config</string>
-	<key>InAppMessagingSDKVersion</key>
-	<string>0</string>
 	<key>InAppMessagingSubscriptionID</key>
 	<string>752c6b02-2411-11e9-ab3b-d9875482cabe</string>
 	<key>LSApplicationQueriesSchemes</key>

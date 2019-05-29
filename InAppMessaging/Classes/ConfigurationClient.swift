@@ -13,16 +13,8 @@ class ConfigurationClient: HttpRequestable {
      */
     internal func isConfigEnabled() -> Bool {
         
-        guard let configUrl = Bundle.inAppConfigUrl else {
-            #if DEBUG
-                assertionFailure("InAppMessaging: Make sure there is a valid '\(Keys.URL.ConfigServerURL)' key in your info.plist")
-            #endif
-            
-            return false
-        }
-
         guard let responseData = self.requestFromServer(
-            withUrl: configUrl,
+            withUrl: Constants.URL.ConfigServerURL,
             withHttpMethod: .post,
             withAdditionalHeaders: nil,
             withSemaphoreWait: true).data else {
@@ -72,7 +64,7 @@ class ConfigurationClient: HttpRequestable {
     internal func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data? {
         
         guard let locale = Locale.formattedCode,
-            let appVersion = Bundle.appBuildVersion,
+            let appVersion = Bundle.appVersion,
             let appId = Bundle.applicationId,
             let sdkVersion = Bundle.inAppSdkVersion
         else {

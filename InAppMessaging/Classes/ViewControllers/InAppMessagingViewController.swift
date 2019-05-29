@@ -51,7 +51,7 @@ class InAppMessagingViewController: UIViewController {
         let semaphore = DispatchSemaphore(value: 0)
         var image: UIImage?
         if let imageUrl = campaign.campaignData.messagePayload.resource.imageUrl {
-            SDWebImageDownloader.shared().downloadImage(with: URL(string: imageUrl), options: [], progress: nil) { (downloadedImage, data, error, bool) in
+            SDWebImageDownloader.shared.downloadImage(with: URL(string: imageUrl), options: [], progress: nil) { (downloadedImage, data, error, bool) in
                 image = downloadedImage
                 semaphore.signal()
             }

@@ -17,6 +17,8 @@
 		D911DC4F211115730082B950 /* ConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F418282110FD9F00E2158F /* ConfigurationTests.swift */; };
 		D911DC5821115B410082B950 /* IdRegistrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D911DC56211159DE0082B950 /* IdRegistrationTests.swift */; };
 		D911DC5B211236080082B950 /* EventLoggingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D911DC59211234610082B950 /* EventLoggingTests.swift */; };
+		D920D8C92277B80F008FB38D /* SecondPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D920D8C82277B80F008FB38D /* SecondPageViewController.xib */; };
+		D920D8CB2277B965008FB38D /* SecondPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D920D8CA2277B965008FB38D /* SecondPageViewController.swift */; };
 		D92D1F2322249853008EA748 /* ReconciliationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D1F2122249833008EA748 /* ReconciliationTests.swift */; };
 		D92D1F262224A269008EA748 /* TestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D1F242224A265008EA748 /* TestConstants.swift */; };
 /* End PBXBuildFile section */
@@ -51,6 +53,8 @@
 		9D8B5B22B8667738939AF00A /* Pods-InAppMessaging_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InAppMessaging_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-InAppMessaging_Tests/Pods-InAppMessaging_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D911DC56211159DE0082B950 /* IdRegistrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdRegistrationTests.swift; sourceTree = "<group>"; };
 		D911DC59211234610082B950 /* EventLoggingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventLoggingTests.swift; sourceTree = "<group>"; };
+		D920D8C82277B80F008FB38D /* SecondPageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecondPageViewController.xib; sourceTree = "<group>"; };
+		D920D8CA2277B965008FB38D /* SecondPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondPageViewController.swift; sourceTree = "<group>"; };
 		D92D1F2122249833008EA748 /* ReconciliationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReconciliationTests.swift; sourceTree = "<group>"; };
 		D92D1F242224A265008EA748 /* TestConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConstants.swift; sourceTree = "<group>"; };
 		D9F418282110FD9F00E2158F /* ConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationTests.swift; sourceTree = "<group>"; };
@@ -113,6 +117,8 @@
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
+				D920D8CA2277B965008FB38D /* SecondPageViewController.swift */,
+				D920D8C82277B80F008FB38D /* SecondPageViewController.xib */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -262,6 +268,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D920D8C92277B80F008FB38D /* SecondPageViewController.xib in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
@@ -369,6 +376,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D920D8CB2277B965008FB38D /* SecondPageViewController.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);

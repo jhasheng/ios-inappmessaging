@@ -10,10 +10,15 @@ import UIKit
 import InAppMessaging
 
 class ViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(goToSecondPage(_:)),
+                                               name: Notification.Name("showSecondPage"),
+                                               object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -22,12 +27,14 @@ class ViewController: UIViewController {
     }
     
     @IBAction func purchaseSuccessfulButton(_ sender: Any) {
-        InAppMessaging.logEvent(
-            PurchaseSuccessfulEvent.init(
-                withPurchaseAmount: 20,
-                withNumberOfItems: 2,
-                withCurrencyCode: "USD",
-                withItems: []))
+        
+        let purchaseEvent = PurchaseSuccessfulEvent()
+        purchaseEvent.setPurchaseAmount(50)
+        purchaseEvent.setItemList(["box", "hammer"])
+        purchaseEvent.setCurrencyCode("USD")
+        purchaseEvent.setNumberOfItems(2)
+        
+        InAppMessaging.logEvent(purchaseEvent)
     }
     @IBAction func loginSuccessfulButton(_ sender: Any) {
         InAppMessaging.logEvent(LoginSuccessfulEvent())
@@ -38,10 +45,16 @@ class ViewController: UIViewController {
                 withName: "second activity",
                 withCustomAttributes: [CustomAttribute(withKeyName: "click", withBoolValue: true)]
             )
-        )
+        )        
     }
     
     @IBAction func appStartButton(_ sender: Any) {
         InAppMessaging.logEvent(AppStartEvent())
+    }
+    
+    @IBAction func goToSecondPage(_ sender: Any) {
+        // Register Nib
+        let newViewController = SecondPageViewController(nibName: "SecondPageViewController", bundle: nil)
+        self.present(newViewController, animated: true, completion: nil)
     }
 }

@@ -2,13 +2,11 @@
  * Handles hitting the impression endpoint.
  */
 class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
-    typealias Property = Attribute
     
     /**
      * Keys for the optionalParams dictionary.
      */
     final let impressionKey = "impressions"
-    final let propertyKey = "properties"
     final let campaignKey = "campaign"
     
     /**
@@ -20,7 +18,6 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
      */
     func pingImpression(
         withImpressions impressions: [Impression],
-        withProperties properties: [Property],
         withCampaign campaign: CampaignData) {
         
             guard let pingImpressionEndpoint = ConfigurationClient.endpoints?.impression else {
@@ -32,13 +29,12 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
         
             let optionalParams: [String : Any] = [
                 impressionKey: impressions,
-                propertyKey: properties,
                 campaignKey: campaign
             ]
         
             // Broadcast impression data to RAnalytics.
             self.sendEventName(
-                Keys.RAnalytics.impressions,
+                Constants.RAnalytics.impressions,
                 ["impressions": deconstructImpressionObject(impressionList: impressions)]
             )
         
@@ -78,10 +74,8 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
         
         guard let params = optionalParams,
             let impressions = params[impressionKey] as? [Impression],
-            let properties = params[propertyKey] as? [Property],
             let campaign = params[campaignKey] as? CampaignData,
-            let subscriptionId = Bundle.inAppSubscriptionId,
-            let appVersion = Bundle.appBuildVersion,
+            let appVersion = Bundle.appVersion,
             let sdkVersion = Bundle.inAppSdkVersion
         else {
             #if DEBUG
@@ -93,10 +87,8 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
         let impressionRequest = ImpressionRequest(
             campaignId: campaign.campaignId,
             isTest: campaign.isTest,
-            subscriptionId: subscriptionId,
             appVersion: appVersion,
             sdkVersion: sdkVersion,
-            properties: properties,
             impressions: impressions,
             userIdentifiers: IAMPreferenceRepository.getUserIdentifiers()
         )
@@ -117,17 +109,17 @@ class ImpressionClient: HttpRequestable, AnalyticsBroadcaster {
         
         // Retrieve sub ID and return in header of the request.
         if let subId = Bundle.inAppSubscriptionId {
-            additionalHeaders.append(Attribute(withKeyName: Keys.Request.subscriptionHeader, withValue: subId))
+            additionalHeaders.append(Attribute(withKeyName: Constants.Request.subscriptionHeader, withValue: subId))
         }
         
         // Retrieve access token and return in the header of the request.
         if let accessToken = IAMPreferenceRepository.getAccessToken() {
-            additionalHeaders.append(Attribute(withKeyName: Keys.Request.authorization, withValue: "OAuth2 \(accessToken)"))
+            additionalHeaders.append(Attribute(withKeyName: Constants.Request.authorization, withValue: "OAuth2 \(accessToken)"))
         }
         
         // Retrieve device ID and return in header of the request.
         if let deviceId = UIDevice.current.identifierForVendor?.uuidString {
-            additionalHeaders.append(Attribute(withKeyName: Keys.Request.deviceID, withValue: deviceId))
+            additionalHeaders.append(Attribute(withKeyName: Constants.Request.deviceID, withValue: deviceId))
         }
         
         return additionalHeaders

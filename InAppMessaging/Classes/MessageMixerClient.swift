@@ -87,17 +87,11 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
      */
     internal func buildHttpBody(withOptionalParams optionalParams: [String: Any]?) -> Data? {
         
-        guard let subscriptionId = Bundle.inAppSubscriptionId,
-            let appVersion = Bundle.appVersionString
-        else {
-            #if DEBUG
-                assertionFailure("InAppMessaging: Make sure there is a valid '\(Keys.Bundle.SubscriptionID)' key in your info.plist.")
-            #endif
+        guard let appVersion = Bundle.appVersion else {
             return nil
         }
         
         let pingRequest = PingRequest.init(
-            subscriptionId: subscriptionId,
             userIdentifiers: IAMPreferenceRepository.getUserIdentifiers(),
             appVersion: appVersion
         )
@@ -116,17 +110,17 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
         
         // Retrieve sub ID and return in header of the request.
         if let subId = Bundle.inAppSubscriptionId {
-            additionalHeaders.append(Attribute(withKeyName: Keys.Request.subscriptionHeader, withValue: subId))
+            additionalHeaders.append(Attribute(withKeyName: Constants.Request.subscriptionHeader, withValue: subId))
         }
         
         // Retrieve device ID and return in header of the request.
         if let deviceId = UIDevice.current.identifierForVendor?.uuidString {
-            additionalHeaders.append(Attribute(withKeyName: Keys.Request.deviceID, withValue: deviceId))
+            additionalHeaders.append(Attribute(withKeyName: Constants.Request.deviceID, withValue: deviceId))
         }
         
         // Retrieve access token and return in the header of the request.
         if let accessToken = IAMPreferenceRepository.getAccessToken() {
-            additionalHeaders.append(Attribute(withKeyName: Keys.Request.authorization, withValue: "OAuth2 \(accessToken)"))
+            additionalHeaders.append(Attribute(withKeyName: Constants.Request.authorization, withValue: "OAuth2 \(accessToken)"))
         }
         
         return additionalHeaders
