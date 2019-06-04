@@ -59,7 +59,7 @@ class InAppMessagingViewController: UIViewController {
         }
         
         DispatchQueue.main.async {
-            var view: Modal?
+            var view: IAMView?
             
             // TODO(daniel.tam) Add the other view types.
             switch campaignViewType {

@@ -4,7 +4,7 @@ import SDWebImage
 /**
  * Class that initializes the modal view using the passed in campaign information to build the UI.
  */
-class ModalView: UIView, Modal, ImpressionTrackable {
+class ModalView: UIView, IAMView, ImpressionTrackable {
 
     var impressions: [Impression] = []
     var campaign: CampaignData?
@@ -433,7 +433,6 @@ class ModalView: UIView, Modal, ImpressionTrackable {
      * Obj-c selector to dismiss the modal view when the 'X' is tapped.
      */
     @objc fileprivate func didTapOnExitButton(_ sender: UIGestureRecognizer){
-        
         self.dismiss()
         
         // To log and send impression.
