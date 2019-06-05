@@ -5,6 +5,7 @@
  */
 @objc public class InAppMessaging: NSObject {
     
+    private static let inAppQueue = DispatchQueue(label: "IAM_Queue", attributes: .concurrent)
     private let configurationClient: ConfigurationClient
     private let messageMixerClient: MessageMixerClient
     private static var isEnabled = false
@@ -23,7 +24,7 @@
      */
     @objc public class func configure() {
         if !InAppMessaging.isEnabled {
-            DispatchQueue.global(qos: .background).async {
+            inAppQueue.async(flags: .barrier) {
                 InAppMessaging().initializeSdk()
             }
         }
@@ -48,7 +49,7 @@
      * @param { event: Event } Event object to log.
      */
     @objc public class func logEvent(_ event: Event) {
-        DispatchQueue.global(qos: .background).async {
+        inAppQueue.async(flags: .barrier) {
             EventRepository.addEvent(event)
             
             if InAppMessaging.isEnabled {
@@ -69,7 +70,7 @@
      * @param { preference: IAMPreference } preferences of the user.
      */
     @objc public class func registerPreference(_ preference: IAMPreference?) {
-        DispatchQueue.global(qos: .background).async {
+        inAppQueue.async(flags: .barrier) {
             IAMPreferenceRepository.setPreference(with: preference)
 
             // Everytime a new ID is registered, send a ping request.
