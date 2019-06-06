@@ -208,7 +208,7 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
             if messagePayload.header == nil &&
                 messagePayload.messageBody == nil {
                 
-                self.textViewContentHeight += heightOffset
+                    self.textViewContentHeight += heightOffset
             }
             
             self.appendLowerBodyMessage(withBody: lowerBodyMessage)
