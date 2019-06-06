@@ -50,6 +50,9 @@ class ViewController: UIViewController {
     
     @IBAction func appStartButton(_ sender: Any) {
         InAppMessaging.logEvent(AppStartEvent())
+        InAppMessaging.logEvent(LoginSuccessfulEvent())
+        InAppMessaging.registerPreference(nil)
+
     }
     
     @IBAction func goToSecondPage(_ sender: Any) {
