@@ -11,13 +11,23 @@ protocol Modal {
 }
 
 extension Modal where Self: UIView {
-    
     /**
      * Function that finds the presented view controller and add the modal sub view on top.
      */
     internal func show() {
+        let viewIdentifier = "IAMView"
+        self.accessibilityIdentifier = viewIdentifier
+        
+        // Check to see if any other IAMViews are presented.
+        if let subviews = UIApplication.shared.keyWindow?.subviews {
+            for subview in subviews {
+                if subview.accessibilityIdentifier == viewIdentifier {
+                    return
+                }
+            }
+        }
+        
         if let window =  UIApplication.shared.keyWindow {
-            InAppMessagingViewController.isRunning = true
             window.addSubview(self)
         }
     }
@@ -27,9 +37,6 @@ extension Modal where Self: UIView {
      */
     internal func dismiss() {
         self.removeFromSuperview()
-        InAppMessagingViewController.isRunning = false
-
-        //TODO(Daniel Tam) Clarify on the time between showing campaigns.
         WorkScheduler.scheduleTask(5000, closure: InAppMessagingViewController.display)
     }
 }
