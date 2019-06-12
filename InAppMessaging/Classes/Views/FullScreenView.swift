@@ -12,7 +12,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     // Constant values used for UI elements in model views.
     let heightOffset: CGFloat = 18 // Height offset for every UI element.
     let backgroundViewAlpha: CGFloat = 0.66 // Value to adjust the transparency of the background view.
-    let cornerRadiusForDialogView: CGFloat = 8 // Adjust how round the edge the dialog view will be.
+    let cornerRadiusForDialogView: CGFloat = 0 // Adjust how round the edge the dialog view will be.
     let cornerRadiusForButtons: CGFloat = 4 // Adjust how round the edge of the buttons will be.
     let headerMessageFontSize: CGFloat = 16 // Font size for the header message.
     let bodyMessageFontSize: CGFloat = 14 // Font size for the body message.
@@ -21,8 +21,8 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     let twoButtonWidthOffset: CGFloat = 24 // Width offset when two buttons are given.
     let horizontalSpacingOffset: CGFloat = 20 // The spacing between dialog view and the children elements.
     let initialFrameWidthOffset: CGFloat = 0 // Margin between the left and right frame width and message.
-    let initialFrameWidthIPadMultiplier: CGFloat = 0.60 // Percentage size for iPad's to display
-    let maxWindowHeightPercentage: CGFloat = 1.0 // The max height the window should take up before making text scrollable.
+    let initialFrameWidthIPadMultiplier: CGFloat = 1.0 // Percentage size for iPad's to display
+    let maxWindowHeightPercentage: CGFloat = 0.90 // The max height the window should take up before making text scrollable.
     var exitButtonSize: CGFloat = 0 // Size of the exit button.
     var exitButtonHeightOffset: CGFloat = 0 // Height offset for exit button from the actual message.
     var exitButtonFontSize: CGFloat = 0 // Font size of exit button.
@@ -128,26 +128,25 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
                 campaign.messagePayload.header == nil &&
                 campaign.messagePayload.messageBody == nil &&
                 campaign.messagePayload.messageLowerBody == nil {
-                
+
                 self.dialogViewCurrentHeight += heightOffset
             }
-            
+
             self.appendButtons(withButtonList: buttonList)
             self.dialogViewCurrentHeight += heightOffset
         }
         
-        // The dialog view which is the rounded rectangle in the center.
-//        self.dialogView.frame.origin = CGPoint(x: 32, y: frame.height)
-//        self.dialogView.frame.size = CGSize(width: self.dialogViewWidth, height: self.dialogViewCurrentHeight)
         if #available(iOS 11.0, *) {
             self.dialogView.frame = UIApplication.shared.keyWindow!.safeAreaLayoutGuide.layoutFrame
         } else {
-            // Fallback on earlier versions
+            self.dialogView.frame.origin = CGPoint(x: 32, y: frame.height)
+            self.dialogView.frame.size = CGSize(width: self.dialogViewWidth, height: self.dialogViewCurrentHeight)
+            self.dialogView.center = center
         }
+        
         self.dialogView.backgroundColor = UIColor(hexFromString: campaign.messagePayload.backgroundColor)
         self.dialogView.layer.cornerRadius = cornerRadiusForDialogView
         self.dialogView.clipsToBounds = true
-        self.dialogView.center  = self.center
         
         // Add the exit button on the top right.
         self.appendExitButton()
@@ -171,7 +170,6 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         exitButton.layer.masksToBounds = true
         exitButton.tag = ImpressionType.EXIT.rawValue
         exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
-//        self.backgroundView.addSubview(exitButton)
     }
     
     /**
@@ -217,7 +215,12 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         // Height of the current window.
         let overallHeight = self.dialogViewCurrentHeight + self.textViewContentHeight
         // The height of the frame when multipled with the cap.
-        let maxFrameHeight = self.frame.height * maxWindowHeightPercentage
+        var maxFrameHeight: CGFloat = 0
+        if #available(iOS 11.0, *) {
+            maxFrameHeight = UIApplication.shared.keyWindow!.safeAreaLayoutGuide.layoutFrame.height * maxWindowHeightPercentage
+        } else {
+            maxFrameHeight = self.frame.height * maxWindowHeightPercentage
+        }
         
         // Calculate the optimal height based on the amount of text.
         // If the whole window were to exceed over 70% of the frame's height, then keep it at 70%
@@ -353,7 +356,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
                 
                 let buttonToAdd = UIButton(
                     frame: CGRect(x: xPositionForButton,
-                                  y: self.dialogViewCurrentHeight,
+                                  y: dialogViewCurrentHeight,
                                   width: ((self.dialogViewWidth / 2) - buttonWidthOffset),
                                   height: buttonHeight))
                 
@@ -384,9 +387,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
                 
                 self.dialogView.addSubview(buttonToAdd)
             }
-        }
-        
-        self.dialogViewCurrentHeight += buttonHeight
+        }        
     }
     
     /**
