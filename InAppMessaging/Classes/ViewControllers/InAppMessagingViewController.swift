@@ -59,12 +59,12 @@ class InAppMessagingViewController: UIViewController {
         }
         
         DispatchQueue.main.async {
-            var view: NewIAMView?
+            var view: IAMView?
             
             // TODO(daniel.tam) Add the other view types.
             switch campaignViewType {
             case .modal:
-//                view = ModalView(withCampaign: campaign.campaignData, andImage: image)
+                view = ModalView(withCampaign: campaign.campaignData, andImage: image)
                 break
             case .invalid:
                 break
