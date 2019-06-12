@@ -32,8 +32,8 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
     var dialogView = UIView()
     var textView = UITextView()
     
-    // Field obtained from button behavior payload.
-    var uri: String?
+    // Button URL mapping.
+    var buttonURLMapping = [Int: String]()
     
     // Boolean to change when the SDK will display the modal view.
     // Will change to true if campaign has an image URL.
@@ -366,14 +366,15 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
                 buttonToAdd.layer.borderColor = UIColor(hexFromString: button.buttonTextColor).cgColor
                 buttonToAdd.layer.borderWidth = 1
                 
+                // Add a mapping from the action type to the URL.
+                buttonURLMapping[buttonToAdd.tag] = button.buttonBehavior.uri
+                
                 switch buttonAction {
                     case .invalid:
                         return
                     case .redirect:
-                        self.uri = button.buttonBehavior.uri
                         buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnLink)))
                     case .deeplink:
-                        self.uri = button.buttonBehavior.uri
                         buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnLink)))
                     case .close:
                         buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
@@ -409,14 +410,17 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
      */
     @objc fileprivate func didTapOnLink(_ sender: UIGestureRecognizer){
         
-        // To log and send impression.
-        if let tag = sender.view?.tag,
-            let type = ImpressionType(rawValue: tag) {
-                logImpression(withImpressionType: type)
-                sendImpression()
+        guard let tag = sender.view?.tag else {
+            return
         }
         
-        if let unwrappedUri = self.uri,
+        // To log and send impression.
+        if let type = ImpressionType(rawValue: tag) {
+            logImpression(withImpressionType: type)
+            sendImpression()
+        }
+        
+        if let unwrappedUri = buttonURLMapping[tag],
             let uriToOpen = URL(string: unwrappedUri),
             UIApplication.shared.canOpenURL(uriToOpen) {
                 UIApplication.shared.openURL(uriToOpen)

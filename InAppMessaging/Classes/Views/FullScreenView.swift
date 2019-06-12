@@ -20,20 +20,18 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     let singleButtonWidthOffset: CGFloat = 0 // Width offset when only one button is given.
     let twoButtonWidthOffset: CGFloat = 24 // Width offset when two buttons are given.
     let horizontalSpacingOffset: CGFloat = 20 // The spacing between dialog view and the children elements.
-    let initialFrameWidthOffset: CGFloat = 120 // Margin between the left and right frame width and message.
+    let initialFrameWidthOffset: CGFloat = 0 // Margin between the left and right frame width and message.
     let initialFrameWidthIPadMultiplier: CGFloat = 0.60 // Percentage size for iPad's to display
-    let imageAspectRatio: CGFloat = 1.25 // Aspect ratio for image. Currently set to 3:4.
-    let maxWindowHeightPercentage: CGFloat = 0.70 // The max height the window should take up before making text scrollable.
+    let maxWindowHeightPercentage: CGFloat = 1.0 // The max height the window should take up before making text scrollable.
     var exitButtonSize: CGFloat = 0 // Size of the exit button.
     var exitButtonHeightOffset: CGFloat = 0 // Height offset for exit button from the actual message.
     var exitButtonFontSize: CGFloat = 0 // Font size of exit button.
     
-    var backgroundView = UIView()
     var dialogView = UIView()
     var textView = UITextView()
     
-    // Field obtained from button behavior payload.
-    var uri: String?
+    // Button URL mapping.
+    var buttonURLMapping = [Int: String]()
     
     // Boolean to change when the SDK will display the modal view.
     // Will change to true if campaign has an image URL.
@@ -66,10 +64,6 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     }
     
     internal func initializeView(withCampaign campaign: CampaignData, andImage optionalImage: UIImage?) {
-        // The opaque black background of modals.
-        self.backgroundView.frame = frame
-        self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(backgroundViewAlpha)
-        
         // Set up the initial values for UI based on device.
         self.setUpInitialValues()
         
@@ -83,6 +77,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     }
     
     fileprivate func setUpInitialValues() {
+        
         // Set different values based on device -- either iPad or iPhone.
         if UIDevice.current.userInterfaceIdiom == .pad {
             // Use 75% of iPad's width.
@@ -142,8 +137,13 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         }
         
         // The dialog view which is the rounded rectangle in the center.
-        self.dialogView.frame.origin = CGPoint(x: 32, y: frame.height)
-        self.dialogView.frame.size = CGSize(width: self.dialogViewWidth, height: self.dialogViewCurrentHeight)
+//        self.dialogView.frame.origin = CGPoint(x: 32, y: frame.height)
+//        self.dialogView.frame.size = CGSize(width: self.dialogViewWidth, height: self.dialogViewCurrentHeight)
+        if #available(iOS 11.0, *) {
+            self.dialogView.frame = UIApplication.shared.keyWindow!.safeAreaLayoutGuide.layoutFrame
+        } else {
+            // Fallback on earlier versions
+        }
         self.dialogView.backgroundColor = UIColor(hexFromString: campaign.messagePayload.backgroundColor)
         self.dialogView.layer.cornerRadius = cornerRadiusForDialogView
         self.dialogView.clipsToBounds = true
@@ -171,7 +171,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         exitButton.layer.masksToBounds = true
         exitButton.tag = ImpressionType.EXIT.rawValue
         exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
-        self.backgroundView.addSubview(exitButton)
+//        self.backgroundView.addSubview(exitButton)
     }
     
     /**
@@ -248,8 +248,8 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         
         let imageView = UIImageView(
             frame: CGRect(x: 0,
-                          y: self.dialogViewCurrentHeight,
-                          width: self.dialogViewWidth,
+                          y: dialogViewCurrentHeight,
+                          width: dialogViewWidth,
                           height: image.size.height * imageRatio))
         
         imageView.contentMode = .scaleAspectFit
@@ -366,14 +366,15 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
                 buttonToAdd.layer.borderColor = UIColor(hexFromString: button.buttonTextColor).cgColor
                 buttonToAdd.layer.borderWidth = 1
                 
+                // Add a mapping from the action type to the URL.
+                buttonURLMapping[buttonToAdd.tag] = button.buttonBehavior.uri
+                
                 switch buttonAction {
                 case .invalid:
                     return
                 case .redirect:
-                    self.uri = button.buttonBehavior.uri
                     buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnLink)))
                 case .deeplink:
-                    self.uri = button.buttonBehavior.uri
                     buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnLink)))
                 case .close:
                     buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
@@ -392,7 +393,6 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
      * Append sub views to present view when ready.
      */
     fileprivate func appendSubViews() {
-        self.addSubview(self.backgroundView)
         self.addSubview(self.dialogView)
         logImpression(withImpressionType: .IMPRESSION)
     }
@@ -409,14 +409,17 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
      */
     @objc fileprivate func didTapOnLink(_ sender: UIGestureRecognizer){
         
+        guard let tag = sender.view?.tag else {
+            return
+        }
+        
         // To log and send impression.
-        if let tag = sender.view?.tag,
-            let type = ImpressionType(rawValue: tag) {
+        if let type = ImpressionType(rawValue: tag) {
             logImpression(withImpressionType: type)
             sendImpression()
         }
         
-        if let unwrappedUri = self.uri,
+        if let unwrappedUri = buttonURLMapping[tag],
             let uriToOpen = URL(string: unwrappedUri),
             UIApplication.shared.canOpenURL(uriToOpen) {
             UIApplication.shared.openURL(uriToOpen)
