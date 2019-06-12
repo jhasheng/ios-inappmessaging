@@ -354,9 +354,18 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
                     xPositionForButton = buttonHorizontalSpace
                 }
                 
+                var safeAreaFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
+                var bottomInset: CGFloat = 0
+                if #available(iOS 11.0, *) {
+                    safeAreaFrame = UIApplication.shared.keyWindow!.safeAreaLayoutGuide.layoutFrame
+                    bottomInset = UIApplication.shared.keyWindow!.safeAreaInsets.bottom
+                }
+                print(bottomInset)
+
+                
                 let buttonToAdd = UIButton(
                     frame: CGRect(x: xPositionForButton,
-                                  y: dialogViewCurrentHeight,
+                                  y: safeAreaFrame.height - buttonHeight - heightOffset,
                                   width: ((self.dialogViewWidth / 2) - buttonWidthOffset),
                                   height: buttonHeight))
                 
@@ -387,7 +396,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
                 
                 self.dialogView.addSubview(buttonToAdd)
             }
-        }        
+        }
     }
     
     /**
