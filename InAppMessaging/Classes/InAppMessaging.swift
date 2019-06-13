@@ -76,7 +76,6 @@
             // Everytime a new ID is registered, send a ping request.
             if InAppMessaging.isEnabled {
                 MessageMixerClient().ping()
-                InAppMessagingViewController.display()
             }
         }
     }
