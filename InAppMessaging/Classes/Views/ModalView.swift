@@ -22,7 +22,6 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
     let horizontalSpacingOffset: CGFloat = 20 // The spacing between dialog view and the children elements.
     let initialFrameWidthOffset: CGFloat = 120 // Margin between the left and right frame width and message.
     let initialFrameWidthIPadMultiplier: CGFloat = 0.60 // Percentage size for iPad's to display
-    let imageAspectRatio: CGFloat = 1.25 // Aspect ratio for image. Currently set to 3:4.
     let maxWindowHeightPercentage: CGFloat = 0.70 // The max height the window should take up before making text scrollable.
     var exitButtonSize: CGFloat = 0 // Size of the exit button.
     var exitButtonHeightOffset: CGFloat = 0 // Height offset for exit button from the actual message.
@@ -34,12 +33,6 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
     
     // Button URL mapping.
     var buttonURLMapping = [Int: String]()
-    
-    // Boolean to change when the SDK will display the modal view.
-    // Will change to true if campaign has an image URL.
-    // If true, display after image has finish downloading.
-    // If false, display after everything else is built.
-    var hasImage = false
     
     // Spacing on the left and right side of subviews.
     var dialogViewWidth: CGFloat = 0

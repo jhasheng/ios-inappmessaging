@@ -66,7 +66,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    internal func initializeView(withCampaign campaign: CampaignData, andImage optionalImage: UIImage?) {
+    func initializeView(withCampaign campaign: CampaignData, andImage optionalImage: UIImage?) {
         // The opaque black background of modals.
         backgroundView.frame = frame
         backgroundView.backgroundColor = .white
@@ -84,8 +84,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         appendSubViews()
     }
     
-    fileprivate     func setUpInitialValues() {
-        
+    private func setUpInitialValues() {
         // Set different values based on device -- either iPad or iPhone.
         if UIDevice.current.userInterfaceIdiom == .pad {
             // Use 75% of iPad's width.
@@ -105,7 +104,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
      * Creates the modal view to be displayed using the campaign information.
      * @param { campaign: CampaignData } the campaign to be displayed.
      */
-    internal func createMessageBody(campaign: CampaignData) {
+    func createMessageBody(campaign: CampaignData) {
         // Add the exit button on the top right.
         appendExitButton()
         
@@ -129,7 +128,6 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
                 
                 dialogViewCurrentHeight += heightOffset
             }
-            
         }
         
         // Buttons.
@@ -140,7 +138,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
                 campaign.messagePayload.messageBody == nil &&
                 campaign.messagePayload.messageLowerBody == nil {
 
-                dialogViewCurrentHeight += heightOffset
+                    dialogViewCurrentHeight += heightOffset
             }
 
             appendButtons(withButtonList: buttonList)
@@ -160,8 +158,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         dialogView.clipsToBounds = true
     }
     
-    fileprivate func appendExitButton() {
-        
+    private func appendExitButton() {
         var safeFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
         if #available(iOS 11.0, *) {
             safeFrame = UIApplication.shared.keyWindow!.safeAreaLayoutGuide.layoutFrame
@@ -193,7 +190,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
      * Creates the text view to be displayed using the campaign information.
      * @param { messagePayload: MessagePayload } the campaign's message payload.
      */
-    fileprivate func appendTextView(withMessage messagePayload: MessagePayload) {
+    private func appendTextView(withMessage messagePayload: MessagePayload) {
         // Change textview background color
         textView.backgroundColor = UIColor(hexFromString: messagePayload.backgroundColor)
         
@@ -205,7 +202,6 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         
         // Body message.
         if let bodyMessage = messagePayload.messageBody {
-            
             if messagePayload.header == nil {
                 textViewContentHeight += heightOffset
             }
@@ -219,7 +215,6 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         
         // Lower body message.
         if let lowerBodyMessage = messagePayload.messageLowerBody {
-            
             if messagePayload.header == nil &&
                 messagePayload.messageBody == nil {
                 
@@ -261,8 +256,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
      * Append image view to dialog view.
      * @param { iimage: UIImage } the image to display.
      */
-    fileprivate func appendImageView(withImage image: UIImage) {
-        
+    private func appendImageView(withImage image: UIImage) {
         // Image ratio to calculate the height.
         let imageRatio = dialogViewWidth / image.size.width
         
@@ -283,7 +277,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
      * Append header message to dialog view.
      * @param { headerMessage: String } string of the header message.
      */
-    fileprivate func appendHeaderMessage(withHeader headerMessage: String) {
+    private func appendHeaderMessage(withHeader headerMessage: String) {
         let headerMessageLabel = UILabel(
             frame: CGRect(x: 0,
                           y: textViewContentHeight,
@@ -306,7 +300,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
      * Append body message to dialog view.
      * @param { bodyMessage: String } string of the body message.
      */
-    fileprivate func appendBodyMessage(withBody bodyMessage: String) {
+    private func appendBodyMessage(withBody bodyMessage: String) {
         let bodyMessageLabel = UILabel(
             frame: CGRect(x: 0,
                           y: textViewContentHeight,
@@ -329,7 +323,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
      * Append lower body message to dialog view.
      * @param { bodyMessage: String } string of the lower body message.
      */
-    fileprivate func appendLowerBodyMessage(withBody lowerBodyMessage: String) {
+    private func appendLowerBodyMessage(withBody lowerBodyMessage: String) {
         let lowerBodyMessageLabel = UILabel(
             frame: CGRect(x: 0,
                           y: textViewContentHeight,
@@ -352,7 +346,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
      * Append buttons to dialog view.
      * @param { buttonList: [Button] } list of Button data type.
      */
-    fileprivate func appendButtons(withButtonList buttonList: [Button]) {
+    private func appendButtons(withButtonList buttonList: [Button]) {
         
         var buttonHorizontalSpace: CGFloat = 20 // Space for the left and right margin.
         let buttonHeight: CGFloat = 40 // Define the height to use for the button.
@@ -417,7 +411,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     /**
      * Append sub views to present view when ready.
      */
-    fileprivate func appendSubViews() {
+    private func appendSubViews() {
         addSubview(backgroundView)
         addSubview(dialogView)
         logImpression(withImpressionType: .IMPRESSION)
@@ -433,7 +427,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
      * When iOS 10 becomes the minimum version supported by the SDK, please refer to:
      * https://developer.apple.com/documentation/uikit/uiapplication/1648685-openurl?language=objc
      */
-    @objc fileprivate func didTapOnLink(_ sender: UIGestureRecognizer){
+    @objc private func didTapOnLink(_ sender: UIGestureRecognizer){
         
         guard let tag = sender.view?.tag else {
             return
@@ -461,7 +455,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     /**
      * Obj-c selector to dismiss the modal view when the 'X' is tapped.
      */
-    @objc fileprivate func didTapOnExitButton(_ sender: UIGestureRecognizer){
+    @objc private func didTapOnExitButton(_ sender: UIGestureRecognizer){
         dismiss()
         
         // To log and send impression.
@@ -482,4 +476,3 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         )
     }
 }
-
