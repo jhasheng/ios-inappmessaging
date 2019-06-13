@@ -183,7 +183,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
         dialogView.addSubview(exitButton)
         
-        dialogViewCurrentHeight += exitButtonGapHeight
+        dialogViewCurrentHeight += hasImage ? 0 : exitButtonGapHeight
     }
     
     /**
