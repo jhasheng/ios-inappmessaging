@@ -29,6 +29,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     var exitButtonGapHeight: CGFloat = 55 // Size of the gap between the exit button and textview.
     var exitButtonYPosition: CGFloat = 30 // Position of where the button should be relative to the safe area frame.
     
+    var backgroundView = UIView()
     var dialogView = UIView()
     var textView = UITextView()
     
@@ -54,7 +55,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     convenience init(withCampaign campaign: CampaignData, andImage image: UIImage?) {
         self.init(frame: UIScreen.main.bounds)
         self.campaign = campaign
-        self.initializeView(withCampaign: campaign, andImage: image)
+        initializeView(withCampaign: campaign, andImage: image)
     }
     
     override init(frame: CGRect) {
@@ -66,17 +67,21 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     }
     
     internal func initializeView(withCampaign campaign: CampaignData, andImage optionalImage: UIImage?) {
+        // The opaque black background of modals.
+        backgroundView.frame = frame
+        backgroundView.backgroundColor = .white
+        
         // Set up the initial values for UI based on device.
-        self.setUpInitialValues()
+        setUpInitialValues()
         
         // Create the UIImageView first if there is an image.
         if let image = optionalImage {
             hasImage = true
-            self.appendImageView(withImage: image)
+            appendImageView(withImage: image)
         }
         
-        self.createMessageBody(campaign: campaign)
-        self.appendSubViews()
+        createMessageBody(campaign: campaign)
+        appendSubViews()
     }
     
     fileprivate     func setUpInitialValues() {
@@ -84,15 +89,15 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         // Set different values based on device -- either iPad or iPhone.
         if UIDevice.current.userInterfaceIdiom == .pad {
             // Use 75% of iPad's width.
-            self.dialogViewWidth = frame.width * initialFrameWidthIPadMultiplier
-            self.exitButtonSize = 32
-            self.exitButtonHeightOffset = 25
-            self.exitButtonFontSize = 16
+            dialogViewWidth = frame.width * initialFrameWidthIPadMultiplier
+            exitButtonSize = 32
+            exitButtonHeightOffset = 25
+            exitButtonFontSize = 16
         } else {
-            self.dialogViewWidth = frame.width - initialFrameWidthOffset
-            self.exitButtonSize = 25
-            self.exitButtonHeightOffset = 5
-            self.exitButtonFontSize = 14
+            dialogViewWidth = frame.width - initialFrameWidthOffset
+            exitButtonSize = 25
+            exitButtonHeightOffset = 5
+            exitButtonFontSize = 14
         }
     }
     
@@ -102,7 +107,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
      */
     internal func createMessageBody(campaign: CampaignData) {
         // Add the exit button on the top right.
-        self.appendExitButton()
+        appendExitButton()
         
         // Scroll view for header and messages.
         if campaign.messagePayload.header != nil ||
@@ -111,18 +116,18 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
             
             // Handle spacing case for when there is no header.
             if campaign.messagePayload.header != nil {
-                self.dialogViewCurrentHeight += heightOffset
+                dialogViewCurrentHeight += heightOffset
             }
             
-            self.appendTextView(withMessage: campaign.messagePayload)
+            appendTextView(withMessage: campaign.messagePayload)
             
-            self.dialogViewCurrentHeight += self.textView.frame.height
+            dialogViewCurrentHeight += textView.frame.height
             
             // Handle spacing case for when there are no messages.
             if campaign.messagePayload.messageBody != nil ||
                 campaign.messagePayload.messageLowerBody != nil {
                 
-                self.dialogViewCurrentHeight += heightOffset
+                dialogViewCurrentHeight += heightOffset
             }
             
         }
@@ -135,24 +140,24 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
                 campaign.messagePayload.messageBody == nil &&
                 campaign.messagePayload.messageLowerBody == nil {
 
-                self.dialogViewCurrentHeight += heightOffset
+                dialogViewCurrentHeight += heightOffset
             }
 
-            self.appendButtons(withButtonList: buttonList)
-            self.dialogViewCurrentHeight += heightOffset
+            appendButtons(withButtonList: buttonList)
+            dialogViewCurrentHeight += heightOffset
         }
         
         if #available(iOS 11.0, *) {
-            self.dialogView.frame = UIApplication.shared.keyWindow!.safeAreaLayoutGuide.layoutFrame
+            dialogView.frame = UIApplication.shared.keyWindow!.safeAreaLayoutGuide.layoutFrame
         } else {
-            self.dialogView.frame.origin = CGPoint(x: 32, y: frame.height)
-            self.dialogView.frame.size = CGSize(width: self.dialogViewWidth, height: self.dialogViewCurrentHeight)
-            self.dialogView.center = center
+            dialogView.frame.origin = CGPoint(x: 32, y: frame.height)
+            dialogView.frame.size = CGSize(width: dialogViewWidth, height: dialogViewCurrentHeight)
+            dialogView.center = center
         }
         
-        self.dialogView.backgroundColor = UIColor(hexFromString: campaign.messagePayload.backgroundColor)
-        self.dialogView.layer.cornerRadius = cornerRadiusForDialogView
-        self.dialogView.clipsToBounds = true
+        dialogView.backgroundColor = UIColor(hexFromString: campaign.messagePayload.backgroundColor)
+        dialogView.layer.cornerRadius = cornerRadiusForDialogView
+        dialogView.clipsToBounds = true
     }
     
     fileprivate func appendExitButton() {
@@ -161,8 +166,6 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         if #available(iOS 11.0, *) {
             safeFrame = UIApplication.shared.keyWindow!.safeAreaLayoutGuide.layoutFrame
         }
-        
-        print("miny \(safeFrame.minY)")
         
         // The top right "X" button to dismiss.
         let exitButton = UILabel(
@@ -192,25 +195,25 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
      */
     fileprivate func appendTextView(withMessage messagePayload: MessagePayload) {
         // Change textview background color
-        self.textView.backgroundColor = UIColor(hexFromString: messagePayload.backgroundColor)
+        textView.backgroundColor = UIColor(hexFromString: messagePayload.backgroundColor)
         
         // Header title.
         if let headerMessage = messagePayload.header {
-            self.appendHeaderMessage(withHeader: headerMessage)
-            self.textViewContentHeight += heightOffset
+            appendHeaderMessage(withHeader: headerMessage)
+            textViewContentHeight += heightOffset
         }
         
         // Body message.
         if let bodyMessage = messagePayload.messageBody {
             
             if messagePayload.header == nil {
-                self.textViewContentHeight += heightOffset
+                textViewContentHeight += heightOffset
             }
             
-            self.appendBodyMessage(withBody: bodyMessage)
+            appendBodyMessage(withBody: bodyMessage)
             
             if messagePayload.messageLowerBody != nil {
-                self.textViewContentHeight += heightOffset
+                textViewContentHeight += heightOffset
             }
         }
         
@@ -220,38 +223,38 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
             if messagePayload.header == nil &&
                 messagePayload.messageBody == nil {
                 
-                self.textViewContentHeight += heightOffset
+                textViewContentHeight += heightOffset
             }
             
-            self.appendLowerBodyMessage(withBody: lowerBodyMessage)
+            appendLowerBodyMessage(withBody: lowerBodyMessage)
         }
         
         // Height of the current window.
-        let overallHeight = self.dialogViewCurrentHeight + self.textViewContentHeight
+        let overallHeight = dialogViewCurrentHeight + textViewContentHeight
         // The height of the frame when multipled with the cap.
         var maxFrameHeight: CGFloat = 0
         if #available(iOS 11.0, *) {
             maxFrameHeight = UIApplication.shared.keyWindow!.safeAreaLayoutGuide.layoutFrame.height * maxWindowHeightPercentage
         } else {
-            maxFrameHeight = self.frame.height * maxWindowHeightPercentage
+            maxFrameHeight = frame.height * maxWindowHeightPercentage
         }
         
         // Calculate the optimal height based on the amount of text.
         // If the whole window were to exceed over 70% of the frame's height, then keep it at 70%
         // and make text scrollable
         let optimalHeight = overallHeight < maxFrameHeight ?
-            self.textViewContentHeight :
-            maxFrameHeight - self.dialogViewCurrentHeight
+            textViewContentHeight :
+            maxFrameHeight - dialogViewCurrentHeight
         
-        self.textView.frame = CGRect(x: horizontalSpacingOffset,
-                                     y: self.dialogViewCurrentHeight,
-                                     width: self.dialogViewWidth - (horizontalSpacingOffset * 2),
+        textView.frame = CGRect(x: horizontalSpacingOffset,
+                                     y: dialogViewCurrentHeight,
+                                     width: dialogViewWidth - (horizontalSpacingOffset * 2),
                                      height: optimalHeight)
         
-        textView.contentSize.height = self.textViewContentHeight
+        textView.contentSize.height = textViewContentHeight
         textView.isEditable = false
         
-        self.dialogView.addSubview(textView)
+        dialogView.addSubview(textView)
     }
     
     /**
@@ -261,7 +264,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     fileprivate func appendImageView(withImage image: UIImage) {
         
         // Image ratio to calculate the height.
-        let imageRatio = self.dialogViewWidth / image.size.width
+        let imageRatio = dialogViewWidth / image.size.width
         
         let imageView = UIImageView(
             frame: CGRect(x: 0,
@@ -272,8 +275,8 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         imageView.contentMode = .scaleAspectFit
         imageView.image = image
         
-        self.dialogView.addSubview(imageView)
-        self.dialogViewCurrentHeight += imageView.frame.height
+        dialogView.addSubview(imageView)
+        dialogViewCurrentHeight += imageView.frame.height
     }
     
     /**
@@ -283,8 +286,8 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     fileprivate func appendHeaderMessage(withHeader headerMessage: String) {
         let headerMessageLabel = UILabel(
             frame: CGRect(x: 0,
-                          y: self.textViewContentHeight,
-                          width: self.dialogViewWidth - (horizontalSpacingOffset * 2),
+                          y: textViewContentHeight,
+                          width: dialogViewWidth - (horizontalSpacingOffset * 2),
                           height: 0))
         
         headerMessageLabel.text = headerMessage
@@ -294,9 +297,9 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         headerMessageLabel.numberOfLines = 0
         headerMessageLabel.font = .boldSystemFont(ofSize: headerMessageFontSize)
         headerMessageLabel.frame.size.height = headerMessageLabel.optimalHeight
-        self.textView.addSubview(headerMessageLabel)
+        textView.addSubview(headerMessageLabel)
         
-        self.textViewContentHeight += headerMessageLabel.frame.height
+        textViewContentHeight += headerMessageLabel.frame.height
     }
     
     /**
@@ -306,8 +309,8 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     fileprivate func appendBodyMessage(withBody bodyMessage: String) {
         let bodyMessageLabel = UILabel(
             frame: CGRect(x: 0,
-                          y: self.textViewContentHeight,
-                          width: self.dialogViewWidth - (horizontalSpacingOffset * 2),
+                          y: textViewContentHeight,
+                          width: dialogViewWidth - (horizontalSpacingOffset * 2),
                           height: 0))
         
         bodyMessageLabel.text = bodyMessage
@@ -317,9 +320,9 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         bodyMessageLabel.lineBreakMode = .byWordWrapping
         bodyMessageLabel.numberOfLines = 0
         bodyMessageLabel.frame.size.height = bodyMessageLabel.optimalHeight
-        self.textView.addSubview(bodyMessageLabel)
+        textView.addSubview(bodyMessageLabel)
         
-        self.textViewContentHeight += bodyMessageLabel.frame.height
+        textViewContentHeight += bodyMessageLabel.frame.height
     }
     
     /**
@@ -329,8 +332,8 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     fileprivate func appendLowerBodyMessage(withBody lowerBodyMessage: String) {
         let lowerBodyMessageLabel = UILabel(
             frame: CGRect(x: 0,
-                          y: self.textViewContentHeight,
-                          width: self.dialogViewWidth - (horizontalSpacingOffset * 2),
+                          y: textViewContentHeight,
+                          width: dialogViewWidth - (horizontalSpacingOffset * 2),
                           height: 0))
         
         lowerBodyMessageLabel.text = lowerBodyMessage
@@ -340,9 +343,9 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         lowerBodyMessageLabel.lineBreakMode = .byWordWrapping
         lowerBodyMessageLabel.numberOfLines = 0
         lowerBodyMessageLabel.frame.size.height = lowerBodyMessageLabel.optimalHeight
-        self.textView.addSubview(lowerBodyMessageLabel)
+        textView.addSubview(lowerBodyMessageLabel)
         
-        self.textViewContentHeight += lowerBodyMessageLabel.frame.height
+        textViewContentHeight += lowerBodyMessageLabel.frame.height
     }
     
     /**
@@ -362,7 +365,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
                 
                 if buttonList.count == 1 {
                     buttonWidthOffset = singleButtonWidthOffset
-                    xPositionForButton = (self.dialogViewWidth / 4) + (buttonWidthOffset / 2)
+                    xPositionForButton = (dialogViewWidth / 4) + (buttonWidthOffset / 2)
                 } else {
                     buttonWidthOffset = twoButtonWidthOffset
                     xPositionForButton = buttonHorizontalSpace
@@ -374,13 +377,11 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
                     safeAreaFrame = UIApplication.shared.keyWindow!.safeAreaLayoutGuide.layoutFrame
                     bottomInset = UIApplication.shared.keyWindow!.safeAreaInsets.bottom
                 }
-                print(bottomInset)
-
                 
                 let buttonToAdd = UIButton(
                     frame: CGRect(x: xPositionForButton,
                                   y: safeAreaFrame.height - buttonHeight - heightOffset,
-                                  width: ((self.dialogViewWidth / 2) - buttonWidthOffset),
+                                  width: ((dialogViewWidth / 2) - buttonWidthOffset),
                                   height: buttonHeight))
                 
                 buttonToAdd.setTitle(button.buttonText, for: .normal)
@@ -408,7 +409,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
                 
                 buttonHorizontalSpace += buttonToAdd.frame.width + 8
                 
-                self.dialogView.addSubview(buttonToAdd)
+                dialogView.addSubview(buttonToAdd)
             }
         }
     }
@@ -417,7 +418,8 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
      * Append sub views to present view when ready.
      */
     fileprivate func appendSubViews() {
-        self.addSubview(self.dialogView)
+        addSubview(backgroundView)
+        addSubview(dialogView)
         logImpression(withImpressionType: .IMPRESSION)
     }
     
@@ -453,14 +455,14 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
             UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
         }
         
-        self.dismiss();
+        dismiss();
     }
     
     /**
      * Obj-c selector to dismiss the modal view when the 'X' is tapped.
      */
     @objc fileprivate func didTapOnExitButton(_ sender: UIGestureRecognizer){
-        self.dismiss()
+        dismiss()
         
         // To log and send impression.
         if let tag = sender.view?.tag,
@@ -472,7 +474,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     
     func logImpression(withImpressionType type: ImpressionType) {
         // Log the impression.
-        self.impressions.append(
+        impressions.append(
             Impression(
                 type: type,
                 timestamp: Date().millisecondsSince1970

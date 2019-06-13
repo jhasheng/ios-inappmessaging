@@ -42,28 +42,28 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zzZ-Cb-5PD">
-                                <rect key="frame" x="146" y="292" width="84" height="30"/>
+                                <rect key="frame" x="145.5" y="292" width="84" height="30"/>
                                 <state key="normal" title="custom_test"/>
                                 <connections>
                                     <action selector="customTestButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="ehl-RW-0kA"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lru-TA-Ydd">
-                                <rect key="frame" x="156" y="340" width="64" height="30"/>
+                                <rect key="frame" x="155.5" y="340" width="64" height="30"/>
                                 <state key="normal" title="app_start"/>
                                 <connections>
                                     <action selector="appStartButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="glb-fm-v5s"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v1Y-eE-Q4A">
-                                <rect key="frame" x="122" y="488" width="130" height="30"/>
+                                <rect key="frame" x="122.5" y="488" width="130" height="30"/>
                                 <state key="normal" title="Go to second page"/>
                                 <connections>
                                     <action selector="goToSecondPage:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="1kW-Yy-s23"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="v1Y-eE-Q4A" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="0JP-72-W9l"/>
                             <constraint firstItem="zzZ-Cb-5PD" firstAttribute="centerX" secondItem="lru-TA-Ydd" secondAttribute="centerX" id="5I8-KD-qt1"/>
