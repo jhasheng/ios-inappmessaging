@@ -26,6 +26,8 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     var exitButtonSize: CGFloat = 0 // Size of the exit button.
     var exitButtonHeightOffset: CGFloat = 0 // Height offset for exit button from the actual message.
     var exitButtonFontSize: CGFloat = 0 // Font size of exit button.
+    var exitButtonGapHeight: CGFloat = 55 // Size of the gap between the exit button and textview.
+    var exitButtonYPosition: CGFloat = 30 // Position of where the button should be relative to the safe area frame.
     
     var dialogView = UIView()
     var textView = UITextView()
@@ -69,6 +71,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         
         // Create the UIImageView first if there is an image.
         if let image = optionalImage {
+            hasImage = true
             self.appendImageView(withImage: image)
         }
         
@@ -76,20 +79,20 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         self.appendSubViews()
     }
     
-    fileprivate func setUpInitialValues() {
+    fileprivate     func setUpInitialValues() {
         
         // Set different values based on device -- either iPad or iPhone.
         if UIDevice.current.userInterfaceIdiom == .pad {
             // Use 75% of iPad's width.
             self.dialogViewWidth = frame.width * initialFrameWidthIPadMultiplier
-            self.exitButtonSize = 22
-            self.exitButtonHeightOffset = 35
+            self.exitButtonSize = 32
+            self.exitButtonHeightOffset = 25
             self.exitButtonFontSize = 16
         } else {
             self.dialogViewWidth = frame.width - initialFrameWidthOffset
-            self.exitButtonSize = 15
-            self.exitButtonHeightOffset = 25
-            self.exitButtonFontSize = 13
+            self.exitButtonSize = 25
+            self.exitButtonHeightOffset = 5
+            self.exitButtonFontSize = 14
         }
     }
     
@@ -98,6 +101,9 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
      * @param { campaign: CampaignData } the campaign to be displayed.
      */
     internal func createMessageBody(campaign: CampaignData) {
+        // Add the exit button on the top right.
+        self.appendExitButton()
+        
         // Scroll view for header and messages.
         if campaign.messagePayload.header != nil ||
             campaign.messagePayload.messageBody != nil ||
@@ -147,29 +153,37 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         self.dialogView.backgroundColor = UIColor(hexFromString: campaign.messagePayload.backgroundColor)
         self.dialogView.layer.cornerRadius = cornerRadiusForDialogView
         self.dialogView.clipsToBounds = true
-        
-        // Add the exit button on the top right.
-        self.appendExitButton()
     }
     
     fileprivate func appendExitButton() {
+        
+        var safeFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
+        if #available(iOS 11.0, *) {
+            safeFrame = UIApplication.shared.keyWindow!.safeAreaLayoutGuide.layoutFrame
+        }
+        
+        print("miny \(safeFrame.minY)")
+        
         // The top right "X" button to dismiss.
         let exitButton = UILabel(
-            frame: CGRect(x: dialogView.frame.maxX - exitButtonSize,
-                          y: dialogView.frame.minY - exitButtonHeightOffset,
+            frame: CGRect(x: safeFrame.maxX - (exitButtonSize * 2.0),
+                          y: exitButtonYPosition,
                           width: exitButtonSize,
                           height: exitButtonSize))
         
         exitButton.text = "X"
         exitButton.font = .systemFont(ofSize: exitButtonFontSize)
-        exitButton.backgroundColor = .white
-        exitButton.textColor = .black
+        exitButton.backgroundColor = hasImage ? .white : .black
+        exitButton.textColor = hasImage ? .black : .white
         exitButton.textAlignment = .center
         exitButton.isUserInteractionEnabled = true
         exitButton.layer.cornerRadius = exitButton.frame.width / 2
         exitButton.layer.masksToBounds = true
         exitButton.tag = ImpressionType.EXIT.rawValue
         exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
+        dialogView.addSubview(exitButton)
+        
+        dialogViewCurrentHeight += exitButtonGapHeight
     }
     
     /**
