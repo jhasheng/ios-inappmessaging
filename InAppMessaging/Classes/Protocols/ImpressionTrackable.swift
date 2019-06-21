@@ -22,7 +22,6 @@ protocol ImpressionTrackable {
 
 extension ImpressionTrackable {
     func sendImpression() {
-    
         guard let campaign = self.campaign else {
             #if DEBUG
                 print("InAppMessaging: Error sending impression.")
