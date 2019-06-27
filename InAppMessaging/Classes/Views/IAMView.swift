@@ -42,3 +42,32 @@ extension IAMView where Self: UIView {
         WorkScheduler.scheduleTask(5000, closure: InAppMessagingViewController.display)
     }
 }
+
+extension IAMView where Self: SlideUpView {    
+    func show() {
+        if let window =  UIApplication.shared.keyWindow {
+            window.addSubview(self)
+        }
+        
+        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseInOut,
+                       animations: {
+                        self.center.y -= self.slideUpHeight / 2
+                        self.layoutIfNeeded()
+        }, completion: nil)
+////        self.isHidden = false
+    }
+//    func animHide(){
+//        UIView.animate(withDuration: 2, delay: 0, options: [.curveLinear],
+//                       animations: {
+//                        self.center.y += self.bounds.height
+//                        self.layoutIfNeeded()
+//
+//        },  completion: {(_ completed: Bool) -> Void in
+//            self.isHidden = true
+//        })
+//    }
+    
+    func dismiss() {
+        
+    }
+}
