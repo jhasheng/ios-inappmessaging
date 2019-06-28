@@ -45,13 +45,13 @@ class SlideUpView: UIView, IAMView {
     }
     
     private func initializeView(withCampaign campaign: CampaignData) {
+        //TODO: Change back the color variable after finishing development.
         dialogView.backgroundColor = .purple
         dialogView.frame = CGRect(x: 0,
                                   y: 0,
                                   width: screenWidth,
                                   height: slideUpHeight + bottomSafeAreaInsets
         )
-
         
         if let bodyMessage = campaign.messagePayload.messageBody {
             appendMessage(with: bodyMessage)
