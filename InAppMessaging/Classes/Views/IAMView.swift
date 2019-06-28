@@ -45,29 +45,27 @@ extension IAMView where Self: UIView {
 
 extension IAMView where Self: SlideUpView {    
     func show() {
+        
+        let viewIdentifier = "IAMView"
+        self.accessibilityIdentifier = viewIdentifier
+
+        // Check to see if any other IAMViews are presented.
+        if let subviews = UIApplication.shared.keyWindow?.subviews {
+            for subview in subviews {
+                if subview.accessibilityIdentifier == viewIdentifier {
+                    return
+                }
+            }
+        }
+        
         if let window =  UIApplication.shared.keyWindow {
             window.addSubview(self)
         }
         
-        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseInOut,
-                       animations: {
-                        self.center.y -= self.slideUpHeight / 2
-                        self.layoutIfNeeded()
-        }, completion: nil)
-////        self.isHidden = false
-    }
-//    func animHide(){
-//        UIView.animate(withDuration: 2, delay: 0, options: [.curveLinear],
-//                       animations: {
-//                        self.center.y += self.bounds.height
-//                        self.layoutIfNeeded()
-//
-//        },  completion: {(_ completed: Bool) -> Void in
-//            self.isHidden = true
-//        })
-//    }
-    
-    func dismiss() {
-        
+        //TODO: Support other direction for slide-up
+        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseInOut, animations: {
+            self.center.y -= self.slideUpHeight
+            self.layoutIfNeeded()
+        })
     }
 }
