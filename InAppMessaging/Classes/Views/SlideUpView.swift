@@ -93,6 +93,8 @@ class SlideUpView: UIView, IAMView, ImpressionTrackable {
         bodyMessageLabel.textAlignment = .left
         bodyMessageLabel.numberOfLines = 3
         bodyMessageLabel.lineBreakMode = .byTruncatingTail
+        bodyMessageLabel.isUserInteractionEnabled = true
+        bodyMessageLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnContent)))
         
         dialogView.addSubview(bodyMessageLabel)
     }
@@ -114,7 +116,6 @@ class SlideUpView: UIView, IAMView, ImpressionTrackable {
         exitButton.isUserInteractionEnabled = true
         exitButton.layer.cornerRadius = exitButton.frame.width / 2
         exitButton.layer.masksToBounds = true
-        exitButton.tag = ImpressionType.EXIT.rawValue
         exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
         
         dialogView.addSubview(exitButton)
@@ -122,6 +123,7 @@ class SlideUpView: UIView, IAMView, ImpressionTrackable {
     
     private func appendSubview() {
         addSubview(dialogView)
+        logImpression(withImpressionType: .IMPRESSION)
     }
     
     /**
@@ -147,10 +149,32 @@ class SlideUpView: UIView, IAMView, ImpressionTrackable {
     }
     
     /**
+     * Obj-c selector to handle the action when the onClick content is tapped.
+     */
+    @objc private func didTapOnContent(_ sender: UIGestureRecognizer) {
+        if let uri = campaign?.messagePayload.messageSettings.controlSettings?.content?.onClickBehavior.uri,
+            let uriToOpen = URL(string: uri),
+            UIApplication.shared.canOpenURL(uriToOpen) {
+            
+                UIApplication.shared.openURL(uriToOpen)
+        } else {
+            let alert = UIAlertController(title: "Page not found", message: "Encountered error while navigating to the page.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
+            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
+        }
+        
+        dismiss()
+        logImpression(withImpressionType: .CLICK_CONTENT)
+        sendImpression()
+    }
+    
+    /**
      * Obj-c selector to dismiss the modal view when the 'X' is tapped.
      */
-    @objc private func didTapOnExitButton(_ sender: UIGestureRecognizer){
+    @objc private func didTapOnExitButton(_ sender: UIGestureRecognizer) {
         dismiss()
+        logImpression(withImpressionType: .EXIT)
+        sendImpression()
     }
     
     func logImpression(withImpressionType type: ImpressionType) {
