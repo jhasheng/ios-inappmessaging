@@ -3,9 +3,11 @@ import UIKit
 /**
  * SlideUpView for InAppMessaging campaign.
  */
-class SlideUpView: UIView, IAMView {
+class SlideUpView: UIView, IAMView, ImpressionTrackable {
     var dialogView = UIView()
     var slideFromDirection: SlideFromEnum?
+    var impressions: [Impression] = []
+    var campaign: CampaignData?
     
     private var bottomSafeAreaInsets: CGFloat {
         get {
@@ -41,6 +43,7 @@ class SlideUpView: UIView, IAMView {
         }
         
         self.slideFromDirection = direction
+        self.campaign = campaign
         
         frame.origin = startingFramePosition(fromSliding: direction)
         frame.size = CGSize(width: screenWidth, height: slideUpHeight + bottomSafeAreaInsets)
@@ -148,5 +151,14 @@ class SlideUpView: UIView, IAMView {
      */
     @objc private func didTapOnExitButton(_ sender: UIGestureRecognizer){
         dismiss()
+    }
+    
+    func logImpression(withImpressionType type: ImpressionType) {
+        self.impressions.append(
+            Impression(
+                type: type,
+                timestamp: Date().millisecondsSince1970
+            )
+        )
     }
 }
