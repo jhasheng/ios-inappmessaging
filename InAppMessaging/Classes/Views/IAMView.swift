@@ -52,15 +52,35 @@ extension IAMView where Self: UIView {
 }
 
 extension IAMView where Self: SlideUpView {
+    /**
+     * Handles logic for displaying a SlideUpView.
+     */
     func show() {
         displayView()
         animateSlideUp()
     }
     
-    func animateSlideUp() {        
-        //TODO: Support other direction for slide-up
+    /**
+     * Handles the animation of the SlideUpView.
+     */
+    func animateSlideUp() {
+        guard let direction = self.slideFromDirection else {
+            return
+        }
+        
+        //TODO: Support TOP direction for slide-up
         UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseInOut, animations: {
-            self.center.y -= self.slideUpHeight
+            switch direction {
+                case .BOTTOM:
+                    self.center.y -= self.slideUpHeight
+                case .LEFT:
+                    self.center.x = self.screenWidth / 2
+                case .RIGHT:
+                    self.center.x = self.screenWidth / 2
+                case .TOP:
+                    break
+            }
+            
             self.layoutIfNeeded()
         })
     }

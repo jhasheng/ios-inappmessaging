@@ -118,7 +118,7 @@ struct MessageSettings: Decodable {
 
 struct DisplaySettings: Decodable {
     let orientation: Int
-    let slideFrom: Int
+    let slideFrom: SlideFromEnum?
     let endTimeMillis: Int
     let textAlign: Int
     

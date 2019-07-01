@@ -1,10 +1,11 @@
 import UIKit
 
+/**
+ * SlideUpView for InAppMessaging campaign.
+ */
 class SlideUpView: UIView, IAMView {
-    
     var dialogView = UIView()
-    
-    private let screenWidth = UIScreen.main.bounds.width
+    var slideFromDirection: SlideFromEnum?
     
     private var bottomSafeAreaInsets: CGFloat {
         get {
@@ -19,18 +20,30 @@ class SlideUpView: UIView, IAMView {
         }
     }
     
+    let screenWidth: CGFloat = UIScreen.main.bounds.width // Width of the device.
     let slideUpHeight: CGFloat = 89 // Height of the banner window.
     private let slideUpLeftPaddingPercentage: CGFloat = 0.07 // Percentage of the left padding to total width.
     private let slideUpRightPaddingPercentage: CGFloat = 0.17 // Percentage of the right padding to total width.
     private let bodyMessageLabelFontSize: CGFloat = 14 // Font size of the message.
     private let bodyMessageLabelHeight: CGFloat = 61 // Height of the UILabel for the body message.
     private let slideUpContentTopPadding: CGFloat = 12 // Top padding for the content inside the slide up view.
+    private let exitButtonSize: CGFloat = 20 // Size of the button.
+    private let exitButtonRightPadding: CGFloat = 36 // Amount of padding right of the exit button
     
     convenience init(withCampaign campaign: CampaignData) {
         self.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         
+        guard let direction = campaign.messagePayload.messageSettings.displaySettings.slideFrom else {
+            #if DEBUG
+                print("InAppMessaging: Error constructing a SlideUpView.")
+            #endif
+            return
+        }
+        
+        self.slideFromDirection = direction
+        
         //TODO: Support other sliding positions other than bottom.
-        frame.origin = startingFramePosition(fromSliding: .BOTTOM)
+        frame.origin = startingFramePosition(fromSliding: direction)
         frame.size = CGSize(width: screenWidth, height: slideUpHeight + bottomSafeAreaInsets)
         
         initializeView(withCampaign: campaign)
@@ -45,8 +58,7 @@ class SlideUpView: UIView, IAMView {
     }
     
     private func initializeView(withCampaign campaign: CampaignData) {
-        //TODO: Change back the color variable after finishing development.
-        dialogView.backgroundColor = .purple
+        dialogView.backgroundColor = UIColor(hexFromString: campaign.messagePayload.messageBodyColor)
         dialogView.frame = CGRect(x: 0,
                                   y: 0,
                                   width: screenWidth,
@@ -85,10 +97,10 @@ class SlideUpView: UIView, IAMView {
     
     private func appendExitButton() {
         let exitButton = UILabel(
-            frame: CGRect(x: screenWidth - 36,
+            frame: CGRect(x: screenWidth - exitButtonRightPadding,
                           y: slideUpContentTopPadding,
-                          width: 20,
-                          height: 20
+                          width: exitButtonSize,
+                          height: exitButtonSize
             )
         )
         
@@ -110,13 +122,24 @@ class SlideUpView: UIView, IAMView {
         addSubview(dialogView)
     }
     
+    /**
+     * Find the frame origin depending on the slide direction.
+     * @param { direction: SlideFromEnum } direction to slide from.
+     * @return { CGPoint } origin of the campaign frame.
+     */
     private func startingFramePosition(fromSliding direction: SlideFromEnum) -> CGPoint {
+        let yPosition = UIScreen.main.bounds.height
+        
         switch direction {
             case .BOTTOM:
-                return CGPoint(x: 0, y: UIScreen.main.bounds.height - bottomSafeAreaInsets)
-
-        //TODO: Support other directions for sliding.
-            case .TOP, .LEFT, .RIGHT:
+                return CGPoint(x: 0, y: yPosition - bottomSafeAreaInsets)
+            case .LEFT:
+                return CGPoint(x: -screenWidth, y: yPosition - slideUpHeight)
+            case .RIGHT:
+                return CGPoint(x: screenWidth * 2, y: yPosition - slideUpHeight)
+            
+        //TODO: Support TOP direction for sliding.
+            case .TOP:
                 return CGPoint(x: 0, y: 0)
         }
     }

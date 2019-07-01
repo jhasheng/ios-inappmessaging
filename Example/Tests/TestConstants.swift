@@ -30,7 +30,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -61,7 +61,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: . BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -92,7 +92,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: . BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -130,7 +130,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -161,7 +161,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: . BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -206,7 +206,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -253,7 +253,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -300,7 +300,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -347,7 +347,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -394,7 +394,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -441,7 +441,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -488,7 +488,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -535,7 +535,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -582,7 +582,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -629,7 +629,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -676,7 +676,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -723,7 +723,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -770,7 +770,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -817,7 +817,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: . BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -864,7 +864,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: . BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -911,7 +911,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: . BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -958,7 +958,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: . BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -1004,7 +1004,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: . BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -1051,7 +1051,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: . BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
@@ -1098,7 +1098,7 @@ struct TestConstants {
                             messageSettings: MessageSettings.init(
                                 displaySettings: DisplaySettings.init(
                                     orientation: 1,
-                                    slideFrom: 1,
+                                    slideFrom: . BOTTOM,
                                     endTimeMillis: 1,
                                     textAlign: 1),
                                 controlSettings: nil)
