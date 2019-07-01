@@ -42,7 +42,6 @@ class SlideUpView: UIView, IAMView {
         
         self.slideFromDirection = direction
         
-        //TODO: Support other sliding positions other than bottom.
         frame.origin = startingFramePosition(fromSliding: direction)
         frame.size = CGSize(width: screenWidth, height: slideUpHeight + bottomSafeAreaInsets)
         
