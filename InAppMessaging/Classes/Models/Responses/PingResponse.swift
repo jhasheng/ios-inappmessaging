@@ -29,7 +29,7 @@ struct Campaign: Decodable, Hashable {
     }
 }
 
-struct CampaignData: Decodable, Equatable {
+struct CampaignData: Decodable, Equatable, Hashable {
     
     let campaignId: String
     let maxImpressions: Int
@@ -37,6 +37,10 @@ struct CampaignData: Decodable, Equatable {
     let triggers: [Trigger]?
     let isTest: Bool
     let messagePayload: MessagePayload
+    
+    var hashValue: Int {
+        return campaignId.hashValue
+    }
     
     enum CodingKeys: String, CodingKey {
         case campaignId
@@ -121,12 +125,14 @@ struct DisplaySettings: Decodable {
     let slideFrom: SlideFromEnum?
     let endTimeMillis: Int
     let textAlign: Int
+    let optOut: Bool
     
     enum CodingKeys: String, CodingKey {
         case orientation
         case slideFrom
         case endTimeMillis
         case textAlign
+        case optOut
     }
 }
 

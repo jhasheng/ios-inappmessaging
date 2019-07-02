@@ -6,9 +6,10 @@ Pod::Spec.new do |s|
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Daniel Tam' => 'daniel.a.tam@rakuten.com' }
   s.source           = { :git => 'https://gitpub.rakuten-it.com/projects/ECO/repos/ios-insights.git', :tag => s.version.to_s }
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '12.1'
 
   s.source_files = 'InAppMessaging/Classes/**/*.{swift,h,m}'
+  s.resource_bundle = { "InAppMessaging" => ["**/*.lproj/*.strings"] }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
