@@ -1,7 +1,7 @@
 /**
- * Enum of all button actions InAppMessaging supports.
+ * Enum of all actions InAppMessaging supports.
  */
-enum ButtonActionType: Int {
+enum ActionType: Int, Decodable {
     case invalid = 0
     case redirect = 1
     case deeplink = 2

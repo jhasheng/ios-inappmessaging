@@ -352,7 +352,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         let buttonHeight: CGFloat = 40 // Define the height to use for the button.
         
         for (index, button) in buttonList.enumerated() {
-            if let buttonAction = ButtonActionType(rawValue: button.buttonBehavior.action) {
+            if let buttonAction = ActionType(rawValue: button.buttonBehavior.action) {
                 // Determine offset value based on numbers of buttons to display.
                 var buttonWidthOffset: CGFloat
                 var xPositionForButton: CGFloat

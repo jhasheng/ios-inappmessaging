@@ -60,6 +60,7 @@ class InAppMessagingViewController: UIViewController {
                 view = FullScreenView(withCampaign: campaign.campaignData, andImage: image)
                 break
             case .slide:
+                view = SlideUpView(withCampaign: campaign.campaignData)
                 break
             case .html:
                 break

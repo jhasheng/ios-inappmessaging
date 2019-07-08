@@ -7,6 +7,8 @@ enum ImpressionType: Int, Encodable {
     case ACTION_ONE = 2
     case ACTION_TWO = 3
     case EXIT = 4
+    case CLICK_CONTENT = 5
+    case OPT_OUT = 6
     
     var description: String {
         get {
@@ -21,6 +23,10 @@ enum ImpressionType: Int, Encodable {
                 return "ACTION_TWO"
             case .EXIT:
                 return "EXIT"
+            case .CLICK_CONTENT:
+                return "CLICK_CONTENT"
+            case .OPT_OUT:
+                return "OPT_OUT"
             }
         }
     }

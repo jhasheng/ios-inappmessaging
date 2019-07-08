@@ -8,16 +8,24 @@ protocol IAMView {
     func dismiss()
     var backgroundView: UIView? { get }
     var dialogView: UIView { get set }
+    var viewIdentifier: String { get }
 }
 
 extension IAMView where Self: UIView {
     var backgroundView: UIView? { return nil } // Not all views will be using a background view.
+    var viewIdentifier: String { return "IAMView" }
 
     /**
-     * Function that finds the presented view controller and add the modal sub view on top.
+     * Function that handles the login for displaying Modal/Fullscreen IAM views.
      */
-    internal func show() {
-        let viewIdentifier = "IAMView"
+    func show() {
+        displayView()
+    }
+    
+    /**
+     * Function that finds the presented view controller and add the IAMView on top.
+     */
+    func displayView() {
         self.accessibilityIdentifier = viewIdentifier
         
         // Check to see if any other IAMViews are presented.
@@ -37,8 +45,43 @@ extension IAMView where Self: UIView {
     /**
      * Function that dismisses the presented IAM view.
      */
-    internal func dismiss() {
+    func dismiss() {
         self.removeFromSuperview()
         WorkScheduler.scheduleTask(5000, closure: InAppMessagingViewController.display)
+    }
+}
+
+extension IAMView where Self: SlideUpView {
+    /**
+     * Handles logic for displaying a SlideUpView.
+     */
+    func show() {
+        displayView()
+        animateSlideUp()
+    }
+    
+    /**
+     * Handles the animation of the SlideUpView.
+     */
+    func animateSlideUp() {
+        guard let direction = self.slideFromDirection else {
+            return
+        }
+        
+        //TODO: Support TOP direction for slide-up
+        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseInOut, animations: {
+            switch direction {
+                case .BOTTOM:
+                    self.center.y -= self.slideUpHeight
+                case .LEFT:
+                    self.center.x = self.screenWidth / 2
+                case .RIGHT:
+                    self.center.x = self.screenWidth / 2
+                case .TOP:
+                    break
+            }
+            
+            self.layoutIfNeeded()
+        })
     }
 }
