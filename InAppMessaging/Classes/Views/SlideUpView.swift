@@ -1,10 +1,13 @@
 import UIKit
 
-class SlideUpView: UIView, IAMView {
-    
+/**
+ * SlideUpView for InAppMessaging campaign.
+ */
+class SlideUpView: UIView, IAMView, ImpressionTrackable {
     var dialogView = UIView()
-    
-    private let screenWidth = UIScreen.main.bounds.width
+    var slideFromDirection: SlideFromEnum?
+    var impressions: [Impression] = []
+    var campaign: CampaignData?
     
     private var bottomSafeAreaInsets: CGFloat {
         get {
@@ -19,18 +22,30 @@ class SlideUpView: UIView, IAMView {
         }
     }
     
+    let screenWidth: CGFloat = UIScreen.main.bounds.width // Width of the device.
     let slideUpHeight: CGFloat = 89 // Height of the banner window.
     private let slideUpLeftPaddingPercentage: CGFloat = 0.07 // Percentage of the left padding to total width.
     private let slideUpRightPaddingPercentage: CGFloat = 0.17 // Percentage of the right padding to total width.
     private let bodyMessageLabelFontSize: CGFloat = 14 // Font size of the message.
     private let bodyMessageLabelHeight: CGFloat = 61 // Height of the UILabel for the body message.
     private let slideUpContentTopPadding: CGFloat = 12 // Top padding for the content inside the slide up view.
+    private let exitButtonSize: CGFloat = 20 // Size of the button.
+    private let exitButtonRightPadding: CGFloat = 36 // Amount of padding right of the exit button
     
     convenience init(withCampaign campaign: CampaignData) {
         self.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         
-        //TODO: Support other sliding positions other than bottom.
-        frame.origin = startingFramePosition(fromSliding: .BOTTOM)
+        guard let direction = campaign.messagePayload.messageSettings.displaySettings.slideFrom else {
+            #if DEBUG
+                print("InAppMessaging: Error constructing a SlideUpView.")
+            #endif
+            return
+        }
+        
+        self.slideFromDirection = direction
+        self.campaign = campaign
+        
+        frame.origin = startingFramePosition(fromSliding: direction)
         frame.size = CGSize(width: screenWidth, height: slideUpHeight + bottomSafeAreaInsets)
         
         initializeView(withCampaign: campaign)
@@ -45,8 +60,7 @@ class SlideUpView: UIView, IAMView {
     }
     
     private func initializeView(withCampaign campaign: CampaignData) {
-        //TODO: Change back the color variable after finishing development.
-        dialogView.backgroundColor = .purple
+        dialogView.backgroundColor = UIColor(hexFromString: campaign.messagePayload.messageBodyColor)
         dialogView.frame = CGRect(x: 0,
                                   y: 0,
                                   width: screenWidth,
@@ -79,16 +93,18 @@ class SlideUpView: UIView, IAMView {
         bodyMessageLabel.textAlignment = .left
         bodyMessageLabel.numberOfLines = 3
         bodyMessageLabel.lineBreakMode = .byTruncatingTail
+        bodyMessageLabel.isUserInteractionEnabled = true
+        bodyMessageLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnContent)))
         
         dialogView.addSubview(bodyMessageLabel)
     }
     
     private func appendExitButton() {
         let exitButton = UILabel(
-            frame: CGRect(x: screenWidth - 36,
+            frame: CGRect(x: screenWidth - exitButtonRightPadding,
                           y: slideUpContentTopPadding,
-                          width: 20,
-                          height: 20
+                          width: exitButtonSize,
+                          height: exitButtonSize
             )
         )
         
@@ -100,7 +116,6 @@ class SlideUpView: UIView, IAMView {
         exitButton.isUserInteractionEnabled = true
         exitButton.layer.cornerRadius = exitButton.frame.width / 2
         exitButton.layer.masksToBounds = true
-        exitButton.tag = ImpressionType.EXIT.rawValue
         exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
         
         dialogView.addSubview(exitButton)
@@ -108,23 +123,66 @@ class SlideUpView: UIView, IAMView {
     
     private func appendSubview() {
         addSubview(dialogView)
+        logImpression(withImpressionType: .IMPRESSION)
     }
     
+    /**
+     * Find the frame origin depending on the slide direction.
+     * @param { direction: SlideFromEnum } direction to slide from.
+     * @return { CGPoint } origin of the campaign frame.
+     */
     private func startingFramePosition(fromSliding direction: SlideFromEnum) -> CGPoint {
+        let yPosition = UIScreen.main.bounds.height
+        
         switch direction {
             case .BOTTOM:
-                return CGPoint(x: 0, y: UIScreen.main.bounds.height - bottomSafeAreaInsets)
-
-        //TODO: Support other directions for sliding.
-            case .TOP, .LEFT, .RIGHT:
+                return CGPoint(x: 0, y: yPosition - bottomSafeAreaInsets)
+            case .LEFT:
+                return CGPoint(x: -screenWidth, y: yPosition - slideUpHeight)
+            case .RIGHT:
+                return CGPoint(x: screenWidth * 2, y: yPosition - slideUpHeight)
+            
+        //TODO: Support TOP direction for sliding.
+            case .TOP:
                 return CGPoint(x: 0, y: 0)
         }
     }
     
     /**
+     * Obj-c selector to handle the action when the onClick content is tapped.
+     */
+    @objc private func didTapOnContent(_ sender: UIGestureRecognizer) {
+        if let uri = campaign?.messagePayload.messageSettings.controlSettings?.content?.onClickBehavior.uri,
+            let uriToOpen = URL(string: uri),
+            UIApplication.shared.canOpenURL(uriToOpen) {
+            
+                UIApplication.shared.openURL(uriToOpen)
+        } else {
+            let alert = UIAlertController(title: "Page not found", message: "Encountered error while navigating to the page.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
+            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
+        }
+        
+        dismiss()
+        logImpression(withImpressionType: .CLICK_CONTENT)
+        sendImpression()
+    }
+    
+    /**
      * Obj-c selector to dismiss the modal view when the 'X' is tapped.
      */
-    @objc private func didTapOnExitButton(_ sender: UIGestureRecognizer){
+    @objc private func didTapOnExitButton(_ sender: UIGestureRecognizer) {
         dismiss()
+        logImpression(withImpressionType: .EXIT)
+        sendImpression()
+    }
+    
+    func logImpression(withImpressionType type: ImpressionType) {
+        self.impressions.append(
+            Impression(
+                type: type,
+                timestamp: Date().millisecondsSince1970
+            )
+        )
     }
 }

@@ -118,7 +118,7 @@ struct MessageSettings: Decodable {
 
 struct DisplaySettings: Decodable {
     let orientation: Int
-    let slideFrom: Int
+    let slideFrom: SlideFromEnum?
     let endTimeMillis: Int
     let textAlign: Int
     
@@ -132,9 +132,29 @@ struct DisplaySettings: Decodable {
 
 struct ControlSettings: Decodable {
     let buttons: [Button]?
+    let content: Content?
     
     enum CodingKeys: String, CodingKey {
         case buttons
+        case content
+    }
+}
+
+struct Content: Decodable {
+    let onClickBehavior: OnClickBehavior
+    
+    enum CodingKeys: String, CodingKey {
+        case onClickBehavior
+    }
+}
+
+struct OnClickBehavior: Decodable {
+    let action: ActionType
+    let uri: String
+    
+    enum CodingKeys: String, CodingKey {
+        case action
+        case uri
     }
 }
 
