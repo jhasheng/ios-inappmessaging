@@ -150,7 +150,7 @@ struct Content: Decodable {
 
 struct OnClickBehavior: Decodable {
     let action: ActionType
-    let uri: String
+    let uri: String?
     
     enum CodingKeys: String, CodingKey {
         case action

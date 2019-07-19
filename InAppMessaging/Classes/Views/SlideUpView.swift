@@ -60,7 +60,7 @@ class SlideUpView: UIView, IAMView, ImpressionTrackable {
     }
     
     private func initializeView(withCampaign campaign: CampaignData) {
-        dialogView.backgroundColor = UIColor(hexFromString: campaign.messagePayload.messageBodyColor)
+        dialogView.backgroundColor = UIColor(hexFromString: campaign.messagePayload.backgroundColor)
         dialogView.frame = CGRect(x: 0,
                                   y: 0,
                                   width: screenWidth,
@@ -152,15 +152,17 @@ class SlideUpView: UIView, IAMView, ImpressionTrackable {
      * Obj-c selector to handle the action when the onClick content is tapped.
      */
     @objc private func didTapOnContent(_ sender: UIGestureRecognizer) {
-        if let uri = campaign?.messagePayload.messageSettings.controlSettings?.content?.onClickBehavior.uri,
-            let uriToOpen = URL(string: uri),
-            UIApplication.shared.canOpenURL(uriToOpen) {
-            
+        if campaign?.messagePayload.messageSettings.controlSettings?.content?.onClickBehavior.action != .close {
+            if let uri = campaign?.messagePayload.messageSettings.controlSettings?.content?.onClickBehavior.uri,
+                let uriToOpen = URL(string: uri),
+                UIApplication.shared.canOpenURL(uriToOpen) {
+                
                 UIApplication.shared.openURL(uriToOpen)
-        } else {
-            let alert = UIAlertController(title: "Page not found", message: "Encountered error while navigating to the page.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
-            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
+            } else {
+                let alert = UIAlertController(title: "Page not found", message: "Encountered error while navigating to the page.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
+                UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
+            }
         }
         
         dismiss()
