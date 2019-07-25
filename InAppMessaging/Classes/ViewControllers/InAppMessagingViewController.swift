@@ -47,7 +47,7 @@ class InAppMessagingViewController: UIViewController {
         }
         
         DispatchQueue.main.async {
-            var view: Modal?
+            var view: IAMView?
             
             // TODO(daniel.tam) Add the other view types.
             switch campaignViewType {
@@ -57,8 +57,10 @@ class InAppMessagingViewController: UIViewController {
             case .invalid:
                 break
             case .full:
+                view = FullScreenView(withCampaign: campaign.campaignData, andImage: image)
                 break
             case .slide:
+                view = SlideUpView(withCampaign: campaign.campaignData)
                 break
             case .html:
                 break
