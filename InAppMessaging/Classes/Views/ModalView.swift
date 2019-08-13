@@ -31,8 +31,8 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
     var dialogView = UIView()
     var textView = UITextView()
     
-    // Button URL mapping.
-    var buttonURLMapping = [Int: String]()
+    // Maps the button tag number to its link URI and campaign trigger.
+    var buttonMapping = [Int: (uri: String?, trigger: Trigger?)]()
     
     // Spacing on the left and right side of subviews.
     var dialogViewWidth: CGFloat = 0
@@ -78,7 +78,6 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
     fileprivate func setUpInitialValues() {
         // Set different values based on device -- either iPad or iPhone.
         if UIDevice.current.userInterfaceIdiom == .pad {
-            // Use 75% of iPad's width.
             self.dialogViewWidth = frame.width * initialFrameWidthIPadMultiplier
             self.exitButtonSize = 22
             self.exitButtonHeightOffset = 35
@@ -331,52 +330,50 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
         let buttonHeight: CGFloat = 40 // Define the height to use for the button.
         
         for (index, button) in buttonList.enumerated() {
-            if let buttonAction = ActionType(rawValue: button.buttonBehavior.action) {
-                // Determine offset value based on numbers of buttons to display.
-                var buttonWidthOffset: CGFloat
-                var xPositionForButton: CGFloat
-                
-                if buttonList.count == 1 {
-                    buttonWidthOffset = singleButtonWidthOffset
-                    xPositionForButton = (self.dialogViewWidth / 4) + (buttonWidthOffset / 2)
-                } else {
-                    buttonWidthOffset = twoButtonWidthOffset
-                    xPositionForButton = buttonHorizontalSpace
-                }
-
-                let buttonToAdd = UIButton(
-                    frame: CGRect(x: xPositionForButton,
-                                  y: self.dialogViewCurrentHeight,
-                                  width: ((self.dialogViewWidth / 2) - buttonWidthOffset),
-                                  height: buttonHeight))
-                
-                buttonToAdd.setTitle(button.buttonText, for: .normal)
-                buttonToAdd.setTitleColor(UIColor(hexFromString: button.buttonTextColor), for: .normal)
-                buttonToAdd.titleLabel?.font = .boldSystemFont(ofSize: buttonTextFontSize)
-                buttonToAdd.layer.cornerRadius = cornerRadiusForButtons
-                buttonToAdd.tag = index == 0 ? ImpressionType.ACTION_ONE.rawValue : ImpressionType.ACTION_TWO.rawValue
-                buttonToAdd.backgroundColor = UIColor(hexFromString: button.buttonBackgroundColor)
-                buttonToAdd.layer.borderColor = UIColor(hexFromString: button.buttonTextColor).cgColor
-                buttonToAdd.layer.borderWidth = 1
-                
-                // Add a mapping from the action type to the URL.
-                buttonURLMapping[buttonToAdd.tag] = button.buttonBehavior.uri
-                
-                switch buttonAction {
-                    case .invalid:
-                        return
-                    case .redirect:
-                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnLink)))
-                    case .deeplink:
-                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnLink)))
-                    case .close:
-                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
-                }
-                
-                buttonHorizontalSpace += buttonToAdd.frame.width + 8
-                
-                self.dialogView.addSubview(buttonToAdd)
+            // Determine offset value based on numbers of buttons to display.
+            var buttonWidthOffset: CGFloat
+            var xPositionForButton: CGFloat
+            
+            if buttonList.count == 1 {
+                buttonWidthOffset = singleButtonWidthOffset
+                xPositionForButton = (self.dialogViewWidth / 4) + (buttonWidthOffset / 2)
+            } else {
+                buttonWidthOffset = twoButtonWidthOffset
+                xPositionForButton = buttonHorizontalSpace
             }
+
+            let buttonToAdd = UIButton(
+                frame: CGRect(x: xPositionForButton,
+                              y: self.dialogViewCurrentHeight,
+                              width: ((self.dialogViewWidth / 2) - buttonWidthOffset),
+                              height: buttonHeight))
+            
+            buttonToAdd.setTitle(button.buttonText, for: .normal)
+            buttonToAdd.setTitleColor(UIColor(hexFromString: button.buttonTextColor), for: .normal)
+            buttonToAdd.titleLabel?.font = .boldSystemFont(ofSize: buttonTextFontSize)
+            buttonToAdd.layer.cornerRadius = cornerRadiusForButtons
+            buttonToAdd.tag = index == 0 ? ImpressionType.ACTION_ONE.rawValue : ImpressionType.ACTION_TWO.rawValue
+            buttonToAdd.backgroundColor = UIColor(hexFromString: button.buttonBackgroundColor)
+            buttonToAdd.layer.borderColor = UIColor(hexFromString: button.buttonTextColor).cgColor
+            buttonToAdd.layer.borderWidth = 1
+            
+            // Add a mapping from the action type to the URL.
+            buttonMapping[buttonToAdd.tag] = (button.buttonBehavior.uri ?? nil, button.campaignTrigger ?? nil)
+            
+            switch button.buttonBehavior.action {
+                case .invalid:
+                    return
+                case .redirect:
+                    buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnLink)))
+                case .deeplink:
+                    buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnLink)))
+                case .close:
+                    buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
+            }
+            
+            buttonHorizontalSpace += buttonToAdd.frame.width + 8
+            
+            self.dialogView.addSubview(buttonToAdd)
         }
         
         self.dialogViewCurrentHeight += buttonHeight
@@ -401,7 +398,7 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
      * When iOS 10 becomes the minimum version supported by the SDK, please refer to:
      * https://developer.apple.com/documentation/uikit/uiapplication/1648685-openurl?language=objc
      */
-    @objc fileprivate func didTapOnLink(_ sender: UIGestureRecognizer){
+    @objc fileprivate func didTapOnLink(_ sender: UIGestureRecognizer) {
         
         guard let tag = sender.view?.tag else {
             return
@@ -413,7 +410,7 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
             sendImpression()
         }
         
-        if let unwrappedUri = buttonURLMapping[tag],
+        if let unwrappedUri = buttonMapping[tag]?.uri,
             let uriToOpen = URL(string: unwrappedUri),
             UIApplication.shared.canOpenURL(uriToOpen) {
                 UIApplication.shared.openURL(uriToOpen)
@@ -423,13 +420,21 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
             UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
         }
         
-        self.dismiss();
+        // If the button came with a campaign trigger, log it.
+        if let trigger = buttonMapping[tag]?.trigger,
+            let event = CommonUtility.convertTriggerObjectToEvent(trigger) {
+            
+                EventRepository.addEvent(event)
+                CampaignReconciliation.reconciliate()
+        }
+        
+        self.dismiss()
     }
     
     /**
      * Obj-c selector to dismiss the modal view when the 'X' is tapped.
      */
-    @objc fileprivate func didTapOnExitButton(_ sender: UIGestureRecognizer){
+    @objc fileprivate func didTapOnExitButton(_ sender: UIGestureRecognizer) {
         self.dismiss()
         
         // To log and send impression.

@@ -64,4 +64,27 @@ struct CommonUtility {
             objc_sync_exit(object)
         }
     }
+    
+    /**
+     * Converts a campaignTrigger object from Button object to an event.
+     * NOTE: This method will not parse out the custom attributes
+     * since it is not required by the specs.
+     * @param { trigger: Trigger } the trigger object to parse out.
+     * @returns { Event? } the event object created the trigger object.
+     */
+    static func convertTriggerObjectToEvent(_ trigger: Trigger) -> Event? {
+        switch trigger.eventType {
+        case .invalid:
+            return nil
+        case .appStart:
+            return AppStartEvent()
+        case .loginSuccessful:
+            return LoginSuccessfulEvent()
+        case .purchaseSuccessful:
+            return PurchaseSuccessfulEvent()
+        case .custom:
+            // Currently does not support custom attributes.
+            return CustomEvent.init(withName: trigger.eventName, withCustomAttributes: nil)
+        }
+    }
 }

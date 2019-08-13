@@ -33,8 +33,8 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     var dialogView = UIView()
     var textView = UITextView()
     
-    // Button URL mapping.
-    var buttonURLMapping = [Int: String]()
+    // Maps the button tag number to its link URI and campaign trigger.
+    var buttonMapping = [Int: (uri: String?, trigger: Trigger?)]()
     
     // Boolean to change when the SDK will display the modal view.
     // Will change to true if campaign has an image URL.
@@ -87,7 +87,6 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     private func setUpInitialValues() {
         // Set different values based on device -- either iPad or iPhone.
         if UIDevice.current.userInterfaceIdiom == .pad {
-            // Use 75% of iPad's width.
             dialogViewWidth = frame.width * initialFrameWidthIPadMultiplier
             exitButtonSize = 32
             exitButtonHeightOffset = 25
@@ -352,45 +351,44 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         let buttonHeight: CGFloat = 40 // Define the height to use for the button.
         
         for (index, button) in buttonList.enumerated() {
-            if let buttonAction = ActionType(rawValue: button.buttonBehavior.action) {
-                // Determine offset value based on numbers of buttons to display.
-                var buttonWidthOffset: CGFloat
-                var xPositionForButton: CGFloat
-                
-                if buttonList.count == 1 {
-                    buttonWidthOffset = singleButtonWidthOffset
-                    xPositionForButton = (dialogViewWidth / 4) + (buttonWidthOffset / 2)
-                } else {
-                    buttonWidthOffset = twoButtonWidthOffset
-                    xPositionForButton = buttonHorizontalSpace
-                }
-                
-                var safeAreaFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
-                var bottomInset: CGFloat = 0
-                if #available(iOS 11.0, *) {
-                    safeAreaFrame = UIApplication.shared.keyWindow!.safeAreaLayoutGuide.layoutFrame
-                    bottomInset = UIApplication.shared.keyWindow!.safeAreaInsets.bottom
-                }
-                
-                let buttonToAdd = UIButton(
-                    frame: CGRect(x: xPositionForButton,
-                                  y: safeAreaFrame.height - buttonHeight - heightOffset,
-                                  width: ((dialogViewWidth / 2) - buttonWidthOffset),
-                                  height: buttonHeight))
-                
-                buttonToAdd.setTitle(button.buttonText, for: .normal)
-                buttonToAdd.setTitleColor(UIColor(hexFromString: button.buttonTextColor), for: .normal)
-                buttonToAdd.titleLabel?.font = .boldSystemFont(ofSize: buttonTextFontSize)
-                buttonToAdd.layer.cornerRadius = cornerRadiusForButtons
-                buttonToAdd.tag = index == 0 ? ImpressionType.ACTION_ONE.rawValue : ImpressionType.ACTION_TWO.rawValue
-                buttonToAdd.backgroundColor = UIColor(hexFromString: button.buttonBackgroundColor)
-                buttonToAdd.layer.borderColor = UIColor(hexFromString: button.buttonTextColor).cgColor
-                buttonToAdd.layer.borderWidth = 1
-                
-                // Add a mapping from the action type to the URL.
-                buttonURLMapping[buttonToAdd.tag] = button.buttonBehavior.uri
-                
-                switch buttonAction {
+            // Determine offset value based on numbers of buttons to display.
+            var buttonWidthOffset: CGFloat
+            var xPositionForButton: CGFloat
+            
+            if buttonList.count == 1 {
+                buttonWidthOffset = singleButtonWidthOffset
+                xPositionForButton = (dialogViewWidth / 4) + (buttonWidthOffset / 2)
+            } else {
+                buttonWidthOffset = twoButtonWidthOffset
+                xPositionForButton = buttonHorizontalSpace
+            }
+            
+            var safeAreaFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
+            var bottomInset: CGFloat = 0
+            if #available(iOS 11.0, *) {
+                safeAreaFrame = UIApplication.shared.keyWindow!.safeAreaLayoutGuide.layoutFrame
+                bottomInset = UIApplication.shared.keyWindow!.safeAreaInsets.bottom
+            }
+            
+            let buttonToAdd = UIButton(
+                frame: CGRect(x: xPositionForButton,
+                              y: safeAreaFrame.height - buttonHeight - heightOffset,
+                              width: ((dialogViewWidth / 2) - buttonWidthOffset),
+                              height: buttonHeight))
+            
+            buttonToAdd.setTitle(button.buttonText, for: .normal)
+            buttonToAdd.setTitleColor(UIColor(hexFromString: button.buttonTextColor), for: .normal)
+            buttonToAdd.titleLabel?.font = .boldSystemFont(ofSize: buttonTextFontSize)
+            buttonToAdd.layer.cornerRadius = cornerRadiusForButtons
+            buttonToAdd.tag = index == 0 ? ImpressionType.ACTION_ONE.rawValue : ImpressionType.ACTION_TWO.rawValue
+            buttonToAdd.backgroundColor = UIColor(hexFromString: button.buttonBackgroundColor)
+            buttonToAdd.layer.borderColor = UIColor(hexFromString: button.buttonTextColor).cgColor
+            buttonToAdd.layer.borderWidth = 1
+            
+            // Add a mapping from the action type to the URL.
+            buttonMapping[buttonToAdd.tag] = (button.buttonBehavior.uri ?? nil, button.campaignTrigger ?? nil)
+            
+            switch button.buttonBehavior.action {
                 case .invalid:
                     return
                 case .redirect:
@@ -399,12 +397,11 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
                     buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnLink)))
                 case .close:
                     buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
-                }
-                
-                buttonHorizontalSpace += buttonToAdd.frame.width + 8
-                
-                dialogView.addSubview(buttonToAdd)
             }
+            
+            buttonHorizontalSpace += buttonToAdd.frame.width + 8
+            
+            dialogView.addSubview(buttonToAdd)
         }
     }
     
@@ -427,7 +424,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
      * When iOS 10 becomes the minimum version supported by the SDK, please refer to:
      * https://developer.apple.com/documentation/uikit/uiapplication/1648685-openurl?language=objc
      */
-    @objc private func didTapOnLink(_ sender: UIGestureRecognizer){
+    @objc private func didTapOnLink(_ sender: UIGestureRecognizer) {
         
         guard let tag = sender.view?.tag else {
             return
@@ -439,7 +436,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
             sendImpression()
         }
         
-        if let unwrappedUri = buttonURLMapping[tag],
+        if let unwrappedUri = buttonMapping[tag]?.uri,
             let uriToOpen = URL(string: unwrappedUri),
             UIApplication.shared.canOpenURL(uriToOpen) {
             UIApplication.shared.openURL(uriToOpen)
@@ -449,13 +446,21 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
             UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
         }
         
-        dismiss();
+        // If the button came with a campaign trigger, log it.
+        if let trigger = buttonMapping[tag]?.trigger,
+            let event = CommonUtility.convertTriggerObjectToEvent(trigger) {
+            
+            EventRepository.addEvent(event)
+            CampaignReconciliation.reconciliate()
+        }
+        
+        dismiss()
     }
     
     /**
      * Obj-c selector to dismiss the modal view when the 'X' is tapped.
      */
-    @objc private func didTapOnExitButton(_ sender: UIGestureRecognizer){
+    @objc private func didTapOnExitButton(_ sender: UIGestureRecognizer) {
         dismiss()
         
         // To log and send impression.
