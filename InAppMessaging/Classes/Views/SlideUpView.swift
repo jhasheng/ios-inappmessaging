@@ -183,7 +183,8 @@ class SlideUpView: UIView, IAMView, ImpressionTrackable {
      */
     @objc private func onExitButtonClick(_ sender: UIGestureRecognizer) {
         dismiss()
-        
+
+        // Log and send impression.
         logImpression(withImpressionType: .EXIT)
         sendImpression()
     }
