@@ -165,28 +165,27 @@ class SlideUpView: UIView, IAMView, ImpressionTrackable {
             }
         }
         
+        dismiss()
+        
         // Log and send impression.
         logImpression(withImpressionType: .CLICK_CONTENT)
         sendImpression()
         
-        //
+        // If the button came with a campaign trigger, log it.
         if let trigger = campaign?.messagePayload.messageSettings.controlSettings?.content?.campaignTrigger {
             EventRepository.addEvent(CommonUtility.convertTriggerObjectToCustomEvent(trigger))
             CampaignReconciliation.reconciliate()
         }
-        
-        dismiss()
     }
     
     /**
      * Obj-c selector to dismiss the modal view when the 'X' is tapped.
      */
     @objc private func onExitButtonClick(_ sender: UIGestureRecognizer) {
+        dismiss()
+        
         logImpression(withImpressionType: .EXIT)
         sendImpression()
-        
-        dismiss()
-
     }
     
     func logImpression(withImpressionType type: ImpressionType) {

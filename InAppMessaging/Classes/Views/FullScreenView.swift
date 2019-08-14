@@ -467,9 +467,12 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     @objc private func onExitButtonClick(_ sender: UIGestureRecognizer) {
         dismiss()
         
+        guard let tag = sender.view?.tag else {
+            return
+        }
+        
         // To log and send impression.
-        if let tag = sender.view?.tag,
-            let type = ImpressionType(rawValue: tag) {
+        if let type = ImpressionType(rawValue: tag) {
             logImpression(withImpressionType: type)
             sendImpression()
         }
