@@ -105,8 +105,8 @@ struct CommonUtility {
             case .DOUBLE:
                 guard let value = Double(attribute.value) else {
                     #if DEBUG
-                    print("InAppMessaging: Error converting value.")
-                        #endif
+                        print("InAppMessaging: Error converting value.")
+                    #endif
                     return nil
                 }
                 
@@ -123,7 +123,7 @@ struct CommonUtility {
             case .TIME_IN_MILLI:
                 guard let value = Int(attribute.value) else {
                     #if DEBUG
-                    print("InAppMessaging: Error converting value.")
+                        print("InAppMessaging: Error converting value.")
                     #endif
                     return nil
                 }
