@@ -66,25 +66,69 @@ struct CommonUtility {
     }
     
     /**
-     * Converts a campaignTrigger object from Button object to an event.
-     * NOTE: This method will not parse out the custom attributes
-     * since it is not required by the specs.
+     * Converts a Trigger object from Button object to a CustomEvent.
      * @param { trigger: Trigger } the trigger object to parse out.
      * @returns { Event? } the event object created the trigger object.
      */
-    static func convertTriggerObjectToEvent(_ trigger: Trigger) -> Event? {
-        switch trigger.eventType {
-        case .invalid:
-            return nil
-        case .appStart:
-            return AppStartEvent()
-        case .loginSuccessful:
-            return LoginSuccessfulEvent()
-        case .purchaseSuccessful:
-            return PurchaseSuccessfulEvent()
-        case .custom:
-            // Currently does not support custom attributes.
-            return CustomEvent.init(withName: trigger.eventName, withCustomAttributes: nil)
+    static func convertTriggerObjectToCustomEvent(_ trigger: Trigger) -> CustomEvent {
+        var attributeList = [CustomAttribute]()
+        
+        for attribute in trigger.attributes {
+            if let customAttribute = convertAttributeObjectToCustomAttribute(attribute) {
+                attributeList.append(customAttribute)
+            }
+        }
+        
+        return CustomEvent(withName: trigger.eventName, withCustomAttributes: attributeList)
+    }
+
+    /**
+     * Converts a TriggerAttribute into a CustomAttribute.
+     * @param { attribute: TriggerAttribute } the trigger attribute to convert.
+     * @returns { CustomAttribute? } the CustomAttribute object or nil.
+     */
+    static func convertAttributeObjectToCustomAttribute(_ attribute: TriggerAttribute) -> CustomAttribute? {
+        switch attribute.type {
+            case .INVALID:
+                return nil
+            case .STRING:
+                return CustomAttribute(withKeyName: attribute.name, withStringValue: attribute.value)
+            case .INTEGER:
+                guard let value = Int(attribute.value) else {
+                    #if DEBUG
+                        print("InAppMessaging: Error converting value.")
+                    #endif
+                    return nil
+                }
+                
+                return CustomAttribute(withKeyName: attribute.name, withIntValue: value)
+            case .DOUBLE:
+                guard let value = Double(attribute.value) else {
+                    #if DEBUG
+                    print("InAppMessaging: Error converting value.")
+                        #endif
+                    return nil
+                }
+                
+                return CustomAttribute(withKeyName: attribute.name, withDoubleValue: value)
+            case .BOOLEAN:
+                guard let value = Bool(attribute.value) else {
+                    #if DEBUG
+                        print("InAppMessaging: Error converting value.")
+                    #endif
+                    return nil
+                }
+                
+                return CustomAttribute(withKeyName: attribute.name, withBoolValue: value)
+            case .TIME_IN_MILLI:
+                guard let value = Int(attribute.value) else {
+                    #if DEBUG
+                    print("InAppMessaging: Error converting value.")
+                    #endif
+                    return nil
+                }
+                
+                return CustomAttribute(withKeyName: attribute.name, withTimeInMilliValue: value)
         }
     }
 }
