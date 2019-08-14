@@ -17,6 +17,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     let headerMessageFontSize: CGFloat = 16 // Font size for the header message.
     let bodyMessageFontSize: CGFloat = 14 // Font size for the body message.
     let buttonTextFontSize: CGFloat = 14 // Font size for the button labels.
+    let secondButtonGapSize: CGFloat = 8 // Size of the gap between the buttons when there are two buttons.
     let singleButtonWidthOffset: CGFloat = 0 // Width offset when only one button is given.
     let twoButtonWidthOffset: CGFloat = 24 // Width offset when two buttons are given.
     let horizontalSpacingOffset: CGFloat = 20 // The spacing between dialog view and the children elements.
@@ -392,14 +393,14 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
                 case .invalid:
                     return
                 case .redirect:
-                    buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnLink)))
+                    buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onActionButtonClick)))
                 case .deeplink:
-                    buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnLink)))
+                    buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onActionButtonClick)))
                 case .close:
                     buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
             }
             
-            buttonHorizontalSpace += buttonToAdd.frame.width + 8
+            buttonHorizontalSpace += buttonToAdd.frame.width + secondButtonGapSize
             
             dialogView.addSubview(buttonToAdd)
         }
@@ -417,29 +418,31 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     // Button selectors for modal view.
     
     /**
-     * Obj-c selector to handle both redirect and deeplink actions.
+     * Obj-c selector to handle both redirect and deeplink type buttons.
      * When the URL fails to validate through canOpenUrl() or is empty, an alert message will pop up
      * to warn about the navigation error.
      * NOTE: The openUrl() method used here is deprecated and is being used because the SDK has to support iOS 9.
      * When iOS 10 becomes the minimum version supported by the SDK, please refer to:
      * https://developer.apple.com/documentation/uikit/uiapplication/1648685-openurl?language=objc
      */
-    @objc private func didTapOnLink(_ sender: UIGestureRecognizer) {
+    @objc private func onActionButtonClick(_ sender: UIGestureRecognizer) {
         
         guard let tag = sender.view?.tag else {
             return
         }
         
-        // To log and send impression.
+        // Log and send impression.
         if let type = ImpressionType(rawValue: tag) {
             logImpression(withImpressionType: type)
             sendImpression()
         }
         
+        // Execute the action of the button.
         if let unwrappedUri = buttonMapping[tag]?.uri,
             let uriToOpen = URL(string: unwrappedUri),
             UIApplication.shared.canOpenURL(uriToOpen) {
-            UIApplication.shared.openURL(uriToOpen)
+            
+                UIApplication.shared.openURL(uriToOpen)
         } else {
             let alert = UIAlertController(title: "Page not found", message: "Encountered error while navigating to the page.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
@@ -451,6 +454,9 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
             EventRepository.addEvent(CommonUtility.convertTriggerObjectToCustomEvent(trigger))
             CampaignReconciliation.reconciliate()
         }
+        
+        // If the button came with a campaign trigger, log it.
+        logButtonTrigger(with: tag)
         
         dismiss()
     }
@@ -466,6 +472,20 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
             let type = ImpressionType(rawValue: tag) {
             logImpression(withImpressionType: type)
             sendImpression()
+        }
+        
+        // If the button came with a campaign trigger, log it.
+        logButtonTrigger(with: tag)
+    }
+    
+    /**
+     * Handles the logging of an event of a button if a trigger is attached.
+     * @param { tag: Int } the button's tag ID.
+     */
+    fileprivate func logButtonTrigger(with tag: Int) {
+        if let trigger = buttonMapping[tag]?.trigger {
+            EventRepository.addEvent(CommonUtility.convertTriggerObjectToCustomEvent(trigger))
+            CampaignReconciliation.reconciliate()
         }
     }
     

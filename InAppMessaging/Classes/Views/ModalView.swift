@@ -415,6 +415,7 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
         if let unwrappedUri = buttonMapping[tag]?.uri,
             let uriToOpen = URL(string: unwrappedUri),
             UIApplication.shared.canOpenURL(uriToOpen) {
+            
                 UIApplication.shared.openURL(uriToOpen)
         } else {
             let alert = UIAlertController(title: "Page not found", message: "Encountered error while navigating to the page.", preferredStyle: .alert)
