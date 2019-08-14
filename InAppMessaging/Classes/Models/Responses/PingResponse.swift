@@ -79,6 +79,7 @@ struct ControlSettings: Decodable {
 
 struct Content: Decodable {
     let onClickBehavior: OnClickBehavior
+    let campaignTrigger: Trigger?
 }
 
 struct OnClickBehavior: Decodable {

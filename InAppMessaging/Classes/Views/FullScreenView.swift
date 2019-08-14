@@ -180,7 +180,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         exitButton.layer.cornerRadius = exitButton.frame.width / 2
         exitButton.layer.masksToBounds = true
         exitButton.tag = ImpressionType.EXIT.rawValue
-        exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
+        exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onExitButtonClick)))
         dialogView.addSubview(exitButton)
         
         dialogViewCurrentHeight += hasImage ? 0 : exitButtonGapHeight
@@ -397,7 +397,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
                 case .deeplink:
                     buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onActionButtonClick)))
                 case .close:
-                    buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
+                    buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onExitButtonClick)))
             }
             
             buttonHorizontalSpace += buttonToAdd.frame.width + secondButtonGapSize
@@ -464,7 +464,7 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     /**
      * Obj-c selector to dismiss the modal view when the 'X' is tapped.
      */
-    @objc private func didTapOnExitButton(_ sender: UIGestureRecognizer) {
+    @objc private func onExitButtonClick(_ sender: UIGestureRecognizer) {
         dismiss()
         
         // To log and send impression.
