@@ -4,7 +4,7 @@ import SDWebImage
 /**
  * Class that initializes the modal view using the passed in campaign information to build the UI.
  */
-class FullScreenView: UIView, IAMView, ImpressionTrackable {
+class FullScreenView: UIView, IAMFullScreenview {
     
     var impressions: [Impression] = []
     var campaign: CampaignData?
@@ -474,17 +474,6 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         
         // If the button came with a campaign trigger, log it.
         logButtonTrigger(with: tag)
-    }
-    
-    /**
-     * Handles the logging of an event of a button if a trigger is attached.
-     * @param { tag: Int } the button's tag ID.
-     */
-    fileprivate func logButtonTrigger(with tag: Int) {
-        if let trigger = buttonMapping[tag]?.trigger {
-            EventRepository.addEvent(CommonUtility.convertTriggerObjectToCustomEvent(trigger))
-            CampaignReconciliation.reconciliate()
-        }
     }
     
     func logImpression(withImpressionType type: ImpressionType) {

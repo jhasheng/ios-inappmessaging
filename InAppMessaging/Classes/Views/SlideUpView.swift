@@ -1,9 +1,7 @@
-import UIKit
-
 /**
  * SlideUpView for InAppMessaging campaign.
  */
-class SlideUpView: UIView, IAMView, ImpressionTrackable {
+class SlideUpView: UIView, IAMSlideUpView {    
     var dialogView = UIView()
     var slideFromDirection: SlideFromEnum?
     var impressions: [Impression] = []
