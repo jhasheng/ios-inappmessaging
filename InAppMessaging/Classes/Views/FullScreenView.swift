@@ -450,12 +450,6 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         }
         
         // If the button came with a campaign trigger, log it.
-        if let trigger = buttonMapping[tag]?.trigger {
-            EventRepository.addEvent(CommonUtility.convertTriggerObjectToCustomEvent(trigger))
-            CampaignReconciliation.reconciliate()
-        }
-        
-        // If the button came with a campaign trigger, log it.
         logButtonTrigger(with: tag)
         
         dismiss()
