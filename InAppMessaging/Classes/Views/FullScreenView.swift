@@ -456,7 +456,8 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     }
     
     /**
-     * Obj-c selector to dismiss the modal view when the 'X' is tapped.
+     * Obj-c selector to handle exit type buttons.
+     * Includes the "X" button on the top right and the close action type button.
      */
     @objc private func onExitButtonClick(_ sender: UIGestureRecognizer) {
         dismiss()
