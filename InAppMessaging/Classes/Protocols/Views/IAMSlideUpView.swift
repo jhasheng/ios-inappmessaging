@@ -20,7 +20,7 @@ extension IAMSlideUpView where Self: SlideUpView {
             return
         }
         
-        //TODO: Support TOP direction for slide-up
+        //TODO: (Daniel Tam) - Support TOP direction for slide-up
         UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseInOut, animations: {
             switch direction {
             case .BOTTOM:
