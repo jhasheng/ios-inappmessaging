@@ -3,8 +3,9 @@
  * to log attached events in buttons.
  */
 protocol ButtonLoggable {
-    func logButtonTrigger(with tag: Int)
     var buttonMapping: [Int: (uri: String?, trigger: Trigger?)] { get }
+    
+    func logButtonTrigger(with tag: Int)
 }
 
 extension ButtonLoggable {

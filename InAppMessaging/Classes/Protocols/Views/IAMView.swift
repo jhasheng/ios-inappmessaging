@@ -2,9 +2,10 @@
  * Base protocol that defines all of IAM's supported campaign views.
  */
 protocol IAMView: ImpressionTrackable {
+    var viewIdentifier: String { get }
+    
     func show()
     func dismiss()
-    var viewIdentifier: String { get }
 }
 
 extension IAMView where Self: UIView {
@@ -42,6 +43,6 @@ extension IAMView where Self: UIView {
      */
     func dismiss() {
         self.removeFromSuperview()
-        WorkScheduler.scheduleTask(5000, closure: InAppMessagingViewController.display)
+        WorkScheduler.scheduleTask(Constants.Configuration.milliBetweenDisplays, closure: InAppMessagingViewController.display)
     }
 }

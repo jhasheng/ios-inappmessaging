@@ -11,6 +11,13 @@ struct Constants {
     }
     
     /**
+     * Configuration.
+     */
+    struct Configuration {
+        static let milliBetweenDisplays = 5000
+    }
+    
+    /**
      * Constants used to build request body.
      */
     struct Request {

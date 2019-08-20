@@ -1,7 +1,7 @@
 /**
  * SlideUpView for InAppMessaging campaign.
  */
-class SlideUpView: UIView, IAMSlideUpView {    
+class SlideUpView: UIView, IAMSlideUpView {
     var dialogView = UIView()
     var slideFromDirection: SlideFromEnum?
     var impressions: [Impression] = []
