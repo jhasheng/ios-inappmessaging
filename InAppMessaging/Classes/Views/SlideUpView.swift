@@ -172,7 +172,7 @@ class SlideUpView: UIView, IAMSlideUpView {
         // If the button came with a campaign trigger, log it.
         if let trigger = campaign?.messagePayload.messageSettings.controlSettings?.content?.campaignTrigger {
             EventRepository.addEvent(CommonUtility.convertTriggerObjectToCustomEvent(trigger))
-            CampaignReconciliation.reconciliate()
+            CampaignReconciliation.reconcile()
         }
     }
     

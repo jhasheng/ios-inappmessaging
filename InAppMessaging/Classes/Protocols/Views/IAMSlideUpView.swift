@@ -25,9 +25,7 @@ extension IAMSlideUpView where Self: SlideUpView {
             switch direction {
             case .BOTTOM:
                 self.center.y -= self.slideUpHeight
-            case .LEFT:
-                self.center.x = self.screenWidth / 2
-            case .RIGHT:
+            case .LEFT, .RIGHT:
                 self.center.x = self.screenWidth / 2
             case .TOP:
                 break

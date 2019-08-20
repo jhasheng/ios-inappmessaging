@@ -16,7 +16,7 @@ extension ButtonLoggable {
     func logButtonTrigger(with tag: Int) {
         if let trigger = buttonMapping[tag]?.trigger {
             EventRepository.addEvent(CommonUtility.convertTriggerObjectToCustomEvent(trigger))
-            CampaignReconciliation.reconciliate()
+            CampaignReconciliation.reconcile()
         }
     }
 }
