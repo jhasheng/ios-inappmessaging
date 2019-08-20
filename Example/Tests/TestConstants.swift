@@ -32,7 +32,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -63,7 +64,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -94,7 +96,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -132,7 +135,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -163,7 +167,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -208,7 +213,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -255,7 +261,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -302,7 +309,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -349,7 +357,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -396,7 +405,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -443,7 +453,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -490,7 +501,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -537,7 +549,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -584,7 +597,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -631,7 +645,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -678,7 +693,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -725,7 +741,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -772,7 +789,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -819,7 +837,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -866,7 +885,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -913,7 +933,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -960,7 +981,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -1006,7 +1028,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -1053,7 +1076,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )
@@ -1100,7 +1124,8 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false),
                                 controlSettings: nil)
                         )
                     )

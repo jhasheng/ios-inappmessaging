@@ -22,7 +22,10 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     let horizontalSpacingOffset: CGFloat = 20 // The spacing between dialog view and the children elements.
     let initialFrameWidthOffset: CGFloat = 0 // Margin between the left and right frame width and message.
     let initialFrameWidthIPadMultiplier: CGFloat = 1.0 // Percentage size for iPad's to display
-    let maxWindowHeightPercentage: CGFloat = 0.90 // The max height the window should take up before making text scrollable.
+    let maxWindowHeightPercentage: CGFloat = 0.85 // The max height the window should take up before making text scrollable.
+    let optOutMessageSize: CGFloat = 12 // Vertical height for the opt-out message and checkbox.
+    let optOutMessageFontSize: CGFloat = 12 // Font size of the opt-out message
+    let optOutCheckBoxOffset: CGFloat = 5 // How far the checkbox should be from the opt-out msg.
     var exitButtonSize: CGFloat = 0 // Size of the exit button.
     var exitButtonHeightOffset: CGFloat = 0 // Height offset for exit button from the actual message.
     var exitButtonFontSize: CGFloat = 0 // Font size of exit button.
@@ -32,6 +35,9 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
     var backgroundView = UIView()
     var dialogView = UIView()
     var textView = UITextView()
+    
+    // Opt-out checkbox.
+    var optOutCheckbox: Checkbox?
     
     // Button URL mapping.
     var buttonURLMapping = [Int: String]()
@@ -84,6 +90,43 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         appendSubViews()
     }
     
+    private func appendOptOutMessage() {
+        let optOutMessage = UILabel()
+        optOutMessage.textAlignment = .center
+        optOutMessage.text = "Do not show me this message again.".localized
+        optOutMessage.font = .systemFont(ofSize: optOutMessageFontSize)
+        optOutMessage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnOptOutLabel)))
+        optOutMessage.isUserInteractionEnabled = true
+        optOutMessage.sizeToFit()
+        optOutMessage.frame.origin.y = dialogViewCurrentHeight
+        optOutMessage.center.x = dialogViewWidth / 2
+        
+        optOutCheckbox = Checkbox(frame:
+            CGRect(x: optOutMessage.frame.origin.x - optOutMessageSize - optOutCheckBoxOffset,
+                   y: dialogViewCurrentHeight,
+                   width: optOutMessageSize,
+                   height: optOutMessageSize
+            )
+        )
+        
+        guard let checkbox = optOutCheckbox else {
+            return
+        }
+        
+        checkbox.borderStyle = .square
+        checkbox.uncheckedBorderColor = .black
+        checkbox.checkedBorderColor = .black
+        checkbox.checkmarkColor = .black
+        checkbox.checkmarkStyle = .tick
+        checkbox.borderWidth = 1
+        checkbox.useHapticFeedback = false
+        
+        dialogView.addSubview(optOutMessage)
+        dialogView.addSubview(checkbox)
+        
+        self.dialogViewCurrentHeight += checkbox.frame.height
+    }
+    
     private func setUpInitialValues() {
         // Set different values based on device -- either iPad or iPhone.
         if UIDevice.current.userInterfaceIdiom == .pad {
@@ -128,6 +171,20 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
                 
                 dialogViewCurrentHeight += heightOffset
             }
+        }
+        
+        // Opt-out message.
+        if campaign.messagePayload.messageSettings.displaySettings.optOut {
+            if campaign.messagePayload.header == nil &&
+                campaign.messagePayload.messageBody == nil &&
+                campaign.messagePayload.messageLowerBody == nil {
+                
+                self.dialogViewCurrentHeight += heightOffset
+            }
+            
+            
+            appendOptOutMessage()
+            self.dialogViewCurrentHeight += heightOffset
         }
         
         // Buttons.
@@ -436,8 +493,17 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         // To log and send impression.
         if let type = ImpressionType(rawValue: tag) {
             logImpression(withImpressionType: type)
-            sendImpression()
         }
+        
+        if let isOptedOut = optOutCheckbox?.isChecked,
+            isOptedOut == true,
+            let campaign = self.campaign {
+            
+                logImpression(withImpressionType: .OPT_OUT)
+                OptedOutRepository.addCampaign(campaign)
+        }
+        
+        sendImpression()
         
         if let unwrappedUri = buttonURLMapping[tag],
             let uriToOpen = URL(string: unwrappedUri),
@@ -459,10 +525,24 @@ class FullScreenView: UIView, IAMView, ImpressionTrackable {
         dismiss()
         
         // To log and send impression.
-        if let tag = sender.view?.tag,
-            let type = ImpressionType(rawValue: tag) {
-            logImpression(withImpressionType: type)
-            sendImpression()
+        if let isOptedOut = optOutCheckbox?.isChecked,
+            isOptedOut == true,
+            let campaign = self.campaign {
+            
+            logImpression(withImpressionType: .OPT_OUT)
+            OptedOutRepository.addCampaign(campaign)
+        }
+        
+        logImpression(withImpressionType: .EXIT)
+        sendImpression()
+    }
+    
+    /**
+     * Selector for changing the state of the opt-out checkbox when tapping on the label and not the checkbox itself.
+     */
+    @objc fileprivate func didTapOnOptOutLabel(_ sender: UIGestureRecognizer) {
+        if let isChecked = optOutCheckbox?.isChecked {
+            optOutCheckbox?.isChecked = !isChecked
         }
     }
     
