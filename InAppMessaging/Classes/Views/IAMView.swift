@@ -7,12 +7,14 @@ protocol IAMView {
     func show()
     func dismiss()
     var backgroundView: UIView? { get }
+    var optOutCheckbox: Checkbox? { get }
     var dialogView: UIView { get set }
     var viewIdentifier: String { get }
 }
 
 extension IAMView where Self: UIView {
     var backgroundView: UIView? { return nil } // Not all views will be using a background view.
+    var optOutCheckbox: Checkbox? { return nil } // Not all views will require an opt-out checkbox.
     var viewIdentifier: String { return "IAMView" }
 
     /**
