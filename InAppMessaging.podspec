@@ -9,10 +9,8 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '12.1'
 
   s.source_files = 'InAppMessaging/Classes/**/*.{swift,h,m}'
+  s.ios.vendored_frameworks = 'InAppMessaging/Frameworks/SDWebImage.framework'
   s.resource_bundle = { "InAppMessaging" => ["**/*.lproj/*.strings"] }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'Swinject', "2.5.0"
-  s.dependency 'SDWebImage', "5.0.3"
 end
