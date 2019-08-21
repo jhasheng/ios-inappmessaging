@@ -32,16 +32,11 @@ class ModalView: UIView, IAMModalView {
     var dialogView = UIView()
     var textView = UITextView()
     
-<<<<<<< HEAD
     // Maps the button tag number to its link URI and campaign trigger.
     var buttonMapping = [Int: (uri: String?, trigger: Trigger?)]()
-=======
+
     // Opt-out checkbox.
     var optOutCheckbox: Checkbox?
-    
-    // Button URL mapping.
-    var buttonURLMapping = [Int: String]()
->>>>>>> dev
     
     // Spacing on the left and right side of subviews.
     var dialogViewWidth: CGFloat = 0
@@ -219,12 +214,9 @@ class ModalView: UIView, IAMModalView {
         exitButton.isUserInteractionEnabled = true
         exitButton.layer.cornerRadius = exitButton.frame.width / 2
         exitButton.layer.masksToBounds = true
-<<<<<<< HEAD
         exitButton.tag = ImpressionType.EXIT.rawValue
         exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onExitButtonClick)))
-=======
-        exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
->>>>>>> dev
+
         self.backgroundView.addSubview(exitButton)
     }
     
