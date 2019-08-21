@@ -483,6 +483,7 @@ class FullScreenView: UIView, IAMFullScreenview {
      * https://developer.apple.com/documentation/uikit/uiapplication/1648685-openurl?language=objc
      */
     @objc private func onActionButtonClick(_ sender: UIGestureRecognizer) {
+        dismiss()
         
         guard let tag = sender.view?.tag else {
             return
@@ -516,9 +517,7 @@ class FullScreenView: UIView, IAMFullScreenview {
         }
         
         // If the button came with a campaign trigger, log it.
-        logButtonTrigger(with: tag)
-        
-        dismiss()
+        logButtonTrigger(with: tag)        
     }
     
     /**
@@ -546,6 +545,9 @@ class FullScreenView: UIView, IAMFullScreenview {
         }
         
         sendImpression()
+        
+        // If the button came with a campaign trigger, log it.
+        logButtonTrigger(with: tag)
     }
     
     /**
@@ -555,9 +557,6 @@ class FullScreenView: UIView, IAMFullScreenview {
         if let isChecked = optOutCheckbox?.isChecked {
             optOutCheckbox?.isChecked = !isChecked
         }
-        
-        // If the button came with a campaign trigger, log it.
-        logButtonTrigger(with: tag)
     }
     
     func logImpression(withImpressionType type: ImpressionType) {

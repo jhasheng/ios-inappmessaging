@@ -453,6 +453,7 @@ class ModalView: UIView, IAMModalView {
      * https://developer.apple.com/documentation/uikit/uiapplication/1648685-openurl?language=objc
      */
     @objc fileprivate func onActionButtonClick(_ sender: UIGestureRecognizer) {
+        dismiss()
         
         guard let tag = sender.view?.tag else {
             return
@@ -487,8 +488,6 @@ class ModalView: UIView, IAMModalView {
         
         // If the button came with a campaign trigger, log it.
         logButtonTrigger(with: tag)
-        
-        self.dismiss()
     }
     
     /**
@@ -496,7 +495,7 @@ class ModalView: UIView, IAMModalView {
      * Includes the "X" button on the top right and the close action type button.
      */
     @objc fileprivate func onExitButtonClick(_ sender: UIGestureRecognizer) {
-        self.dismiss()
+        dismiss()
         
         guard let tag = sender.view?.tag else {
             return
