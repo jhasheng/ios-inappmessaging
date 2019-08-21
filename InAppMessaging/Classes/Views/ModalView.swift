@@ -18,9 +18,12 @@ class ModalView: UIView, IAMModalView {
     let singleButtonWidthOffset: CGFloat = 0 // Width offset when only one button is given.
     let twoButtonWidthOffset: CGFloat = 24 // Width offset when two buttons are given.
     let horizontalSpacingOffset: CGFloat = 20 // The spacing between dialog view and the children elements.
-    let initialFrameWidthOffset: CGFloat = 120 // Margin between the left and right frame width and message.
+    let initialFrameWidthOffset: CGFloat = 100 // Margin between the left and right frame width and message.
     let initialFrameWidthIPadMultiplier: CGFloat = 0.60 // Percentage size for iPad's to display
-    let maxWindowHeightPercentage: CGFloat = 0.70 // The max height the window should take up before making text scrollable.
+    let maxWindowHeightPercentage: CGFloat = 0.65 // The max height the window should take up before making text scrollable.
+    let optOutMessageSize: CGFloat = 12 // Vertical height for the opt-out message and checkbox.
+    let optOutMessageFontSize: CGFloat = 12 // Font size of the opt-out message
+    let optOutCheckBoxOffset: CGFloat = 5 // How far the checkbox should be from the opt-out msg.
     var exitButtonSize: CGFloat = 0 // Size of the exit button.
     var exitButtonHeightOffset: CGFloat = 0 // Height offset for exit button from the actual message.
     var exitButtonFontSize: CGFloat = 0 // Font size of exit button.
@@ -29,8 +32,16 @@ class ModalView: UIView, IAMModalView {
     var dialogView = UIView()
     var textView = UITextView()
     
+<<<<<<< HEAD
     // Maps the button tag number to its link URI and campaign trigger.
     var buttonMapping = [Int: (uri: String?, trigger: Trigger?)]()
+=======
+    // Opt-out checkbox.
+    var optOutCheckbox: Checkbox?
+    
+    // Button URL mapping.
+    var buttonURLMapping = [Int: String]()
+>>>>>>> dev
     
     // Spacing on the left and right side of subviews.
     var dialogViewWidth: CGFloat = 0
@@ -73,6 +84,43 @@ class ModalView: UIView, IAMModalView {
         self.appendSubViews()
     }
     
+    private func appendOptOutMessage() {
+        let optOutMessage = UILabel()
+        optOutMessage.textAlignment = .center
+        optOutMessage.text = "Do not show me this message again.".localized
+        optOutMessage.font = .systemFont(ofSize: optOutMessageFontSize)
+        optOutMessage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnOptOutLabel)))
+        optOutMessage.isUserInteractionEnabled = true
+        optOutMessage.sizeToFit()
+        optOutMessage.frame.origin.y = dialogViewCurrentHeight
+        optOutMessage.center.x = dialogViewWidth / 2
+        
+        optOutCheckbox = Checkbox(frame:
+            CGRect(x: optOutMessage.frame.origin.x - optOutMessageSize - optOutCheckBoxOffset,
+                   y: dialogViewCurrentHeight,
+                   width: optOutMessageSize,
+                   height: optOutMessageSize
+            )
+        )
+        
+        guard let checkbox = optOutCheckbox else {
+            return
+        }
+        
+        checkbox.borderStyle = .square
+        checkbox.uncheckedBorderColor = .black
+        checkbox.checkedBorderColor = .black
+        checkbox.checkmarkColor = .black
+        checkbox.checkmarkStyle = .tick
+        checkbox.borderWidth = 1
+        checkbox.useHapticFeedback = false
+        
+        dialogView.addSubview(optOutMessage)
+        dialogView.addSubview(checkbox)
+        
+        self.dialogViewCurrentHeight += checkbox.frame.height
+    }
+    
     fileprivate func setUpInitialValues() {
         // Set different values based on device -- either iPad or iPhone.
         if UIDevice.current.userInterfaceIdiom == .pad {
@@ -113,7 +161,19 @@ class ModalView: UIView, IAMModalView {
 
                         self.dialogViewCurrentHeight += heightOffset
                 }
-
+        }
+        
+        // Opt-out message.
+        if campaign.messagePayload.messageSettings.displaySettings.optOut {
+            if campaign.messagePayload.header == nil &&
+                campaign.messagePayload.messageBody == nil &&
+                campaign.messagePayload.messageLowerBody == nil {
+                
+                self.dialogViewCurrentHeight += heightOffset
+            }
+            
+            appendOptOutMessage()
+            self.dialogViewCurrentHeight += heightOffset
         }
 
         // Buttons.
@@ -138,7 +198,7 @@ class ModalView: UIView, IAMModalView {
         self.dialogView.layer.cornerRadius = cornerRadiusForDialogView
         self.dialogView.clipsToBounds = true
         self.dialogView.center  = self.center
-
+        
         // Add the exit button on the top right.
         self.appendExitButton()
     }
@@ -159,8 +219,12 @@ class ModalView: UIView, IAMModalView {
         exitButton.isUserInteractionEnabled = true
         exitButton.layer.cornerRadius = exitButton.frame.width / 2
         exitButton.layer.masksToBounds = true
+<<<<<<< HEAD
         exitButton.tag = ImpressionType.EXIT.rawValue
         exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onExitButtonClick)))
+=======
+        exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
+>>>>>>> dev
         self.backgroundView.addSubview(exitButton)
     }
     
@@ -405,11 +469,20 @@ class ModalView: UIView, IAMModalView {
         // Log and send impression.
         if let type = ImpressionType(rawValue: tag) {
             logImpression(withImpressionType: type)
-            sendImpression()
         }
         
+        if let isOptedOut = optOutCheckbox?.isChecked,
+            isOptedOut == true,
+            let campaign = self.campaign {
+            
+                logImpression(withImpressionType: .OPT_OUT)
+                OptedOutRepository.addCampaign(campaign)
+        }
+        
+        sendImpression()
+        
         // Execute the action of the button.
-        if let unwrappedUri = buttonMapping[tag]?.uri,
+        if let unwrappedUri = buttonMapping[tag]?.uri
             let uriToOpen = URL(string: unwrappedUri),
             UIApplication.shared.canOpenURL(uriToOpen) {
             
@@ -441,6 +514,24 @@ class ModalView: UIView, IAMModalView {
         if let type = ImpressionType(rawValue: tag) {
             logImpression(withImpressionType: type)
             sendImpression()
+        }
+        if let isOptedOut = optOutCheckbox?.isChecked,
+            isOptedOut == true,
+            let campaign = self.campaign {
+            
+                logImpression(withImpressionType: .OPT_OUT)
+                OptedOutRepository.addCampaign(campaign)
+        }
+        
+        sendImpression()
+    }
+    
+    /**
+     * Selector for changing the state of the opt-out checkbox when tapping on the label and not the checkbox itself.
+     */
+    @objc fileprivate func didTapOnOptOutLabel(_ sender: UIGestureRecognizer) {
+        if let isChecked = optOutCheckbox?.isChecked {
+            optOutCheckbox?.isChecked = !isChecked
         }
         
         // If the button came with a campaign trigger, log it.

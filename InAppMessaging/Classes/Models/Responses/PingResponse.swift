@@ -19,7 +19,7 @@ struct Campaign: Decodable, Hashable {
     }
 }
 
-struct CampaignData: Decodable, Equatable {
+struct CampaignData: Decodable, Equatable, Hashable {
     
     let campaignId: String
     let maxImpressions: Int
@@ -28,6 +28,10 @@ struct CampaignData: Decodable, Equatable {
     let isTest: Bool
     let messagePayload: MessagePayload
     
+    var hashValue: Int {
+        return campaignId.hashValue
+    }
+
     static func == (lhs: CampaignData, rhs: CampaignData) -> Bool {
         return lhs.campaignId == rhs.campaignId
     }
@@ -70,6 +74,7 @@ struct DisplaySettings: Decodable {
     let slideFrom: SlideFromEnum?
     let endTimeMillis: Int
     let textAlign: Int
+    let optOut: Bool
 }
 
 struct ControlSettings: Decodable {
