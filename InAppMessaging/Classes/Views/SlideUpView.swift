@@ -1,9 +1,7 @@
-import UIKit
-
 /**
  * SlideUpView for InAppMessaging campaign.
  */
-class SlideUpView: UIView, IAMView, ImpressionTrackable {
+class SlideUpView: UIView, IAMSlideUpView {
     var dialogView = UIView()
     var slideFromDirection: SlideFromEnum?
     var impressions: [Impression] = []
@@ -94,7 +92,7 @@ class SlideUpView: UIView, IAMView, ImpressionTrackable {
         bodyMessageLabel.numberOfLines = 3
         bodyMessageLabel.lineBreakMode = .byTruncatingTail
         bodyMessageLabel.isUserInteractionEnabled = true
-        bodyMessageLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnContent)))
+        bodyMessageLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onContentClick)))
         
         dialogView.addSubview(bodyMessageLabel)
     }
@@ -116,7 +114,7 @@ class SlideUpView: UIView, IAMView, ImpressionTrackable {
         exitButton.isUserInteractionEnabled = true
         exitButton.layer.cornerRadius = exitButton.frame.width / 2
         exitButton.layer.masksToBounds = true
-        exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
+        exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onExitButtonClick)))
         
         dialogView.addSubview(exitButton)
     }
@@ -151,13 +149,13 @@ class SlideUpView: UIView, IAMView, ImpressionTrackable {
     /**
      * Obj-c selector to handle the action when the onClick content is tapped.
      */
-    @objc private func didTapOnContent(_ sender: UIGestureRecognizer) {
+    @objc private func onContentClick(_ sender: UIGestureRecognizer) {
         if campaign?.messagePayload.messageSettings.controlSettings?.content?.onClickBehavior.action != .close {
             if let uri = campaign?.messagePayload.messageSettings.controlSettings?.content?.onClickBehavior.uri,
                 let uriToOpen = URL(string: uri),
                 UIApplication.shared.canOpenURL(uriToOpen) {
                 
-                UIApplication.shared.openURL(uriToOpen)
+                    UIApplication.shared.openURL(uriToOpen)
             } else {
                 let alert = UIAlertController(title: "Page not found", message: "Encountered error while navigating to the page.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
@@ -166,15 +164,25 @@ class SlideUpView: UIView, IAMView, ImpressionTrackable {
         }
         
         dismiss()
+        
+        // Log and send impression.
         logImpression(withImpressionType: .CLICK_CONTENT)
         sendImpression()
+        
+        // If the button came with a campaign trigger, log it.
+        if let trigger = campaign?.messagePayload.messageSettings.controlSettings?.content?.campaignTrigger {
+            EventRepository.addEvent(CommonUtility.convertTriggerObjectToCustomEvent(trigger))
+            CampaignReconciliation.reconcile()
+        }
     }
     
     /**
      * Obj-c selector to dismiss the modal view when the 'X' is tapped.
      */
-    @objc private func didTapOnExitButton(_ sender: UIGestureRecognizer) {
+    @objc private func onExitButtonClick(_ sender: UIGestureRecognizer) {
         dismiss()
+
+        // Log and send impression.
         logImpression(withImpressionType: .EXIT)
         sendImpression()
     }

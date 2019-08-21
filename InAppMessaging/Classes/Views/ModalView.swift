@@ -1,10 +1,7 @@
-import UIKit
-import SDWebImage
-
 /**
  * Class that initializes the modal view using the passed in campaign information to build the UI.
  */
-class ModalView: UIView, IAMView, ImpressionTrackable {
+class ModalView: UIView, IAMModalView {
 
     var impressions: [Impression] = []
     var campaign: CampaignData?
@@ -17,6 +14,7 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
     let headerMessageFontSize: CGFloat = 16 // Font size for the header message.
     let bodyMessageFontSize: CGFloat = 14 // Font size for the body message.
     let buttonTextFontSize: CGFloat = 14 // Font size for the button labels.
+    let secondButtonGapSize: CGFloat = 8 // Size of the gap between the buttons when there are two buttons.
     let singleButtonWidthOffset: CGFloat = 0 // Width offset when only one button is given.
     let twoButtonWidthOffset: CGFloat = 24 // Width offset when two buttons are given.
     let horizontalSpacingOffset: CGFloat = 20 // The spacing between dialog view and the children elements.
@@ -34,11 +32,11 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
     var dialogView = UIView()
     var textView = UITextView()
     
+    // Maps the button tag number to its link URI and campaign trigger.
+    var buttonMapping = [Int: (uri: String?, trigger: Trigger?)]()
+
     // Opt-out checkbox.
     var optOutCheckbox: Checkbox?
-    
-    // Button URL mapping.
-    var buttonURLMapping = [Int: String]()
     
     // Spacing on the left and right side of subviews.
     var dialogViewWidth: CGFloat = 0
@@ -121,7 +119,6 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
     fileprivate func setUpInitialValues() {
         // Set different values based on device -- either iPad or iPhone.
         if UIDevice.current.userInterfaceIdiom == .pad {
-            // Use 75% of iPad's width.
             self.dialogViewWidth = frame.width * initialFrameWidthIPadMultiplier
             self.exitButtonSize = 22
             self.exitButtonHeightOffset = 35
@@ -217,7 +214,9 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
         exitButton.isUserInteractionEnabled = true
         exitButton.layer.cornerRadius = exitButton.frame.width / 2
         exitButton.layer.masksToBounds = true
-        exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
+        exitButton.tag = ImpressionType.EXIT.rawValue
+        exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onExitButtonClick)))
+
         self.backgroundView.addSubview(exitButton)
     }
     
@@ -385,52 +384,50 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
         let buttonHeight: CGFloat = 40 // Define the height to use for the button.
         
         for (index, button) in buttonList.enumerated() {
-            if let buttonAction = ActionType(rawValue: button.buttonBehavior.action) {
-                // Determine offset value based on numbers of buttons to display.
-                var buttonWidthOffset: CGFloat
-                var xPositionForButton: CGFloat
-                
-                if buttonList.count == 1 {
-                    buttonWidthOffset = singleButtonWidthOffset
-                    xPositionForButton = (self.dialogViewWidth / 4) + (buttonWidthOffset / 2)
-                } else {
-                    buttonWidthOffset = twoButtonWidthOffset
-                    xPositionForButton = buttonHorizontalSpace
-                }
-
-                let buttonToAdd = UIButton(
-                    frame: CGRect(x: xPositionForButton,
-                                  y: self.dialogViewCurrentHeight,
-                                  width: ((self.dialogViewWidth / 2) - buttonWidthOffset),
-                                  height: buttonHeight))
-                
-                buttonToAdd.setTitle(button.buttonText, for: .normal)
-                buttonToAdd.setTitleColor(UIColor(hexFromString: button.buttonTextColor), for: .normal)
-                buttonToAdd.titleLabel?.font = .boldSystemFont(ofSize: buttonTextFontSize)
-                buttonToAdd.layer.cornerRadius = cornerRadiusForButtons
-                buttonToAdd.tag = index == 0 ? ImpressionType.ACTION_ONE.rawValue : ImpressionType.ACTION_TWO.rawValue
-                buttonToAdd.backgroundColor = UIColor(hexFromString: button.buttonBackgroundColor)
-                buttonToAdd.layer.borderColor = UIColor(hexFromString: button.buttonTextColor).cgColor
-                buttonToAdd.layer.borderWidth = 1
-                
-                // Add a mapping from the action type to the URL.
-                buttonURLMapping[buttonToAdd.tag] = button.buttonBehavior.uri
-                
-                switch buttonAction {
-                    case .invalid:
-                        return
-                    case .redirect:
-                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnLink)))
-                    case .deeplink:
-                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnLink)))
-                    case .close:
-                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
-                }
-                
-                buttonHorizontalSpace += buttonToAdd.frame.width + 8
-                
-                self.dialogView.addSubview(buttonToAdd)
+            // Determine offset value based on numbers of buttons to display.
+            var buttonWidthOffset: CGFloat
+            var xPositionForButton: CGFloat
+            
+            if buttonList.count == 1 {
+                buttonWidthOffset = singleButtonWidthOffset
+                xPositionForButton = (self.dialogViewWidth / 4) + (buttonWidthOffset / 2)
+            } else {
+                buttonWidthOffset = twoButtonWidthOffset
+                xPositionForButton = buttonHorizontalSpace
             }
+
+            let buttonToAdd = UIButton(
+                frame: CGRect(x: xPositionForButton,
+                              y: self.dialogViewCurrentHeight,
+                              width: ((self.dialogViewWidth / 2) - buttonWidthOffset),
+                              height: buttonHeight))
+            
+            buttonToAdd.setTitle(button.buttonText, for: .normal)
+            buttonToAdd.setTitleColor(UIColor(hexFromString: button.buttonTextColor), for: .normal)
+            buttonToAdd.titleLabel?.font = .boldSystemFont(ofSize: buttonTextFontSize)
+            buttonToAdd.layer.cornerRadius = cornerRadiusForButtons
+            buttonToAdd.tag = index == 0 ? ImpressionType.ACTION_ONE.rawValue : ImpressionType.ACTION_TWO.rawValue
+            buttonToAdd.backgroundColor = UIColor(hexFromString: button.buttonBackgroundColor)
+            buttonToAdd.layer.borderColor = UIColor(hexFromString: button.buttonTextColor).cgColor
+            buttonToAdd.layer.borderWidth = 1
+            
+            // Add a mapping from the action type to the URL.
+            buttonMapping[buttonToAdd.tag] = (button.buttonBehavior.uri ?? nil, button.campaignTrigger ?? nil)
+            
+            switch button.buttonBehavior.action {
+                case .invalid:
+                    return
+                case .redirect:
+                    buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onActionButtonClick)))
+                case .deeplink:
+                    buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onActionButtonClick)))
+                case .close:
+                    buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onExitButtonClick)))
+            }
+            
+            buttonHorizontalSpace += buttonToAdd.frame.width + secondButtonGapSize
+            
+            self.dialogView.addSubview(buttonToAdd)
         }
         
         self.dialogViewCurrentHeight += buttonHeight
@@ -448,20 +445,21 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
     // Button selectors for modal view.
     
     /**
-     * Obj-c selector to handle both redirect and deeplink actions.
+     * Obj-c selector to handle both redirect and deeplink type buttons.
      * When the URL fails to validate through canOpenUrl() or is empty, an alert message will pop up
      * to warn about the navigation error.
      * NOTE: The openUrl() method used here is deprecated and is being used because the SDK has to support iOS 9.
      * When iOS 10 becomes the minimum version supported by the SDK, please refer to:
      * https://developer.apple.com/documentation/uikit/uiapplication/1648685-openurl?language=objc
      */
-    @objc fileprivate func didTapOnLink(_ sender: UIGestureRecognizer) {
+    @objc fileprivate func onActionButtonClick(_ sender: UIGestureRecognizer) {
+        dismiss()
         
         guard let tag = sender.view?.tag else {
             return
         }
         
-        // To log and send impression.
+        // Log and send impression.
         if let type = ImpressionType(rawValue: tag) {
             logImpression(withImpressionType: type)
         }
@@ -476,9 +474,11 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
         
         sendImpression()
         
-        if let unwrappedUri = buttonURLMapping[tag],
+        // Execute the action of the button.
+        if let unwrappedUri = buttonMapping[tag]?.uri
             let uriToOpen = URL(string: unwrappedUri),
             UIApplication.shared.canOpenURL(uriToOpen) {
+            
                 UIApplication.shared.openURL(uriToOpen)
         } else {
             let alert = UIAlertController(title: "Page not found", message: "Encountered error while navigating to the page.", preferredStyle: .alert)
@@ -486,16 +486,26 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
             UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
         }
         
-        self.dismiss();
+        // If the button came with a campaign trigger, log it.
+        logButtonTrigger(with: tag)
     }
     
     /**
-     * Obj-c selector to dismiss the modal view when the 'X' is tapped.
+     * Obj-c selector to handle exit type buttons.
+     * Includes the "X" button on the top right and the close action type button.
      */
-    @objc fileprivate func didTapOnExitButton(_ sender: UIGestureRecognizer) {
-        self.dismiss()
+    @objc fileprivate func onExitButtonClick(_ sender: UIGestureRecognizer) {
+        dismiss()
+        
+        guard let tag = sender.view?.tag else {
+            return
+        }
         
         // To log and send impression.
+        if let type = ImpressionType(rawValue: tag) {
+            logImpression(withImpressionType: type)
+            sendImpression()
+        }
         if let isOptedOut = optOutCheckbox?.isChecked,
             isOptedOut == true,
             let campaign = self.campaign {
@@ -504,7 +514,6 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
                 OptedOutRepository.addCampaign(campaign)
         }
         
-        logImpression(withImpressionType: .EXIT)
         sendImpression()
     }
     
@@ -515,6 +524,9 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
         if let isChecked = optOutCheckbox?.isChecked {
             optOutCheckbox?.isChecked = !isChecked
         }
+        
+        // If the button came with a campaign trigger, log it.
+        logButtonTrigger(with: tag)
     }
     
     func logImpression(withImpressionType type: ImpressionType) {

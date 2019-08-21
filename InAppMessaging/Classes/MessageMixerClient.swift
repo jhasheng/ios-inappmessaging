@@ -77,7 +77,7 @@ class MessageMixerClient: HttpRequestable, TaskSchedulable {
         PingResponseRepository.currentPingMillis = pingResponse.currentPingMillis
         ReadyCampaignRepository.clear()
         
-        CampaignReconciliation.reconciliate()
+        CampaignReconciliation.reconcile()
     }
     
     /**

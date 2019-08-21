@@ -187,7 +187,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .loginSuccessful,
                                 eventName: "test",
                                 attributes: []
@@ -233,7 +233,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -281,7 +281,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -329,7 +329,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -377,7 +377,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -425,7 +425,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -473,7 +473,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -521,7 +521,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -569,7 +569,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -617,7 +617,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -665,7 +665,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -713,7 +713,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -761,7 +761,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -809,7 +809,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -857,7 +857,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -905,7 +905,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -953,7 +953,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -1001,7 +1001,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -1048,7 +1048,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -1096,7 +1096,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [

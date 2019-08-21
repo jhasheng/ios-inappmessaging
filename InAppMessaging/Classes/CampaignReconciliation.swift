@@ -10,7 +10,7 @@ struct CampaignReconciliation {
      * 1) MessageMixerClient retrieves a new list from the ping endpoint.
      * 2) Hostapp logs an event.
      */
-    static func reconciliate() {
+    static func reconcile() {
         
         // Split the CampaignRepository into two different sets of test and non-test campaigns.
         let campaignList = CampaignParser.splitCampaigns(campaigns: PingResponseRepository.list)
