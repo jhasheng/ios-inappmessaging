@@ -3,7 +3,7 @@ import UIKit
 /**
  * Protocol to define the IAM view.
  */
-protocol IAMView {
+protocol IAMView: ImpressionTrackable {
     func show()
     func dismiss()
     var backgroundView: UIView? { get }

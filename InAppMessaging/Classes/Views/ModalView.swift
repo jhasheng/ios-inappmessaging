@@ -475,7 +475,7 @@ class ModalView: UIView, IAMModalView {
         sendImpression()
         
         // Execute the action of the button.
-        if let unwrappedUri = buttonMapping[tag]?.uri
+        if let unwrappedUri = buttonMapping[tag]?.uri,
             let uriToOpen = URL(string: unwrappedUri),
             UIApplication.shared.canOpenURL(uriToOpen) {
             
