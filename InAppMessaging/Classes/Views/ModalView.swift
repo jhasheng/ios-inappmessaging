@@ -504,8 +504,8 @@ class ModalView: UIView, IAMModalView {
         // To log and send impression.
         if let type = ImpressionType(rawValue: tag) {
             logImpression(withImpressionType: type)
-            sendImpression()
         }
+        
         if let isOptedOut = optOutCheckbox?.isChecked,
             isOptedOut == true,
             let campaign = self.campaign {
@@ -515,6 +515,9 @@ class ModalView: UIView, IAMModalView {
         }
         
         sendImpression()
+        
+        // If the button came with a campaign trigger, log it.
+        logButtonTrigger(with: tag)
     }
     
     /**
@@ -524,9 +527,6 @@ class ModalView: UIView, IAMModalView {
         if let isChecked = optOutCheckbox?.isChecked {
             optOutCheckbox?.isChecked = !isChecked
         }
-        
-        // If the button came with a campaign trigger, log it.
-        logButtonTrigger(with: tag)
     }
     
     func logImpression(withImpressionType type: ImpressionType) {

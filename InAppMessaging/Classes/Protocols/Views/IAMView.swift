@@ -43,6 +43,7 @@ extension IAMView where Self: UIView {
      */
     func dismiss() {
         self.removeFromSuperview()
+        //TODO: (Daniel Tam) - Use backend-sent value for milliBetweenDisplays.
         WorkScheduler.scheduleTask(Constants.Configuration.milliBetweenDisplays, closure: InAppMessagingViewController.display)
     }
 }

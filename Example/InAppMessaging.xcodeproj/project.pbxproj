@@ -296,17 +296,13 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-InAppMessaging_Example/Pods-InAppMessaging_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-InAppMessaging_Example/Pods-InAppMessaging_Example-frameworks.sh",
 				"${PODS_ROOT}/../../InAppMessaging/Frameworks/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/InAppMessaging/InAppMessaging.framework",
 				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/InAppMessaging.framework",
@@ -314,7 +310,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-InAppMessaging_Example/Pods-InAppMessaging_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-InAppMessaging_Example/Pods-InAppMessaging_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		448DD173FAD18DE7B8C985C0 /* [CP] Check Pods Manifest.lock */ = {
@@ -366,10 +362,8 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-InAppMessaging_Tests/Pods-InAppMessaging_Tests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-InAppMessaging_Tests/Pods-InAppMessaging_Tests-frameworks.sh",
 				"${PODS_ROOT}/../../InAppMessaging/Frameworks/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/InAppMessaging/InAppMessaging.framework",
 				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
@@ -377,8 +371,6 @@
 				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/InAppMessaging.framework",
@@ -388,7 +380,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-InAppMessaging_Tests/Pods-InAppMessaging_Tests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-InAppMessaging_Tests/Pods-InAppMessaging_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
