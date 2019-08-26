@@ -540,8 +540,8 @@ class FullScreenView: UIView, IAMFullScreenview {
             isOptedOut == true,
             let campaign = self.campaign {
             
-            logImpression(withImpressionType: .OPT_OUT)
-            OptedOutRepository.addCampaign(campaign)
+                logImpression(withImpressionType: .OPT_OUT)
+                OptedOutRepository.addCampaign(campaign)
         }
         
         sendImpression()
