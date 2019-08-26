@@ -75,6 +75,7 @@ struct DisplaySettings: Decodable {
     let endTimeMillis: Int
     let textAlign: Int
     let optOut: Bool
+    let html: Bool?
 }
 
 struct ControlSettings: Decodable {
