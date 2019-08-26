@@ -1,3 +1,5 @@
+import WebKit
+
 /**
  * Class that initializes the modal view using the passed in campaign information to build the UI.
  */
@@ -31,6 +33,7 @@ class ModalView: UIView, IAMModalView {
     var backgroundView = UIView()
     var dialogView = UIView()
     var textView = UITextView()
+    var webview: WKWebView?
     
     // Maps the button tag number to its link URI and campaign trigger.
     var buttonMapping = [Int: (uri: String?, trigger: Trigger?)]()
@@ -66,16 +69,25 @@ class ModalView: UIView, IAMModalView {
         // The opaque black background of modals.
         self.backgroundView.frame = frame
         self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(backgroundViewAlpha)
-
+        
         // Set up the initial values for UI based on device.
         self.setUpInitialValues()
-
-        // Create the UIImageView first if there is an image.
-        if let image = optionalImage {
-            self.appendImageView(withImage: image)
-        }
         
-        self.createMessageBody(campaign: campaign)
+        if let isRichContent = campaign.messagePayload.messageSettings.displaySettings.html,
+            isRichContent == true {
+            
+                webview = WKWebView()
+            
+        } else {
+            // Create the UIImageView first if there is an image.
+            if let image = optionalImage {
+                self.appendImageView(withImage: image)
+            }
+            
+            self.createMessageBody(campaign: campaign)
+            
+        }
+
         self.appendSubViews()
     }
     
