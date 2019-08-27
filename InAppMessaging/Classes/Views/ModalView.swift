@@ -33,7 +33,6 @@ class ModalView: UIView, IAMModalView {
     var backgroundView = UIView()
     var dialogView = UIView()
     var textView = UITextView()
-    var webView: WKWebView?
     
     // Maps the button tag number to its link URI and campaign trigger.
     var buttonMapping = [Int: (uri: String?, trigger: Trigger?)]()
@@ -223,11 +222,7 @@ class ModalView: UIView, IAMModalView {
      * contain only safe characters -- it should NOT contain any un-escaped characters.
      */
     fileprivate func appendWebView(withHtmlString htmlString: String) {
-        webView = WKWebView()
-        
-        guard let webView = self.webView else {
-            return
-        }
+        let webView = WKWebView()
         
         webView.loadHTMLString(htmlString, baseURL: nil)
         webView.frame = CGRect(x: frame.origin.x,
