@@ -72,7 +72,7 @@ class ModalView: UIView, IAMModalView {
 
         // Set up the initial values for UI based on device.
         self.setUpInitialValues()
-        
+
         // Create the UIImageView first if there is an image.
         if let image = optionalImage {
             self.appendImageView(withImage: image)
