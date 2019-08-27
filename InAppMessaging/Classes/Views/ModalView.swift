@@ -69,15 +69,15 @@ class ModalView: UIView, IAMModalView {
         // The opaque black background of modals.
         self.backgroundView.frame = frame
         self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(backgroundViewAlpha)
-        
+
         // Set up the initial values for UI based on device.
         self.setUpInitialValues()
         
-        // Create the UIImageView first if there is an image.
-//        if let image = optionalImage {
-//            self.appendImageView(withImage: image)
-//        }
-            
+        //Create the UIImageView first if there is an image.
+        if let image = optionalImage {
+            self.appendImageView(withImage: image)
+        }
+        
         self.createMessageBody(campaign: campaign)
         self.appendSubViews()
     }
@@ -163,11 +163,11 @@ class ModalView: UIView, IAMModalView {
                 if messagePayload.header != nil {
                     self.dialogViewCurrentHeight += heightOffset
                 }
-                
+
                 self.appendTextView(withMessage: campaign.messagePayload)
-                
+
                 self.dialogViewCurrentHeight += self.textView.frame.height
-                
+
                 // Handle spacing case for when there are no messages.
                 if messagePayload.messageBody != nil ||
                     messagePayload.messageLowerBody != nil {
@@ -217,6 +217,11 @@ class ModalView: UIView, IAMModalView {
         self.appendExitButton()
     }
     
+    /**
+     * Creates a webview and load in the HTML string provided by the Ping response.
+     * @param { htmlString: String } HTML string by the backend. This string should
+     * contain only safe characters -- it should NOT contain any un-escaped characters.
+     */
     fileprivate func appendWebView(withHtmlString htmlString: String) {
         webView = WKWebView()
         
