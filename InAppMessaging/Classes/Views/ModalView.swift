@@ -73,21 +73,12 @@ class ModalView: UIView, IAMModalView {
         // Set up the initial values for UI based on device.
         self.setUpInitialValues()
         
-        if let isRichContent = campaign.messagePayload.messageSettings.displaySettings.html,
-            isRichContent == true {
+        // Create the UIImageView first if there is an image.
+//        if let image = optionalImage {
+//            self.appendImageView(withImage: image)
+//        }
             
-                webview = WKWebView()
-            
-        } else {
-            // Create the UIImageView first if there is an image.
-            if let image = optionalImage {
-                self.appendImageView(withImage: image)
-            }
-            
-            self.createMessageBody(campaign: campaign)
-            
-        }
-
+        self.createMessageBody(campaign: campaign)
         self.appendSubViews()
     }
     
@@ -148,26 +139,37 @@ class ModalView: UIView, IAMModalView {
      * @param { campaign: CampaignData } the campaign to be displayed.
      */
     internal func createMessageBody(campaign: CampaignData) {
-        // Scroll view for header and messages.
-        if campaign.messagePayload.header != nil ||
-            campaign.messagePayload.messageBody != nil ||
-            campaign.messagePayload.messageLowerBody != nil {
-
+        
+        if let isRichContent = campaign.messagePayload.messageSettings.displaySettings.html,
+            isRichContent == true {
+            
+                webview = WKWebView()
+                webview?.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width * 0.5, height: frame.size.height * 0.5)
+                webview?.loadHTMLString(campaign.messagePayload.messageBody!, baseURL: nil)
+                dialogViewCurrentHeight += webview!.frame.height
+                dialogView.addSubview(webview!)
+        } else {
+            // Scroll view for header and messages.
+            if campaign.messagePayload.header != nil ||
+                campaign.messagePayload.messageBody != nil ||
+                campaign.messagePayload.messageLowerBody != nil {
+                
                 // Handle spacing case for when there is no header.
                 if campaign.messagePayload.header != nil {
                     self.dialogViewCurrentHeight += heightOffset
                 }
-
+                
                 self.appendTextView(withMessage: campaign.messagePayload)
-
+                
                 self.dialogViewCurrentHeight += self.textView.frame.height
-
+                
                 // Handle spacing case for when there are no messages.
                 if campaign.messagePayload.messageBody != nil ||
                     campaign.messagePayload.messageLowerBody != nil {
-
-                        self.dialogViewCurrentHeight += heightOffset
+                    
+                    self.dialogViewCurrentHeight += heightOffset
                 }
+            }
         }
         
         // Opt-out message.
