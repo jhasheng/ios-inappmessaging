@@ -3,7 +3,7 @@ import WebKit
 /**
  * Class that initializes the modal view using the passed in campaign information to build the UI.
  */
-class ModalView: UIView, IAMModalView {
+class ModalView: UIView, IAMModalView, RichContentBrowsable {
 
     var impressions: [Impression] = []
     var campaign: CampaignData?
@@ -222,13 +222,13 @@ class ModalView: UIView, IAMModalView {
      * contain only safe characters -- it should NOT contain any un-escaped characters.
      */
     fileprivate func appendWebView(withHtmlString htmlString: String) {
-        let webView = WKWebView()
-        
-        webView.loadHTMLString(htmlString, baseURL: nil)
-        webView.frame = CGRect(x: frame.origin.x,
-                               y: frame.origin.y,
-                               width: dialogViewWidth,
-                               height: frame.size.height * maxWindowHeightPercentage
+
+        let webView = createWebView(withHtmlString: htmlString,
+                                    andFrame: CGRect(x: frame.origin.x,
+                                                     y: frame.origin.y,
+                                                     width: dialogViewWidth,
+                                                     height: frame.size.height * maxWindowHeightPercentage
+            )
         )
         
         dialogViewCurrentHeight += webView.frame.height
