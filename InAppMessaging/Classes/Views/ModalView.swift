@@ -33,7 +33,7 @@ class ModalView: UIView, IAMModalView {
     var backgroundView = UIView()
     var dialogView = UIView()
     var textView = UITextView()
-    var webview: WKWebView?
+    var webView: WKWebView?
     
     // Maps the button tag number to its link URI and campaign trigger.
     var buttonMapping = [Int: (uri: String?, trigger: Trigger?)]()
@@ -139,23 +139,28 @@ class ModalView: UIView, IAMModalView {
      * @param { campaign: CampaignData } the campaign to be displayed.
      */
     internal func createMessageBody(campaign: CampaignData) {
+        let messagePayload = campaign.messagePayload
         
-        if let isRichContent = campaign.messagePayload.messageSettings.displaySettings.html,
-            isRichContent == true {
+        // Check the type of campaign -- either rich content or regular.
+        if let isRichContent = messagePayload.messageSettings.displaySettings.html,
+            isRichContent == true,
+            let messageBody = messagePayload.messageBody {
             
-                webview = WKWebView()
-                webview?.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width * 0.5, height: frame.size.height * 0.5)
-                webview?.loadHTMLString(campaign.messagePayload.messageBody!, baseURL: nil)
-                dialogViewCurrentHeight += webview!.frame.height
-                dialogView.addSubview(webview!)
+                appendWebView(withHtmlString: messageBody)
+            
+                if let isButtonEmpty = messagePayload.messageSettings.controlSettings?.buttons?.isEmpty,
+                    (!isButtonEmpty || messagePayload.messageSettings.displaySettings.optOut) {
+                    
+                        self.dialogViewCurrentHeight += heightOffset
+            }
         } else {
             // Scroll view for header and messages.
-            if campaign.messagePayload.header != nil ||
-                campaign.messagePayload.messageBody != nil ||
-                campaign.messagePayload.messageLowerBody != nil {
+            if messagePayload.header != nil ||
+                messagePayload.messageBody != nil ||
+                messagePayload.messageLowerBody != nil {
                 
                 // Handle spacing case for when there is no header.
-                if campaign.messagePayload.header != nil {
+                if messagePayload.header != nil {
                     self.dialogViewCurrentHeight += heightOffset
                 }
                 
@@ -164,8 +169,8 @@ class ModalView: UIView, IAMModalView {
                 self.dialogViewCurrentHeight += self.textView.frame.height
                 
                 // Handle spacing case for when there are no messages.
-                if campaign.messagePayload.messageBody != nil ||
-                    campaign.messagePayload.messageLowerBody != nil {
+                if messagePayload.messageBody != nil ||
+                    messagePayload.messageLowerBody != nil {
                     
                     self.dialogViewCurrentHeight += heightOffset
                 }
@@ -173,10 +178,10 @@ class ModalView: UIView, IAMModalView {
         }
         
         // Opt-out message.
-        if campaign.messagePayload.messageSettings.displaySettings.optOut {
-            if campaign.messagePayload.header == nil &&
-                campaign.messagePayload.messageBody == nil &&
-                campaign.messagePayload.messageLowerBody == nil {
+        if messagePayload.messageSettings.displaySettings.optOut {
+            if messagePayload.header == nil &&
+                messagePayload.messageBody == nil &&
+                messagePayload.messageLowerBody == nil {
                 
                 self.dialogViewCurrentHeight += heightOffset
             }
@@ -186,12 +191,12 @@ class ModalView: UIView, IAMModalView {
         }
 
         // Buttons.
-        if let buttonList = campaign.messagePayload.messageSettings.controlSettings?.buttons, !buttonList.isEmpty {
+        if let buttonList = messagePayload.messageSettings.controlSettings?.buttons, !buttonList.isEmpty {
             // Handle spacing for when there is only an image and buttons
-            if campaign.messagePayload.resource.imageUrl != nil &&
-                campaign.messagePayload.header == nil &&
-                campaign.messagePayload.messageBody == nil &&
-                campaign.messagePayload.messageLowerBody == nil {
+            if messagePayload.resource.imageUrl != nil &&
+                messagePayload.header == nil &&
+                messagePayload.messageBody == nil &&
+                messagePayload.messageLowerBody == nil {
 
                     self.dialogViewCurrentHeight += heightOffset
             }
@@ -210,6 +215,24 @@ class ModalView: UIView, IAMModalView {
         
         // Add the exit button on the top right.
         self.appendExitButton()
+    }
+    
+    fileprivate func appendWebView(withHtmlString htmlString: String) {
+        webView = WKWebView()
+        
+        guard let webView = self.webView else {
+            return
+        }
+        
+        webView.loadHTMLString(htmlString, baseURL: nil)
+        webView.frame = CGRect(x: frame.origin.x,
+                               y: frame.origin.y,
+                               width: dialogViewWidth,
+                               height: frame.size.height * maxWindowHeightPercentage
+        )
+        
+        dialogViewCurrentHeight += webView.frame.height
+        dialogView.addSubview(webView)
     }
     
     fileprivate func appendExitButton() {
