@@ -172,7 +172,7 @@ class ModalView: UIView, IAMModalView {
                 if messagePayload.messageBody != nil ||
                     messagePayload.messageLowerBody != nil {
                     
-                    self.dialogViewCurrentHeight += heightOffset
+                        self.dialogViewCurrentHeight += heightOffset
                 }
             }
         }
@@ -183,7 +183,7 @@ class ModalView: UIView, IAMModalView {
                 messagePayload.messageBody == nil &&
                 messagePayload.messageLowerBody == nil {
                 
-                self.dialogViewCurrentHeight += heightOffset
+                    self.dialogViewCurrentHeight += heightOffset
             }
             
             appendOptOutMessage()
