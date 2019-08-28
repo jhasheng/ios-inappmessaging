@@ -17,6 +17,7 @@ class FullScreenView: UIView, IAMFullScreenview, RichContentBrowsable {
     let headerMessageFontSize: CGFloat = 16 // Font size for the header message.
     let bodyMessageFontSize: CGFloat = 14 // Font size for the body message.
     let buttonTextFontSize: CGFloat = 14 // Font size for the button labels.
+    let buttonHeight: CGFloat = 40 // Define the height to use for the button.
     let secondButtonGapSize: CGFloat = 8 // Size of the gap between the buttons when there are two buttons.
     let singleButtonWidthOffset: CGFloat = 0 // Width offset when only one button is given.
     let twoButtonWidthOffset: CGFloat = 24 // Width offset when two buttons are given.
@@ -26,6 +27,7 @@ class FullScreenView: UIView, IAMFullScreenview, RichContentBrowsable {
     let maxWindowHeightPercentage: CGFloat = 0.85 // The max height the window should take up before making text scrollable.
     let optOutMessageSize: CGFloat = 12 // Vertical height for the opt-out message and checkbox.
     let optOutMessageFontSize: CGFloat = 12 // Font size of the opt-out message
+    let optOutMessageGapSizeBetweenButtons: CGFloat = 4 // Vertical gap size between buttons and optOut message.
     let optOutCheckBoxOffset: CGFloat = 5 // How far the checkbox should be from the opt-out msg.
     var exitButtonSize: CGFloat = 0 // Size of the exit button.
     var exitButtonHeightOffset: CGFloat = 0 // Height offset for exit button from the actual message.
@@ -246,18 +248,19 @@ class FullScreenView: UIView, IAMFullScreenview, RichContentBrowsable {
             webViewMaxHeight = frame.size.height
         }
         
-        print(webViewMaxHeight)
-        if let isButtonEmpty = campaign!.messagePayload.messageSettings.controlSettings?.buttons?.isEmpty,
-            !isButtonEmpty {
-            
-                webViewMaxHeight -= (84)
+        guard let isButtonEmpty = campaign?.messagePayload.messageSettings.controlSettings?.buttons?.isEmpty else {
+            return
+        }
+        
+        if !isButtonEmpty {
+            webViewMaxHeight -= (buttonHeight * 2)
         }
         
         if campaign!.messagePayload.messageSettings.displaySettings.optOut {
-            webViewMaxHeight -= (24 + heightOffset)
+            let spacerSize: CGFloat = isButtonEmpty ? 4 : 2
+            webViewMaxHeight -= (optOutMessageSize * spacerSize) + optOutMessageGapSizeBetweenButtons
         }
         
-        print(webViewMaxHeight)
         let webView = createWebView(withHtmlString: htmlString,
                                     andFrame: CGRect(x: frame.origin.x,
                                                      y: frame.origin.y,
@@ -461,7 +464,6 @@ class FullScreenView: UIView, IAMFullScreenview, RichContentBrowsable {
     private func appendButtons(withButtonList buttonList: [Button]) {
         
         var buttonHorizontalSpace: CGFloat = 20 // Space for the left and right margin.
-        let buttonHeight: CGFloat = 40 // Define the height to use for the button.
         
         for (index, button) in buttonList.enumerated() {
             // Determine offset value based on numbers of buttons to display.
