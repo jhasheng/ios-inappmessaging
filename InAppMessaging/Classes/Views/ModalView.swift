@@ -1,5 +1,3 @@
-import WebKit
-
 /**
  * Class that initializes the modal view using the passed in campaign information to build the UI.
  */
