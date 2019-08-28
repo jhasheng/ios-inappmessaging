@@ -4,7 +4,7 @@ import SDWebImage
 /**
  * Class that initializes the modal view using the passed in campaign information to build the UI.
  */
-class FullScreenView: UIView, IAMFullScreenview {
+class FullScreenView: UIView, IAMFullScreenview, RichContentBrowsable {
     
     var impressions: [Impression] = []
     var campaign: CampaignData?
@@ -148,38 +148,51 @@ class FullScreenView: UIView, IAMFullScreenview {
      * @param { campaign: CampaignData } the campaign to be displayed.
      */
     func createMessageBody(campaign: CampaignData) {
-        // Add the exit button on the top right.
-        appendExitButton()
+        let messagePayload = campaign.messagePayload
         
-        // Scroll view for header and messages.
-        if campaign.messagePayload.header != nil ||
-            campaign.messagePayload.messageBody != nil ||
-            campaign.messagePayload.messageLowerBody != nil {
+        // Check the type of campaign -- either rich content or regular.
+        if let isRichContent = messagePayload.messageSettings.displaySettings.html,
+            isRichContent == true,
+            let messageBody = messagePayload.messageBody {
             
-            // Handle spacing case for when there is no header.
-            if campaign.messagePayload.header != nil {
-                dialogViewCurrentHeight += heightOffset
-            }
+            appendWebView(withHtmlString: messageBody)
             
-            appendTextView(withMessage: campaign.messagePayload)
-            
-            dialogViewCurrentHeight += textView.frame.height
-            
-            // Handle spacing case for when there are no messages.
-            if campaign.messagePayload.messageBody != nil ||
-                campaign.messagePayload.messageLowerBody != nil {
+            if let isButtonEmpty = messagePayload.messageSettings.controlSettings?.buttons?.isEmpty,
+                (!isButtonEmpty || messagePayload.messageSettings.displaySettings.optOut) {
                 
-                dialogViewCurrentHeight += heightOffset
+                self.dialogViewCurrentHeight += heightOffset
+            }
+        } else {
+            // Scroll view for header and messages.
+            if messagePayload.header != nil ||
+                messagePayload.messageBody != nil ||
+                messagePayload.messageLowerBody != nil {
+                
+                // Handle spacing case for when there is no header.
+                if messagePayload.header != nil {
+                    dialogViewCurrentHeight += heightOffset
+                }
+                
+                appendTextView(withMessage: campaign.messagePayload)
+                
+                dialogViewCurrentHeight += textView.frame.height
+                
+                // Handle spacing case for when there are no messages.
+                if messagePayload.messageBody != nil ||
+                    messagePayload.messageLowerBody != nil {
+                    
+                        dialogViewCurrentHeight += heightOffset
+                }
             }
         }
         
         // Opt-out message.
-        if campaign.messagePayload.messageSettings.displaySettings.optOut {
-            if campaign.messagePayload.header == nil &&
-                campaign.messagePayload.messageBody == nil &&
-                campaign.messagePayload.messageLowerBody == nil {
+        if messagePayload.messageSettings.displaySettings.optOut {
+            if messagePayload.header == nil &&
+                messagePayload.messageBody == nil &&
+                messagePayload.messageLowerBody == nil {
                 
-                self.dialogViewCurrentHeight += heightOffset
+                    self.dialogViewCurrentHeight += heightOffset
             }
             
             
@@ -190,10 +203,10 @@ class FullScreenView: UIView, IAMFullScreenview {
         // Buttons.
         if let buttonList = campaign.messagePayload.messageSettings.controlSettings?.buttons, !buttonList.isEmpty {
             // Handle spacing for when there is only an image and buttons
-            if campaign.messagePayload.resource.imageUrl != nil &&
-                campaign.messagePayload.header == nil &&
-                campaign.messagePayload.messageBody == nil &&
-                campaign.messagePayload.messageLowerBody == nil {
+            if messagePayload.resource.imageUrl != nil &&
+                messagePayload.header == nil &&
+                messagePayload.messageBody == nil &&
+                messagePayload.messageLowerBody == nil {
 
                     dialogViewCurrentHeight += heightOffset
             }
@@ -213,6 +226,48 @@ class FullScreenView: UIView, IAMFullScreenview {
         dialogView.backgroundColor = UIColor(hexFromString: campaign.messagePayload.backgroundColor)
         dialogView.layer.cornerRadius = cornerRadiusForDialogView
         dialogView.clipsToBounds = true
+        
+        // Add the exit button on the top right.
+        appendExitButton()
+    }
+    
+    /**
+     * Creates a webview and load in the HTML string provided by the Ping response.
+     * @param { htmlString: String } HTML string by the backend. This string should
+     * contain only safe characters -- it should NOT contain any un-escaped characters.
+     */
+    fileprivate func appendWebView(withHtmlString htmlString: String) {
+        
+        var webViewMaxHeight = frame.size.height
+        
+        if #available(iOS 11.0, *) {
+            webViewMaxHeight = UIApplication.shared.keyWindow!.safeAreaLayoutGuide.layoutFrame.height
+        } else {
+            webViewMaxHeight = frame.size.height
+        }
+        
+        print(webViewMaxHeight)
+        if let isButtonEmpty = campaign!.messagePayload.messageSettings.controlSettings?.buttons?.isEmpty,
+            !isButtonEmpty {
+            
+                webViewMaxHeight -= (84)
+        }
+        
+        if campaign!.messagePayload.messageSettings.displaySettings.optOut {
+            webViewMaxHeight -= (24 + heightOffset)
+        }
+        
+        print(webViewMaxHeight)
+        let webView = createWebView(withHtmlString: htmlString,
+                                    andFrame: CGRect(x: frame.origin.x,
+                                                     y: frame.origin.y,
+                                                     width: frame.size.width,
+                                                     height: webViewMaxHeight
+            )
+        )
+        
+        dialogViewCurrentHeight += webView.frame.height
+        dialogView.addSubview(webView)
     }
     
     private func appendExitButton() {
