@@ -10,7 +10,6 @@ protocol RichContentBrowsable {
 extension RichContentBrowsable {
     func createWebView(withHtmlString htmlString: String, andFrame frame: CGRect) -> WKWebView {
         let webView = WKWebView()
-        
         webView.loadHTMLString(htmlString, baseURL: nil)
         webView.frame = frame
     
