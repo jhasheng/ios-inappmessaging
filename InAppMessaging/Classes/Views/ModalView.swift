@@ -1,10 +1,7 @@
-import UIKit
-import SDWebImage
-
 /**
  * Class that initializes the modal view using the passed in campaign information to build the UI.
  */
-class ModalView: UIView, IAMView, ImpressionTrackable {
+class ModalView: UIView, IAMModalView, RichContentBrowsable {
 
     var impressions: [Impression] = []
     var campaign: CampaignData?
@@ -17,12 +14,16 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
     let headerMessageFontSize: CGFloat = 16 // Font size for the header message.
     let bodyMessageFontSize: CGFloat = 14 // Font size for the body message.
     let buttonTextFontSize: CGFloat = 14 // Font size for the button labels.
+    let secondButtonGapSize: CGFloat = 8 // Size of the gap between the buttons when there are two buttons.
     let singleButtonWidthOffset: CGFloat = 0 // Width offset when only one button is given.
     let twoButtonWidthOffset: CGFloat = 24 // Width offset when two buttons are given.
     let horizontalSpacingOffset: CGFloat = 20 // The spacing between dialog view and the children elements.
-    let initialFrameWidthOffset: CGFloat = 120 // Margin between the left and right frame width and message.
+    let initialFrameWidthOffset: CGFloat = 100 // Margin between the left and right frame width and message.
     let initialFrameWidthIPadMultiplier: CGFloat = 0.60 // Percentage size for iPad's to display
-    let maxWindowHeightPercentage: CGFloat = 0.70 // The max height the window should take up before making text scrollable.
+    let maxWindowHeightPercentage: CGFloat = 0.65 // The max height the window should take up before making text scrollable.
+    let optOutMessageSize: CGFloat = 12 // Vertical height for the opt-out message and checkbox.
+    let optOutMessageFontSize: CGFloat = 12 // Font size of the opt-out message
+    let optOutCheckBoxOffset: CGFloat = 5 // How far the checkbox should be from the opt-out msg.
     var exitButtonSize: CGFloat = 0 // Size of the exit button.
     var exitButtonHeightOffset: CGFloat = 0 // Height offset for exit button from the actual message.
     var exitButtonFontSize: CGFloat = 0 // Font size of exit button.
@@ -31,8 +32,11 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
     var dialogView = UIView()
     var textView = UITextView()
     
-    // Button URL mapping.
-    var buttonURLMapping = [Int: String]()
+    // Maps the button tag number to its link URI and campaign trigger.
+    var buttonMapping = [Int: (uri: String?, trigger: Trigger?)]()
+
+    // Opt-out checkbox.
+    var optOutCheckbox: Checkbox?
     
     // Spacing on the left and right side of subviews.
     var dialogViewWidth: CGFloat = 0
@@ -75,10 +79,46 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
         self.appendSubViews()
     }
     
+    private func appendOptOutMessage() {
+        let optOutMessage = UILabel()
+        optOutMessage.textAlignment = .center
+        optOutMessage.text = "Do not show me this message again.".localized
+        optOutMessage.font = .systemFont(ofSize: optOutMessageFontSize)
+        optOutMessage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnOptOutLabel)))
+        optOutMessage.isUserInteractionEnabled = true
+        optOutMessage.sizeToFit()
+        optOutMessage.frame.origin.y = dialogViewCurrentHeight
+        optOutMessage.center.x = dialogViewWidth / 2
+        
+        optOutCheckbox = Checkbox(frame:
+            CGRect(x: optOutMessage.frame.origin.x - optOutMessageSize - optOutCheckBoxOffset,
+                   y: dialogViewCurrentHeight,
+                   width: optOutMessageSize,
+                   height: optOutMessageSize
+            )
+        )
+        
+        guard let checkbox = optOutCheckbox else {
+            return
+        }
+        
+        checkbox.borderStyle = .square
+        checkbox.uncheckedBorderColor = .black
+        checkbox.checkedBorderColor = .black
+        checkbox.checkmarkColor = .black
+        checkbox.checkmarkStyle = .tick
+        checkbox.borderWidth = 1
+        checkbox.useHapticFeedback = false
+        
+        dialogView.addSubview(optOutMessage)
+        dialogView.addSubview(checkbox)
+        
+        self.dialogViewCurrentHeight += checkbox.frame.height
+    }
+    
     fileprivate func setUpInitialValues() {
         // Set different values based on device -- either iPad or iPhone.
         if UIDevice.current.userInterfaceIdiom == .pad {
-            // Use 75% of iPad's width.
             self.dialogViewWidth = frame.width * initialFrameWidthIPadMultiplier
             self.exitButtonSize = 22
             self.exitButtonHeightOffset = 35
@@ -96,13 +136,28 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
      * @param { campaign: CampaignData } the campaign to be displayed.
      */
     internal func createMessageBody(campaign: CampaignData) {
-        // Scroll view for header and messages.
-        if campaign.messagePayload.header != nil ||
-            campaign.messagePayload.messageBody != nil ||
-            campaign.messagePayload.messageLowerBody != nil {
-
+        let messagePayload = campaign.messagePayload
+        
+        // Check the type of campaign -- either rich content or regular.
+        if let isRichContent = messagePayload.messageSettings.displaySettings.html,
+            isRichContent == true,
+            let messageBody = messagePayload.messageBody {
+            
+                appendWebView(withHtmlString: messageBody)
+            
+                if let isButtonEmpty = messagePayload.messageSettings.controlSettings?.buttons?.isEmpty,
+                    (!isButtonEmpty || messagePayload.messageSettings.displaySettings.optOut) {
+                    
+                        self.dialogViewCurrentHeight += heightOffset
+            }
+        } else {
+            // Scroll view for header and messages.
+            if messagePayload.header != nil ||
+                messagePayload.messageBody != nil ||
+                messagePayload.messageLowerBody != nil {
+                
                 // Handle spacing case for when there is no header.
-                if campaign.messagePayload.header != nil {
+                if messagePayload.header != nil {
                     self.dialogViewCurrentHeight += heightOffset
                 }
 
@@ -111,21 +166,34 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
                 self.dialogViewCurrentHeight += self.textView.frame.height
 
                 // Handle spacing case for when there are no messages.
-                if campaign.messagePayload.messageBody != nil ||
-                    campaign.messagePayload.messageLowerBody != nil {
-
+                if messagePayload.messageBody != nil ||
+                    messagePayload.messageLowerBody != nil {
+                    
                         self.dialogViewCurrentHeight += heightOffset
                 }
-
+            }
+        }
+        
+        // Opt-out message.
+        if messagePayload.messageSettings.displaySettings.optOut {
+            if messagePayload.header == nil &&
+                messagePayload.messageBody == nil &&
+                messagePayload.messageLowerBody == nil {
+                
+                    self.dialogViewCurrentHeight += heightOffset
+            }
+            
+            appendOptOutMessage()
+            self.dialogViewCurrentHeight += heightOffset
         }
 
         // Buttons.
-        if let buttonList = campaign.messagePayload.messageSettings.controlSettings?.buttons, !buttonList.isEmpty {
+        if let buttonList = messagePayload.messageSettings.controlSettings?.buttons, !buttonList.isEmpty {
             // Handle spacing for when there is only an image and buttons
-            if campaign.messagePayload.resource.imageUrl != nil &&
-                campaign.messagePayload.header == nil &&
-                campaign.messagePayload.messageBody == nil &&
-                campaign.messagePayload.messageLowerBody == nil {
+            if messagePayload.resource.imageUrl != nil &&
+                messagePayload.header == nil &&
+                messagePayload.messageBody == nil &&
+                messagePayload.messageLowerBody == nil {
 
                     self.dialogViewCurrentHeight += heightOffset
             }
@@ -141,9 +209,28 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
         self.dialogView.layer.cornerRadius = cornerRadiusForDialogView
         self.dialogView.clipsToBounds = true
         self.dialogView.center  = self.center
-
+        
         // Add the exit button on the top right.
         self.appendExitButton()
+    }
+    
+    /**
+     * Creates a webview and load in the HTML string provided by the Ping response.
+     * @param { htmlString: String } HTML string by the backend. This string should
+     * contain only safe characters -- it should NOT contain any un-escaped characters.
+     */
+    fileprivate func appendWebView(withHtmlString htmlString: String) {
+
+        let webView = createWebView(withHtmlString: htmlString,
+                                    andFrame: CGRect(x: frame.origin.x,
+                                                     y: frame.origin.y,
+                                                     width: dialogViewWidth,
+                                                     height: frame.size.height * maxWindowHeightPercentage
+            )
+        )
+        
+        dialogViewCurrentHeight += webView.frame.height
+        dialogView.addSubview(webView)
     }
     
     fileprivate func appendExitButton() {
@@ -163,7 +250,8 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
         exitButton.layer.cornerRadius = exitButton.frame.width / 2
         exitButton.layer.masksToBounds = true
         exitButton.tag = ImpressionType.EXIT.rawValue
-        exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
+        exitButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onExitButtonClick)))
+
         self.backgroundView.addSubview(exitButton)
     }
     
@@ -331,52 +419,50 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
         let buttonHeight: CGFloat = 40 // Define the height to use for the button.
         
         for (index, button) in buttonList.enumerated() {
-            if let buttonAction = ActionType(rawValue: button.buttonBehavior.action) {
-                // Determine offset value based on numbers of buttons to display.
-                var buttonWidthOffset: CGFloat
-                var xPositionForButton: CGFloat
-                
-                if buttonList.count == 1 {
-                    buttonWidthOffset = singleButtonWidthOffset
-                    xPositionForButton = (self.dialogViewWidth / 4) + (buttonWidthOffset / 2)
-                } else {
-                    buttonWidthOffset = twoButtonWidthOffset
-                    xPositionForButton = buttonHorizontalSpace
-                }
-
-                let buttonToAdd = UIButton(
-                    frame: CGRect(x: xPositionForButton,
-                                  y: self.dialogViewCurrentHeight,
-                                  width: ((self.dialogViewWidth / 2) - buttonWidthOffset),
-                                  height: buttonHeight))
-                
-                buttonToAdd.setTitle(button.buttonText, for: .normal)
-                buttonToAdd.setTitleColor(UIColor(hexFromString: button.buttonTextColor), for: .normal)
-                buttonToAdd.titleLabel?.font = .boldSystemFont(ofSize: buttonTextFontSize)
-                buttonToAdd.layer.cornerRadius = cornerRadiusForButtons
-                buttonToAdd.tag = index == 0 ? ImpressionType.ACTION_ONE.rawValue : ImpressionType.ACTION_TWO.rawValue
-                buttonToAdd.backgroundColor = UIColor(hexFromString: button.buttonBackgroundColor)
-                buttonToAdd.layer.borderColor = UIColor(hexFromString: button.buttonTextColor).cgColor
-                buttonToAdd.layer.borderWidth = 1
-                
-                // Add a mapping from the action type to the URL.
-                buttonURLMapping[buttonToAdd.tag] = button.buttonBehavior.uri
-                
-                switch buttonAction {
-                    case .invalid:
-                        return
-                    case .redirect:
-                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnLink)))
-                    case .deeplink:
-                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnLink)))
-                    case .close:
-                        buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnExitButton)))
-                }
-                
-                buttonHorizontalSpace += buttonToAdd.frame.width + 8
-                
-                self.dialogView.addSubview(buttonToAdd)
+            // Determine offset value based on numbers of buttons to display.
+            var buttonWidthOffset: CGFloat
+            var xPositionForButton: CGFloat
+            
+            if buttonList.count == 1 {
+                buttonWidthOffset = singleButtonWidthOffset
+                xPositionForButton = (self.dialogViewWidth / 4) + (buttonWidthOffset / 2)
+            } else {
+                buttonWidthOffset = twoButtonWidthOffset
+                xPositionForButton = buttonHorizontalSpace
             }
+
+            let buttonToAdd = UIButton(
+                frame: CGRect(x: xPositionForButton,
+                              y: self.dialogViewCurrentHeight,
+                              width: ((self.dialogViewWidth / 2) - buttonWidthOffset),
+                              height: buttonHeight))
+            
+            buttonToAdd.setTitle(button.buttonText, for: .normal)
+            buttonToAdd.setTitleColor(UIColor(hexFromString: button.buttonTextColor), for: .normal)
+            buttonToAdd.titleLabel?.font = .boldSystemFont(ofSize: buttonTextFontSize)
+            buttonToAdd.layer.cornerRadius = cornerRadiusForButtons
+            buttonToAdd.tag = index == 0 ? ImpressionType.ACTION_ONE.rawValue : ImpressionType.ACTION_TWO.rawValue
+            buttonToAdd.backgroundColor = UIColor(hexFromString: button.buttonBackgroundColor)
+            buttonToAdd.layer.borderColor = UIColor(hexFromString: button.buttonTextColor).cgColor
+            buttonToAdd.layer.borderWidth = 1
+            
+            // Add a mapping from the action type to the URL.
+            buttonMapping[buttonToAdd.tag] = (button.buttonBehavior.uri ?? nil, button.campaignTrigger ?? nil)
+            
+            switch button.buttonBehavior.action {
+                case .invalid:
+                    return
+                case .redirect:
+                    buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onActionButtonClick)))
+                case .deeplink:
+                    buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onActionButtonClick)))
+                case .close:
+                    buttonToAdd.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onExitButtonClick)))
+            }
+            
+            buttonHorizontalSpace += buttonToAdd.frame.width + secondButtonGapSize
+            
+            self.dialogView.addSubview(buttonToAdd)
         }
         
         self.dialogViewCurrentHeight += buttonHeight
@@ -394,14 +480,57 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
     // Button selectors for modal view.
     
     /**
-     * Obj-c selector to handle both redirect and deeplink actions.
+     * Obj-c selector to handle both redirect and deeplink type buttons.
      * When the URL fails to validate through canOpenUrl() or is empty, an alert message will pop up
      * to warn about the navigation error.
      * NOTE: The openUrl() method used here is deprecated and is being used because the SDK has to support iOS 9.
      * When iOS 10 becomes the minimum version supported by the SDK, please refer to:
      * https://developer.apple.com/documentation/uikit/uiapplication/1648685-openurl?language=objc
      */
-    @objc fileprivate func didTapOnLink(_ sender: UIGestureRecognizer){
+    @objc fileprivate func onActionButtonClick(_ sender: UIGestureRecognizer) {
+        dismiss()
+        
+        guard let tag = sender.view?.tag else {
+            return
+        }
+        
+        // Log and send impression.
+        if let type = ImpressionType(rawValue: tag) {
+            logImpression(withImpressionType: type)
+        }
+        
+        if let isOptedOut = optOutCheckbox?.isChecked,
+            isOptedOut == true,
+            let campaign = self.campaign {
+            
+                logImpression(withImpressionType: .OPT_OUT)
+                OptedOutRepository.addCampaign(campaign)
+        }
+        
+        sendImpression()
+        
+        // Execute the action of the button.
+        if let unwrappedUri = buttonMapping[tag]?.uri,
+            let uriToOpen = URL(string: unwrappedUri),
+            UIApplication.shared.canOpenURL(uriToOpen) {
+            
+                UIApplication.shared.openURL(uriToOpen)
+        } else {
+            let alert = UIAlertController(title: "Page not found", message: "Encountered error while navigating to the page.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
+            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
+        }
+        
+        // If the button came with a campaign trigger, log it.
+        logButtonTrigger(with: tag)
+    }
+    
+    /**
+     * Obj-c selector to handle exit type buttons.
+     * Includes the "X" button on the top right and the close action type button.
+     */
+    @objc fileprivate func onExitButtonClick(_ sender: UIGestureRecognizer) {
+        dismiss()
         
         guard let tag = sender.view?.tag else {
             return
@@ -410,33 +539,28 @@ class ModalView: UIView, IAMView, ImpressionTrackable {
         // To log and send impression.
         if let type = ImpressionType(rawValue: tag) {
             logImpression(withImpressionType: type)
-            sendImpression()
         }
         
-        if let unwrappedUri = buttonURLMapping[tag],
-            let uriToOpen = URL(string: unwrappedUri),
-            UIApplication.shared.canOpenURL(uriToOpen) {
-                UIApplication.shared.openURL(uriToOpen)
-        } else {
-            let alert = UIAlertController(title: "Page not found", message: "Encountered error while navigating to the page.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
-            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
+        if let isOptedOut = optOutCheckbox?.isChecked,
+            isOptedOut == true,
+            let campaign = self.campaign {
+            
+                logImpression(withImpressionType: .OPT_OUT)
+                OptedOutRepository.addCampaign(campaign)
         }
         
-        self.dismiss();
+        sendImpression()
+        
+        // If the button came with a campaign trigger, log it.
+        logButtonTrigger(with: tag)
     }
     
     /**
-     * Obj-c selector to dismiss the modal view when the 'X' is tapped.
+     * Selector for changing the state of the opt-out checkbox when tapping on the label and not the checkbox itself.
      */
-    @objc fileprivate func didTapOnExitButton(_ sender: UIGestureRecognizer){
-        self.dismiss()
-        
-        // To log and send impression.
-        if let tag = sender.view?.tag,
-            let type = ImpressionType(rawValue: tag) {
-            logImpression(withImpressionType: type)
-            sendImpression()
+    @objc fileprivate func didTapOnOptOutLabel(_ sender: UIGestureRecognizer) {
+        if let isChecked = optOutCheckbox?.isChecked {
+            optOutCheckbox?.isChecked = !isChecked
         }
     }
     

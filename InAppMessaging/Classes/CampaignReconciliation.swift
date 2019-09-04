@@ -10,7 +10,7 @@ struct CampaignReconciliation {
      * 1) MessageMixerClient retrieves a new list from the ping endpoint.
      * 2) Hostapp logs an event.
      */
-    static func reconciliate() {
+    static func reconcile() {
         
         // Split the CampaignRepository into two different sets of test and non-test campaigns.
         let campaignList = CampaignParser.splitCampaigns(campaigns: PingResponseRepository.list)
@@ -23,16 +23,14 @@ struct CampaignReconciliation {
         
         // Iterate through all the non-test campaigns to verify each one.
         for campaign in campaignList.nonTestCampaigns {
-            
-            // Check if maxImpressions has already been reached for this campaign.
-            if isMaxImpressionReached(forCampaign: campaign) {
-                continue
-            }
-            
+            // Check if maxImpressions has already been reached OR if the campaign is opted-out.
             // Add to ReadyCampaignRepo if the campaign's set of triggers are satisfied.
             // Message will not be added twice within one reconciliation process.
-            if isCampaignReady(campaign, localEventMapping){
-                ReadyCampaignRepository.addCampaign(campaign)
+            if !isMaxImpressionReached(forCampaign: campaign) &&
+                !isOptedOut(for: campaign) &&
+                isCampaignReady(campaign, localEventMapping) {
+                
+                    ReadyCampaignRepository.addCampaign(campaign)
             }
         }
     }
@@ -44,6 +42,15 @@ struct CampaignReconciliation {
      */
     private static func isMaxImpressionReached(forCampaign campaign: Campaign) -> Bool {
         return DisplayedCampaignRepository.getDisplayedCount(forCampaign: campaign) >= campaign.campaignData.maxImpressions
+    }
+    
+    /**
+     * Verfies that the campaign has not been opted-out by the user within this session.
+     * @param { campaign: Campaign } campaign to check for opt-out status.
+     * @returns { Bool } whether or not the campaign is opted out.
+     */
+    private static func isOptedOut(for campaign: Campaign) -> Bool {
+        return OptedOutRepository.contains(campaign.campaignData)
     }
     
     /**

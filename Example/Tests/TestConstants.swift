@@ -32,7 +32,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -63,7 +65,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -94,7 +98,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -132,7 +138,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -163,7 +171,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -182,7 +192,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .loginSuccessful,
                                 eventName: "test",
                                 attributes: []
@@ -208,7 +218,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -227,7 +239,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -255,7 +267,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -274,7 +288,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -302,7 +316,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -321,7 +337,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -349,7 +365,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -368,7 +386,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -396,7 +414,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -415,7 +435,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -443,7 +463,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -462,7 +484,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -490,7 +512,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -509,7 +533,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -537,7 +561,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -556,7 +582,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -584,7 +610,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -603,7 +631,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -631,7 +659,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -650,7 +680,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -678,7 +708,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -697,7 +729,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -725,7 +757,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -744,7 +778,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -772,7 +806,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -791,7 +827,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -819,7 +855,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -838,7 +876,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -866,7 +904,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -885,7 +925,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -913,7 +953,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -932,7 +974,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -960,7 +1002,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -979,7 +1023,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -1006,7 +1050,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -1025,7 +1071,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -1053,7 +1099,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )
@@ -1072,7 +1120,7 @@ struct TestConstants {
                         type: 1,
                         triggers: [
                             Trigger.init(
-                                type: 1,
+                                type: CampaignTriggerType(rawValue: 1)!,
                                 eventType: .custom,
                                 eventName: "testevent",
                                 attributes: [
@@ -1100,7 +1148,9 @@ struct TestConstants {
                                     orientation: 1,
                                     slideFrom: .BOTTOM,
                                     endTimeMillis: 1,
-                                    textAlign: 1),
+                                    textAlign: 1,
+                                    optOut: false,
+                                    html: false),
                                 controlSettings: nil)
                         )
                     )

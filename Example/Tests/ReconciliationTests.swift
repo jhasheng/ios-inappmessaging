@@ -39,7 +39,7 @@ class ReconciliationTests: QuickSpec {
                 let mockResponse = TestConstants.MockResponse.twoTestCampaigns
                 PingResponseRepository.list = mockResponse.data
                 
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 
                 expect(ReadyCampaignRepository.list.count).to(equal(2))
             }
@@ -48,7 +48,7 @@ class ReconciliationTests: QuickSpec {
                 let mockResponse = TestConstants.MockResponse.noTestCampaigns
                 PingResponseRepository.list = mockResponse.data
                 
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
             }
@@ -57,11 +57,11 @@ class ReconciliationTests: QuickSpec {
                 let mockResponse = TestConstants.MockResponse.oneLoginSuccessfulEvent
                 PingResponseRepository.list = mockResponse.data
                 
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
 
                 EventRepository.addEvent(LoginSuccessfulEvent())
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).toEventually(equal(1), timeout: 3.0, pollInterval: 0.1, description: nil)
             }
             
@@ -76,7 +76,7 @@ class ReconciliationTests: QuickSpec {
                     ]
                 )
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
                 
                 let customEvent2 = CustomEvent(
@@ -87,7 +87,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent2)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
@@ -102,7 +102,7 @@ class ReconciliationTests: QuickSpec {
                     ]
                 )
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
                 
                 let customEvent2 = CustomEvent(
@@ -113,7 +113,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent2)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
@@ -128,7 +128,7 @@ class ReconciliationTests: QuickSpec {
                     ]
                 )
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
                 
                 let customEvent2 = CustomEvent(
@@ -139,7 +139,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent2)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
@@ -154,7 +154,7 @@ class ReconciliationTests: QuickSpec {
                     ]
                 )
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
                 
                 let customEvent2 = CustomEvent(
@@ -165,7 +165,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent2)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
@@ -180,7 +180,7 @@ class ReconciliationTests: QuickSpec {
                     ]
                 )
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
                 
                 let customEvent2 = CustomEvent(
@@ -191,7 +191,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent2)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
@@ -206,7 +206,7 @@ class ReconciliationTests: QuickSpec {
                     ]
                 )
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
                 
                 let customEvent2 = CustomEvent(
@@ -217,7 +217,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent2)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
@@ -232,7 +232,7 @@ class ReconciliationTests: QuickSpec {
                     ]
                 )
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
                 
                 let customEvent2 = CustomEvent(
@@ -243,7 +243,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent2)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
@@ -258,7 +258,7 @@ class ReconciliationTests: QuickSpec {
                     ]
                 )
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
                 
                 let customEvent2 = CustomEvent(
@@ -269,7 +269,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent2)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
@@ -284,7 +284,7 @@ class ReconciliationTests: QuickSpec {
                     ]
                 )
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
                 
                 let customEvent2 = CustomEvent(
@@ -295,7 +295,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent2)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
@@ -310,7 +310,7 @@ class ReconciliationTests: QuickSpec {
                     ]
                 )
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
                 
                 let customEvent2 = CustomEvent(
@@ -321,7 +321,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent2)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
@@ -336,7 +336,7 @@ class ReconciliationTests: QuickSpec {
                     ]
                 )
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
                 
                 let customEvent2 = CustomEvent(
@@ -347,7 +347,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent2)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
@@ -362,7 +362,7 @@ class ReconciliationTests: QuickSpec {
                     ]
                 )
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
                 
                 let customEvent2 = CustomEvent(
@@ -373,7 +373,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent2)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
@@ -388,7 +388,7 @@ class ReconciliationTests: QuickSpec {
                     ]
                 )
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
                 
                 let customEvent2 = CustomEvent(
@@ -399,7 +399,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent2)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
@@ -414,7 +414,7 @@ class ReconciliationTests: QuickSpec {
                     ]
                 )
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
                 
                 let customEvent2 = CustomEvent(
@@ -425,7 +425,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent2)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
@@ -440,7 +440,7 @@ class ReconciliationTests: QuickSpec {
                     ]
                 )
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
                 
                 let customEvent2 = CustomEvent(
@@ -451,7 +451,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent2)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
@@ -466,7 +466,7 @@ class ReconciliationTests: QuickSpec {
                     ]
                 )
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
                 
                 let customEvent2 = CustomEvent(
@@ -477,7 +477,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent2)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
@@ -492,7 +492,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
@@ -508,7 +508,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(1))
             }
             
@@ -524,7 +524,7 @@ class ReconciliationTests: QuickSpec {
                 )
                 
                 EventRepository.addEvent(customEvent)
-                CampaignReconciliation.reconciliate()
+                CampaignReconciliation.reconcile()
                 expect(ReadyCampaignRepository.list.count).to(equal(0))
             }
         }
