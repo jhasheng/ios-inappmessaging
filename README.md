@@ -1,5 +1,5 @@
 # InAppMessaging
-Version 1.3.0
+Version 1.4.0
 
 ## Installation
 
@@ -11,6 +11,12 @@ https://developers.rakuten.com/intra/node/311/revisions/2498/view
 
 - Support for SlideUp View
 - Support for FullScreen View
+
+1.4.0 (9/3/19)
+
+- Support for Rich Content
+- Custom events loggable from buttons
+- Bug fixes and enhancements
 
 ## License
 
