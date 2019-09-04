@@ -3,7 +3,7 @@ Version 1.4.0
 
 ## Installation
 
-https://developers.rakuten.com/intra/node/311/revisions/2498/view
+https://developers.rakuten.com/intra/node/311/revisions/2659/view
 
 ## Changelog
 
